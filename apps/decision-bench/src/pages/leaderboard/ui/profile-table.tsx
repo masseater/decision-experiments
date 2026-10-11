@@ -12,13 +12,14 @@ import { HeaderRow } from "./header-row";
 import { ProfileRow } from "./profile-row";
 
 const CAPTION = "確信度・速度・費用";
-const HEADERS = ["モデル", "ECE", "Brier", "p50 / p95 ms", "1,000 件あたり"];
+const LABEL = "モデル";
+const METRICS = ["ECE", "Brier", "p50 / p95 ms", "1,000 件あたり"];
 
 const ProfileTable = ({ task }: Readonly<{ task: TaskInfo }>): ReactNode => (
   <Table>
-    <TableCaption>{CAPTION}</TableCaption>
+    <TableCaption className="mt-0 mb-2 caption-top text-left">{CAPTION}</TableCaption>
     <TableHeader>
-      <HeaderRow headers={HEADERS} align="end" />
+      <HeaderRow label={LABEL} metrics={METRICS} />
     </TableHeader>
     <TableBody>
       {entriesOf(task.task)

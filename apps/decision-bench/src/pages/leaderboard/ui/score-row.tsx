@@ -25,10 +25,10 @@ const ScoreRow = ({
   return (
     <TableRow>
       <TableHead scope="row">{label}</TableHead>
-      <TableCell justify="end">{percent(result.test.skill)}</TableCell>
-      <TableCell justify="end">{percent(result.test.raw)}</TableCell>
-      <TableCell justify="end">{percent(result.test.accuracy)}</TableCell>
-      <TableCell justify="end">{`${percent(result.test.coverage)}%`}</TableCell>
+      <TableCell className="text-right tabular-nums">{percent(result.test.skill)}</TableCell>
+      <TableCell className="text-right tabular-nums">{percent(result.test.raw)}</TableCell>
+      <TableCell className="text-right tabular-nums">{percent(result.test.accuracy)}</TableCell>
+      <TableCell className="text-right tabular-nums">{`${percent(result.test.coverage)}%`}</TableCell>
     </TableRow>
   );
 };

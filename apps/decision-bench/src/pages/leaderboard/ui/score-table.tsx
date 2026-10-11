@@ -14,8 +14,9 @@ import { ScoreRow } from "./score-row";
 
 const CAPTION = "成績（test）";
 
-const headersOf = (task: Readonly<TaskInfo>): readonly string[] => [
-  "モデル",
+const LABEL = "モデル";
+
+const metricsOf = (task: Readonly<TaskInfo>): readonly string[] => [
   "skill",
   METRIC_NAMES[task.metric],
   "正解率",
@@ -24,9 +25,9 @@ const headersOf = (task: Readonly<TaskInfo>): readonly string[] => [
 
 const ScoreTable = ({ task }: Readonly<{ task: TaskInfo }>): ReactNode => (
   <Table>
-    <TableCaption>{CAPTION}</TableCaption>
+    <TableCaption className="mt-0 mb-2 caption-top text-left">{CAPTION}</TableCaption>
     <TableHeader>
-      <HeaderRow headers={headersOf(task)} align="end" />
+      <HeaderRow label={LABEL} metrics={metricsOf(task)} />
     </TableHeader>
     <TableBody>
       {entriesOf(task.task).map((entry) => (
