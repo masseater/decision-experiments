@@ -1,7 +1,8 @@
 {
   "task": "jnli",
-  "items": 200,
+  "items": 2434,
   "hard": 10,
   "opusCostUsd": 6.6914706000000015,
-  "opusMatchesHuman": 0.915
+  "opusMatchesHuman": 0.915,
+  "opusSampled": 200
 }

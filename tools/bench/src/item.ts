@@ -5,7 +5,7 @@ const common = {
   text: Schema.String,
   criteria: Schema.String,
   gold_source: Schema.Literals(["human", "llm"]),
-  agreement: Schema.Finite,
+  agreement: Schema.optionalKey(Schema.Finite),
   source: Schema.String,
   license: Schema.String,
   split: Schema.Literals(["test", "hard"]),

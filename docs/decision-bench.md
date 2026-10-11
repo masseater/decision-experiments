@@ -34,20 +34,22 @@ span-01 lite は Noul しか受け付けないため、JNLI（Choice）は全問
 
 | タスク         | 種類   | 件数 | 正解     | 出典とライセンス                                                   |
 | -------------- | ------ | ---: | -------- | ------------------------------------------------------------------ |
-| JNLI 含意関係  | Choice |  200 | 人       | JGLUE JNLI v1.3 の valid（yahoojapan/JGLUE@6f071c0）、CC BY-SA 4.0 |
+| JNLI 含意関係  | Choice | 2434 | 人       | JGLUE JNLI v1.3 の valid（yahoojapan/JGLUE@6f071c0）、CC BY-SA 4.0 |
 | 業務ルール判定 | Noul   |  200 | Opus 5.5 | Opus 5.5 で生成した架空の社内規程と事例、CC BY-SA 4.0              |
 
 データは `tools/bench/data` に JSONL で置く。
 1 件ごとに `id / type / text / criteria / options / gold / gold_source / agreement / source / license / split` を持つ。
 `text` は System One API の `state`、`criteria` は `instructions`、`options` は `criteria` にそのまま渡す。
 
-JNLI は valid 2,434 件から、`sentence_pair_id` の SHA-256 順に先頭 200 件を選んだ。
+JNLI は valid 2,434 件をすべて使う。
+正解は人が付けたものなので、Opus 5.5 のラベルは `sentence_pair_id` の SHA-256 順で先頭 200 件にだけ付け、人の正解との一致率を出すのに使う。
 業務ルール判定は、20 のテーマごとに Opus 5.5 で規程・事例・基準文を 10 件ずつ生成した。
 
 ## 正解ラベルの付け方
 
 1 問ごとに `claude -p --model claude-opus-5-5` を構造化出力（`--json-schema`）で 3 回独立に呼ぶ。
 3 回とも一致した問題を `split: test`、割れた問題を `split: hard` にし、最多の答えの割合を `agreement` に記録する。
+Opus 5.5 に聞いていない JNLI の問題は `split: test` にし、`agreement` を持たない。
 応答は Effect の `PersistedCache` で `tools/bench/cache` に 1 件 1 ファイルで保存するので、再実行しても呼び直さない。
 
 ## 採点

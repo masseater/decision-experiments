@@ -8,6 +8,7 @@ const LabelStatsSchema = Schema.Struct({
   hard: Schema.Finite,
   opusCostUsd: Schema.Finite,
   opusMatchesHuman: Schema.optionalKey(Schema.Finite),
+  opusSampled: Schema.optionalKey(Schema.Finite),
 });
 
 const LABEL_CONCURRENCY = 4;

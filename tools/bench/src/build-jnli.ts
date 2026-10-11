@@ -7,7 +7,7 @@ import { LABEL_CONCURRENCY, LabelStatsSchema, splitOf } from "./labeling.ts";
 import { runBench } from "./runtime.ts";
 import { benchPath, readJsonl, sha256, writeJson, writeJsonl } from "./store.ts";
 
-const SIZE = 200;
+const OPUS_SAMPLE = 200;
 const FIRST = 0;
 const JGLUE_COMMIT = "6f071c09316baae89c3d083a90985b4b1cb9968c";
 const SOURCE = `JGLUE JNLI v1.3 valid (yahoojapan/JGLUE@${JGLUE_COMMIT})`;
@@ -28,29 +28,28 @@ const JnliRowSchema = Schema.Struct({
 
 type JnliRow = typeof JnliRowSchema.Type;
 
+const toItem = (row: JnliRow): ChoiceItem => ({
+  id: `jnli-${row.sentence_pair_id}`,
+  type: "choice",
+  text: `文1: ${row.sentence1}\n文2: ${row.sentence2}`,
+  criteria: "文1と文2の関係として正しいものを選んでください。",
+  options: OPTIONS,
+  gold: row.label,
+  gold_source: "human",
+  source: SOURCE,
+  license: LICENSE,
+  split: "test",
+});
+
 const labelRow = Effect.fn("labelRow")(function* labelRow(row: JnliRow) {
-  const question = {
-    type: "choice" as const,
-    text: `文1: ${row.sentence1}\n文2: ${row.sentence2}`,
-    criteria: "文1と文2の関係として正しいものを選んでください。",
-    options: OPTIONS,
-  };
-  const { answers, costUsd } = yield* askThrice(question);
+  const base = toItem(row);
+  const { answers, costUsd } = yield* askThrice(base);
   const { mode, agreement } = tally(answers);
-  const item: ChoiceItem = {
-    id: `jnli-${row.sentence_pair_id}`,
-    ...question,
-    gold: row.label,
-    gold_source: "human",
-    agreement,
-    source: SOURCE,
-    license: LICENSE,
-    split: splitOf(agreement),
-  };
+  const item: ChoiceItem = { ...base, agreement, split: splitOf(agreement) };
   return { item, costUsd, opusMatches: mode === row.label };
 });
 
-const pickRows = Effect.fn("pickRows")(function* pickRows(rows: readonly JnliRow[]) {
+const orderRows = Effect.fn("orderRows")(function* orderRows(rows: readonly JnliRow[]) {
   const keyed = yield* Effect.forEach(
     rows,
     (row) => sha256(row.sentence_pair_id).pipe(Effect.map((order) => ({ row, order }))),
@@ -58,7 +57,6 @@ const pickRows = Effect.fn("pickRows")(function* pickRows(rows: readonly JnliRow
   );
   return keyed
     .toSorted((left, right) => left.order.localeCompare(right.order))
-    .slice(FIRST, SIZE)
     .map(({ row }) => row);
 });
 
@@ -66,17 +64,22 @@ runBench(
   Effect.gen(function* buildJnli() {
     const source = yield* Config.String("JNLI_VALID_JSON");
     const rows = yield* readJsonl(JnliRowSchema, source);
-    const labeled = yield* Effect.forEach(yield* pickRows(rows), labelRow, {
+    const ordered = yield* orderRows(rows);
+    const labeled = yield* Effect.forEach(ordered.slice(FIRST, OPUS_SAMPLE), labelRow, {
       concurrency: LABEL_CONCURRENCY,
     });
-    const items = labeled.map(({ item }) => item);
+    const items = [
+      ...labeled.map(({ item }) => item),
+      ...ordered.slice(OPUS_SAMPLE).map((row) => toItem(row)),
+    ];
     yield* writeJsonl(ItemSchema, yield* benchPath("data", "jnli.jsonl"), items);
     yield* writeJson(LabelStatsSchema, yield* benchPath("data", "jnli.stats.json"), {
       task: "jnli",
       items: items.length,
       hard: items.filter(({ split }) => split === "hard").length,
       opusCostUsd: Num.sumAll(labeled.map(({ costUsd }) => costUsd)),
-      opusMatchesHuman: labeled.filter(({ opusMatches }) => opusMatches).length / items.length,
+      opusMatchesHuman: labeled.filter(({ opusMatches }) => opusMatches).length / labeled.length,
+      opusSampled: labeled.length,
     });
   }),
 );
