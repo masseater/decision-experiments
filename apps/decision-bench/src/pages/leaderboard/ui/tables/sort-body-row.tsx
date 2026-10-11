@@ -1,10 +1,9 @@
 import type { ReactNode } from "react";
 
+import type { TableColumn } from "#/pages/leaderboard/model/sorting";
 import { TableCell } from "#/shared/ui/table-cell";
 import { TableHead } from "#/shared/ui/table-head";
 import { TableRow } from "#/shared/ui/table-row";
-
-import type { TableColumn } from "./table-column";
 
 const SortBodyRow = <Row,>({
   row,

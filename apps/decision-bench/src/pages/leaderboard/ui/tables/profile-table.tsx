@@ -2,10 +2,10 @@ import type { ReactNode } from "react";
 
 import { displayLabel } from "#/pages/leaderboard/model/display-label";
 import type { TaskEntry, TaskInfo } from "#/pages/leaderboard/model/ranking";
+import type { TableColumn } from "#/pages/leaderboard/model/sorting";
 import { decimal, usd } from "#/pages/leaderboard/ui/format";
 
 import { SortableTable } from "./sortable-table";
-import type { TableColumn } from "./table-column";
 
 const CAPTION = "確信度・速度・費用";
 const LABEL = "モデル";

@@ -2,11 +2,11 @@ import type { ReactNode } from "react";
 
 import { displayLabel } from "#/pages/leaderboard/model/display-label";
 import type { TaskEntry, TaskInfo } from "#/pages/leaderboard/model/ranking";
+import type { TableColumn } from "#/pages/leaderboard/model/sorting";
 import { percent, withInterval } from "#/pages/leaderboard/ui/format";
 import { METRIC_NAMES } from "#/pages/leaderboard/ui/metric-names";
 
 import { SortableTable } from "./sortable-table";
-import type { TableColumn } from "./table-column";
 
 const CAPTION = "成績（test）";
 const LABEL = "モデル";

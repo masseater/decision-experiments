@@ -1,7 +1,17 @@
 import { useAtomSet, useAtomValue } from "@effect/atom-react";
+import { Array, Order } from "effect";
 import { Atom } from "effect/reactivity";
 
 type SortDirection = "asc" | "desc" | "none";
+
+type TableColumn<Row> = Readonly<{
+  id: string;
+  header: string;
+  sortValue: (row: Row) => number;
+  display: (row: Row) => string;
+}>;
+
+const LABEL_ID = "label";
 
 type Sort =
   | Readonly<{ status: "default" }>
@@ -47,5 +57,45 @@ const useToggleSort = ({
   };
 };
 
-export { useSort, useSortDirection, useToggleSort };
-export type { Sort, SortDirection };
+const orderOf = <Row>({
+  column,
+  columns,
+  labelOf,
+}: Readonly<{
+  column: string;
+  columns: readonly TableColumn<Row>[];
+  labelOf: (row: Row) => string;
+}>): Order.Order<Row> => {
+  if (column === LABEL_ID) {
+    return Order.mapInput(Order.String, labelOf);
+  }
+  return Order.combineAll(
+    columns
+      .filter(({ id }) => id === column)
+      .map(({ sortValue }) => Order.mapInput(Order.Number, sortValue)),
+  );
+};
+
+const sortRows = <Row>({
+  rows,
+  sort,
+  columns,
+  labelOf,
+}: Readonly<{
+  rows: readonly Row[];
+  sort: Sort;
+  columns: readonly TableColumn<Row>[];
+  labelOf: (row: Row) => string;
+}>): readonly Row[] => {
+  if (sort.status === "default") {
+    return rows;
+  }
+  const order = orderOf({ column: sort.column, columns, labelOf });
+  if (sort.direction === "asc") {
+    return Array.sort(rows, order);
+  }
+  return Array.sort(rows, Order.flip(order));
+};
+
+export { LABEL_ID, sortRows, useSort, useSortDirection, useToggleSort };
+export type { Sort, SortDirection, TableColumn };

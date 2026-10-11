@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 
+import type { TableColumn } from "#/pages/leaderboard/model/sorting";
 import type { ModelResult } from "#/pages/leaderboard/model/summary";
 import { percent, usd } from "#/pages/leaderboard/ui/format";
 
 import { SortableTable } from "./sortable-table";
-import type { TableColumn } from "./table-column";
 
 const CAPTION = "指数と費用";
 const LABEL = "モデル";

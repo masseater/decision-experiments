@@ -7,7 +7,7 @@ import { useSortDirection, useToggleSort } from "#/pages/leaderboard/model/sorti
 import { Button } from "#/shared/ui/button";
 import { TableHead } from "#/shared/ui/table-head";
 
-import type { Align } from "./table-column";
+type Align = "start" | "end";
 
 const ARIA_SORT = { asc: "ascending", desc: "descending", none: "none" } as const;
 
@@ -41,3 +41,4 @@ const SortHead = ({
 };
 
 export { SortHead };
+export type { Align };

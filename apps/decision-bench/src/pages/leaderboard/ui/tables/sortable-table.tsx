@@ -2,7 +2,8 @@
 
 import type { ReactNode } from "react";
 
-import { useSort } from "#/pages/leaderboard/model/sorting";
+import { sortRows, useSort } from "#/pages/leaderboard/model/sorting";
+import type { TableColumn } from "#/pages/leaderboard/model/sorting";
 import { Table } from "#/shared/ui/table";
 import { TableBody } from "#/shared/ui/table-body";
 import { TableCaption } from "#/shared/ui/table-caption";
@@ -10,8 +11,6 @@ import { TableHeader } from "#/shared/ui/table-header";
 
 import { SortBodyRow } from "./sort-body-row";
 import { SortHeaderRow } from "./sort-header-row";
-import { sortRows } from "./sort-rows";
-import type { TableColumn } from "./table-column";
 
 const SortableTable = <Row,>({
   id,

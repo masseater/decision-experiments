@@ -1,11 +1,10 @@
 import type { ReactNode } from "react";
 
+import { LABEL_ID } from "#/pages/leaderboard/model/sorting";
+import type { TableColumn } from "#/pages/leaderboard/model/sorting";
 import { TableRow } from "#/shared/ui/table-row";
 
 import { SortHead } from "./sort-head";
-import type { TableColumn } from "./table-column";
-
-const LABEL_ID = "label";
 
 const SortHeaderRow = <Row,>({
   table,
@@ -26,4 +25,4 @@ const SortHeaderRow = <Row,>({
   </TableRow>
 );
 
-export { LABEL_ID, SortHeaderRow };
+export { SortHeaderRow };
