@@ -9,7 +9,11 @@
         "name": "@effect/language-service",
         "allowedUnstableApis": [
           "effect/process/ChildProcess",
-          "effect/process/ChildProcessSpawner#ChildProcessSpawner"
+          "effect/process/ChildProcessSpawner#ChildProcessSpawner",
+          "effect/persistence/KeyValueStore",
+          "effect/persistence/Persistable",
+          "effect/persistence/PersistedCache",
+          "effect/persistence/Persistence"
         ]
       }
     ]

@@ -39,7 +39,7 @@ JNLI は valid 2,434 件から、`sentence_pair_id` の SHA-256 順に先頭 200
 
 1 問ごとに `claude -p --model claude-opus-5-5` を構造化出力（`--json-schema`）で 3 回独立に呼ぶ。
 3 回とも一致した問題を `split: test`、割れた問題を `split: hard` にし、最多の答えの割合を `agreement` に記録する。
-応答は `tools/bench/cache/opus.jsonl` にキャッシュするので、再実行しても呼び直さない。
+応答は Effect の `PersistedCache` で `tools/bench/cache` に 1 件 1 ファイルで保存するので、再実行しても呼び直さない。
 
 ## 採点
 

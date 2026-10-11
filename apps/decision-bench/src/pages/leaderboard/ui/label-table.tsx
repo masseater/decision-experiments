@@ -7,8 +7,11 @@ import { LabelRow } from "./label-row";
 
 const HEADERS = ["タスク", "件数", "hard", "Opus 5.5 のラベル費用", "Opus 5.5 と人の正解の一致率"];
 
-const LabelTable = ({ labeling }: Readonly<{ labeling: readonly LabelStats[] }>): ReactNode => (
-  <table className="w-full text-sm">
+const LabelTable = ({
+  labeling,
+  labelledBy,
+}: Readonly<{ labeling: readonly LabelStats[]; labelledBy: string }>): ReactNode => (
+  <table aria-labelledby={labelledBy} className="w-full text-sm">
     <thead>
       <HeaderRow headers={HEADERS} />
     </thead>

@@ -1,21 +1,18 @@
 import { NodeRuntime, NodeServices } from "@effect/platform-node";
-import { Context, Effect, FileSystem, Layer, Option, Schema, Stream } from "effect";
-import type { Crypto, Path } from "effect";
+import { Context, Effect, FileSystem, Layer, Schema, Stream } from "effect";
+import type { Crypto, Path, Scope } from "effect";
 import { ChildProcess, ChildProcessSpawner } from "effect/process";
 
-import { appendJsonl, benchPath, readJsonl, sha256, toJson } from "./store.ts";
+import { makeCache } from "./cache.ts";
+import { sha256, toJson } from "./store.ts";
 
 const OPUS_MODEL = "claude-opus-5-5";
 const REASON_START = 0;
 const REASON_LENGTH = 500;
 
-const CacheRowSchema = Schema.Struct({
-  key: Schema.String,
-  output: Schema.Unknown,
-  costUsd: Schema.Finite,
-});
+const OpusRowSchema = Schema.Struct({ output: Schema.Unknown, costUsd: Schema.Finite });
 
-type CacheRow = typeof CacheRowSchema.Type;
+type OpusRow = typeof OpusRowSchema.Type;
 
 const ClaudeResultSchema = Schema.Struct({
   is_error: Schema.Boolean,
@@ -49,7 +46,7 @@ class Opus extends Context.Service<
   }
 >()("bench/runtime/Opus") {}
 
-type BenchServices = Opus | FileSystem.FileSystem | Path.Path | Crypto.Crypto;
+type BenchServices = Opus | FileSystem.FileSystem | Path.Path | Crypto.Crypto | Scope.Scope;
 
 type OpusServices =
   | FileSystem.FileSystem
@@ -93,41 +90,39 @@ const runClaude = Effect.fn("runClaude")(function* runClaude(request: Prompt) {
   );
 }, Effect.scoped);
 
-const structuredOutput = (
-  result: typeof ClaudeResultSchema.Type,
-): Effect.Effect<Omit<CacheRow, "key">> => {
+const structuredOutput = (result: typeof ClaudeResultSchema.Type): Effect.Effect<OpusRow> => {
   if (result.is_error || !("structured_output" in result)) {
     return Effect.die(result.result ?? "no structured output");
   }
   return Effect.succeed({ output: result.structured_output, costUsd: result.total_cost_usd });
 };
 
+const keepAll = (): boolean => true;
+
 const makeOpus = Effect.gen(function* makeOpus() {
-  const file = yield* benchPath("cache", "opus.jsonl");
   const services = yield* Effect.context<OpusServices>();
-  const cache = new Map(
-    (yield* readJsonl(CacheRowSchema, file)).map((row): [string, CacheRow] => [row.key, row]),
-  );
-  const fetchRow = Effect.fn("fetchRow")(function* fetchRow(key: string, request: Prompt) {
-    const row = { key, ...(yield* runClaude(request).pipe(Effect.flatMap(structuredOutput))) };
-    cache.set(key, row);
-    yield* appendJsonl(CacheRowSchema, file, row);
-    return row;
-  });
-  const lookup = (request: Prompt & Readonly<{ sample: number }>): Effect.Effect<CacheRow> =>
-    Effect.gen(function* lookupRow() {
-      const key = yield* sha256({
-        model: OPUS_MODEL,
-        system: request.system,
-        prompt: request.prompt,
-        jsonSchema: request.jsonSchema,
-        sample: request.sample,
-      });
-      return yield* Option.match(Option.fromNullishOr(cache.get(key)), {
-        onSome: Effect.succeed,
-        onNone: () => fetchRow(key, request),
-      });
-    }).pipe(Effect.provideContext(services), Effect.orDie);
+  const cached = yield* makeCache("opus", OpusRowSchema, keepAll);
+  const lookup = (request: Prompt & Readonly<{ sample: number }>): Effect.Effect<OpusRow> =>
+    sha256({
+      model: OPUS_MODEL,
+      system: request.system,
+      prompt: request.prompt,
+      jsonSchema: request.jsonSchema,
+      sample: request.sample,
+    }).pipe(
+      Effect.flatMap((key) =>
+        cached(
+          key,
+          runClaude(request).pipe(
+            Effect.flatMap(structuredOutput),
+            Effect.provideContext(services),
+            Effect.orDie,
+          ),
+        ),
+      ),
+      Effect.provideContext(services),
+      Effect.orDie,
+    );
   return Opus.of({
     ask: (request) =>
       lookup(request).pipe(

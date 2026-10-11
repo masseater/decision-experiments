@@ -1,12 +1,13 @@
 import { OpenRouter } from "@openrouter/sdk";
 import type { DecisionsRequest, DecisionsResponse } from "@openrouter/sdk/models";
 import { Clock, Config, Effect, Option, Redacted, Result, Schema } from "effect";
-import type { Crypto, FileSystem, Path } from "effect";
+import type { Crypto } from "effect";
 
+import { makeCache } from "./cache.ts";
 import { DecisionSchema, OutcomeSchema } from "./item.ts";
 import type { Decision, Item, Outcome } from "./item.ts";
 import { toRequest } from "./label.ts";
-import { appendJsonl, benchPath, readJsonl, sha256 } from "./store.ts";
+import { sha256 } from "./store.ts";
 
 interface DecisionAdapter {
   readonly model: string;
@@ -16,7 +17,7 @@ interface DecisionAdapter {
 const QUESTION_ID = "q";
 const NO_COST = 0;
 
-const CacheRowSchema = Schema.Struct({ key: Schema.String, outcome: OutcomeSchema });
+const isAnswered = (outcome: Outcome): boolean => outcome.status === "answered";
 
 const failed = (reason: string, latencyMs: number): Outcome => ({
   status: "failed",
@@ -81,32 +82,17 @@ const makeOpenRouterAdapter = Effect.fn("makeOpenRouterAdapter")(function* makeO
     client.systemOne.create({
       decisionsRequest: { model, state: item.text, questions: toQuestions(item) },
     });
-  const file = yield* benchPath("cache", `openrouter-${model.replaceAll("/", "__")}.jsonl`);
-  const services = yield* Effect.context<FileSystem.FileSystem | Path.Path | Crypto.Crypto>();
-  const cache = new Map(
-    (yield* readJsonl(CacheRowSchema, file)).map((row): [string, Outcome] => [
-      row.key,
-      row.outcome,
-    ]),
+  const services = yield* Effect.context<Crypto.Crypto>();
+  const cached = yield* makeCache(
+    `openrouter-${model.replaceAll("/", "__")}`,
+    OutcomeSchema,
+    isAnswered,
   );
-  const fresh = Effect.fn("fresh")(function* fresh(key: string, item: Readonly<Item>) {
-    const outcome = yield* callSystemOne(create, item);
-    if (outcome.status === "answered") {
-      cache.set(key, outcome);
-      yield* appendJsonl(CacheRowSchema, file, { key, outcome });
-    }
-    return outcome;
-  });
   const adapter: DecisionAdapter = {
     model,
     decide: (item) =>
       sha256({ model, request: toRequest(item) }).pipe(
-        Effect.flatMap((key) =>
-          Option.match(Option.fromNullishOr(cache.get(key)), {
-            onSome: (outcome) => Effect.succeed(outcome),
-            onNone: () => fresh(key, item),
-          }),
-        ),
+        Effect.flatMap((key) => cached(key, callSystemOne(create, item))),
         Effect.provideContext(services),
         Effect.orDie,
       ),

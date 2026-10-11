@@ -42,17 +42,6 @@ const writeJsonl = Effect.fn("writeJsonl")(function* writeJsonl<Codec extends Sc
   yield* fs.writeFileString(file, lines.map((line) => `${line}\n`).join(""));
 });
 
-const appendJsonl = Effect.fn("appendJsonl")(function* appendJsonl<Codec extends Schema.Top>(
-  schema: Codec,
-  file: string,
-  row: Codec["Type"],
-) {
-  const fs = yield* FileSystem.FileSystem;
-  const line = yield* Schema.encodeEffect(Schema.fromJsonString(schema))(row);
-  yield* ensureParent(file);
-  yield* fs.writeFileString(file, `${line}\n`, { flag: "a" });
-});
-
 const writeJson = Effect.fn("writeJson")(function* writeJson<Codec extends Schema.Top>(
   schema: Codec,
   file: string,
@@ -74,4 +63,4 @@ const sha256 = Effect.fn("sha256")(function* sha256(value: unknown) {
   return Hex.encode(yield* crypto.digest("SHA-256", new TextEncoder().encode(json)));
 });
 
-export { appendJsonl, benchPath, readJsonl, sha256, toJson, writeJson, writeJsonl };
+export { benchPath, readJsonl, sha256, toJson, writeJson, writeJsonl };

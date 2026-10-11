@@ -16,8 +16,11 @@ const HEADERS = [
   "1,000 判定あたり",
 ];
 
-const ModelTable = ({ models }: Readonly<{ models: readonly ModelResult[] }>): ReactNode => (
-  <table className="w-full text-sm">
+const ModelTable = ({
+  models,
+  labelledBy,
+}: Readonly<{ models: readonly ModelResult[]; labelledBy: string }>): ReactNode => (
+  <table aria-labelledby={labelledBy} className="w-full text-sm">
     <thead>
       <HeaderRow headers={HEADERS} />
     </thead>
