@@ -3,7 +3,6 @@ import { ConfusionMatrix } from "ml-confusion-matrix";
 
 import { calibrationOf } from "./calibration.ts";
 import type { ChoiceItem, Decision, Item, NoulItem, Outcome, ScoreItem } from "./item.ts";
-import { pairAccuracyOf } from "./pairs.ts";
 import type { TaskResult } from "./summary.ts";
 
 interface Scored {
@@ -166,6 +165,24 @@ const skillOf = (raw: number, chance: number): number => {
   return Num.clamp((raw - chance) / (FULL - chance), { minimum: NONE, maximum: FULL });
 };
 
+const PAIR_MEMBER = /-\d+[ab]$/u;
+const PAIR_SIZE = 2;
+const SIDE_LENGTH = 1;
+
+const pairOf = ({ item }: Readonly<Scored>): string => item.id.slice(NONE, -SIDE_LENGTH);
+
+const pairAccuracyOf = (rows: readonly Scored[]): TaskResult["test"]["pairs"] => {
+  const members = rows.filter(({ item }) => PAIR_MEMBER.test(item.id));
+  const pairs = Object.values(Arr.groupBy(members, pairOf)).filter(
+    (pair) => pair.length === PAIR_SIZE,
+  );
+  if (pairs.length === NONE) {
+    return { status: "unavailable" };
+  }
+  const solved = pairs.filter((pair) => pair.every((row) => credit(row) === FULL));
+  return { status: "measured", accuracy: solved.length / pairs.length, count: pairs.length };
+};
+
 const metric = (rows: readonly Scored[]): TaskResult["test"] => {
   const { raw, chance } = rawScore(rows);
   const failed = rows.filter(({ outcome }) => outcome.status === "failed").length;
@@ -178,7 +195,7 @@ const metric = (rows: readonly Scored[]): TaskResult["test"] => {
     chance,
     skill: skillOf(raw, chance),
     calibration: calibrationOf(rows),
-    pairs: pairAccuracyOf({ rows, credit }),
+    pairs: pairAccuracyOf(rows),
   };
 };
 
