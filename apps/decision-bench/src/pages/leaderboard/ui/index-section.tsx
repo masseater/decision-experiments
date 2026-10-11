@@ -2,9 +2,9 @@ import type { ReactNode } from "react";
 
 import { rankedModels } from "#/pages/leaderboard/model/ranking";
 
-import { BarChart } from "./bar-chart";
-import { ChartFigure } from "./chart-figure";
-import type { ChartRow } from "./chart-row";
+import { BarChart } from "./charts/bar-chart";
+import { ChartFigure } from "./charts/chart-figure";
+import type { ChartRow } from "./charts/chart-row";
 import { percent } from "./format";
 import { Section } from "./section";
 

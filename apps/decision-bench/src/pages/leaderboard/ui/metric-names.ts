@@ -6,10 +6,4 @@ const METRIC_NAMES: Readonly<Record<TaskResult["metric"], string>> = {
   "normalized-mae": "1 - normalized MAE",
 };
 
-const FORMAT_NAMES: Readonly<Record<TaskResult["format"], string>> = {
-  choice: "Choice",
-  noul: "Noul",
-  score: "Score",
-};
-
-export { FORMAT_NAMES, METRIC_NAMES };
+export { METRIC_NAMES };

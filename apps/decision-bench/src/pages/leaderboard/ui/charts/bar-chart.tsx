@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { Bar, CartesianGrid, BarChart as Chart, Tooltip, XAxis, YAxis } from "recharts";
 import type { LabelListProps } from "recharts";
 
+import { pointsOf, toPercentPoints } from "#/pages/leaderboard/ui/format";
 import { ChartContainer } from "#/shared/ui/chart";
 
 import type { ChartRow } from "./chart-row";
@@ -15,7 +16,6 @@ import {
   SERIES_COLOR,
   TOOLTIP_STYLE,
 } from "./chart-style";
-import { pointsOf, toPercentPoints } from "./format";
 
 const LABEL_WIDTH = 104;
 const BAR_SIZE = 14;

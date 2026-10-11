@@ -12,6 +12,7 @@ import {
 } from "recharts";
 
 import type { TaskResult } from "#/pages/leaderboard/model/summary";
+import { pointsOf, toPercentPoints } from "#/pages/leaderboard/ui/format";
 import { ChartContainer } from "#/shared/ui/chart";
 
 import {
@@ -23,7 +24,6 @@ import {
   SERIES_COLOR,
   TOOLTIP_STYLE,
 } from "./chart-style";
-import { pointsOf, toPercentPoints } from "./format";
 
 const X_LABEL = { value: "確信度", position: "insideBottom", offset: -4, fontSize: 12 } as const;
 const Y_LABEL = {

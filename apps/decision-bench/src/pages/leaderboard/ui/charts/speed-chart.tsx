@@ -5,10 +5,10 @@ import { CartesianGrid, Scatter, ScatterChart, Tooltip, XAxis, YAxis } from "rec
 
 import { displayLabel } from "#/pages/leaderboard/model/display-label";
 import type { TaskEntry } from "#/pages/leaderboard/model/ranking";
+import { pointsOf, toPercentPoints } from "#/pages/leaderboard/ui/format";
 import { ChartContainer } from "#/shared/ui/chart";
 
 import { AXIS_TICK, ORIGIN, PERCENT_SCALE, SERIES_COLOR, TOOLTIP_STYLE } from "./chart-style";
-import { pointsOf, toPercentPoints } from "./format";
 
 const X_LABEL = {
   value: "p50 レイテンシ（ms）",

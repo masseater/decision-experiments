@@ -1,11 +1,10 @@
 import type { ReactNode } from "react";
 
 import type { TaskResult } from "#/pages/leaderboard/model/summary";
+import { percent } from "#/pages/leaderboard/ui/format";
 import { TableCell } from "#/shared/ui/table-cell";
 import { TableHead } from "#/shared/ui/table-head";
 import { TableRow } from "#/shared/ui/table-row";
-
-import { percent } from "./format";
 
 const UNSUPPORTED = "未対応";
 const SCORE_COLUMNS = 4;

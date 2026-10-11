@@ -1,11 +1,10 @@
 import type { ReactNode } from "react";
 
 import type { TaskResult } from "#/pages/leaderboard/model/summary";
+import { decimal, usd } from "#/pages/leaderboard/ui/format";
 import { TableCell } from "#/shared/ui/table-cell";
 import { TableHead } from "#/shared/ui/table-head";
 import { TableRow } from "#/shared/ui/table-row";
-
-import { decimal, usd } from "./format";
 
 const NOT_AVAILABLE = "-";
 
