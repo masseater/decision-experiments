@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-11T06:44:00.012Z",
+  "generatedAt": "2026-10-11T07:08:32.735Z",
   "models": [
     {
       "model": "respan/span-01-lite",
       "label": "span-01 lite",
       "choiceVia": "noul",
-      "index": 0.2589949918263613,
+      "index": 0.11588506826113268,
       "costUsd": 0,
       "tasks": [
         {
@@ -54,6 +54,9 @@
                   "count": 1
                 }
               ]
+            },
+            "pairs": {
+              "status": "unavailable"
             }
           },
           "hard": {
@@ -86,6 +89,9 @@
                   "count": 3
                 }
               ]
+            },
+            "pairs": {
+              "status": "unavailable"
             }
           },
           "p50Ms": 189,
@@ -100,76 +106,79 @@
           "format": "noul",
           "support": "supported",
           "test": {
-            "total": 498,
+            "total": 497,
             "failed": 0,
             "coverage": 1,
-            "raw": 0.7043387096774194,
-            "accuracy": 0.7048192771084337,
+            "raw": 0.5612287861121907,
+            "accuracy": 0.5613682092555332,
             "chance": 0.5,
-            "skill": 0.4086774193548388,
+            "skill": 0.12245757222438147,
             "calibration": {
               "status": "measured",
-              "ece": 0.14805708247188756,
-              "brier": 0.4488999414496329,
-              "forecasts": 498,
+              "ece": 0.24564508220321904,
+              "brier": 0.6168118953229805,
+              "forecasts": 497,
               "curve": [
                 {
-                  "meanPredicted": 0.5493851099999999,
-                  "observedFrequency": 0.5483870967741935,
-                  "count": 31
+                  "meanPredicted": 0.54733215,
+                  "observedFrequency": 0.5365853658536586,
+                  "count": 41
                 },
                 {
-                  "meanPredicted": 0.6550903675675674,
-                  "observedFrequency": 0.5675675675675675,
-                  "count": 37
+                  "meanPredicted": 0.6517151832812502,
+                  "observedFrequency": 0.453125,
+                  "count": 64
                 },
                 {
-                  "meanPredicted": 0.7623904521428571,
-                  "observedFrequency": 0.5714285714285714,
-                  "count": 56
+                  "meanPredicted": 0.7529598456122448,
+                  "observedFrequency": 0.5102040816326531,
+                  "count": 98
                 },
                 {
-                  "meanPredicted": 0.8608521754444446,
-                  "observedFrequency": 0.7142857142857143,
-                  "count": 126
+                  "meanPredicted": 0.8583362610074071,
+                  "observedFrequency": 0.5777777777777777,
+                  "count": 135
                 },
                 {
-                  "meanPredicted": 0.9367012323991936,
-                  "observedFrequency": 0.7701612903225806,
-                  "count": 248
+                  "meanPredicted": 0.9262248796792445,
+                  "observedFrequency": 0.6289308176100629,
+                  "count": 159
                 }
               ]
+            },
+            "pairs": {
+              "status": "measured",
+              "accuracy": 0.13765182186234817,
+              "count": 247
             }
           },
           "hard": {
-            "total": 2,
+            "total": 3,
             "failed": 0,
             "coverage": 1,
-            "raw": 0,
-            "accuracy": 0,
+            "raw": 0.3333333333333333,
+            "accuracy": 0.3333333333333333,
             "chance": 0.5,
             "skill": 0,
             "calibration": {
               "status": "measured",
-              "ece": 0.879440515,
-              "brier": 1.553335125999759,
-              "forecasts": 2,
+              "ece": 0.5227814466666667,
+              "brier": 1.0035087643394165,
+              "forecasts": 3,
               "curve": [
                 {
-                  "meanPredicted": 0.8224147,
-                  "observedFrequency": 0,
-                  "count": 1
-                },
-                {
-                  "meanPredicted": 0.93646633,
-                  "observedFrequency": 0,
-                  "count": 1
+                  "meanPredicted": 0.8561147800000001,
+                  "observedFrequency": 0.3333333333333333,
+                  "count": 3
                 }
               ]
+            },
+            "pairs": {
+              "status": "unavailable"
             }
           },
-          "p50Ms": 198,
-          "p95Ms": 361,
+          "p50Ms": 352,
+          "p95Ms": 525,
           "costUsd": 0,
           "costPer1000Usd": 0
         }
@@ -188,8 +197,8 @@
     {
       "task": "rules",
       "items": 500,
-      "hard": 2,
-      "opusCostUsd": 22.22309499999999
+      "hard": 3,
+      "opusCostUsd": 31.18651819999997
     }
   ]
 }

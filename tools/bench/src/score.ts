@@ -3,6 +3,7 @@ import { ConfusionMatrix } from "ml-confusion-matrix";
 
 import { calibrationOf } from "./calibration.ts";
 import type { ChoiceItem, Decision, Item, NoulItem, Outcome, ScoreItem } from "./item.ts";
+import { pairAccuracyOf } from "./pairs.ts";
 import type { TaskResult } from "./summary.ts";
 
 interface Scored {
@@ -177,6 +178,7 @@ const metric = (rows: readonly Scored[]): TaskResult["test"] => {
     chance,
     skill: skillOf(raw, chance),
     calibration: calibrationOf(rows),
+    pairs: pairAccuracyOf({ rows, credit }),
   };
 };
 

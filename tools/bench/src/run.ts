@@ -9,7 +9,7 @@ import { metric, usage } from "./score.ts";
 import type { Scored } from "./score.ts";
 import { benchPath, readJsonl, writeJson } from "./store.ts";
 import { SummarySchema } from "./summary.ts";
-import type { Summary } from "./summary.ts";
+import type { Summary, TaskResult } from "./summary.ts";
 
 const CONCURRENCY = 4;
 const PERCENT = 100;
@@ -46,6 +46,13 @@ const pct = (value: number): string => (value * PERCENT).toFixed(PERCENT_DIGITS)
 const humanMatch = (value: Option.Option<number>): string =>
   Option.match(value, { onNone: () => "-", onSome: (rate) => `${pct(rate)}%` });
 
+const pairCell = (pairs: TaskResult["test"]["pairs"]): string => {
+  if (pairs.status === "unavailable") {
+    return "-";
+  }
+  return pct(pairs.accuracy);
+};
+
 const indexTable = (summary: Summary): readonly string[] => [
   "| モデル | 指数（参考） |",
   "| --- | ---: |",
@@ -60,8 +67,8 @@ const taskTable = (summary: Summary, task: (typeof TASKS)[number]): readonly str
   "",
   ...summary.labeling.filter((stats) => stats.task === task.data).map((stats) => labelLine(stats)),
   "",
-  "| モデル | skill | raw | 正解率 | coverage | p50 / p95 (ms) | 1,000 判定あたり (USD) |",
-  "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+  "| モデル | skill | raw | 正解率 | 対の正解率 | coverage | p50 / p95 (ms) | 1,000 判定あたり (USD) |",
+  "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
   ...summary.models.flatMap((model) =>
     model.tasks
       .filter((result) => result.task === task.id)
@@ -72,6 +79,7 @@ const taskTable = (summary: Summary, task: (typeof TASKS)[number]): readonly str
           pct(result.test.skill),
           pct(result.test.raw),
           pct(result.test.accuracy),
+          pairCell(result.test.pairs),
           pct(result.test.coverage),
           `${result.p50Ms} / ${result.p95Ms}`,
           result.costPer1000Usd.toFixed(COST_DIGITS),

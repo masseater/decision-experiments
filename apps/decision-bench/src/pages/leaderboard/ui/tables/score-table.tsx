@@ -20,6 +20,7 @@ const metricsOf = (task: Readonly<TaskInfo>): readonly string[] => [
   "skill",
   METRIC_NAMES[task.metric],
   "正解率",
+  "対の正解率",
   "coverage",
 ];
 

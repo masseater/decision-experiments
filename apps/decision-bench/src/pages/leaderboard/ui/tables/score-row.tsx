@@ -7,7 +7,15 @@ import { TableHead } from "#/shared/ui/table-head";
 import { TableRow } from "#/shared/ui/table-row";
 
 const UNSUPPORTED = "未対応";
-const SCORE_COLUMNS = 4;
+const SCORE_COLUMNS = 5;
+const NOT_PAIRED = "-";
+
+const pairCell = (result: Readonly<TaskResult>): string => {
+  if (result.test.pairs.status === "unavailable") {
+    return NOT_PAIRED;
+  }
+  return percent(result.test.pairs.accuracy);
+};
 
 const ScoreRow = ({
   label,
@@ -27,6 +35,7 @@ const ScoreRow = ({
       <TableCell className="text-right tabular-nums">{percent(result.test.skill)}</TableCell>
       <TableCell className="text-right tabular-nums">{percent(result.test.raw)}</TableCell>
       <TableCell className="text-right tabular-nums">{percent(result.test.accuracy)}</TableCell>
+      <TableCell className="text-right tabular-nums">{pairCell(result)}</TableCell>
       <TableCell className="text-right tabular-nums">{`${percent(result.test.coverage)}%`}</TableCell>
     </TableRow>
   );

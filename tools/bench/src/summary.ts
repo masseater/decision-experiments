@@ -19,6 +19,15 @@ const CalibrationSchema = Schema.Union([
   Schema.Struct({ status: Schema.Literal("unavailable") }),
 ]);
 
+const PairsSchema = Schema.Union([
+  Schema.Struct({
+    status: Schema.Literal("measured"),
+    accuracy: Schema.Finite,
+    count: Schema.Finite,
+  }),
+  Schema.Struct({ status: Schema.Literal("unavailable") }),
+]);
+
 const MetricSchema = Schema.Struct({
   total: Schema.Finite,
   failed: Schema.Finite,
@@ -28,6 +37,7 @@ const MetricSchema = Schema.Struct({
   chance: Schema.Finite,
   skill: Schema.Finite,
   calibration: CalibrationSchema,
+  pairs: PairsSchema,
 });
 
 const TaskResultSchema = Schema.Struct({

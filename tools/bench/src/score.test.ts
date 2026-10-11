@@ -125,3 +125,20 @@ describe("usage", () => {
     );
   });
 });
+
+describe("pair accuracy", () => {
+  it("counts a pair as solved only when both of its cases are right", () => {
+    const result = metric([
+      { item: noul("rules-0-0a", true), outcome: probability(HIGH) },
+      { item: noul("rules-0-0b", false), outcome: probability(LOW) },
+      { item: noul("rules-0-1a", true), outcome: probability(HIGH) },
+      { item: noul("rules-0-1b", false), outcome: probability(HIGH) },
+    ]);
+    expect(result.pairs).toStrictEqual({ status: "measured", accuracy: HALF, count: TWO });
+  });
+
+  it("leaves pair accuracy unavailable without paired ids", () => {
+    const result = metric([{ item: choice("a", "yes"), outcome: picked("yes") }]);
+    expect(result.pairs).toStrictEqual({ status: "unavailable" });
+  });
+});
