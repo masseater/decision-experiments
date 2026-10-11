@@ -1,13 +1,11 @@
 import { OpenRouter } from "@openrouter/sdk";
 import type { DecisionsRequest, DecisionsResponse } from "@openrouter/sdk/models";
 import { Clock, Config, Effect, Option, Redacted, Result, Schema } from "effect";
-import type { Crypto } from "effect";
 
 import { makeCache } from "./cache.ts";
 import { DecisionSchema, OutcomeSchema } from "./item.ts";
 import type { Decision, Item, Outcome } from "./item.ts";
 import { toRequest } from "./label.ts";
-import { sha256 } from "./store.ts";
 
 interface DecisionAdapter {
   readonly model: string;
@@ -82,7 +80,6 @@ const makeOpenRouterAdapter = Effect.fn("makeOpenRouterAdapter")(function* makeO
     client.systemOne.create({
       decisionsRequest: { model, state: item.text, questions: toQuestions(item) },
     });
-  const services = yield* Effect.context<Crypto.Crypto>();
   const cached = yield* makeCache(
     `openrouter-${model.replaceAll("/", "__")}`,
     OutcomeSchema,
@@ -90,12 +87,7 @@ const makeOpenRouterAdapter = Effect.fn("makeOpenRouterAdapter")(function* makeO
   );
   const adapter: DecisionAdapter = {
     model,
-    decide: (item) =>
-      sha256({ model, request: toRequest(item) }).pipe(
-        Effect.flatMap((key) => cached(key, callSystemOne(create, item))),
-        Effect.provideContext(services),
-        Effect.orDie,
-      ),
+    decide: (item) => cached({ model, request: toRequest(item) }, callSystemOne(create, item)),
   };
   return adapter;
 });

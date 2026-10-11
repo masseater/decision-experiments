@@ -4,7 +4,7 @@ import type { Crypto, Path, Scope } from "effect";
 import { ChildProcess, ChildProcessSpawner } from "effect/process";
 
 import { makeCache } from "./cache.ts";
-import { sha256, toJson } from "./store.ts";
+import { toJson } from "./store.ts";
 
 const OPUS_MODEL = "claude-opus-5-5";
 const REASON_START = 0;
@@ -103,25 +103,19 @@ const makeOpus = Effect.gen(function* makeOpus() {
   const services = yield* Effect.context<OpusServices>();
   const cached = yield* makeCache("opus", OpusRowSchema, keepAll);
   const lookup = (request: Prompt & Readonly<{ sample: number }>): Effect.Effect<OpusRow> =>
-    sha256({
-      model: OPUS_MODEL,
-      system: request.system,
-      prompt: request.prompt,
-      jsonSchema: request.jsonSchema,
-      sample: request.sample,
-    }).pipe(
-      Effect.flatMap((key) =>
-        cached(
-          key,
-          runClaude(request).pipe(
-            Effect.flatMap(structuredOutput),
-            Effect.provideContext(services),
-            Effect.orDie,
-          ),
-        ),
+    cached(
+      {
+        model: OPUS_MODEL,
+        system: request.system,
+        prompt: request.prompt,
+        jsonSchema: request.jsonSchema,
+        sample: request.sample,
+      },
+      runClaude(request).pipe(
+        Effect.flatMap(structuredOutput),
+        Effect.provideContext(services),
+        Effect.orDie,
       ),
-      Effect.provideContext(services),
-      Effect.orDie,
     );
   return Opus.of({
     ask: (request) =>
