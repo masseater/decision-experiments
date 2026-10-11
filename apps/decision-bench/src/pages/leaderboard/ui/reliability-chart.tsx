@@ -54,9 +54,20 @@ const toPoints = (
   }));
 };
 
-const ReliabilityChart = ({ result }: Readonly<{ result: TaskResult }>): ReactNode => (
+const describe = (result: Readonly<TaskResult>): string =>
+  toPoints(result)
+    .map(
+      ({ confidence, accuracy, count }) =>
+        `確信度 ${pointsOf(confidence)}% で正解率 ${pointsOf(accuracy)}%（${count} 件）`,
+    )
+    .join("、");
+
+const ReliabilityChart = ({
+  result,
+  title,
+}: Readonly<{ result: TaskResult; title: string }>): ReactNode => (
   <ChartContainer>
-    <ScatterChart margin={MARGIN}>
+    <ScatterChart title={title} desc={describe(result)} margin={MARGIN}>
       <CartesianGrid />
       <XAxis
         type="number"

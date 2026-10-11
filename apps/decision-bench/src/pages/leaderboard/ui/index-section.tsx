@@ -24,7 +24,7 @@ const rows: readonly ChartRow[] = rankedModels.map((model) => ({
 const IndexSection = (): ReactNode => (
   <Section id="index" title="総合指数（参考）" note={NOTE}>
     <ChartFigure title={CHART_TITLE}>
-      <BarChart rows={rows} />
+      <BarChart title={CHART_TITLE} rows={rows} />
     </ChartFigure>
   </Section>
 );

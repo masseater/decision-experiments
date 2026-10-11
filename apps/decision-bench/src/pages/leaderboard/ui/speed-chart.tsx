@@ -37,9 +37,17 @@ const toPoints = (
       skill: toPercentPoints(entry.result.test.skill),
     }));
 
-const SpeedChart = ({ entries }: Readonly<{ entries: readonly TaskEntry[] }>): ReactNode => (
+const describe = (entries: readonly TaskEntry[]): string =>
+  toPoints(entries)
+    .map(({ label, latency, skill }) => `${label}: p50 ${latency} ms、skill ${pointsOf(skill)}`)
+    .join("。");
+
+const SpeedChart = ({
+  entries,
+  title,
+}: Readonly<{ entries: readonly TaskEntry[]; title: string }>): ReactNode => (
   <ChartContainer>
-    <ScatterChart margin={MARGIN}>
+    <ScatterChart title={title} desc={describe(entries)} margin={MARGIN}>
       <CartesianGrid />
       <XAxis
         type="number"

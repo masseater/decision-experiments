@@ -33,9 +33,23 @@ const toPoints = (
     return [{ label: row.label, value: toPercentPoints(row.ratio) }];
   });
 
-const BarChart = ({ rows }: Readonly<{ rows: readonly ChartRow[] }>): ReactNode => (
+const describe = (rows: readonly ChartRow[]): string =>
+  toPoints(rows)
+    .map(({ label, value }) => `${label}: ${pointsOf(value)}`)
+    .join("、");
+
+const BarChart = ({
+  rows,
+  title,
+}: Readonly<{ rows: readonly ChartRow[]; title: string }>): ReactNode => (
   <ChartContainer size="compact">
-    <Chart data={toPoints(rows)} layout="vertical" margin={MARGIN}>
+    <Chart
+      title={title}
+      desc={describe(rows)}
+      data={toPoints(rows)}
+      layout="vertical"
+      margin={MARGIN}
+    >
       <CartesianGrid horizontal={false} />
       <XAxis type="number" dataKey="value" domain={PERCENT_SCALE} tick={AXIS_TICK} />
       <YAxis type="category" dataKey="label" width={LABEL_WIDTH} tick={AXIS_TICK} />
