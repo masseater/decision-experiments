@@ -20,14 +20,14 @@ const LeaderboardPage = (): ReactNode => (
       <h1 className="text-2xl font-bold">{TITLE}</h1>
       <Disclaimer />
     </header>
-    <section className="flex flex-col gap-3">
+    <section className="flex flex-col gap-3 overflow-x-auto">
       <h2 id={LEADERBOARD_ID} className="text-lg font-semibold">
         {LEADERBOARD}
       </h2>
       <p className="text-muted-foreground text-sm">{SKILL_NOTE}</p>
       <ModelTable models={summary.models} labelledBy={LEADERBOARD_ID} />
     </section>
-    <section className="flex flex-col gap-3">
+    <section className="flex flex-col gap-3 overflow-x-auto">
       <h2 id={LABELS_ID} className="text-lg font-semibold">
         {LABELS}
       </h2>
