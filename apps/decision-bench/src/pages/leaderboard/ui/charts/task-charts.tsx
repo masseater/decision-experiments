@@ -30,7 +30,7 @@ const skillRows = (entries: readonly TaskEntry[]): readonly ChartRow[] =>
   });
 
 const TaskCharts = ({ entries }: Readonly<{ entries: readonly TaskEntry[] }>): ReactNode => (
-  <div className="grid gap-6 sm:grid-cols-2">
+  <div className="flex flex-col gap-10">
     <ChartFigure title={SKILL_TITLE}>
       <BarChart title={SKILL_TITLE} rows={skillRows(entries)} />
     </ChartFigure>

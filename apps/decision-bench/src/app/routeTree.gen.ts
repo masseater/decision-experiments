@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TodosRouteImport } from './routes/todos'
 import { Route as ApiSplatRouteImport } from './routes/api.$'
+import { Route as TasksTaskRouteImport } from './routes/tasks.$task'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,44 @@ const ApiSplatRoute = ApiSplatRouteImport.update({
   path: '/api/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TasksTaskRoute = TasksTaskRouteImport.update({
+  id: '/tasks/$task',
+  path: '/tasks/$task',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/todos': typeof TodosRoute
   '/api/$': typeof ApiSplatRoute
+  '/tasks/$task': typeof TasksTaskRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/todos': typeof TodosRoute
   '/api/$': typeof ApiSplatRoute
+  '/tasks/$task': typeof TasksTaskRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/todos': typeof TodosRoute
   '/api/$': typeof ApiSplatRoute
+  '/tasks/$task': typeof TasksTaskRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/todos' | '/api/$'
+  fullPaths: '/' | '/todos' | '/api/$' | '/tasks/$task'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/todos' | '/api/$'
-  id: '__root__' | '/' | '/todos' | '/api/$'
+  to: '/' | '/todos' | '/api/$' | '/tasks/$task'
+  id: '__root__' | '/' | '/todos' | '/api/$' | '/tasks/$task'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TodosRoute: typeof TodosRoute
   ApiSplatRoute: typeof ApiSplatRoute
+  TasksTaskRoute: typeof TasksTaskRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tasks/$task': {
+      id: '/tasks/$task'
+      path: '/tasks/$task'
+      fullPath: '/tasks/$task'
+      preLoaderRoute: typeof TasksTaskRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TodosRoute: TodosRoute,
   ApiSplatRoute: ApiSplatRoute,
+  TasksTaskRoute: TasksTaskRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
