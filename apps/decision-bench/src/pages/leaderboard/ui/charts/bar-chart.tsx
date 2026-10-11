@@ -2,7 +2,6 @@
 
 import type { ReactNode } from "react";
 import { Bar, CartesianGrid, BarChart as Chart, Tooltip, XAxis, YAxis } from "recharts";
-import type { LabelListProps } from "recharts";
 
 import { pointsOf, toPercentPoints } from "#/pages/leaderboard/ui/format";
 import { ChartContainer } from "#/shared/ui/chart";
@@ -21,17 +20,17 @@ import { errorOf, intervalBar } from "./interval-bar";
 const LABEL_WIDTH = 104;
 const BAR_SIZE = 14;
 const BAR_RADIUS: [number, number, number, number] = [ORIGIN, MARK_RADIUS, MARK_RADIUS, ORIGIN];
-const VALUE_LABEL: LabelListProps = {
-  position: "right",
-  offset: 20,
-  fontSize: 12,
-  formatter: pointsOf,
-};
-const MARGIN = { right: 24 } as const;
+const VALUE_WIDTH = 40;
+const MARGIN = { right: 8 } as const;
 const ROW_HEIGHT = 36;
 const AXIS_HEIGHT = 40;
 
-type BarPoint = Readonly<{ label: string; value: number; error?: readonly [number, number] }>;
+type BarPoint = Readonly<{
+  label: string;
+  value: number;
+  text: string;
+  error?: readonly [number, number];
+}>;
 
 const toPoint = (row: ChartRow): readonly BarPoint[] => {
   if (row.status === "unsupported") {
@@ -39,14 +38,14 @@ const toPoint = (row: ChartRow): readonly BarPoint[] => {
   }
   const value = toPercentPoints(row.ratio);
   if (row.status === "point") {
-    return [{ label: row.label, value }];
+    return [{ label: row.label, value, text: pointsOf(value) }];
   }
   const error = errorOf({
     value,
     lower: toPercentPoints(row.interval.lower),
     upper: toPercentPoints(row.interval.upper),
   });
-  return [{ label: row.label, value, error }];
+  return [{ label: row.label, value, text: pointsOf(value), error }];
 };
 
 const toPoints = (rows: readonly ChartRow[]): readonly BarPoint[] =>
@@ -72,14 +71,24 @@ const BarChart = ({
       <CartesianGrid horizontal={false} />
       <XAxis type="number" dataKey="value" domain={PERCENT_SCALE} tick={AXIS_TICK} />
       <YAxis type="category" dataKey="label" width={LABEL_WIDTH} tick={AXIS_TICK} />
+      <YAxis
+        yAxisId="value"
+        type="category"
+        dataKey="text"
+        orientation="right"
+        width={VALUE_WIDTH}
+        axisLine={false}
+        tickLine={false}
+        tick={AXIS_TICK}
+      />
       <Tooltip contentStyle={TOOLTIP_STYLE} formatter={pointsOf} />
       <Bar
         isAnimationActive={false}
         dataKey="value"
+        name={title}
         fill={SERIES_COLOR}
         radius={BAR_RADIUS}
         barSize={BAR_SIZE}
-        label={VALUE_LABEL}
       >
         {intervalBar("x")}
       </Bar>
