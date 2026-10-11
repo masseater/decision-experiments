@@ -18,7 +18,7 @@ const TaskBlock = ({ task }: Readonly<{ task: TaskInfo }>): ReactNode => {
       <ScoreTable task={task} entries={entries} />
       <ProfileTable task={task} entries={entries} />
       <TaskCharts entries={entries} />
-      <ReliabilitySection entries={entries} />
+      <ReliabilitySection task={task.task} entries={entries} />
     </>
   );
 };

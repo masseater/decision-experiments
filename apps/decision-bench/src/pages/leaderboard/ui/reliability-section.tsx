@@ -1,27 +1,30 @@
-import { TrendingDown } from "lucide-react";
+import { MousePointerClick, TrendingDown } from "lucide-react";
 import type { ReactNode } from "react";
 
 import type { TaskEntry } from "#/pages/leaderboard/model/ranking";
 
-import { ReliabilityFigure } from "./charts/reliability-figure";
+import { ReliabilityChart } from "./charts/reliability-chart";
 import { NoteList } from "./note-list";
 import type { Note } from "./note-list";
 import { Section } from "./section";
 
+const TITLE = "確信度と実際の正解率";
+
 const NOTES: readonly Note[] = [
   { icon: <TrendingDown aria-hidden="true" />, text: "対角線より下は過信" },
+  {
+    icon: <MousePointerClick aria-hidden="true" />,
+    text: "凡例をクリックで表示を切り替え、ホバーでそのモデルを強調",
+  },
 ];
 
 const ReliabilitySection = ({
+  task,
   entries,
-}: Readonly<{ entries: readonly TaskEntry[] }>): ReactNode => (
-  <Section id="calibration" title="確信度と実際の正解率">
+}: Readonly<{ task: string; entries: readonly TaskEntry[] }>): ReactNode => (
+  <Section id="calibration" title={TITLE}>
     <NoteList notes={NOTES} />
-    {entries
-      .filter(({ result }) => result.test.calibration.status === "measured")
-      .map((entry) => (
-        <ReliabilityFigure key={entry.model.model} entry={entry} />
-      ))}
+    <ReliabilityChart task={task} title={TITLE} entries={entries} />
   </Section>
 );
 
