@@ -4,6 +4,7 @@
   "include": ["src", "*.ts"],
   "compilerOptions": {
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "resolveJsonModule": true,
     "types": ["vite/client", "@cloudflare/workers-types"],
     "paths": {
       "#/*": ["./src/*"]

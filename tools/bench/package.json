@@ -1,0 +1,25 @@
+{
+  "name": "bench",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./summary": "./results/summary.json",
+    "./summary-schema": "./src/summary.ts"
+  },
+  "scripts": {
+    "build:jnli": "node src/build-jnli.ts",
+    "build:rules": "node src/build-rules.ts",
+    "bench": "node src/run.ts",
+    "test": "vp test run",
+    "fallow": "fallow --production --quiet --format compact && fallow dupes --quiet --format compact && fallow security --fail-on-issues --quiet"
+  },
+  "dependencies": {
+    "@effect/platform-node": "catalog:",
+    "@openrouter/sdk": "catalog:",
+    "effect": "catalog:stack"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:"
+  }
+}

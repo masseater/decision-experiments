@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-10-11T00:00:00.000Z",
+  "models": [],
+  "labeling": [
+    {
+      "task": "jnli",
+      "items": 200,
+      "hard": 10,
+      "opusCostUsd": 6.6914706000000015,
+      "opusMatchesHuman": 0.915
+    },
+    {
+      "task": "rules",
+      "items": 200,
+      "hard": 0,
+      "opusCostUsd": 8.46449779999999
+    }
+  ]
+}

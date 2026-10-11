@@ -1,0 +1,66 @@
+import { Schema } from "effect";
+
+const common = {
+  id: Schema.String,
+  text: Schema.String,
+  criteria: Schema.String,
+  gold_source: Schema.Literals(["human", "llm"]),
+  agreement: Schema.Finite,
+  source: Schema.String,
+  license: Schema.String,
+  split: Schema.Literals(["test", "hard"]),
+};
+
+const ChoiceItemSchema = Schema.Struct({
+  ...common,
+  type: Schema.Literal("choice"),
+  options: Schema.Record(Schema.String, Schema.String),
+  gold: Schema.String,
+});
+
+const NoulItemSchema = Schema.Struct({
+  ...common,
+  type: Schema.Literal("noul"),
+  options: Schema.Struct({ true: Schema.String, false: Schema.String }),
+  gold: Schema.Boolean,
+});
+
+const ScoreItemSchema = Schema.Struct({
+  ...common,
+  type: Schema.Literal("score"),
+  options: Schema.Array(Schema.String),
+  gold: Schema.Finite,
+});
+
+const ItemSchema = Schema.Union([ChoiceItemSchema, NoulItemSchema, ScoreItemSchema]);
+
+type Item = typeof ItemSchema.Type;
+type ChoiceItem = typeof ChoiceItemSchema.Type;
+type NoulItem = typeof NoulItemSchema.Type;
+type ScoreItem = typeof ScoreItemSchema.Type;
+
+const DecisionSchema = Schema.Union([
+  Schema.Struct({ type: Schema.Literal("choice"), choice: Schema.String }),
+  Schema.Struct({ type: Schema.Literal("noul"), noul: Schema.Finite }),
+  Schema.Struct({ type: Schema.Literal("score"), score: Schema.Finite }),
+]);
+
+const OutcomeSchema = Schema.Union([
+  Schema.Struct({
+    status: Schema.Literal("answered"),
+    decision: DecisionSchema,
+    latencyMs: Schema.Finite,
+    costUsd: Schema.Finite,
+  }),
+  Schema.Struct({
+    status: Schema.Literal("failed"),
+    reason: Schema.String,
+    latencyMs: Schema.Finite,
+  }),
+]);
+
+type Outcome = typeof OutcomeSchema.Type;
+type Decision = typeof DecisionSchema.Type;
+
+export { DecisionSchema, ItemSchema, OutcomeSchema };
+export type { ChoiceItem, Decision, Item, NoulItem, Outcome, ScoreItem };
