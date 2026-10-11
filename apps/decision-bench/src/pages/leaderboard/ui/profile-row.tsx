@@ -1,6 +1,9 @@
 import type { ReactNode } from "react";
 
 import type { TaskResult } from "#/pages/leaderboard/model/summary";
+import { TableCell } from "#/shared/ui/table-cell";
+import { TableHead } from "#/shared/ui/table-head";
+import { TableRow } from "#/shared/ui/table-row";
 
 import { decimal, usd } from "./format";
 
@@ -19,15 +22,13 @@ const ProfileRow = ({
 }: Readonly<{ label: string; result: TaskResult }>): ReactNode => {
   const [ece, brier] = calibrationCells(result);
   return (
-    <tr className="border-t tabular-nums">
-      <th scope="row" className="py-2 pr-3 text-left font-medium">
-        {label}
-      </th>
-      <td className="py-2 pr-3 text-right">{ece}</td>
-      <td className="py-2 pr-3 text-right">{brier}</td>
-      <td className="py-2 pr-3 text-right">{`${result.p50Ms} / ${result.p95Ms}`}</td>
-      <td className="py-2 text-right">{usd(result.costPer1000Usd)}</td>
-    </tr>
+    <TableRow>
+      <TableHead scope="row">{label}</TableHead>
+      <TableCell justify="end">{ece}</TableCell>
+      <TableCell justify="end">{brier}</TableCell>
+      <TableCell justify="end">{`${result.p50Ms} / ${result.p95Ms}`}</TableCell>
+      <TableCell justify="end">{usd(result.costPer1000Usd)}</TableCell>
+    </TableRow>
   );
 };
 

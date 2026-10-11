@@ -1,10 +1,14 @@
 import type { ReactNode } from "react";
 
 import type { TaskResult } from "#/pages/leaderboard/model/summary";
+import { TableCell } from "#/shared/ui/table-cell";
+import { TableHead } from "#/shared/ui/table-head";
+import { TableRow } from "#/shared/ui/table-row";
 
 import { percent } from "./format";
 
 const UNSUPPORTED = "未対応";
+const SCORE_COLUMNS = 4;
 
 const ScoreRow = ({
   label,
@@ -12,26 +16,20 @@ const ScoreRow = ({
 }: Readonly<{ label: string; result: TaskResult }>): ReactNode => {
   if (result.support === "unsupported") {
     return (
-      <tr className="border-t">
-        <th scope="row" className="py-2 pr-3 text-left font-medium">
-          {label}
-        </th>
-        <td colSpan={4} className="text-muted-foreground py-2">
-          {UNSUPPORTED}
-        </td>
-      </tr>
+      <TableRow>
+        <TableHead scope="row">{label}</TableHead>
+        <TableCell colSpan={SCORE_COLUMNS}>{UNSUPPORTED}</TableCell>
+      </TableRow>
     );
   }
   return (
-    <tr className="border-t tabular-nums">
-      <th scope="row" className="py-2 pr-3 text-left font-medium">
-        {label}
-      </th>
-      <td className="py-2 pr-3 text-right">{percent(result.test.skill)}</td>
-      <td className="py-2 pr-3 text-right">{percent(result.test.raw)}</td>
-      <td className="py-2 pr-3 text-right">{percent(result.test.accuracy)}</td>
-      <td className="py-2 text-right">{`${percent(result.test.coverage)}%`}</td>
-    </tr>
+    <TableRow>
+      <TableHead scope="row">{label}</TableHead>
+      <TableCell justify="end">{percent(result.test.skill)}</TableCell>
+      <TableCell justify="end">{percent(result.test.raw)}</TableCell>
+      <TableCell justify="end">{percent(result.test.accuracy)}</TableCell>
+      <TableCell justify="end">{`${percent(result.test.coverage)}%`}</TableCell>
+    </TableRow>
   );
 };
 

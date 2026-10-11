@@ -1,25 +1,28 @@
 import type { ReactNode } from "react";
 
+import { TableHead } from "#/shared/ui/table-head";
+import { TableRow } from "#/shared/ui/table-row";
+
 const FIRST = 0;
 
-const alignOf = (index: number, align: "start" | "end"): string => {
-  if (index === FIRST || align === "start") {
-    return "text-left";
+const alignOf = (index: number, align: "start" | "end"): "start" | "end" => {
+  if (index === FIRST) {
+    return "start";
   }
-  return "text-right";
+  return align;
 };
 
 const HeaderRow = ({
   headers,
   align,
 }: Readonly<{ headers: readonly string[]; align: "start" | "end" }>): ReactNode => (
-  <tr className="text-muted-foreground">
+  <TableRow>
     {headers.map((header, index) => (
-      <th key={header} scope="col" className={`pr-3 pb-2 font-normal ${alignOf(index, align)}`}>
+      <TableHead key={header} scope="col" justify={alignOf(index, align)}>
         {header}
-      </th>
+      </TableHead>
     ))}
-  </tr>
+  </TableRow>
 );
 
 export { HeaderRow };

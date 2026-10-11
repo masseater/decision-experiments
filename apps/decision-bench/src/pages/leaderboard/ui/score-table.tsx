@@ -3,6 +3,10 @@ import type { ReactNode } from "react";
 import { displayLabel } from "#/pages/leaderboard/model/display-label";
 import { entriesOf } from "#/pages/leaderboard/model/ranking";
 import type { TaskInfo } from "#/pages/leaderboard/model/ranking";
+import { Table } from "#/shared/ui/table";
+import { TableBody } from "#/shared/ui/table-body";
+import { TableCaption } from "#/shared/ui/table-caption";
+import { TableHeader } from "#/shared/ui/table-header";
 
 import { HeaderRow } from "./header-row";
 import { METRIC_NAMES } from "./metric-names";
@@ -19,17 +23,17 @@ const headersOf = (task: Readonly<TaskInfo>): readonly string[] => [
 ];
 
 const ScoreTable = ({ task }: Readonly<{ task: TaskInfo }>): ReactNode => (
-  <table className="w-full text-xs sm:text-sm">
-    <caption className="pb-2 text-left text-sm font-medium">{CAPTION}</caption>
-    <thead>
+  <Table>
+    <TableCaption>{CAPTION}</TableCaption>
+    <TableHeader>
       <HeaderRow headers={headersOf(task)} align="end" />
-    </thead>
-    <tbody>
+    </TableHeader>
+    <TableBody>
       {entriesOf(task.task).map((entry) => (
         <ScoreRow key={entry.model.model} label={displayLabel(entry)} result={entry.result} />
       ))}
-    </tbody>
-  </table>
+    </TableBody>
+  </Table>
 );
 
 export { ScoreTable };
