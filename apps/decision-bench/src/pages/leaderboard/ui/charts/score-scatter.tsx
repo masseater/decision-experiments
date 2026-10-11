@@ -6,10 +6,12 @@ import { CartesianGrid, Scatter, ScatterChart, Tooltip, XAxis, YAxis } from "rec
 import { pointsOf } from "#/pages/leaderboard/ui/format";
 import { ChartContainer } from "#/shared/ui/chart";
 
-import { AXIS_TICK, PERCENT_SCALE, SERIES_COLOR, TOOLTIP_STYLE } from "./chart-style";
+import { AXIS_TICK, PERCENT_SCALE, SERIES_COLOR } from "./chart-style";
+import { DetailTooltip } from "./detail-tooltip";
 import { intervalBar } from "./interval-bar";
 import type { LabelSpot } from "./label-placement";
 import { MarkedPoint } from "./marked-point";
+import type { Detail } from "./model-detail";
 
 type ScatterPoint = Readonly<{
   label: string;
@@ -18,6 +20,7 @@ type ScatterPoint = Readonly<{
   measure: number;
   skill: number;
   error: readonly [number, number];
+  detail: Detail;
 }>;
 
 type Axis = Readonly<{
@@ -28,19 +31,6 @@ type Axis = Readonly<{
 
 const Y_LABEL = { value: "skill", angle: -90, position: "insideLeft", fontSize: 12 } as const;
 const MARGIN = { top: 16, right: 24, bottom: 16, left: 0 } as const;
-
-const labelOf = (payload: unknown): string => {
-  if (typeof payload === "object" && payload !== null && "label" in payload) {
-    return String(payload.label);
-  }
-  return "";
-};
-
-const tooltipFormat = (
-  value: unknown,
-  name: unknown,
-  item: Readonly<{ payload?: unknown }>,
-): [string, string] => [pointsOf(value), `${labelOf(item.payload)} ${String(name)}`];
 
 const xLabel = (name: string): Readonly<Record<string, number | string>> => ({
   value: name,
@@ -63,7 +53,7 @@ const ScoreScatter = ({
   title,
 }: Readonly<{ points: readonly ScatterPoint[]; axis: Axis; title: string }>): ReactNode => (
   <ChartContainer>
-    <ScatterChart title={title} desc={describe(points, axis)} margin={MARGIN}>
+    <ScatterChart desc={`${title}: ${describe(points, axis)}`} margin={MARGIN}>
       <CartesianGrid />
       <XAxis
         type="number"
@@ -82,7 +72,7 @@ const ScoreScatter = ({
         tick={AXIS_TICK}
         label={Y_LABEL}
       />
-      <Tooltip contentStyle={TOOLTIP_STYLE} formatter={tooltipFormat} />
+      <Tooltip content={DetailTooltip} />
       <Scatter isAnimationActive={false} data={points} fill={SERIES_COLOR} shape={MarkedPoint}>
         {intervalBar("y")}
       </Scatter>

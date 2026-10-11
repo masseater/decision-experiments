@@ -6,6 +6,7 @@ import { useVisibleModels } from "#/pages/leaderboard/model/view";
 import { BarChart } from "./charts/bar-chart";
 import { ChartFigure } from "./charts/chart-figure";
 import type { ChartRow } from "./charts/chart-row";
+import { indexDetail } from "./charts/model-detail";
 import { Section } from "./section";
 import { IndexTable } from "./tables/index-table";
 
@@ -16,6 +17,7 @@ const rowsOf = (models: readonly ModelResult[]): readonly ChartRow[] =>
     status: "point",
     key: model.model,
     label: model.label,
+    detail: indexDetail(model),
     ratio: model.index,
   }));
 

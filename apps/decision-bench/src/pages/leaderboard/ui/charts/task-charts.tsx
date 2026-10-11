@@ -6,6 +6,7 @@ import type { TaskEntry } from "#/pages/leaderboard/model/ranking";
 import { BarChart } from "./bar-chart";
 import { ChartFigure } from "./chart-figure";
 import type { ChartRow } from "./chart-row";
+import { taskDetail } from "./model-detail";
 import { ModelKey } from "./model-key";
 import { COST_AXIS, LATENCY_AXIS, scatterPoints } from "./scatter-points";
 import { ScoreScatter } from "./score-scatter";
@@ -24,6 +25,7 @@ const skillRows = (entries: readonly TaskEntry[]): readonly ChartRow[] =>
       status: "interval",
       key: entry.model.model,
       label,
+      detail: taskDetail(entry),
       ratio: entry.result.test.skill,
       interval: entry.result.test.skillInterval,
     };

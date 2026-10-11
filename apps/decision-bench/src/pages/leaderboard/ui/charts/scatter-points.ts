@@ -6,6 +6,7 @@ import { ORIGIN } from "./chart-style";
 import { errorOf } from "./interval-bar";
 import { placeLabels } from "./label-placement";
 import type { LabelSpot } from "./label-placement";
+import { taskDetail } from "./model-detail";
 import type { Axis, ScatterPoint } from "./score-scatter";
 
 const HEADROOM = 1.3;
@@ -62,6 +63,7 @@ const scatterPoints = ({
     const { lower, upper } = entry.result.test.skillInterval;
     return {
       label: displayLabel(entry),
+      detail: taskDetail(entry),
       mark: String(entry.mark),
       spot: spots[index] ?? NO_SPOT,
       measure: measureOf(entry),

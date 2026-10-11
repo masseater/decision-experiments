@@ -110,7 +110,7 @@ const ReliabilityChart = ({
   const legend = useLegendHandlers({ task, series: plain });
   return (
     <ChartContainer>
-      <ScatterChart title={title} desc={describe(plain)} margin={MARGIN}>
+      <ScatterChart desc={`${title}: ${describe(plain)}`} margin={MARGIN}>
         <ReliabilityAxes lowest={lowestOf(plain)} />
         <Legend
           wrapperStyle={LEGEND_STYLE}
