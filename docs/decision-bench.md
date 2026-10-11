@@ -1,7 +1,7 @@
-# ja-decision-bench
+# mst-ja-decision-bench
 
 選択・二値・スコアだけを返す decision model を、日本語のタスクで測るベンチマークである。
-結果は https://ja-decision-bench.masseater.dev で公開する。
+結果は https://mst-ja-decision-bench.masseater.dev で公開する。
 
 - 正解ラベルは Claude Opus 5.5 だけで付けた。
 - スコアは Opus 5.5 のラベルとの一致率で、本当の正しさではない。
