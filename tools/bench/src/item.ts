@@ -35,6 +35,11 @@ const ScoreItemSchema = Schema.Struct({
 const ItemSchema = Schema.Union([ChoiceItemSchema, NoulItemSchema, ScoreItemSchema]);
 
 type Item = typeof ItemSchema.Type;
+type Question = Item extends infer Each
+  ? Each extends Item
+    ? Pick<Each, "type" | "text" | "criteria" | "options">
+    : never
+  : never;
 type ChoiceItem = typeof ChoiceItemSchema.Type;
 type NoulItem = typeof NoulItemSchema.Type;
 type ScoreItem = typeof ScoreItemSchema.Type;
@@ -63,4 +68,4 @@ type Outcome = typeof OutcomeSchema.Type;
 type Decision = typeof DecisionSchema.Type;
 
 export { DecisionSchema, ItemSchema, OutcomeSchema };
-export type { ChoiceItem, Decision, Item, NoulItem, Outcome, ScoreItem };
+export type { ChoiceItem, Decision, Item, NoulItem, Outcome, Question, ScoreItem };

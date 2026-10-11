@@ -1,25 +1,11 @@
 import { Array as Arr, Number as Num, Option, pipe } from "effect";
 
 import type { ChoiceItem, Decision, Item, NoulItem, Outcome, ScoreItem } from "./item.ts";
+import type { TaskResult } from "./summary.ts";
 
 interface Scored {
   readonly item: Item;
   readonly outcome: Outcome;
-}
-
-interface Usage {
-  readonly p50Ms: number;
-  readonly p95Ms: number;
-  readonly costUsd: number;
-  readonly costPer1000Usd: number;
-}
-
-interface Metric {
-  readonly total: number;
-  readonly failed: number;
-  readonly raw: number;
-  readonly chance: number;
-  readonly skill: number;
 }
 
 const NONE = 0;
@@ -99,7 +85,7 @@ const skillOf = (raw: number, chance: number): number => {
   return Num.clamp((raw - chance) / (FULL - chance), { minimum: NONE, maximum: FULL });
 };
 
-const metric = (rows: readonly Scored[]): Metric => {
+const metric = (rows: readonly Scored[]): TaskResult["test"] => {
   const raw = rawScore(rows);
   const chance = mean(rows.map(({ item }) => chanceOf(item)));
   return {
@@ -127,7 +113,9 @@ const percentile = (values: readonly number[], rank: number): number => {
   );
 };
 
-const usage = (rows: readonly Scored[]): Usage => {
+const usage = (
+  rows: readonly Scored[],
+): Pick<TaskResult, "p50Ms" | "p95Ms" | "costUsd" | "costPer1000Usd"> => {
   const latencies = rows.map(({ outcome }) => outcome.latencyMs);
   const costUsd = Num.sumAll(rows.map(({ outcome }) => costOf(outcome)));
   return {
@@ -139,4 +127,4 @@ const usage = (rows: readonly Scored[]): Usage => {
 };
 
 export { metric, usage };
-export type { Metric, Scored, Usage };
+export type { Scored };

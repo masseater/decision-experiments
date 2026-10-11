@@ -36,6 +36,7 @@ const SummarySchema = Schema.Struct({
 });
 
 type Summary = typeof SummarySchema.Type;
+type TaskResult = typeof TaskResultSchema.Type;
 
 export { SummarySchema };
-export type { Summary };
+export type { Summary, TaskResult };

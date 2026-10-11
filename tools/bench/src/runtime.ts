@@ -46,8 +46,6 @@ class Opus extends Context.Service<
   }
 >()("bench/runtime/Opus") {}
 
-type BenchServices = Opus | FileSystem.FileSystem | Path.Path | Crypto.Crypto | Scope.Scope;
-
 type OpusServices =
   | FileSystem.FileSystem
   | Path.Path
@@ -132,7 +130,13 @@ const makeOpus = Effect.gen(function* makeOpus() {
 
 const benchLayer = Layer.provideMerge(Layer.effect(Opus, makeOpus), NodeServices.layer);
 
-const runBench = <Failure>(program: Effect.Effect<void, Failure, BenchServices>): void => {
+const runBench = <Failure>(
+  program: Effect.Effect<
+    void,
+    Failure,
+    Opus | FileSystem.FileSystem | Path.Path | Crypto.Crypto | Scope.Scope
+  >,
+): void => {
   NodeRuntime.runMain(
     Layer.build(benchLayer).pipe(
       Effect.flatMap((context) => Effect.provideContext(program, context)),
@@ -142,4 +146,3 @@ const runBench = <Failure>(program: Effect.Effect<void, Failure, BenchServices>)
 };
 
 export { Opus, runBench };
-export type { BenchServices };

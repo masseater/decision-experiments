@@ -1,6 +1,6 @@
 import { Array as Arr, Effect, Number as Num, Option, Order, Record, Schema, pipe } from "effect";
 
-import type { Item } from "./item.ts";
+import type { Item, Question } from "./item.ts";
 import { Opus } from "./runtime.ts";
 import { toJson } from "./store.ts";
 
@@ -8,21 +8,6 @@ const SAMPLE_COUNT = 3;
 
 const SYSTEM =
   "あなたは日本語の判定タスクに答える評価者です。state を読み、question に指定された形式で答えだけを返してください。";
-
-type Question = Item extends infer Each
-  ? Each extends Item
-    ? Pick<Each, "type" | "text" | "criteria" | "options">
-    : never
-  : never;
-
-interface SystemOneRequest {
-  readonly state: string;
-  readonly question: Readonly<{
-    type: Item["type"];
-    instructions: string;
-    criteria: Question["options"];
-  }>;
-}
 
 const byGroupSize = Order.mapInput(Num.Order, (group: readonly string[]) => group.length);
 
@@ -36,7 +21,12 @@ const answerKeys = (question: Readonly<Question>): readonly string[] => {
   return question.options.map((_level, index) => String(index));
 };
 
-const toRequest = (question: Readonly<Question>): SystemOneRequest => ({
+const toRequest = (
+  question: Readonly<Question>,
+): Readonly<{
+  state: string;
+  question: Readonly<{ type: Item["type"]; instructions: string; criteria: Question["options"] }>;
+}> => ({
   state: question.text,
   question: { type: question.type, instructions: question.criteria, criteria: question.options },
 });
@@ -75,4 +65,3 @@ const tally = (answers: readonly string[]): Readonly<{ mode: string; agreement: 
 };
 
 export { askThrice, tally, toRequest };
-export type { Question, SystemOneRequest };
