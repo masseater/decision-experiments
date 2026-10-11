@@ -10,7 +10,6 @@
   "scripts": {
     "build:jnli": "node src/build-jnli.ts",
     "build:rules": "node src/build-rules.ts",
-    "bench": "node src/run.ts",
     "test": "vp test run",
     "fallow": "fallow --production --quiet --format compact && fallow dupes --quiet --format compact && fallow security --fail-on-issues --quiet"
   },
@@ -20,6 +19,7 @@
     "effect": "catalog:stack"
   },
   "devDependencies": {
-    "@types/node": "catalog:"
+    "@types/node": "catalog:",
+    "vite-plus": "catalog:stack"
   }
 }

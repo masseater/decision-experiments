@@ -1,6 +1,59 @@
 {
-  "generatedAt": "2026-10-11T00:00:00.000Z",
-  "models": [],
+  "generatedAt": "2026-10-11T04:27:55.627Z",
+  "models": [
+    {
+      "model": "respan/span-01-lite",
+      "label": "span-01 lite",
+      "index": 0.23107310731073105,
+      "costUsd": 0,
+      "tasks": [
+        {
+          "task": "jnli",
+          "label": "JNLI 含意関係（Choice）",
+          "test": {
+            "total": 190,
+            "failed": 190,
+            "raw": 0,
+            "chance": 0.33333333333333426,
+            "skill": 0
+          },
+          "hard": {
+            "total": 10,
+            "failed": 10,
+            "raw": 0,
+            "chance": 0.33333333333333337,
+            "skill": 0
+          },
+          "p50Ms": 62,
+          "p95Ms": 101,
+          "costUsd": 0,
+          "costPer1000Usd": 0
+        },
+        {
+          "task": "rules",
+          "label": "業務ルール判定（Noul）",
+          "test": {
+            "total": 200,
+            "failed": 0,
+            "raw": 0.731073107310731,
+            "chance": 0.5,
+            "skill": 0.4621462146214621
+          },
+          "hard": {
+            "total": 0,
+            "failed": 0,
+            "raw": 0,
+            "chance": 0,
+            "skill": 0
+          },
+          "p50Ms": 196,
+          "p95Ms": 286,
+          "costUsd": 0,
+          "costPer1000Usd": 0
+        }
+      ]
+    }
+  ],
   "labeling": [
     {
       "task": "jnli",

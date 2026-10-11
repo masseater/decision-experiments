@@ -1,0 +1,4005 @@
+{
+  "model": "respan/span-01-lite",
+  "outcomes": [
+    {
+      "id": "jnli-1135",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 200
+      }
+    },
+    {
+      "id": "jnli-364",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 205
+      }
+    },
+    {
+      "id": "jnli-733",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 202
+      }
+    },
+    {
+      "id": "jnli-2116",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 198
+      }
+    },
+    {
+      "id": "jnli-2074",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 64
+      }
+    },
+    {
+      "id": "jnli-726",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 78
+      }
+    },
+    {
+      "id": "jnli-579",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-2045",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 75
+      }
+    },
+    {
+      "id": "jnli-627",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-1748",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 63
+      }
+    },
+    {
+      "id": "jnli-642",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 64
+      }
+    },
+    {
+      "id": "jnli-651",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 57
+      }
+    },
+    {
+      "id": "jnli-947",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 67
+      }
+    },
+    {
+      "id": "jnli-1331",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 67
+      }
+    },
+    {
+      "id": "jnli-1327",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 70
+      }
+    },
+    {
+      "id": "jnli-1450",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 68
+      }
+    },
+    {
+      "id": "jnli-788",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 59
+      }
+    },
+    {
+      "id": "jnli-2141",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 68
+      }
+    },
+    {
+      "id": "jnli-1147",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-2428",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 65
+      }
+    },
+    {
+      "id": "jnli-329",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 63
+      }
+    },
+    {
+      "id": "jnli-1925",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 57
+      }
+    },
+    {
+      "id": "jnli-749",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-1419",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 64
+      }
+    },
+    {
+      "id": "jnli-849",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 67
+      }
+    },
+    {
+      "id": "jnli-1488",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-18",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 56
+      }
+    },
+    {
+      "id": "jnli-2341",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 54
+      }
+    },
+    {
+      "id": "jnli-1766",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 59
+      }
+    },
+    {
+      "id": "jnli-1482",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 66
+      }
+    },
+    {
+      "id": "jnli-104",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 74
+      }
+    },
+    {
+      "id": "jnli-1845",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 68
+      }
+    },
+    {
+      "id": "jnli-1373",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 66
+      }
+    },
+    {
+      "id": "jnli-1161",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 63
+      }
+    },
+    {
+      "id": "jnli-1070",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 63
+      }
+    },
+    {
+      "id": "jnli-186",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 71
+      }
+    },
+    {
+      "id": "jnli-1235",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 66
+      }
+    },
+    {
+      "id": "jnli-1196",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-2227",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 57
+      }
+    },
+    {
+      "id": "jnli-2217",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 58
+      }
+    },
+    {
+      "id": "jnli-188",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 73
+      }
+    },
+    {
+      "id": "jnli-1071",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 74
+      }
+    },
+    {
+      "id": "jnli-860",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 75
+      }
+    },
+    {
+      "id": "jnli-1951",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 68
+      }
+    },
+    {
+      "id": "jnli-1454",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 59
+      }
+    },
+    {
+      "id": "jnli-2011",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-1529",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 59
+      }
+    },
+    {
+      "id": "jnli-2238",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-326",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 60
+      }
+    },
+    {
+      "id": "jnli-1953",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 63
+      }
+    },
+    {
+      "id": "jnli-20",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 71
+      }
+    },
+    {
+      "id": "jnli-1952",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 75
+      }
+    },
+    {
+      "id": "jnli-1499",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 60
+      }
+    },
+    {
+      "id": "jnli-121",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 63
+      }
+    },
+    {
+      "id": "jnli-675",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 59
+      }
+    },
+    {
+      "id": "jnli-339",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 64
+      }
+    },
+    {
+      "id": "jnli-1389",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 69
+      }
+    },
+    {
+      "id": "jnli-2072",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 60
+      }
+    },
+    {
+      "id": "jnli-1980",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 56
+      }
+    },
+    {
+      "id": "jnli-95",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 65
+      }
+    },
+    {
+      "id": "jnli-1924",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 63
+      }
+    },
+    {
+      "id": "jnli-36",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-907",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 60
+      }
+    },
+    {
+      "id": "jnli-1387",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-2253",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 67
+      }
+    },
+    {
+      "id": "jnli-170",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 77
+      }
+    },
+    {
+      "id": "jnli-707",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 70
+      }
+    },
+    {
+      "id": "jnli-1078",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 56
+      }
+    },
+    {
+      "id": "jnli-29",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 58
+      }
+    },
+    {
+      "id": "jnli-426",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 59
+      }
+    },
+    {
+      "id": "jnli-1553",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 73
+      }
+    },
+    {
+      "id": "jnli-1193",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 70
+      }
+    },
+    {
+      "id": "jnli-1252",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-989",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 55
+      }
+    },
+    {
+      "id": "jnli-360",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 58
+      }
+    },
+    {
+      "id": "jnli-2167",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 60
+      }
+    },
+    {
+      "id": "jnli-586",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 63
+      }
+    },
+    {
+      "id": "jnli-2021",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-124",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 55
+      }
+    },
+    {
+      "id": "jnli-898",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 109
+      }
+    },
+    {
+      "id": "jnli-685",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 72
+      }
+    },
+    {
+      "id": "jnli-1588",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 76
+      }
+    },
+    {
+      "id": "jnli-768",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 68
+      }
+    },
+    {
+      "id": "jnli-236",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 60
+      }
+    },
+    {
+      "id": "jnli-885",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-1166",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 67
+      }
+    },
+    {
+      "id": "jnli-2004",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 65
+      }
+    },
+    {
+      "id": "jnli-781",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-1731",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-2094",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 60
+      }
+    },
+    {
+      "id": "jnli-985",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 92
+      }
+    },
+    {
+      "id": "jnli-511",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 54
+      }
+    },
+    {
+      "id": "jnli-2042",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 55
+      }
+    },
+    {
+      "id": "jnli-811",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 59
+      }
+    },
+    {
+      "id": "jnli-2071",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 58
+      }
+    },
+    {
+      "id": "jnli-821",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 58
+      }
+    },
+    {
+      "id": "jnli-1172",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 58
+      }
+    },
+    {
+      "id": "jnli-357",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 53
+      }
+    },
+    {
+      "id": "jnli-1345",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 56
+      }
+    },
+    {
+      "id": "jnli-822",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 57
+      }
+    },
+    {
+      "id": "jnli-2203",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 55
+      }
+    },
+    {
+      "id": "jnli-1622",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 54
+      }
+    },
+    {
+      "id": "jnli-180",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 65
+      }
+    },
+    {
+      "id": "jnli-1004",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 70
+      }
+    },
+    {
+      "id": "jnli-2177",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 73
+      }
+    },
+    {
+      "id": "jnli-588",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 72
+      }
+    },
+    {
+      "id": "jnli-1724",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-1805",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 57
+      }
+    },
+    {
+      "id": "jnli-1599",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 55
+      }
+    },
+    {
+      "id": "jnli-1245",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 55
+      }
+    },
+    {
+      "id": "jnli-1983",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 57
+      }
+    },
+    {
+      "id": "jnli-836",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 51
+      }
+    },
+    {
+      "id": "jnli-1506",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 57
+      }
+    },
+    {
+      "id": "jnli-1477",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-2307",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 64
+      }
+    },
+    {
+      "id": "jnli-2084",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 63
+      }
+    },
+    {
+      "id": "jnli-663",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-2372",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 53
+      }
+    },
+    {
+      "id": "jnli-1763",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 58
+      }
+    },
+    {
+      "id": "jnli-1667",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-1611",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 59
+      }
+    },
+    {
+      "id": "jnli-1926",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 57
+      }
+    },
+    {
+      "id": "jnli-1320",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 68
+      }
+    },
+    {
+      "id": "jnli-2223",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 65
+      }
+    },
+    {
+      "id": "jnli-2170",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 73
+      }
+    },
+    {
+      "id": "jnli-943",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 75
+      }
+    },
+    {
+      "id": "jnli-1206",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 70
+      }
+    },
+    {
+      "id": "jnli-2149",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-1472",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 60
+      }
+    },
+    {
+      "id": "jnli-931",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 57
+      }
+    },
+    {
+      "id": "jnli-1428",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 59
+      }
+    },
+    {
+      "id": "jnli-214",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 57
+      }
+    },
+    {
+      "id": "jnli-2099",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 55
+      }
+    },
+    {
+      "id": "jnli-1632",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 56
+      }
+    },
+    {
+      "id": "jnli-1651",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-717",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 59
+      }
+    },
+    {
+      "id": "jnli-2403",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 63
+      }
+    },
+    {
+      "id": "jnli-320",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 63
+      }
+    },
+    {
+      "id": "jnli-802",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 220
+      }
+    },
+    {
+      "id": "jnli-1211",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 213
+      }
+    },
+    {
+      "id": "jnli-2232",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 212
+      }
+    },
+    {
+      "id": "jnli-2118",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 207
+      }
+    },
+    {
+      "id": "jnli-722",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 67
+      }
+    },
+    {
+      "id": "jnli-744",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 71
+      }
+    },
+    {
+      "id": "jnli-1110",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 76
+      }
+    },
+    {
+      "id": "jnli-2263",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 123
+      }
+    },
+    {
+      "id": "jnli-239",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 73
+      }
+    },
+    {
+      "id": "jnli-372",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 69
+      }
+    },
+    {
+      "id": "jnli-294",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 75
+      }
+    },
+    {
+      "id": "jnli-1898",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-1593",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-1354",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 63
+      }
+    },
+    {
+      "id": "jnli-467",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 63
+      }
+    },
+    {
+      "id": "jnli-909",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-310",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-1626",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-1536",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 60
+      }
+    },
+    {
+      "id": "jnli-349",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-2373",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-302",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-1719",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 64
+      }
+    },
+    {
+      "id": "jnli-2174",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 84
+      }
+    },
+    {
+      "id": "jnli-2128",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 78
+      }
+    },
+    {
+      "id": "jnli-1887",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 75
+      }
+    },
+    {
+      "id": "jnli-2017",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 75
+      }
+    },
+    {
+      "id": "jnli-869",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 56
+      }
+    },
+    {
+      "id": "jnli-172",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-2035",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 88
+      }
+    },
+    {
+      "id": "jnli-1046",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 55
+      }
+    },
+    {
+      "id": "jnli-2182",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 60
+      }
+    },
+    {
+      "id": "jnli-1343",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 64
+      }
+    },
+    {
+      "id": "jnli-953",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 60
+      }
+    },
+    {
+      "id": "jnli-2025",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 57
+      }
+    },
+    {
+      "id": "jnli-76",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 65
+      }
+    },
+    {
+      "id": "jnli-2384",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 58
+      }
+    },
+    {
+      "id": "jnli-1027",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 56
+      }
+    },
+    {
+      "id": "jnli-585",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 59
+      }
+    },
+    {
+      "id": "jnli-2265",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-1216",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-1136",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 62
+      }
+    },
+    {
+      "id": "jnli-1776",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 56
+      }
+    },
+    {
+      "id": "jnli-973",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 73
+      }
+    },
+    {
+      "id": "jnli-358",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 78
+      }
+    },
+    {
+      "id": "jnli-220",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 75
+      }
+    },
+    {
+      "id": "jnli-2060",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 67
+      }
+    },
+    {
+      "id": "jnli-1858",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 59
+      }
+    },
+    {
+      "id": "jnli-70",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 65
+      }
+    },
+    {
+      "id": "jnli-1362",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 75
+      }
+    },
+    {
+      "id": "jnli-223",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 71
+      }
+    },
+    {
+      "id": "jnli-2272",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-1432",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 61
+      }
+    },
+    {
+      "id": "jnli-1334",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 58
+      }
+    },
+    {
+      "id": "jnli-1408",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 64
+      }
+    },
+    {
+      "id": "jnli-1911",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 65
+      }
+    },
+    {
+      "id": "jnli-1617",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 63
+      }
+    },
+    {
+      "id": "jnli-98",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 59
+      }
+    },
+    {
+      "id": "jnli-1654",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 101
+      }
+    },
+    {
+      "id": "jnli-855",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 59
+      }
+    },
+    {
+      "id": "jnli-727",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 57
+      }
+    },
+    {
+      "id": "jnli-1178",
+      "outcome": {
+        "status": "failed",
+        "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
+        "latencyMs": 58
+      }
+    },
+    {
+      "id": "rules-0-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.7961504
+        },
+        "latencyMs": 312,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-0-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.049768806
+        },
+        "latencyMs": 515,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-0-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.87376046
+        },
+        "latencyMs": 274,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-0-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.8903775
+        },
+        "latencyMs": 349,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-0-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.04173606
+        },
+        "latencyMs": 218,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-0-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.7963906
+        },
+        "latencyMs": 343,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-0-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.045512322
+        },
+        "latencyMs": 184,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-0-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.5861218
+        },
+        "latencyMs": 204,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-0-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.057371944
+        },
+        "latencyMs": 225,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-0-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.8614312
+        },
+        "latencyMs": 244,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-1-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.07435008
+        },
+        "latencyMs": 182,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-1-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.83213216
+        },
+        "latencyMs": 226,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-1-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.13149033
+        },
+        "latencyMs": 215,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-1-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.7737823
+        },
+        "latencyMs": 223,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-1-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.08653265
+        },
+        "latencyMs": 249,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-1-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.04547843
+        },
+        "latencyMs": 197,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-1-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.5011461
+        },
+        "latencyMs": 212,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-1-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.9271314
+        },
+        "latencyMs": 212,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-1-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.09198401
+        },
+        "latencyMs": 186,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-1-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.16248466
+        },
+        "latencyMs": 207,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-2-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.822224
+        },
+        "latencyMs": 286,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-2-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.04429305
+        },
+        "latencyMs": 285,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-2-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.045940775
+        },
+        "latencyMs": 563,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-2-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.09533517
+        },
+        "latencyMs": 247,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-2-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.04461947
+        },
+        "latencyMs": 258,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-2-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.76984894
+        },
+        "latencyMs": 494,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-2-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.9096237
+        },
+        "latencyMs": 196,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-2-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.040892936
+        },
+        "latencyMs": 183,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-2-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.5318709
+        },
+        "latencyMs": 177,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-2-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.02877342
+        },
+        "latencyMs": 531,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-3-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.37025023
+        },
+        "latencyMs": 185,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-3-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.058942042
+        },
+        "latencyMs": 183,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-3-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.060505345
+        },
+        "latencyMs": 186,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-3-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.07013694
+        },
+        "latencyMs": 187,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-3-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.08295033
+        },
+        "latencyMs": 193,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-3-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.5789132
+        },
+        "latencyMs": 183,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-3-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.10270639
+        },
+        "latencyMs": 215,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-3-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.86470276
+        },
+        "latencyMs": 220,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-3-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.14755398
+        },
+        "latencyMs": 661,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-3-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.86283207
+        },
+        "latencyMs": 228,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-4-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.04484575
+        },
+        "latencyMs": 216,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-4-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.24924716
+        },
+        "latencyMs": 210,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-4-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.6822411
+        },
+        "latencyMs": 195,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-4-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.061655983
+        },
+        "latencyMs": 188,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-4-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.13727367
+        },
+        "latencyMs": 255,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-4-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.8847493
+        },
+        "latencyMs": 180,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-4-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.079971954
+        },
+        "latencyMs": 187,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-4-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.9140066
+        },
+        "latencyMs": 182,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-4-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.50981534
+        },
+        "latencyMs": 238,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-4-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.061412193
+        },
+        "latencyMs": 170,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-5-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.06277756
+        },
+        "latencyMs": 199,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-5-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.7897453
+        },
+        "latencyMs": 498,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-5-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.08848672
+        },
+        "latencyMs": 214,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-5-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.058360774
+        },
+        "latencyMs": 193,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-5-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.061440352
+        },
+        "latencyMs": 281,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-5-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.90529144
+        },
+        "latencyMs": 207,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-5-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.2860816
+        },
+        "latencyMs": 246,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-5-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.91170394
+        },
+        "latencyMs": 188,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-5-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.049152866
+        },
+        "latencyMs": 188,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-5-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.67372274
+        },
+        "latencyMs": 189,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-6-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.04702716
+        },
+        "latencyMs": 196,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-6-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.08146086
+        },
+        "latencyMs": 177,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-6-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.04579454
+        },
+        "latencyMs": 185,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-6-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.48036236
+        },
+        "latencyMs": 188,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-6-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.78598475
+        },
+        "latencyMs": 284,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-6-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.06582816
+        },
+        "latencyMs": 274,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-6-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.84547204
+        },
+        "latencyMs": 255,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-6-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.12696277
+        },
+        "latencyMs": 256,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-6-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.04979865
+        },
+        "latencyMs": 205,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-6-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.7849391
+        },
+        "latencyMs": 206,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-7-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.06244261
+        },
+        "latencyMs": 208,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-7-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.06138718
+        },
+        "latencyMs": 232,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-7-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.78249574
+        },
+        "latencyMs": 194,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-7-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.17859274
+        },
+        "latencyMs": 203,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-7-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.101821125
+        },
+        "latencyMs": 203,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-7-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.8727455
+        },
+        "latencyMs": 183,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-7-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.32062805
+        },
+        "latencyMs": 210,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-7-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.61944926
+        },
+        "latencyMs": 204,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-7-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.0874861
+        },
+        "latencyMs": 223,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-7-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.038611125
+        },
+        "latencyMs": 209,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-8-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.13115494
+        },
+        "latencyMs": 170,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-8-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.36170086
+        },
+        "latencyMs": 170,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-8-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.24126242
+        },
+        "latencyMs": 189,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-8-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.09010857
+        },
+        "latencyMs": 196,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-8-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.05622886
+        },
+        "latencyMs": 193,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-8-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.9205077
+        },
+        "latencyMs": 191,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-8-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.060037877
+        },
+        "latencyMs": 186,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-8-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.92436683
+        },
+        "latencyMs": 198,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-8-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.356077
+        },
+        "latencyMs": 191,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-8-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.54256773
+        },
+        "latencyMs": 190,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-9-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.7546386
+        },
+        "latencyMs": 210,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-9-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.060997
+        },
+        "latencyMs": 200,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-9-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.09560923
+        },
+        "latencyMs": 270,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-9-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.09030047
+        },
+        "latencyMs": 187,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-9-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.04241917
+        },
+        "latencyMs": 181,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-9-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.76824313
+        },
+        "latencyMs": 181,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-9-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.5341218
+        },
+        "latencyMs": 213,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-9-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.07549185
+        },
+        "latencyMs": 211,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-9-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.050225895
+        },
+        "latencyMs": 212,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-9-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.79789364
+        },
+        "latencyMs": 221,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-10-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.18133076
+        },
+        "latencyMs": 184,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-10-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.5487513
+        },
+        "latencyMs": 177,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-10-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.069997415
+        },
+        "latencyMs": 192,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-10-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.06847456
+        },
+        "latencyMs": 191,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-10-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.06915344
+        },
+        "latencyMs": 178,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-10-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.046962127
+        },
+        "latencyMs": 194,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-10-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.058635045
+        },
+        "latencyMs": 194,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-10-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.7748099
+        },
+        "latencyMs": 187,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-10-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.9228106
+        },
+        "latencyMs": 182,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-10-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.6425851
+        },
+        "latencyMs": 187,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-11-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.741532
+        },
+        "latencyMs": 172,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-11-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.4584325
+        },
+        "latencyMs": 197,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-11-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.052505076
+        },
+        "latencyMs": 192,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-11-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.7508449
+        },
+        "latencyMs": 188,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-11-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.11457473
+        },
+        "latencyMs": 192,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-11-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.7405871
+        },
+        "latencyMs": 174,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-11-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.37506342
+        },
+        "latencyMs": 179,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-11-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.34565023
+        },
+        "latencyMs": 172,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-11-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.06279761
+        },
+        "latencyMs": 183,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-11-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.17162234
+        },
+        "latencyMs": 173,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-12-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.44039464
+        },
+        "latencyMs": 185,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-12-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.046840455
+        },
+        "latencyMs": 189,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-12-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.93893826
+        },
+        "latencyMs": 211,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-12-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.115375854
+        },
+        "latencyMs": 193,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-12-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.09674021
+        },
+        "latencyMs": 179,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-12-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.9116163
+        },
+        "latencyMs": 176,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-12-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.15916705
+        },
+        "latencyMs": 196,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-12-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.8697019
+        },
+        "latencyMs": 216,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-12-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.91454226
+        },
+        "latencyMs": 223,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-12-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.04422782
+        },
+        "latencyMs": 208,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-13-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.30010566
+        },
+        "latencyMs": 203,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-13-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.058672797
+        },
+        "latencyMs": 202,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-13-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.06553267
+        },
+        "latencyMs": 258,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-13-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.87499475
+        },
+        "latencyMs": 178,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-13-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.052665643
+        },
+        "latencyMs": 198,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-13-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.05040897
+        },
+        "latencyMs": 203,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-13-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.86223036
+        },
+        "latencyMs": 187,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-13-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.7779041
+        },
+        "latencyMs": 186,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-13-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.078437045
+        },
+        "latencyMs": 173,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-13-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.86673117
+        },
+        "latencyMs": 172,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-14-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.4069942
+        },
+        "latencyMs": 185,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-14-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.054519866
+        },
+        "latencyMs": 184,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-14-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.79680663
+        },
+        "latencyMs": 177,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-14-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.9202594
+        },
+        "latencyMs": 212,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-14-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.79150325
+        },
+        "latencyMs": 207,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-14-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.052970506
+        },
+        "latencyMs": 202,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-14-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.041422006
+        },
+        "latencyMs": 217,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-14-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.051745996
+        },
+        "latencyMs": 226,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-14-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.117352664
+        },
+        "latencyMs": 225,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-14-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.87978774
+        },
+        "latencyMs": 226,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-15-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.8649474
+        },
+        "latencyMs": 212,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-15-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.053258926
+        },
+        "latencyMs": 190,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-15-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.20116884
+        },
+        "latencyMs": 173,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-15-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.6787423
+        },
+        "latencyMs": 199,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-15-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.050875723
+        },
+        "latencyMs": 188,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-15-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.041270066
+        },
+        "latencyMs": 181,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-15-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.31836528
+        },
+        "latencyMs": 191,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-15-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.7970818
+        },
+        "latencyMs": 210,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-15-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.096790776
+        },
+        "latencyMs": 208,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-15-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.8091881
+        },
+        "latencyMs": 197,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-16-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.7579868
+        },
+        "latencyMs": 207,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-16-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.047718298
+        },
+        "latencyMs": 180,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-16-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.051983662
+        },
+        "latencyMs": 199,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-16-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.057398252
+        },
+        "latencyMs": 208,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-16-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.64477384
+        },
+        "latencyMs": 185,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-16-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.038788356
+        },
+        "latencyMs": 199,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-16-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.9154607
+        },
+        "latencyMs": 169,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-16-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.84653974
+        },
+        "latencyMs": 173,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-16-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.046988092
+        },
+        "latencyMs": 195,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-16-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.1686412
+        },
+        "latencyMs": 174,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-17-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.3099846
+        },
+        "latencyMs": 338,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-17-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.08334949
+        },
+        "latencyMs": 242,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-17-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.8285752
+        },
+        "latencyMs": 273,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-17-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.8263536
+        },
+        "latencyMs": 274,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-17-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.88582474
+        },
+        "latencyMs": 184,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-17-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.06543694
+        },
+        "latencyMs": 200,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-17-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.89655274
+        },
+        "latencyMs": 212,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-17-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.098213986
+        },
+        "latencyMs": 187,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-17-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.05522717
+        },
+        "latencyMs": 173,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-17-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.5507464
+        },
+        "latencyMs": 196,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-18-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.066987805
+        },
+        "latencyMs": 183,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-18-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.8624094
+        },
+        "latencyMs": 201,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-18-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.042081803
+        },
+        "latencyMs": 195,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-18-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.88389975
+        },
+        "latencyMs": 196,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-18-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.89399654
+        },
+        "latencyMs": 199,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-18-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.049844895
+        },
+        "latencyMs": 203,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-18-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.93817
+        },
+        "latencyMs": 192,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-18-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.87577856
+        },
+        "latencyMs": 173,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-18-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.92290616
+        },
+        "latencyMs": 180,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-18-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.038740203
+        },
+        "latencyMs": 177,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-19-0",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.44984582
+        },
+        "latencyMs": 183,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-19-1",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.9023485
+        },
+        "latencyMs": 192,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-19-2",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.123239115
+        },
+        "latencyMs": 177,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-19-3",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.07654227
+        },
+        "latencyMs": 185,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-19-4",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.03912726
+        },
+        "latencyMs": 185,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-19-5",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.6282028
+        },
+        "latencyMs": 176,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-19-6",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.05010794
+        },
+        "latencyMs": 199,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-19-7",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.050911438
+        },
+        "latencyMs": 181,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-19-8",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.053285103
+        },
+        "latencyMs": 182,
+        "costUsd": 0
+      }
+    },
+    {
+      "id": "rules-19-9",
+      "outcome": {
+        "status": "answered",
+        "decision": {
+          "type": "noul",
+          "noul": 0.8698152
+        },
+        "latencyMs": 260,
+        "costUsd": 0
+      }
+    }
+  ]
+}
