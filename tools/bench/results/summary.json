@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T06:08:25.133Z",
+  "generatedAt": "2026-10-11T06:44:00.012Z",
   "models": [
     {
       "model": "respan/span-01-lite",
@@ -26,7 +26,34 @@
               "status": "measured",
               "ece": 0.048054700941570105,
               "brier": 0.5797769576626656,
-              "forecasts": 2424
+              "forecasts": 2424,
+              "curve": [
+                {
+                  "meanPredicted": 0.3793656027573657,
+                  "observedFrequency": 0.3076923076923077,
+                  "count": 26
+                },
+                {
+                  "meanPredicted": 0.4657618958795066,
+                  "observedFrequency": 0.41981528127623846,
+                  "count": 1191
+                },
+                {
+                  "meanPredicted": 0.5404800911179088,
+                  "observedFrequency": 0.5141463414634146,
+                  "count": 1025
+                },
+                {
+                  "meanPredicted": 0.6263240992646197,
+                  "observedFrequency": 0.8066298342541437,
+                  "count": 181
+                },
+                {
+                  "meanPredicted": 0.7287600107783504,
+                  "observedFrequency": 1,
+                  "count": 1
+                }
+              ]
             }
           },
           "hard": {
@@ -41,7 +68,24 @@
               "status": "measured",
               "ece": 0.29871399704049056,
               "brier": 0.5200987337560241,
-              "forecasts": 10
+              "forecasts": 10,
+              "curve": [
+                {
+                  "meanPredicted": 0.45725138738084886,
+                  "observedFrequency": 0.6666666666666666,
+                  "count": 3
+                },
+                {
+                  "meanPredicted": 0.5473010004403855,
+                  "observedFrequency": 0.25,
+                  "count": 4
+                },
+                {
+                  "meanPredicted": 0.61010328973803,
+                  "observedFrequency": 1,
+                  "count": 3
+                }
+              ]
             }
           },
           "p50Ms": 189,
@@ -67,7 +111,34 @@
               "status": "measured",
               "ece": 0.14805708247188756,
               "brier": 0.4488999414496329,
-              "forecasts": 498
+              "forecasts": 498,
+              "curve": [
+                {
+                  "meanPredicted": 0.5493851099999999,
+                  "observedFrequency": 0.5483870967741935,
+                  "count": 31
+                },
+                {
+                  "meanPredicted": 0.6550903675675674,
+                  "observedFrequency": 0.5675675675675675,
+                  "count": 37
+                },
+                {
+                  "meanPredicted": 0.7623904521428571,
+                  "observedFrequency": 0.5714285714285714,
+                  "count": 56
+                },
+                {
+                  "meanPredicted": 0.8608521754444446,
+                  "observedFrequency": 0.7142857142857143,
+                  "count": 126
+                },
+                {
+                  "meanPredicted": 0.9367012323991936,
+                  "observedFrequency": 0.7701612903225806,
+                  "count": 248
+                }
+              ]
             }
           },
           "hard": {
@@ -82,7 +153,19 @@
               "status": "measured",
               "ece": 0.879440515,
               "brier": 1.553335125999759,
-              "forecasts": 2
+              "forecasts": 2,
+              "curve": [
+                {
+                  "meanPredicted": 0.8224147,
+                  "observedFrequency": 0,
+                  "count": 1
+                },
+                {
+                  "meanPredicted": 0.93646633,
+                  "observedFrequency": 0,
+                  "count": 1
+                }
+              ]
             }
           },
           "p50Ms": 198,

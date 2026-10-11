@@ -38,4 +38,4 @@ const entriesOf = (task: string): readonly TaskEntry[] =>
   );
 
 export { entriesOf, rankedModels, tasks };
-export type { TaskInfo };
+export type { TaskEntry, TaskInfo };

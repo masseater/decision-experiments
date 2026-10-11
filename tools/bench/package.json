@@ -15,7 +15,9 @@
   "dependencies": {
     "@effect/platform-node": "catalog:",
     "@openrouter/sdk": "catalog:",
-    "effect": "catalog:stack"
+    "effect": "catalog:stack",
+    "forecast-calibration-kit": "catalog:",
+    "ml-confusion-matrix": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",

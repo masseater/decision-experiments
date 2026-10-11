@@ -1,5 +1,7 @@
 import { Array as Arr, Number as Num, Option, pipe } from "effect";
+import { ConfusionMatrix } from "ml-confusion-matrix";
 
+import { calibrationOf } from "./calibration.ts";
 import type { ChoiceItem, Decision, Item, NoulItem, Outcome, ScoreItem } from "./item.ts";
 import type { TaskResult } from "./summary.ts";
 
@@ -17,7 +19,6 @@ const P95 = 0.95;
 const PER_THOUSAND = 1000;
 const LAST_OFFSET = 1;
 const TWO = 2;
-const CALIBRATION_BINS = 10;
 
 const mean = (values: readonly number[]): number => {
   if (values.length === NONE) {
@@ -69,26 +70,23 @@ const chanceOf = (item: Readonly<Item>): number => {
   );
 };
 
-const balancedAccuracy = (rows: readonly Scored[]): number => {
-  const groups = [true, false]
-    .map((gold) => rows.filter(({ item }) => item.type === "noul" && item.gold === gold))
-    .filter((group) => group.length > NONE);
-  return mean(groups.map((group) => mean(group.map((row) => credit(row)))));
-};
+const UNANSWERED = "unanswered";
 
-const predictedChoice = ({ outcome }: Readonly<Scored>): Option.Option<string> => {
+const predictedChoice = ({ outcome }: Readonly<Scored>): string => {
   if (outcome.status === "answered" && outcome.decision.type === "choice") {
-    return Option.some(outcome.decision.choice);
+    return outcome.decision.choice;
   }
-  return Option.none();
+  return UNANSWERED;
 };
 
-const choiceGold = ({ item }: Readonly<Scored>): Option.Option<string> => {
-  if (item.type === "choice") {
-    return Option.some(item.gold);
+const predictedNoul = ({ outcome }: Readonly<Scored>): string => {
+  if (outcome.status === "answered" && outcome.decision.type === "noul") {
+    return String(outcome.decision.noul >= NOUL_THRESHOLD);
   }
-  return Option.none();
+  return UNANSWERED;
 };
+
+const goldOf = ({ item }: Readonly<Scored>): string => String(item.gold);
 
 const optionKeys = (item: Readonly<Item>): readonly string[] => {
   if (item.type === "choice") {
@@ -101,22 +99,39 @@ const choiceClasses = (rows: readonly Scored[]): readonly string[] => [
   ...new Set(rows.flatMap(({ item }) => optionKeys(item))),
 ];
 
-const f1Of = (rows: readonly Scored[], label: string): number => {
-  const isPredicted = (row: Readonly<Scored>): boolean =>
-    Option.contains(predictedChoice(row), label);
-  const isGold = (row: Readonly<Scored>): boolean => Option.contains(choiceGold(row), label);
-  const truePositive = rows.filter((row) => isPredicted(row) && isGold(row)).length;
-  const falsePositive = rows.filter((row) => isPredicted(row) && !isGold(row)).length;
-  const falseNegative = rows.filter((row) => !isPredicted(row) && isGold(row)).length;
-  const denominator = TWO * truePositive + falsePositive + falseNegative;
-  if (denominator === NONE) {
-    return NONE;
+const confusionOf = (
+  rows: readonly Scored[],
+  classes: readonly string[],
+  predicted: (row: Readonly<Scored>) => string,
+): ConfusionMatrix<string> =>
+  ConfusionMatrix.fromLabels(
+    rows.map((row) => goldOf(row)),
+    rows.map((row) => predicted(row)),
+    { labels: [...classes, UNANSWERED] },
+  );
+
+const finiteOrZero = (value: number): number => {
+  if (Number.isFinite(value)) {
+    return value;
   }
-  return (TWO * truePositive) / denominator;
+  return NONE;
 };
 
-const macroF1 = (rows: readonly Scored[]): number =>
-  mean(choiceClasses(rows).map((label) => f1Of(rows, label)));
+const balancedAccuracy = (rows: readonly Scored[]): number => {
+  const classes = [String(true), String(false)];
+  const confusion = confusionOf(rows, classes, predictedNoul);
+  return mean(
+    classes
+      .filter((label) => confusion.getPositiveCount(label) > NONE)
+      .map((label) => confusion.getTruePositiveRate(label)),
+  );
+};
+
+const macroF1 = (rows: readonly Scored[]): number => {
+  const classes = choiceClasses(rows);
+  const confusion = confusionOf(rows, classes, predictedChoice);
+  return mean(classes.map((label) => finiteOrZero(confusion.getF1Score(label))));
+};
 
 const macroF1Chance = (rows: readonly Scored[]): number => {
   const classes = choiceClasses(rows);
@@ -124,8 +139,7 @@ const macroF1Chance = (rows: readonly Scored[]): number => {
   return mean(
     classes.map((label) => {
       const prevalence =
-        rows.filter((row) => Option.contains(choiceGold(row), label)).length /
-        Math.max(FULL, rows.length);
+        rows.filter((row) => goldOf(row) === label).length / Math.max(FULL, rows.length);
       return (TWO * prevalence * guess) / Math.max(Number.EPSILON, prevalence + guess);
     }),
   );
@@ -149,80 +163,6 @@ const skillOf = (raw: number, chance: number): number => {
     return NONE;
   }
   return Num.clamp((raw - chance) / (FULL - chance), { minimum: NONE, maximum: FULL });
-};
-
-interface Forecast {
-  readonly confidence: number;
-  readonly correct: number;
-  readonly brier: number;
-}
-
-const choiceForecast = (item: ChoiceItem, decision: Decision): Option.Option<Forecast> => {
-  if (decision.type !== "choice" || !("probabilities" in decision)) {
-    return Option.none();
-  }
-  const { probabilities } = decision;
-  const labels = Object.keys(item.options);
-  const probabilityOf = (label: string): number => probabilities[label] ?? NONE;
-  return Option.some({
-    confidence: Math.max(NONE, ...labels.map((label) => probabilityOf(label))),
-    correct: Number(decision.choice === item.gold),
-    brier: Num.sumAll(
-      labels.map((label) => (probabilityOf(label) - Number(label === item.gold)) ** TWO),
-    ),
-  });
-};
-
-const noulForecast = (item: NoulItem, decision: Decision): Option.Option<Forecast> => {
-  if (decision.type !== "noul") {
-    return Option.none();
-  }
-  const truth = Number(item.gold);
-  return Option.some({
-    confidence: Math.max(decision.noul, FULL - decision.noul),
-    correct: noulCredit(item, decision),
-    brier: TWO * (decision.noul - truth) ** TWO,
-  });
-};
-
-const forecastOf = ({ item, outcome }: Readonly<Scored>): Option.Option<Forecast> => {
-  if (outcome.status === "failed") {
-    return Option.none();
-  }
-  if (item.type === "choice") {
-    return choiceForecast(item, outcome.decision);
-  }
-  if (item.type === "noul") {
-    return noulForecast(item, outcome.decision);
-  }
-  return Option.none();
-};
-
-const binOf = (confidence: number): number =>
-  Math.min(CALIBRATION_BINS - LAST_OFFSET, Math.floor(confidence * CALIBRATION_BINS));
-
-const expectedCalibrationError = (forecasts: readonly Forecast[]): number =>
-  Num.sumAll(
-    Arr.makeBy(CALIBRATION_BINS, (bin) => {
-      const inBin = forecasts.filter(({ confidence }) => binOf(confidence) === bin);
-      const gap = Math.abs(
-        mean(inBin.map(({ correct }) => correct)) - mean(inBin.map(({ confidence }) => confidence)),
-      );
-      return (inBin.length / Math.max(FULL, forecasts.length)) * gap;
-    }),
-  );
-
-const calibrationOf = (rows: readonly Scored[]): TaskResult["test"]["calibration"] => {
-  const forecasts = rows.flatMap((row) => Option.toArray(forecastOf(row)));
-  if (forecasts.length === NONE) {
-    return { status: "unavailable" };
-  }
-  return {
-    status: "measured",
-    ece: expectedCalibrationError(forecasts),
-    brier: mean(forecasts.map(({ brier }) => brier)),
-    forecasts: forecasts.length,
-  };
 };
 
 const metric = (rows: readonly Scored[]): TaskResult["test"] => {
