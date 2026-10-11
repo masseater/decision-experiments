@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 
-import { percent, usd } from "#/pages/leaderboard/model/summary";
 import type { ModelResult, TaskResult } from "#/pages/leaderboard/model/summary";
+
+import { percent, usd } from "./format";
 
 const TaskRow = ({
   model,
