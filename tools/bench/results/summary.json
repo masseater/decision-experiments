@@ -1,6 +1,227 @@
 {
-  "generatedAt": "2026-10-11T07:35:10.293Z",
+  "generatedAt": "2026-10-11T10:31:33.108Z",
   "models": [
+    {
+      "model": "typesafe/jev-1.13",
+      "label": "Jev 1.13",
+      "choiceVia": "choice",
+      "index": 0.6404795320561826,
+      "costUsd": 0.08255520000000005,
+      "tasks": [
+        {
+          "task": "jnli",
+          "label": "JNLI 含意関係",
+          "metric": "macro-f1",
+          "format": "choice",
+          "support": "supported",
+          "test": {
+            "total": 2424,
+            "failed": 0,
+            "coverage": 1,
+            "raw": 0.8150134277424939,
+            "accuracy": 0.8337458745874587,
+            "chance": 0.3112365315251567,
+            "skill": 0.7314222070065224,
+            "skillInterval": {
+              "lower": 0.7050857846142197,
+              "upper": 0.7573605232869448
+            },
+            "calibration": {
+              "status": "measured",
+              "ece": 0.030297029702976718,
+              "brier": 0.2426644389438943,
+              "forecasts": 2424,
+              "curve": [
+                {
+                  "meanPredicted": 0.4604347826086958,
+                  "observedFrequency": 0.5652173913043478,
+                  "count": 23
+                },
+                {
+                  "meanPredicted": 0.5515151515151515,
+                  "observedFrequency": 0.5353535353535354,
+                  "count": 198
+                },
+                {
+                  "meanPredicted": 0.6449327354260094,
+                  "observedFrequency": 0.6278026905829597,
+                  "count": 223
+                },
+                {
+                  "meanPredicted": 0.746567796610169,
+                  "observedFrequency": 0.7288135593220338,
+                  "count": 236
+                },
+                {
+                  "meanPredicted": 0.847228571428572,
+                  "observedFrequency": 0.7942857142857143,
+                  "count": 350
+                },
+                {
+                  "meanPredicted": 0.9707962697274142,
+                  "observedFrequency": 0.9411764705882353,
+                  "count": 1394
+                }
+              ]
+            },
+            "pairs": {
+              "status": "unavailable"
+            }
+          },
+          "hard": {
+            "total": 10,
+            "failed": 0,
+            "coverage": 1,
+            "raw": 0.41269841269841273,
+            "accuracy": 0.6,
+            "chance": 0.3058275058275058,
+            "skill": 0.15395439572739783,
+            "skillInterval": {
+              "lower": 0,
+              "upper": 0.4536271808999082
+            },
+            "calibration": {
+              "status": "measured",
+              "ece": 0.6140000000000001,
+              "brier": 0.8572599999999999,
+              "forecasts": 10,
+              "curve": [
+                {
+                  "meanPredicted": 0.5475000000000001,
+                  "observedFrequency": 1,
+                  "count": 4
+                },
+                {
+                  "meanPredicted": 0.625,
+                  "observedFrequency": 1,
+                  "count": 2
+                },
+                {
+                  "meanPredicted": 0.8200000000000001,
+                  "observedFrequency": 0,
+                  "count": 2
+                },
+                {
+                  "meanPredicted": 0.97,
+                  "observedFrequency": 0,
+                  "count": 2
+                }
+              ]
+            },
+            "pairs": {
+              "status": "unavailable"
+            }
+          },
+          "p50Ms": 169,
+          "p95Ms": 254,
+          "costUsd": 0.04733950200000004
+        },
+        {
+          "task": "rules",
+          "label": "業務ルール判定",
+          "metric": "balanced-accuracy",
+          "format": "noul",
+          "support": "supported",
+          "test": {
+            "total": 497,
+            "failed": 0,
+            "coverage": 1,
+            "raw": 0.7747684285529214,
+            "accuracy": 0.7746478873239436,
+            "chance": 0.5,
+            "skill": 0.5495368571058428,
+            "skillInterval": {
+              "lower": 0.48732034259486917,
+              "upper": 0.6149412650602412
+            },
+            "calibration": {
+              "status": "measured",
+              "ece": 0.043199195171026286,
+              "brier": 0.2938901408450706,
+              "forecasts": 497,
+              "curve": [
+                {
+                  "meanPredicted": 0.5455172413793105,
+                  "observedFrequency": 0.4827586206896552,
+                  "count": 58
+                },
+                {
+                  "meanPredicted": 0.6443529411764706,
+                  "observedFrequency": 0.5411764705882353,
+                  "count": 85
+                },
+                {
+                  "meanPredicted": 0.7482716049382717,
+                  "observedFrequency": 0.7530864197530864,
+                  "count": 81
+                },
+                {
+                  "meanPredicted": 0.8552173913043475,
+                  "observedFrequency": 0.906832298136646,
+                  "count": 161
+                },
+                {
+                  "meanPredicted": 0.9253571428571429,
+                  "observedFrequency": 0.9285714285714286,
+                  "count": 112
+                }
+              ]
+            },
+            "pairs": {
+              "status": "measured",
+              "accuracy": 0.5546558704453441,
+              "count": 247,
+              "interval": {
+                "lower": 0.4959016393442623,
+                "upper": 0.6204081632653061
+              }
+            }
+          },
+          "hard": {
+            "total": 3,
+            "failed": 0,
+            "coverage": 1,
+            "raw": 1,
+            "accuracy": 1,
+            "chance": 0.5,
+            "skill": 1,
+            "skillInterval": {
+              "lower": 1,
+              "upper": 1
+            },
+            "calibration": {
+              "status": "measured",
+              "ece": 0.2866666666666667,
+              "brier": 0.19559999999999997,
+              "forecasts": 3,
+              "curve": [
+                {
+                  "meanPredicted": 0.54,
+                  "observedFrequency": 1,
+                  "count": 1
+                },
+                {
+                  "meanPredicted": 0.77,
+                  "observedFrequency": 1,
+                  "count": 1
+                },
+                {
+                  "meanPredicted": 0.83,
+                  "observedFrequency": 1,
+                  "count": 1
+                }
+              ]
+            },
+            "pairs": {
+              "status": "unavailable"
+            }
+          },
+          "p50Ms": 190,
+          "p95Ms": 275,
+          "costUsd": 0.03521569800000002
+        }
+      ]
+    },
     {
       "model": "respan/span-01-lite",
       "label": "span-01 lite",
