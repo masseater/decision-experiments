@@ -35,6 +35,55 @@ const TASKS = [
 const MODELS = [
   { provider: "openrouter", id: "typesafe/jev-1.13", label: "Jev 1.13", choiceVia: "choice" },
   { provider: "openrouter", id: "respan/span-01-lite", label: "span-01 lite", choiceVia: "noul" },
+  { provider: "openrouter", id: "respan/span-01", label: "span-01", choiceVia: "noul" },
+  { provider: "openrouter", id: "liquid/d1", label: "Liquid d1", choiceVia: "choice" },
+  {
+    provider: "openrouter",
+    id: "microsoft/microsoft-decision-1",
+    label: "Microsoft-Decision-1",
+    choiceVia: "choice",
+  },
+  { provider: "openrouter", id: "nace-ai/drex-v1.5", label: "Drex v1.5", choiceVia: "choice" },
+  { provider: "openrouter", id: "cloudflare/clef", label: "Clef", choiceVia: "choice" },
+  { provider: "openrouter", id: "cloudflare/clef-omni", label: "Clef Omni", choiceVia: "choice" },
+  { provider: "openrouter", id: "cloudflare/clef-flash", label: "Clef Flash", choiceVia: "choice" },
+  {
+    provider: "openrouter",
+    id: "upstage/solar-decide",
+    label: "Solar Decide",
+    choiceVia: "choice",
+  },
+  {
+    provider: "openrouter",
+    id: "upstage/solar-decide-flash",
+    label: "Solar Decide Flash",
+    choiceVia: "choice",
+  },
+  {
+    provider: "openrouter",
+    id: "perplexity/pplx-decider-v1.1-27b",
+    label: "Decider V1.1 27B",
+    choiceVia: "choice",
+  },
+  {
+    provider: "openrouter",
+    id: "openai/gpt-6-luna-decisions",
+    label: "GPT-6 Luna Decisions",
+    choiceVia: "choice",
+  },
+  {
+    provider: "openrouter",
+    id: "togethercomputer/tev1-4b-experimental",
+    label: "Tev1 4B Experimental",
+    choiceVia: "choice",
+  },
+  {
+    provider: "openrouter",
+    id: "inception/mercury-decide",
+    label: "Mercury Decide",
+    choiceVia: "choice",
+  },
+  { provider: "openrouter", id: "jaredpalmer/kev-4b", label: "Kev 4B", choiceVia: "choice" },
 ] as const;
 
 type Task = (typeof TASKS)[number] & Readonly<{ items: readonly Item[] }>;
