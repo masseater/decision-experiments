@@ -10,8 +10,7 @@
   "scripts": {
     "build:jnli": "node src/build-jnli.ts",
     "build:rules": "node src/build-rules.ts",
-    "test": "vp test run",
-    "fallow": "fallow --production --quiet --format compact && fallow dupes --quiet --format compact && fallow security --fail-on-issues --quiet"
+    "test": "vp test run"
   },
   "dependencies": {
     "@effect/platform-node": "catalog:",
