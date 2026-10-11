@@ -40,20 +40,13 @@ const directionOf = ({ sort, column }: Readonly<{ sort: Sort; column: string }>)
 
 const useSort = (table: string): Sort => useAtomValue(sortAtom(table));
 
-const useSortDirection = ({
-  table,
-  column,
-}: Readonly<{ table: string; column: string }>): SortDirection =>
-  directionOf({ sort: useSort(table), column });
+type SortEvent = Readonly<{ currentTarget: Readonly<{ value: string }> }>;
 
-const useToggleSort = ({
-  table,
-  column,
-}: Readonly<{ table: string; column: string }>): (() => void) => {
+const useSortClick = (table: string): ((event: SortEvent) => void) => {
   const current = useSort(table);
   const set = useAtomSet(sortAtom(table));
-  return () => {
-    set(nextSort({ current, column }));
+  return (event) => {
+    set(nextSort({ current, column: event.currentTarget.value }));
   };
 };
 
@@ -97,5 +90,5 @@ const sortRows = <Row>({
   return Array.sort(rows, Order.flip(order));
 };
 
-export { LABEL_ID, sortRows, useSort, useSortDirection, useToggleSort };
+export { directionOf, LABEL_ID, sortRows, useSort, useSortClick };
 export type { Sort, SortDirection, TableColumn };
