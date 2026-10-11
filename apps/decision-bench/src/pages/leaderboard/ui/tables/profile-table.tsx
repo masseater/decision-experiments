@@ -13,7 +13,7 @@ import { ProfileRow } from "./profile-row";
 
 const CAPTION = "確信度・速度・費用";
 const LABEL = "モデル";
-const METRICS = ["ECE", "Brier", "p50 / p95 ms", "1,000 件あたり"];
+const METRICS = ["ECE", "Brier", "p50 / p95 ms", "タスク全体の費用"];
 
 const ProfileTable = ({ task }: Readonly<{ task: TaskInfo }>): ReactNode => (
   <Table>

@@ -46,17 +46,22 @@ const pct = (value: number): string => (value * PERCENT).toFixed(PERCENT_DIGITS)
 const humanMatch = (value: Option.Option<number>): string =>
   Option.match(value, { onNone: () => "-", onSome: (rate) => `${pct(rate)}%` });
 
+const intervalCell = (interval: Readonly<{ lower: number; upper: number }>): string =>
+  `${pct(interval.lower)}〜${pct(interval.upper)}`;
+
 const pairCell = (pairs: TaskResult["test"]["pairs"]): string => {
   if (pairs.status === "unavailable") {
     return "-";
   }
-  return pct(pairs.accuracy);
+  return `${pct(pairs.accuracy)}（${intervalCell(pairs.interval)}）`;
 };
 
 const indexTable = (summary: Summary): readonly string[] => [
-  "| モデル | 指数（参考） |",
-  "| --- | ---: |",
-  ...summary.models.map((model) => `| ${model.label} | ${pct(model.index)} |`),
+  "| モデル | 指数（参考） | 全タスクの費用 (USD) |",
+  "| --- | ---: | ---: |",
+  ...summary.models.map(
+    (model) => `| ${model.label} | ${pct(model.index)} | ${model.costUsd.toFixed(COST_DIGITS)} |`,
+  ),
 ];
 
 const labelLine = (stats: Summary["labeling"][number]): string =>
@@ -67,7 +72,7 @@ const taskTable = (summary: Summary, task: (typeof TASKS)[number]): readonly str
   "",
   ...summary.labeling.filter((stats) => stats.task === task.data).map((stats) => labelLine(stats)),
   "",
-  "| モデル | skill | raw | 正解率 | 対の正解率 | coverage | p50 / p95 (ms) | 1,000 判定あたり (USD) |",
+  "| モデル | skill（95% 区間） | raw | 正解率 | 対の正解率（95% 区間） | coverage | p50 / p95 (ms) | タスク全体の費用 (USD) |",
   "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
   ...summary.models.flatMap((model) =>
     model.tasks
@@ -76,13 +81,13 @@ const taskTable = (summary: Summary, task: (typeof TASKS)[number]): readonly str
         [
           "",
           model.label,
-          pct(result.test.skill),
+          `${pct(result.test.skill)}（${intervalCell(result.test.skillInterval)}）`,
           pct(result.test.raw),
           pct(result.test.accuracy),
           pairCell(result.test.pairs),
           pct(result.test.coverage),
           `${result.p50Ms} / ${result.p95Ms}`,
-          result.costPer1000Usd.toFixed(COST_DIGITS),
+          result.costUsd.toFixed(COST_DIGITS),
           "",
         ]
           .join(" | ")

@@ -1,5 +1,12 @@
 type ChartRow =
-  | Readonly<{ status: "measured"; key: string; label: string; ratio: number; value: string }>
-  | Readonly<{ status: "unsupported"; key: string; label: string; note: string }>;
+  | Readonly<{
+      status: "interval";
+      key: string;
+      label: string;
+      ratio: number;
+      interval: Readonly<{ lower: number; upper: number }>;
+    }>
+  | Readonly<{ status: "point"; key: string; label: string; ratio: number }>
+  | Readonly<{ status: "unsupported"; key: string; label: string }>;
 
 export type { ChartRow };

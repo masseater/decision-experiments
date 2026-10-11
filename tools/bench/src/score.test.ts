@@ -19,7 +19,6 @@ const MID = 0.6;
 const LOW = 0.1;
 const FAST_MS = 100;
 const ANSWERED_COST = 0.001;
-const PER_THOUSAND = 1000;
 
 const base = {
   text: "state",
@@ -112,7 +111,7 @@ describe("metric", () => {
 });
 
 describe("usage", () => {
-  it("reports latency percentiles and cost per 1,000 decisions", () => {
+  it("reports latency percentiles and the cost of the whole task", () => {
     const result = usage([
       { item: choice("a", "yes"), outcome: picked("yes") },
       { item: choice("b", "no"), outcome: picked("no") },
@@ -120,9 +119,7 @@ describe("usage", () => {
     ]);
     expect(result.p50Ms).toBe(FAST_MS);
     expect(result.p95Ms).toBe(FAST_MS);
-    expect(result.costPer1000Usd).toBeCloseTo(
-      (ANSWERED_COST + ANSWERED_COST) * THIRD * PER_THOUSAND,
-    );
+    expect(result.costUsd).toBeCloseTo(ANSWERED_COST + ANSWERED_COST);
   });
 });
 
@@ -134,7 +131,18 @@ describe("pair accuracy", () => {
       { item: noul("rules-0-1a", true), outcome: probability(HIGH) },
       { item: noul("rules-0-1b", false), outcome: probability(HIGH) },
     ]);
-    expect(result.pairs).toStrictEqual({ status: "measured", accuracy: HALF, count: TWO });
+    expect(result.pairs).toMatchObject({ status: "measured", accuracy: HALF, count: TWO });
+  });
+
+  it("brackets the skill with a bootstrap interval", () => {
+    const result = metric([
+      { item: noul("rules-0-0a", true), outcome: probability(HIGH) },
+      { item: noul("rules-0-0b", false), outcome: probability(LOW) },
+      { item: noul("rules-0-1a", true), outcome: probability(HIGH) },
+      { item: noul("rules-0-1b", false), outcome: probability(HIGH) },
+    ]);
+    expect(result.skillInterval.lower).toBeLessThanOrEqual(result.skill);
+    expect(result.skillInterval.upper).toBeGreaterThanOrEqual(result.skill);
   });
 
   it("leaves pair accuracy unavailable without paired ids", () => {

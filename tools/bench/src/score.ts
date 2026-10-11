@@ -1,5 +1,7 @@
 import { Array as Arr, Number as Num, Option, pipe } from "effect";
 import { ConfusionMatrix } from "ml-confusion-matrix";
+import seedrandom from "seedrandom";
+import { quantile, sampleWithReplacement } from "simple-statistics";
 
 import { calibrationOf } from "./calibration.ts";
 import type { ChoiceItem, Decision, Item, NoulItem, Outcome, ScoreItem } from "./item.ts";
@@ -16,7 +18,6 @@ const NOUL_THRESHOLD = 0.5;
 const NOUL_OPTIONS = 2;
 const P50 = 0.5;
 const P95 = 0.95;
-const PER_THOUSAND = 1000;
 const LAST_OFFSET = 1;
 const TWO = 2;
 
@@ -171,20 +172,68 @@ const SIDE_LENGTH = 1;
 
 const pairOf = ({ item }: Readonly<Scored>): string => item.id.slice(NONE, -SIDE_LENGTH);
 
-const pairAccuracyOf = (rows: readonly Scored[]): TaskResult["test"]["pairs"] => {
-  const members = rows.filter(({ item }) => PAIR_MEMBER.test(item.id));
-  const pairs = Object.values(Arr.groupBy(members, pairOf)).filter(
-    (pair) => pair.length === PAIR_SIZE,
+const RESAMPLES = 1000;
+const SEED = "ja-decision-bench";
+const LOWER = 0.025;
+const UPPER = 0.975;
+
+type Cluster = readonly Scored[];
+type Interval = Readonly<{ lower: number; upper: number }>;
+
+const clusterKey = (row: Readonly<Scored>): string => {
+  if (PAIR_MEMBER.test(row.item.id)) {
+    return pairOf(row);
+  }
+  return row.item.id;
+};
+
+const intervalOf = (values: readonly number[]): Interval => {
+  if (values.length === NONE) {
+    return { lower: NONE, upper: NONE };
+  }
+  return { lower: quantile([...values], LOWER), upper: quantile([...values], UPPER) };
+};
+
+const isSolvedPair = (cluster: Cluster): boolean =>
+  cluster.length === PAIR_SIZE && cluster.every((row) => credit(row) === FULL);
+
+const pairRate = (clusters: readonly Cluster[]): number => {
+  const pairs = clusters.filter((cluster) => cluster.length === PAIR_SIZE);
+  return pairs.filter((pair) => isSolvedPair(pair)).length / Math.max(FULL, pairs.length);
+};
+
+const skillOfRows = (rows: readonly Scored[]): number => {
+  const { raw, chance } = rawScore(rows);
+  return skillOf(raw, chance);
+};
+
+const resample = (clusters: readonly Cluster[]): readonly (readonly Cluster[])[] => {
+  const random = seedrandom(SEED);
+  return Arr.makeBy(RESAMPLES, () =>
+    sampleWithReplacement([...clusters], clusters.length, () => random()),
   );
-  if (pairs.length === NONE) {
+};
+
+const pairAccuracyOf = (
+  clusters: readonly Cluster[],
+  samples: readonly (readonly Cluster[])[],
+): TaskResult["test"]["pairs"] => {
+  const count = clusters.filter((cluster) => cluster.length === PAIR_SIZE).length;
+  if (count === NONE) {
     return { status: "unavailable" };
   }
-  const solved = pairs.filter((pair) => pair.every((row) => credit(row) === FULL));
-  return { status: "measured", accuracy: solved.length / pairs.length, count: pairs.length };
+  return {
+    status: "measured",
+    accuracy: pairRate(clusters),
+    count,
+    interval: intervalOf(samples.map((sample) => pairRate(sample))),
+  };
 };
 
 const metric = (rows: readonly Scored[]): TaskResult["test"] => {
   const { raw, chance } = rawScore(rows);
+  const clusters = Object.values(Arr.groupBy(rows, clusterKey));
+  const samples = resample(clusters);
   const failed = rows.filter(({ outcome }) => outcome.status === "failed").length;
   return {
     total: rows.length,
@@ -194,8 +243,9 @@ const metric = (rows: readonly Scored[]): TaskResult["test"] => {
     accuracy: mean(rows.map((row) => credit(row))),
     chance,
     skill: skillOf(raw, chance),
+    skillInterval: intervalOf(samples.map((sample) => skillOfRows(sample.flat()))),
     calibration: calibrationOf(rows),
-    pairs: pairAccuracyOf(rows),
+    pairs: pairAccuracyOf(clusters, samples),
   };
 };
 
@@ -215,16 +265,13 @@ const percentile = (values: readonly number[], rank: number): number => {
   );
 };
 
-const usage = (
-  rows: readonly Scored[],
-): Pick<TaskResult, "p50Ms" | "p95Ms" | "costUsd" | "costPer1000Usd"> => {
+const usage = (rows: readonly Scored[]): Pick<TaskResult, "p50Ms" | "p95Ms" | "costUsd"> => {
   const latencies = rows.map(({ outcome }) => outcome.latencyMs);
   const costUsd = Num.sumAll(rows.map(({ outcome }) => costOf(outcome)));
   return {
     p50Ms: percentile(latencies, P50),
     p95Ms: percentile(latencies, P95),
     costUsd,
-    costPer1000Usd: (costUsd / Math.max(FULL, rows.length)) * PER_THOUSAND,
   };
 };
 

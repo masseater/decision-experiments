@@ -13,6 +13,12 @@ const toPercentPoints = (ratio: number): number => ratio * PERCENT;
 
 const usd = (value: number): string => `$${value.toFixed(COST_DIGITS)}`;
 
+const withInterval = ({
+  value,
+  interval,
+}: Readonly<{ value: number; interval: Readonly<{ lower: number; upper: number }> }>): string =>
+  `${percent(value)}（${percent(interval.lower)}〜${percent(interval.upper)}）`;
+
 const decimal = (value: number): string => value.toFixed(SCORE_DIGITS);
 
-export { decimal, percent, pointsOf, toPercentPoints, usd };
+export { decimal, percent, pointsOf, toPercentPoints, usd, withInterval };

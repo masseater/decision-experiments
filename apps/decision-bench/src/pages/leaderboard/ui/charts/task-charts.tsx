@@ -3,51 +3,90 @@ import type { ReactNode } from "react";
 import { displayLabel } from "#/pages/leaderboard/model/display-label";
 import { entriesOf } from "#/pages/leaderboard/model/ranking";
 import type { TaskEntry } from "#/pages/leaderboard/model/ranking";
-import { percent } from "#/pages/leaderboard/ui/format";
+import { toPercentPoints, usd } from "#/pages/leaderboard/ui/format";
 
 import { BarChart } from "./bar-chart";
 import { ChartFigure } from "./chart-figure";
 import type { ChartRow } from "./chart-row";
-import { ReliabilityChart } from "./reliability-chart";
-import { SpeedChart } from "./speed-chart";
+import { ORIGIN } from "./chart-style";
+import { errorOf } from "./interval-bar";
+import { ScoreScatter } from "./score-scatter";
+import type { Axis, ScatterPoint } from "./score-scatter";
 
-const UNSUPPORTED = "未対応（この形式を受け付けない）";
-const SKILL_TITLE = "skill（0〜100）";
-const SPEED_TITLE = "skill と速度（左上ほど速くて正確）";
+const SKILL_TITLE = "skill";
+const LATENCY_TITLE = "skill × p50 レイテンシ";
+const COST_TITLE = "skill × タスク全体の費用";
+const HEADROOM = 1.3;
+const LATENCY_STEP = 100;
+const MIN_COST_USD = 0.01;
 
-const reliabilityTitle = (entry: TaskEntry): string =>
-  `確信度と実際の正解率（${displayLabel(entry)}、対角線に近いほど確信度が正直）`;
+const LATENCY_AXIS: Axis = {
+  name: "p50 ms",
+  domain: [ORIGIN, (max) => Math.ceil((max * HEADROOM) / LATENCY_STEP) * LATENCY_STEP],
+  format: String,
+};
+
+const COST_AXIS: Axis = {
+  name: "USD",
+  domain: [ORIGIN, (max) => Math.max(max * HEADROOM, MIN_COST_USD)],
+  format: (value) => usd(Number(value)),
+};
 
 const skillRows = (task: string): readonly ChartRow[] =>
   entriesOf(task).map((entry): ChartRow => {
     const label = displayLabel(entry);
     if (entry.result.support === "unsupported") {
-      return { status: "unsupported", key: entry.model.model, label, note: UNSUPPORTED };
+      return { status: "unsupported", key: entry.model.model, label };
     }
     return {
-      status: "measured",
+      status: "interval",
       key: entry.model.model,
       label,
       ratio: entry.result.test.skill,
-      value: percent(entry.result.test.skill),
+      interval: entry.result.test.skillInterval,
     };
   });
+
+const scatterPoints = (
+  task: string,
+  measureOf: (entry: TaskEntry) => number,
+): readonly ScatterPoint[] =>
+  entriesOf(task)
+    .filter(({ result }) => result.support === "supported")
+    .map((entry) => {
+      const skill = toPercentPoints(entry.result.test.skill);
+      const { lower, upper } = entry.result.test.skillInterval;
+      return {
+        label: displayLabel(entry),
+        measure: measureOf(entry),
+        skill,
+        error: errorOf({
+          value: skill,
+          lower: toPercentPoints(lower),
+          upper: toPercentPoints(upper),
+        }),
+      };
+    });
 
 const TaskCharts = ({ task }: Readonly<{ task: string }>): ReactNode => (
   <div className="grid gap-6 sm:grid-cols-2">
     <ChartFigure title={SKILL_TITLE}>
       <BarChart title={SKILL_TITLE} rows={skillRows(task)} />
     </ChartFigure>
-    <ChartFigure title={SPEED_TITLE}>
-      <SpeedChart title={SPEED_TITLE} entries={entriesOf(task)} />
+    <ChartFigure title={LATENCY_TITLE}>
+      <ScoreScatter
+        title={LATENCY_TITLE}
+        axis={LATENCY_AXIS}
+        points={scatterPoints(task, ({ result }) => result.p50Ms)}
+      />
     </ChartFigure>
-    {entriesOf(task)
-      .filter(({ result }) => result.support === "supported")
-      .map((entry) => (
-        <ChartFigure key={entry.model.model} title={reliabilityTitle(entry)}>
-          <ReliabilityChart title={reliabilityTitle(entry)} result={entry.result} />
-        </ChartFigure>
-      ))}
+    <ChartFigure title={COST_TITLE}>
+      <ScoreScatter
+        title={COST_TITLE}
+        axis={COST_AXIS}
+        points={scatterPoints(task, ({ result }) => result.costUsd)}
+      />
+    </ChartFigure>
   </div>
 );
 

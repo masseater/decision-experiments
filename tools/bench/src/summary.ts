@@ -2,28 +2,24 @@ import { Schema } from "effect";
 
 import { LabelStatsSchema } from "./labeling.ts";
 
-const CalibrationBinSchema = Schema.Struct({
-  meanPredicted: Schema.Finite,
-  observedFrequency: Schema.Finite,
-  count: Schema.Finite,
-});
-
 const CalibrationSchema = Schema.Union([
   Schema.Struct({
     status: Schema.Literal("measured"),
     ece: Schema.Finite,
     brier: Schema.Finite,
     forecasts: Schema.Finite,
-    curve: Schema.Array(CalibrationBinSchema),
   }),
   Schema.Struct({ status: Schema.Literal("unavailable") }),
 ]);
+
+const IntervalSchema = Schema.Struct({ lower: Schema.Finite, upper: Schema.Finite });
 
 const PairsSchema = Schema.Union([
   Schema.Struct({
     status: Schema.Literal("measured"),
     accuracy: Schema.Finite,
     count: Schema.Finite,
+    interval: IntervalSchema,
   }),
   Schema.Struct({ status: Schema.Literal("unavailable") }),
 ]);
@@ -36,6 +32,7 @@ const MetricSchema = Schema.Struct({
   accuracy: Schema.Finite,
   chance: Schema.Finite,
   skill: Schema.Finite,
+  skillInterval: IntervalSchema,
   calibration: CalibrationSchema,
   pairs: PairsSchema,
 });
@@ -51,7 +48,6 @@ const TaskResultSchema = Schema.Struct({
   p50Ms: Schema.Finite,
   p95Ms: Schema.Finite,
   costUsd: Schema.Finite,
-  costPer1000Usd: Schema.Finite,
 });
 
 const ModelResultSchema = Schema.Struct({

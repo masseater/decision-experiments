@@ -26,7 +26,7 @@ const ProfileRow = ({
       <TableCell className="text-right tabular-nums">{ece}</TableCell>
       <TableCell className="text-right tabular-nums">{brier}</TableCell>
       <TableCell className="text-right tabular-nums">{`${result.p50Ms} / ${result.p95Ms}`}</TableCell>
-      <TableCell className="text-right tabular-nums">{usd(result.costPer1000Usd)}</TableCell>
+      <TableCell className="text-right tabular-nums">{usd(result.costUsd)}</TableCell>
     </TableRow>
   );
 };

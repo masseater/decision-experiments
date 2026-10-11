@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import type { TaskResult } from "#/pages/leaderboard/model/summary";
-import { percent } from "#/pages/leaderboard/ui/format";
+import { percent, withInterval } from "#/pages/leaderboard/ui/format";
 import { TableCell } from "#/shared/ui/table-cell";
 import { TableHead } from "#/shared/ui/table-head";
 import { TableRow } from "#/shared/ui/table-row";
@@ -14,7 +14,7 @@ const pairCell = (result: Readonly<TaskResult>): string => {
   if (result.test.pairs.status === "unavailable") {
     return NOT_PAIRED;
   }
-  return percent(result.test.pairs.accuracy);
+  return withInterval({ value: result.test.pairs.accuracy, interval: result.test.pairs.interval });
 };
 
 const ScoreRow = ({
@@ -32,7 +32,9 @@ const ScoreRow = ({
   return (
     <TableRow>
       <TableHead scope="row">{label}</TableHead>
-      <TableCell className="text-right tabular-nums">{percent(result.test.skill)}</TableCell>
+      <TableCell className="text-right tabular-nums">
+        {withInterval({ value: result.test.skill, interval: result.test.skillInterval })}
+      </TableCell>
       <TableCell className="text-right tabular-nums">{percent(result.test.raw)}</TableCell>
       <TableCell className="text-right tabular-nums">{percent(result.test.accuracy)}</TableCell>
       <TableCell className="text-right tabular-nums">{pairCell(result)}</TableCell>

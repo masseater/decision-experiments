@@ -4,6 +4,7 @@ const PERCENT_SCALE = [ORIGIN, FULL_PERCENT] as const;
 const SERIES_COLOR = "var(--color-chart-bar)";
 const REFERENCE_COLOR = "var(--color-muted-foreground)";
 const MARK_RADIUS = 4;
+const ERROR_WIDTH = 6;
 const AXIS_TICK = { fontSize: 12 } as const;
 const TOOLTIP_STYLE = {
   background: "var(--color-popover)",
@@ -15,7 +16,7 @@ const TOOLTIP_STYLE = {
 
 export {
   AXIS_TICK,
-  FULL_PERCENT,
+  ERROR_WIDTH,
   MARK_RADIUS,
   ORIGIN,
   PERCENT_SCALE,

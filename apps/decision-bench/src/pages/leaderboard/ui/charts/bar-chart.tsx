@@ -16,26 +16,38 @@ import {
   SERIES_COLOR,
   TOOLTIP_STYLE,
 } from "./chart-style";
+import { errorOf, intervalBar } from "./interval-bar";
 
 const LABEL_WIDTH = 104;
 const BAR_SIZE = 14;
 const BAR_RADIUS: [number, number, number, number] = [ORIGIN, MARK_RADIUS, MARK_RADIUS, ORIGIN];
-const VALUE_LABEL: LabelListProps = { position: "right", fontSize: 12, formatter: pointsOf };
-const MARGIN = { right: 40 } as const;
+const VALUE_LABEL: LabelListProps = { position: "top", fontSize: 12, formatter: pointsOf };
+const MARGIN = { right: 24 } as const;
 
-const toPoints = (
-  rows: readonly ChartRow[],
-): readonly Readonly<{ label: string; value: number }>[] =>
-  rows.flatMap((row) => {
-    if (row.status === "unsupported") {
-      return [];
-    }
-    return [{ label: row.label, value: toPercentPoints(row.ratio) }];
+type BarPoint = Readonly<{ label: string; value: number; error?: readonly [number, number] }>;
+
+const toPoint = (row: ChartRow): readonly BarPoint[] => {
+  if (row.status === "unsupported") {
+    return [];
+  }
+  const value = toPercentPoints(row.ratio);
+  if (row.status === "point") {
+    return [{ label: row.label, value }];
+  }
+  const error = errorOf({
+    value,
+    lower: toPercentPoints(row.interval.lower),
+    upper: toPercentPoints(row.interval.upper),
   });
+  return [{ label: row.label, value, error }];
+};
+
+const toPoints = (rows: readonly ChartRow[]): readonly BarPoint[] =>
+  rows.flatMap((row) => toPoint(row));
 
 const describe = (rows: readonly ChartRow[]): string =>
   toPoints(rows)
-    .map(({ label, value }) => `${label}: ${pointsOf(value)}`)
+    .map(({ label, value }) => `${label} ${pointsOf(value)}`)
     .join("、");
 
 const BarChart = ({
@@ -61,7 +73,9 @@ const BarChart = ({
         radius={BAR_RADIUS}
         barSize={BAR_SIZE}
         label={VALUE_LABEL}
-      />
+      >
+        {intervalBar("x")}
+      </Bar>
     </Chart>
   </ChartContainer>
 );

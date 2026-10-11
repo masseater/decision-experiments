@@ -17,10 +17,10 @@ const CAPTION = "成績（test）";
 const LABEL = "モデル";
 
 const metricsOf = (task: Readonly<TaskInfo>): readonly string[] => [
-  "skill",
+  "skill（95% 区間）",
   METRIC_NAMES[task.metric],
   "正解率",
-  "対の正解率",
+  "対の正解率（95% 区間）",
   "coverage",
 ];
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T07:08:32.735Z",
+  "generatedAt": "2026-10-11T07:21:47.410Z",
   "models": [
     {
       "model": "respan/span-01-lite",
@@ -22,6 +22,10 @@
             "accuracy": 0.4876237623762376,
             "chance": 0.3112365315251567,
             "skill": 0.10931256429788387,
+            "skillInterval": {
+              "lower": 0.07847856906751845,
+              "upper": 0.1410951507524045
+            },
             "calibration": {
               "status": "measured",
               "ece": 0.048054700941570105,
@@ -67,6 +71,10 @@
             "accuracy": 0.6,
             "chance": 0.3058275058275058,
             "skill": 0.15395439572739783,
+            "skillInterval": {
+              "lower": 0,
+              "upper": 0.45369741686281606
+            },
             "calibration": {
               "status": "measured",
               "ece": 0.29871399704049056,
@@ -96,8 +104,7 @@
           },
           "p50Ms": 189,
           "p95Ms": 336,
-          "costUsd": 0,
-          "costPer1000Usd": 0
+          "costUsd": 0
         },
         {
           "task": "rules",
@@ -113,6 +120,10 @@
             "accuracy": 0.5613682092555332,
             "chance": 0.5,
             "skill": 0.12245757222438147,
+            "skillInterval": {
+              "lower": 0.07498947402513285,
+              "upper": 0.17229516129032255
+            },
             "calibration": {
               "status": "measured",
               "ece": 0.24564508220321904,
@@ -149,7 +160,11 @@
             "pairs": {
               "status": "measured",
               "accuracy": 0.13765182186234817,
-              "count": 247
+              "count": 247,
+              "interval": {
+                "lower": 0.09716599190283401,
+                "upper": 0.18218623481781376
+              }
             }
           },
           "hard": {
@@ -160,6 +175,10 @@
             "accuracy": 0.3333333333333333,
             "chance": 0.5,
             "skill": 0,
+            "skillInterval": {
+              "lower": 0,
+              "upper": 1
+            },
             "calibration": {
               "status": "measured",
               "ece": 0.5227814466666667,
@@ -179,8 +198,7 @@
           },
           "p50Ms": 352,
           "p95Ms": 525,
-          "costUsd": 0,
-          "costPer1000Usd": 0
+          "costUsd": 0
         }
       ]
     }
