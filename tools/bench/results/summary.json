@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T04:34:49.983Z",
+  "generatedAt": "2026-10-11T04:38:55.235Z",
   "models": [
     {
       "model": "respan/span-01-lite",
@@ -11,10 +11,10 @@
           "task": "jnli",
           "label": "JNLI 含意関係（Choice）",
           "test": {
-            "total": 190,
-            "failed": 190,
+            "total": 2424,
+            "failed": 2424,
             "raw": 0,
-            "chance": 0.33333333333333426,
+            "chance": 0.33333333333334236,
             "skill": 0
           },
           "hard": {
@@ -25,7 +25,7 @@
             "skill": 0
           },
           "p50Ms": 60,
-          "p95Ms": 112,
+          "p95Ms": 82,
           "costUsd": 0,
           "costPer1000Usd": 0
         },
@@ -57,10 +57,11 @@
   "labeling": [
     {
       "task": "jnli",
-      "items": 200,
+      "items": 2434,
       "hard": 10,
       "opusCostUsd": 6.6914706000000015,
-      "opusMatchesHuman": 0.915
+      "opusMatchesHuman": 0.915,
+      "opusSampled": 200
     },
     {
       "task": "rules",
