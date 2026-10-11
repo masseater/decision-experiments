@@ -1,5 +1,4 @@
 import { displayLabel } from "#/pages/leaderboard/model/display-label";
-import { entriesOf } from "#/pages/leaderboard/model/ranking";
 import type { TaskEntry } from "#/pages/leaderboard/model/ranking";
 import { toPercentPoints } from "#/pages/leaderboard/ui/format";
 
@@ -36,15 +35,15 @@ const COST_AXIS: Axis = {
 };
 
 const scatterPoints = ({
-  task,
+  entries: all,
   axis,
   measureOf,
 }: Readonly<{
-  task: string;
+  entries: readonly TaskEntry[];
   axis: Axis;
   measureOf: (entry: TaskEntry) => number;
 }>): readonly ScatterPoint[] => {
-  const entries = entriesOf(task).filter(({ result }) => result.support === "supported");
+  const entries = all.filter(({ result }) => result.support === "supported");
   const [, upperOf] = axis.domain;
   const xMax = upperOf(Math.max(ORIGIN, ...entries.map((entry) => measureOf(entry))));
   const spots = placeLabels(

@@ -58,6 +58,7 @@ const TaskResultSchema = Schema.Struct({
 });
 
 const ModelResultSchema = Schema.Struct({
+  provider: Schema.Literals(["openrouter"]),
   model: Schema.String,
   label: Schema.String,
   choiceVia: Schema.Literals(["choice", "noul"]),

@@ -6,6 +6,7 @@ import { summary } from "#/pages/leaderboard/model/summary";
 
 import { IndexSection } from "./index-section";
 import { MethodLink } from "./method-link";
+import { ModelFilter } from "./model-filter";
 import { NoteList } from "./note-list";
 import type { Note } from "./note-list";
 import { TaskBlock } from "./task-block";
@@ -29,6 +30,7 @@ const LeaderboardPage = (): ReactNode => (
       <NoteList notes={NOTES} />
       <MethodLink />
     </header>
+    <ModelFilter />
     <IndexSection />
     {tasks.map((task) => (
       <TaskBlock key={task.task} task={task} />

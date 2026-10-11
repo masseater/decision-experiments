@@ -1,27 +1,42 @@
 import type { ReactNode } from "react";
 
-import { rankedModels } from "#/pages/leaderboard/model/ranking";
-import { Table } from "#/shared/ui/table";
-import { TableBody } from "#/shared/ui/table-body";
-import { TableHeader } from "#/shared/ui/table-header";
+import type { ModelResult } from "#/pages/leaderboard/model/summary";
+import { percent, usd } from "#/pages/leaderboard/ui/format";
 
-import { HeaderRow } from "./header-row";
-import { IndexRow } from "./index-row";
+import { SortableTable } from "./sortable-table";
+import type { TableColumn } from "./table-column";
 
+const CAPTION = "指数と費用";
 const LABEL = "モデル";
-const METRICS = ["指数", "全タスクの費用"];
 
-const IndexTable = (): ReactNode => (
-  <Table>
-    <TableHeader>
-      <HeaderRow label={LABEL} metrics={METRICS} />
-    </TableHeader>
-    <TableBody>
-      {rankedModels.map((model) => (
-        <IndexRow key={model.model} model={model} />
-      ))}
-    </TableBody>
-  </Table>
+const keyOf = ({ model }: ModelResult): string => model;
+const labelOf = ({ label }: ModelResult): string => label;
+
+const COLUMNS: readonly TableColumn<ModelResult>[] = [
+  {
+    id: "index",
+    header: "指数",
+    sortValue: ({ index }) => index,
+    display: ({ index }) => percent(index),
+  },
+  {
+    id: "cost",
+    header: "全タスクの費用",
+    sortValue: ({ costUsd }) => costUsd,
+    display: ({ costUsd }) => usd(costUsd),
+  },
+];
+
+const IndexTable = ({ models }: Readonly<{ models: readonly ModelResult[] }>): ReactNode => (
+  <SortableTable
+    id="index"
+    caption={CAPTION}
+    label={LABEL}
+    rows={models}
+    keyOf={keyOf}
+    labelOf={labelOf}
+    columns={COLUMNS}
+  />
 );
 
 export { IndexTable };

@@ -1,41 +1,92 @@
 import type { ReactNode } from "react";
 
 import { displayLabel } from "#/pages/leaderboard/model/display-label";
-import { entriesOf } from "#/pages/leaderboard/model/ranking";
-import type { TaskInfo } from "#/pages/leaderboard/model/ranking";
+import type { TaskEntry, TaskInfo } from "#/pages/leaderboard/model/ranking";
+import { percent, withInterval } from "#/pages/leaderboard/ui/format";
 import { METRIC_NAMES } from "#/pages/leaderboard/ui/metric-names";
-import { Table } from "#/shared/ui/table";
-import { TableBody } from "#/shared/ui/table-body";
-import { TableCaption } from "#/shared/ui/table-caption";
-import { TableHeader } from "#/shared/ui/table-header";
 
-import { HeaderRow } from "./header-row";
-import { ScoreRow } from "./score-row";
+import { SortableTable } from "./sortable-table";
+import type { TableColumn } from "./table-column";
 
 const CAPTION = "成績（test）";
-
 const LABEL = "モデル";
 
-const metricsOf = (task: Readonly<TaskInfo>): readonly string[] => [
-  "skill（95% 区間）",
-  METRIC_NAMES[task.metric],
-  "正解率",
-  "対の正解率（95% 区間）",
-  "coverage",
+const keyOf = ({ model }: TaskEntry): string => model.model;
+const UNSUPPORTED = "未対応";
+const MISSING = "-";
+const BOTTOM = -1;
+
+const scored =
+  (value: (entry: TaskEntry) => string) =>
+  (entry: TaskEntry): string => {
+    if (entry.result.support === "unsupported") {
+      return MISSING;
+    }
+    return value(entry);
+  };
+
+const pairValue = ({ result }: TaskEntry): number => {
+  if (result.test.pairs.status === "unavailable") {
+    return BOTTOM;
+  }
+  return result.test.pairs.accuracy;
+};
+
+const pairText = ({ result }: TaskEntry): string => {
+  if (result.test.pairs.status === "unavailable") {
+    return MISSING;
+  }
+  return withInterval({ value: result.test.pairs.accuracy, interval: result.test.pairs.interval });
+};
+
+const skillText = ({ result }: TaskEntry): string => {
+  if (result.support === "unsupported") {
+    return UNSUPPORTED;
+  }
+  return withInterval({ value: result.test.skill, interval: result.test.skillInterval });
+};
+
+const columnsOf = (task: Readonly<TaskInfo>): readonly TableColumn<TaskEntry>[] => [
+  {
+    id: "skill",
+    header: "skill（95% 区間）",
+    sortValue: ({ result }) => result.test.skill,
+    display: skillText,
+  },
+  {
+    id: "raw",
+    header: METRIC_NAMES[task.metric],
+    sortValue: ({ result }) => result.test.raw,
+    display: scored(({ result }) => percent(result.test.raw)),
+  },
+  {
+    id: "accuracy",
+    header: "正解率",
+    sortValue: ({ result }) => result.test.accuracy,
+    display: scored(({ result }) => percent(result.test.accuracy)),
+  },
+  { id: "pairs", header: "対の正解率（95% 区間）", sortValue: pairValue, display: pairText },
+  {
+    id: "coverage",
+    header: "coverage",
+    sortValue: ({ result }) => result.test.coverage,
+    display: scored(({ result }) => `${percent(result.test.coverage)}%`),
+  },
 ];
 
-const ScoreTable = ({ task }: Readonly<{ task: TaskInfo }>): ReactNode => (
-  <Table>
-    <TableCaption className="mt-0 mb-2 caption-top text-left">{CAPTION}</TableCaption>
-    <TableHeader>
-      <HeaderRow label={LABEL} metrics={metricsOf(task)} />
-    </TableHeader>
-    <TableBody>
-      {entriesOf(task.task).map((entry) => (
-        <ScoreRow key={entry.model.model} label={displayLabel(entry)} result={entry.result} />
-      ))}
-    </TableBody>
-  </Table>
+const ScoreTable = ({
+  task,
+  entries,
+}: Readonly<{ task: TaskInfo; entries: readonly TaskEntry[] }>): ReactNode => (
+  <SortableTable
+    id={`score-${task.task}`}
+    caption={CAPTION}
+    label={LABEL}
+    rows={entries}
+    keyOf={keyOf}
+    labelOf={displayLabel}
+    columns={columnsOf(task)}
+  />
 );
 
 export { ScoreTable };
