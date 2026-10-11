@@ -7,6 +7,7 @@ import { makeCache } from "./cache.ts";
 import { toJson } from "./store.ts";
 
 const OPUS_MODEL = "claude-opus-5-5";
+const OPUS_EFFORT = "high";
 const REASON_START = 0;
 const REASON_LENGTH = 500;
 
@@ -56,6 +57,8 @@ const claudeArgs = (request: Prompt, jsonSchema: string): readonly string[] => [
   "-p",
   "--model",
   OPUS_MODEL,
+  "--effort",
+  OPUS_EFFORT,
   "--output-format",
   "json",
   "--json-schema",
@@ -104,6 +107,7 @@ const makeOpus = Effect.gen(function* makeOpus() {
     cached(
       {
         model: OPUS_MODEL,
+        effort: OPUS_EFFORT,
         system: request.system,
         prompt: request.prompt,
         jsonSchema: request.jsonSchema,

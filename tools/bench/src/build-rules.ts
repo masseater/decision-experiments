@@ -3,11 +3,16 @@ import { Effect, Number as Num, Schema } from "effect";
 import { ItemSchema } from "./item.ts";
 import type { NoulItem } from "./item.ts";
 import { askThrice, tally } from "./label.ts";
-import { LABEL_CONCURRENCY, LabelStatsSchema, splitOf } from "./labeling.ts";
+import { LabelStatsSchema, splitOf as splitByVotes } from "./labeling.ts";
 import { Opus, runBench } from "./runtime.ts";
 import { benchPath, writeJson, writeJsonl } from "./store.ts";
 
-const PER_THEME = 10;
+const PAIRS_PER_ROUND = 5;
+const CONCURRENCY = 12;
+const MIN_ARTICLES = 8;
+const MAX_ARTICLES = 12;
+const MAX_REGULATION_CHARS = 1500;
+const FIRST_ARTICLE = 1;
 const NO_EARLIER = 0;
 const FIRST_ROUND = 0;
 const SECOND_ROUND = 1;
@@ -45,95 +50,179 @@ const THEMES = [
 const GENERATOR_SYSTEM =
   "あなたは日本企業の社内規程と、その運用で起きる判断事例を作る作成者です。指定の形式で返してください。";
 
-const GeneratedSchema = Schema.Struct({
-  items: Schema.Array(
+const RegulationSchema = Schema.Struct({
+  articles: Schema.Array(Schema.Struct({ title: Schema.String, body: Schema.String })),
+});
+
+const CasesSchema = Schema.Struct({
+  pairs: Schema.Array(
     Schema.Struct({
-      regulation: Schema.String,
-      situation: Schema.String,
       criterion: Schema.String,
+      compliant: Schema.String,
+      violating: Schema.String,
     }),
   ),
 });
 
-const generatorSchema = {
+const regulationSchema = {
   type: "object",
   properties: {
-    items: {
+    articles: {
       type: "array",
-      minItems: PER_THEME,
-      maxItems: PER_THEME,
+      minItems: MIN_ARTICLES,
+      maxItems: MAX_ARTICLES,
       items: {
         type: "object",
         properties: {
-          regulation: { type: "string", description: "規程の条文（2〜5文）" },
-          situation: {
-            type: "string",
-            description: "社員や部署が実際に取った行動の事例（2〜5文）",
-          },
-          criterion: {
-            type: "string",
-            description: "事例が規程を満たすかを問う、はい・いいえで答える問い",
-          },
+          title: { type: "string", description: "条の見出し（例: 適用範囲）" },
+          body: { type: "string", description: "条文（1〜4文）" },
         },
-        required: ["regulation", "situation", "criterion"],
+        required: ["title", "body"],
         additionalProperties: false,
       },
     },
   },
-  required: ["items"],
+  required: ["articles"],
   additionalProperties: false,
 };
+
+const situationSchema = (answer: string): object => ({
+  type: "string",
+  description: `問いの答えが「${answer}」になる、社員や部署が実際に取った行動の事例（2〜5文）`,
+});
+
+const casesSchema = {
+  type: "object",
+  properties: {
+    pairs: {
+      type: "array",
+      minItems: PAIRS_PER_ROUND,
+      maxItems: PAIRS_PER_ROUND,
+      items: {
+        type: "object",
+        properties: {
+          criterion: {
+            type: "string",
+            description: "事例が規程に適合するかを問う、はい・いいえで答える問い",
+          },
+          compliant: situationSchema("はい"),
+          violating: situationSchema("いいえ"),
+        },
+        required: ["criterion", "compliant", "violating"],
+        additionalProperties: false,
+      },
+    },
+  },
+  required: ["pairs"],
+  additionalProperties: false,
+};
+
+const regulationPrompt = (theme: string): string =>
+  [
+    `テーマ「${theme}」について、架空の会社の社内規程を${MIN_ARTICLES}〜${MAX_ARTICLES}条で作ってください。`,
+    "第1条は目的、第2条は用語の定義にしてください。",
+    "金額や日数の基準、例外、承認者、手続きの順序を含め、ある条が別の条を参照したり、別の条の例外を定めたりする箇所を複数入れてください。",
+    `全体で${MAX_REGULATION_CHARS}字以内にしてください。`,
+    "実在の企業名や個人名は使わないでください。",
+  ].join("\n");
 
 const avoidLines = (earlier: readonly string[]): readonly string[] => {
   if (earlier.length === NO_EARLIER) {
     return [];
   }
   return [
-    "次の基準文とは別の規程・事例にし、同じ論点を繰り返さないでください。",
+    "次の問いとは別の事例にし、同じ論点を繰り返さないでください。",
     ...earlier.map((criterion) => `- ${criterion}`),
   ];
 };
 
-const generatorPrompt = (theme: string, earlier: readonly string[]): string =>
+const casesPrompt = (regulation: string, earlier: readonly string[]): string =>
   [
-    `テーマ「${theme}」について、架空の会社の社内規程と判断事例を${PER_THEME}件作ってください。`,
-    "各件は、規程の条文、事例、規程を満たすかを問う基準文の3つからなります。",
-    "答えが「はい」になる事例と「いいえ」になる事例をおおよそ半数ずつにしてください。",
-    "金額や日数の境界、例外条項、承認の順序など、条文を正確に読まないと間違える事例を半分以上含めてください。",
+    "次の社内規程について、規程全体を読まないと判断できない事例の対と問いを作ってください。",
+    "",
+    regulation,
+    "",
+    `対を${PAIRS_PER_ROUND}組作ってください。各組は、事例が規程に適合するかを問う1つの問いと、答えが「はい」になる事例と「いいえ」になる事例の2つからなります。`,
+    "対の2つの事例はほぼ同じ文にし、金額、日付、役職、手続きの順序、例外の条件のどれか1か所だけを変えて答えが逆になるようにしてください。",
+    "どの事例も、判断に2つ以上の条を組み合わせる必要があるようにしてください。定義、例外、参照先の条を読み落とすと間違える対を半分以上含めてください。",
+    "問いは「適合しているか」のように肯定の形で書き、条番号は書かず、どの条が関係するかは読み手が規程から探すようにしてください。",
     "実在の企業名や個人名は使わないでください。",
     ...avoidLines(earlier),
   ].join("\n");
 
-const generateRound = Effect.fn("generateRound")(function* generateRound(
+const renderRegulation = (regulation: typeof RegulationSchema.Type): string =>
+  regulation.articles
+    .map(({ title, body }, index) => `第${index + FIRST_ARTICLE}条（${title}）${body}`)
+    .join("\n");
+
+const generateRegulation = Effect.fn("generateRegulation")(function* generateRegulation(
   theme: string,
+) {
+  const opus = yield* Opus;
+  const { output, costUsd } = yield* opus.ask({
+    system: GENERATOR_SYSTEM,
+    prompt: regulationPrompt(theme),
+    schema: RegulationSchema,
+    jsonSchema: regulationSchema,
+    sample: FIRST_ROUND,
+  });
+  return { regulation: renderRegulation(output), costUsd };
+});
+
+const generateCases = Effect.fn("generateCases")(function* generateCases(
+  regulation: string,
   earlier: readonly string[],
   round: number,
 ) {
   const opus = yield* Opus;
   return yield* opus.ask({
     system: GENERATOR_SYSTEM,
-    prompt: generatorPrompt(theme, earlier),
-    schema: GeneratedSchema,
-    jsonSchema: generatorSchema,
+    prompt: casesPrompt(regulation, earlier),
+    schema: CasesSchema,
+    jsonSchema: casesSchema,
     sample: round,
   });
 });
+
+const splitOf = (agreement: number, asIntended: boolean): "test" | "hard" => {
+  if (asIntended) {
+    return splitByVotes(agreement);
+  }
+  return "hard";
+};
+
+const toDrafts = (
+  pair: (typeof CasesSchema.Type)["pairs"][number],
+  index: number,
+): readonly Readonly<{
+  key: string;
+  situation: string;
+  criterion: string;
+  intended: boolean;
+}>[] => [
+  { key: `${index}a`, situation: pair.compliant, criterion: pair.criterion, intended: true },
+  { key: `${index}b`, situation: pair.violating, criterion: pair.criterion, intended: false },
+];
 
 const generateTheme = Effect.fn("generateTheme")(function* generateTheme(
   theme: string,
   themeIndex: number,
 ) {
-  const first = yield* generateRound(theme, [], FIRST_ROUND);
-  const second = yield* generateRound(
-    theme,
-    first.output.items.map(({ criterion }) => criterion),
+  const { regulation, costUsd } = yield* generateRegulation(theme);
+  const first = yield* generateCases(regulation, [], FIRST_ROUND);
+  const second = yield* generateCases(
+    regulation,
+    first.output.pairs.map(({ criterion }) => criterion),
     SECOND_ROUND,
   );
   return {
     theme,
     themeIndex,
-    drafts: [...first.output.items, ...second.output.items],
-    costUsd: first.costUsd + second.costUsd,
+    regulation,
+    drafts: [...first.output.pairs, ...second.output.pairs].flatMap((pair, index) =>
+      toDrafts(pair, index),
+    ),
+    costUsd: costUsd + first.costUsd + second.costUsd,
   };
 });
 
@@ -141,10 +230,11 @@ const labelDraft = Effect.fn("labelDraft")(function* labelDraft(
   draft: Readonly<{
     theme: string;
     themeIndex: number;
-    index: number;
+    key: string;
     regulation: string;
     situation: string;
     criterion: string;
+    intended: boolean;
   }>,
 ) {
   const question = {
@@ -156,14 +246,14 @@ const labelDraft = Effect.fn("labelDraft")(function* labelDraft(
   const { answers, costUsd } = yield* askThrice(question);
   const { mode, agreement } = tally(answers);
   const item: NoulItem = {
-    id: `rules-${draft.themeIndex}-${draft.index}`,
+    id: `rules-${draft.themeIndex}-${draft.key}`,
     ...question,
     gold: mode === "true",
     gold_source: "llm",
     agreement,
     source: `${SOURCE}（テーマ: ${draft.theme}）`,
     license: LICENSE,
-    split: splitOf(agreement),
+    split: splitOf(agreement, mode === String(draft.intended)),
   };
   return { item, costUsd };
 });
@@ -171,12 +261,12 @@ const labelDraft = Effect.fn("labelDraft")(function* labelDraft(
 runBench(
   Effect.gen(function* buildRules() {
     const generated = yield* Effect.forEach(THEMES, generateTheme, {
-      concurrency: LABEL_CONCURRENCY,
+      concurrency: CONCURRENCY,
     });
-    const drafts = generated.flatMap(({ theme, themeIndex, drafts: themeDrafts }) =>
-      themeDrafts.map((draft, index) => ({ theme, themeIndex, index, ...draft })),
+    const drafts = generated.flatMap(({ theme, themeIndex, regulation, drafts: themeDrafts }) =>
+      themeDrafts.map((draft) => ({ theme, themeIndex, regulation, ...draft })),
     );
-    const labeled = yield* Effect.forEach(drafts, labelDraft, { concurrency: LABEL_CONCURRENCY });
+    const labeled = yield* Effect.forEach(drafts, labelDraft, { concurrency: CONCURRENCY });
     const items = labeled.map(({ item }) => item);
     yield* writeJsonl(ItemSchema, yield* benchPath("data", "rules.jsonl"), items);
     yield* writeJson(LabelStatsSchema, yield* benchPath("data", "rules.stats.json"), {

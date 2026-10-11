@@ -53,7 +53,7 @@ const indexTable = (summary: Summary): readonly string[] => [
 ];
 
 const labelLine = (stats: Summary["labeling"][number]): string =>
-  `正解ラベル: ${stats.items} 件（hard ${stats.hard} 件）、Opus 5.5 のラベル費用 ${stats.opusCostUsd.toFixed(LABEL_COST_DIGITS)} USD、Opus 5.5 と人の正解の一致率 ${humanMatch(Option.fromNullishOr(stats.opusMatchesHuman))}。`;
+  `正解ラベル: ${stats.items} 件（hard ${stats.hard} 件）、Opus 5.5 のラベル費用（API 換算） ${stats.opusCostUsd.toFixed(LABEL_COST_DIGITS)} USD、Opus 5.5 と人の正解の一致率 ${humanMatch(Option.fromNullishOr(stats.opusMatchesHuman))}。`;
 
 const taskTable = (summary: Summary, task: (typeof TASKS)[number]): readonly string[] => [
   `### ${task.label}（${task.format}、raw は ${task.metric}）`,
