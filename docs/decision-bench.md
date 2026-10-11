@@ -35,7 +35,7 @@ span-01 lite は Noul しか受け付けないため、JNLI（Choice）は全問
 | タスク         | 種類   | 件数 | 正解     | 出典とライセンス                                                   |
 | -------------- | ------ | ---: | -------- | ------------------------------------------------------------------ |
 | JNLI 含意関係  | Choice | 2434 | 人       | JGLUE JNLI v1.3 の valid（yahoojapan/JGLUE@6f071c0）、CC BY-SA 4.0 |
-| 業務ルール判定 | Noul   |  200 | Opus 5.5 | Opus 5.5 で生成した架空の社内規程と事例、CC BY-SA 4.0              |
+| 業務ルール判定 | Noul   |  500 | Opus 5.5 | Opus 5.5 で生成した架空の社内規程と事例、CC BY-SA 4.0              |
 
 データは `tools/bench/data` に JSONL で置く。
 1 件ごとに `id / type / text / criteria / options / gold / gold_source / agreement / source / license / split` を持つ。
@@ -43,7 +43,8 @@ span-01 lite は Noul しか受け付けないため、JNLI（Choice）は全問
 
 JNLI は valid 2,434 件をすべて使う。
 正解は人が付けたものなので、Opus 5.5 のラベルは `sentence_pair_id` の SHA-256 順で先頭 200 件にだけ付け、人の正解との一致率を出すのに使う。
-業務ルール判定は、20 のテーマごとに Opus 5.5 で規程・事例・基準文を 10 件ずつ生成した。
+業務ルール判定は、25 のテーマごとに Opus 5.5 で規程・事例・基準文を 10 件ずつ 2 組生成した。
+2 組目には 1 組目の基準文を渡し、同じ論点を繰り返さないよう指示した。
 
 ## 正解ラベルの付け方
 

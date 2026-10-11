@@ -8,7 +8,9 @@ import { Opus, runBench } from "./runtime.ts";
 import { benchPath, writeJson, writeJsonl } from "./store.ts";
 
 const PER_THEME = 10;
-const GENERATION_SAMPLE = 0;
+const NO_EARLIER = 0;
+const FIRST_ROUND = 0;
+const SECOND_ROUND = 1;
 const SOURCE = "Claude Opus 5.5 で生成した架空の社内規程と事例";
 const LICENSE = "CC BY-SA 4.0";
 
@@ -33,6 +35,11 @@ const THEMES = [
   "社用車の利用",
   "ソフトウェアの導入申請",
   "安全衛生と事故報告",
+  "研修の受講と費用負担",
+  "社内システムのアカウント管理",
+  "取引先の与信審査",
+  "文書の保管と廃棄",
+  "災害時の出社判断",
 ] as const;
 
 const GENERATOR_SYSTEM =
@@ -77,28 +84,57 @@ const generatorSchema = {
   additionalProperties: false,
 };
 
-const generatorPrompt = (theme: string): string =>
+const avoidLines = (earlier: readonly string[]): readonly string[] => {
+  if (earlier.length === NO_EARLIER) {
+    return [];
+  }
+  return [
+    "次の基準文とは別の規程・事例にし、同じ論点を繰り返さないでください。",
+    ...earlier.map((criterion) => `- ${criterion}`),
+  ];
+};
+
+const generatorPrompt = (theme: string, earlier: readonly string[]): string =>
   [
     `テーマ「${theme}」について、架空の会社の社内規程と判断事例を${PER_THEME}件作ってください。`,
     "各件は、規程の条文、事例、規程を満たすかを問う基準文の3つからなります。",
     "答えが「はい」になる事例と「いいえ」になる事例をおおよそ半数ずつにしてください。",
     "金額や日数の境界、例外条項、承認の順序など、条文を正確に読まないと間違える事例を半分以上含めてください。",
     "実在の企業名や個人名は使わないでください。",
+    ...avoidLines(earlier),
   ].join("\n");
+
+const generateRound = Effect.fn("generateRound")(function* generateRound(
+  theme: string,
+  earlier: readonly string[],
+  round: number,
+) {
+  const opus = yield* Opus;
+  return yield* opus.ask({
+    system: GENERATOR_SYSTEM,
+    prompt: generatorPrompt(theme, earlier),
+    schema: GeneratedSchema,
+    jsonSchema: generatorSchema,
+    sample: round,
+  });
+});
 
 const generateTheme = Effect.fn("generateTheme")(function* generateTheme(
   theme: string,
   themeIndex: number,
 ) {
-  const opus = yield* Opus;
-  const { output, costUsd } = yield* opus.ask({
-    system: GENERATOR_SYSTEM,
-    prompt: generatorPrompt(theme),
-    schema: GeneratedSchema,
-    jsonSchema: generatorSchema,
-    sample: GENERATION_SAMPLE,
-  });
-  return { theme, themeIndex, drafts: output.items, costUsd };
+  const first = yield* generateRound(theme, [], FIRST_ROUND);
+  const second = yield* generateRound(
+    theme,
+    first.output.items.map(({ criterion }) => criterion),
+    SECOND_ROUND,
+  );
+  return {
+    theme,
+    themeIndex,
+    drafts: [...first.output.items, ...second.output.items],
+    costUsd: first.costUsd + second.costUsd,
+  };
 });
 
 const labelDraft = Effect.fn("labelDraft")(function* labelDraft(

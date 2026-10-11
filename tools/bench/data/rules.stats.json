@@ -1,6 +1,6 @@
 {
   "task": "rules",
-  "items": 200,
-  "hard": 0,
-  "opusCostUsd": 8.46449779999999
+  "items": 500,
+  "hard": 2,
+  "opusCostUsd": 22.22309499999999
 }
