@@ -44,8 +44,14 @@ type ChoiceItem = typeof ChoiceItemSchema.Type;
 type NoulItem = typeof NoulItemSchema.Type;
 type ScoreItem = typeof ScoreItemSchema.Type;
 
+const ProbabilitiesSchema = Schema.Record(Schema.String, Schema.Finite);
+
 const DecisionSchema = Schema.Union([
-  Schema.Struct({ type: Schema.Literal("choice"), choice: Schema.String }),
+  Schema.Struct({
+    type: Schema.Literal("choice"),
+    choice: Schema.String,
+    probabilities: Schema.optionalKey(ProbabilitiesSchema),
+  }),
   Schema.Struct({ type: Schema.Literal("noul"), noul: Schema.Finite }),
   Schema.Struct({ type: Schema.Literal("score"), score: Schema.Finite }),
 ]);

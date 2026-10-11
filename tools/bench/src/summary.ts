@@ -2,17 +2,31 @@ import { Schema } from "effect";
 
 import { LabelStatsSchema } from "./labeling.ts";
 
+const CalibrationSchema = Schema.Union([
+  Schema.Struct({
+    status: Schema.Literal("measured"),
+    ece: Schema.Finite,
+    brier: Schema.Finite,
+    forecasts: Schema.Finite,
+  }),
+  Schema.Struct({ status: Schema.Literal("unavailable") }),
+]);
+
 const MetricSchema = Schema.Struct({
   total: Schema.Finite,
   failed: Schema.Finite,
+  coverage: Schema.Finite,
   raw: Schema.Finite,
+  accuracy: Schema.Finite,
   chance: Schema.Finite,
   skill: Schema.Finite,
+  calibration: CalibrationSchema,
 });
 
 const TaskResultSchema = Schema.Struct({
   task: Schema.String,
   label: Schema.String,
+  metric: Schema.Literals(["macro-f1", "balanced-accuracy", "normalized-mae"]),
   format: Schema.Literals(["choice", "noul", "score"]),
   support: Schema.Literals(["supported", "unsupported"]),
   test: MetricSchema,

@@ -7,6 +7,10 @@ const NONE = 0;
 const ONE = 1;
 const OPTION_COUNT = 3;
 const THIRD = ONE / OPTION_COUNT;
+const TWO = 2;
+const TWO_THIRDS = TWO / OPTION_COUNT;
+const MACRO_F1 = TWO_THIRDS / OPTION_COUNT;
+const BRIER = 0.02;
 const HALF = 0.5;
 const HIGH = 0.9;
 const HIGHER = 0.8;
@@ -60,16 +64,31 @@ const probability = (value: number): Outcome => ({
 const failure: Outcome = { status: "failed", reason: "unsupported", latencyMs: FAST_MS };
 
 describe("metric", () => {
-  it("chance-corrects choice accuracy and counts failures as wrong", () => {
+  it("scores choice by macro-F1 and counts failures as wrong", () => {
     const result = metric([
       { item: choice("a", "yes"), outcome: picked("yes") },
       { item: choice("b", "no"), outcome: picked("yes") },
       { item: choice("c", "maybe"), outcome: failure },
     ]);
-    expect(result.raw).toBeCloseTo(THIRD);
+    expect(result.raw).toBeCloseTo(MACRO_F1);
+    expect(result.accuracy).toBeCloseTo(THIRD);
     expect(result.chance).toBeCloseTo(THIRD);
     expect(result.skill).toBe(NONE);
     expect(result.failed).toBe(ONE);
+    expect(result.coverage).toBeCloseTo(TWO_THIRDS);
+  });
+
+  it("measures calibration from noul probabilities", () => {
+    const result = metric([
+      { item: noul("a", true), outcome: probability(HIGH) },
+      { item: noul("b", false), outcome: probability(LOW) },
+    ]);
+    if (result.calibration.status !== "measured") {
+      throw new Error("calibration should be measured");
+    }
+    expect(result.calibration.ece).toBeCloseTo(LOW);
+    expect(result.calibration.brier).toBeCloseTo(BRIER);
+    expect(result.calibration.forecasts).toBe(TWO);
   });
 
   it("uses balanced accuracy for noul", () => {

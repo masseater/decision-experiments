@@ -1,55 +1,89 @@
 {
-  "generatedAt": "2026-10-11T05:48:25.791Z",
+  "generatedAt": "2026-10-11T06:08:25.133Z",
   "models": [
     {
       "model": "respan/span-01-lite",
       "label": "span-01 lite",
       "choiceVia": "noul",
-      "index": 0.3200565314595924,
+      "index": 0.2589949918263613,
       "costUsd": 0,
       "tasks": [
         {
           "task": "jnli",
-          "label": "JNLI 含意関係（Choice）",
+          "label": "JNLI 含意関係",
+          "metric": "macro-f1",
           "format": "choice",
           "support": "supported",
           "test": {
             "total": 2424,
             "failed": 0,
-            "raw": 0.4876237623762376,
-            "chance": 0.33333333333334236,
-            "skill": 0.231435643564346
+            "coverage": 1,
+            "raw": 0.3865270324588465,
+            "accuracy": 0.4876237623762376,
+            "chance": 0.3112365315251567,
+            "skill": 0.10931256429788387,
+            "calibration": {
+              "status": "measured",
+              "ece": 0.048054700941570105,
+              "brier": 0.5797769576626656,
+              "forecasts": 2424
+            }
           },
           "hard": {
             "total": 10,
             "failed": 0,
-            "raw": 0.6,
-            "chance": 0.33333333333333337,
-            "skill": 0.3999999999999999
+            "coverage": 1,
+            "raw": 0.41269841269841273,
+            "accuracy": 0.6,
+            "chance": 0.3058275058275058,
+            "skill": 0.15395439572739783,
+            "calibration": {
+              "status": "measured",
+              "ece": 0.29871399704049056,
+              "brier": 0.5200987337560241,
+              "forecasts": 10
+            }
           },
-          "p50Ms": 186,
-          "p95Ms": 335,
+          "p50Ms": 189,
+          "p95Ms": 336,
           "costUsd": 0,
           "costPer1000Usd": 0
         },
         {
           "task": "rules",
-          "label": "業務ルール判定（Noul）",
+          "label": "業務ルール判定",
+          "metric": "balanced-accuracy",
           "format": "noul",
           "support": "supported",
           "test": {
             "total": 498,
             "failed": 0,
+            "coverage": 1,
             "raw": 0.7043387096774194,
+            "accuracy": 0.7048192771084337,
             "chance": 0.5,
-            "skill": 0.4086774193548388
+            "skill": 0.4086774193548388,
+            "calibration": {
+              "status": "measured",
+              "ece": 0.14805708247188756,
+              "brier": 0.4488999414496329,
+              "forecasts": 498
+            }
           },
           "hard": {
             "total": 2,
             "failed": 0,
+            "coverage": 1,
             "raw": 0,
+            "accuracy": 0,
             "chance": 0.5,
-            "skill": 0
+            "skill": 0,
+            "calibration": {
+              "status": "measured",
+              "ece": 0.879440515,
+              "brier": 1.553335125999759,
+              "forecasts": 2
+            }
           },
           "p50Ms": 198,
           "p95Ms": 361,

@@ -1,6 +1,16 @@
 import { OpenRouter } from "@openrouter/sdk";
 import type { DecisionsRequest, DecisionsResponse } from "@openrouter/sdk/models";
-import { Array as Arr, Clock, Config, Effect, Option, Redacted, Result, Schema } from "effect";
+import {
+  Array as Arr,
+  Clock,
+  Config,
+  Number as Num,
+  Effect,
+  Option,
+  Redacted,
+  Result,
+  Schema,
+} from "effect";
 
 import { makeCache } from "./cache.ts";
 import { DecisionSchema, OutcomeSchema } from "./item.ts";
@@ -16,6 +26,8 @@ type ChoiceVia = "choice" | "noul";
 
 const QUESTION_ID = "q";
 const NO_COST = 0;
+const MIN_TOTAL = Number.EPSILON;
+const READOUT = "probabilities";
 const NOUL_CRITERIA = { true: "はい", false: "いいえ" };
 const NoulAnswerSchema = Schema.Struct({ type: Schema.Literal("noul"), noul: Schema.Finite });
 
@@ -61,7 +73,9 @@ const decodeSplit = (item: Readonly<ChoiceItem>, answers: unknown): Option.Optio
       ),
     );
     const best = yield* Arr.head(scored.toSorted((left, right) => right.noul - left.noul));
-    return { type: "choice" as const, choice: best.key };
+    const total = Math.max(MIN_TOTAL, Num.sumAll(scored.map(({ noul }) => noul)));
+    const probabilities = Object.fromEntries(scored.map(({ key, noul }) => [key, noul / total]));
+    return { type: "choice" as const, choice: best.key, probabilities };
   });
 
 const decodeDecision = (
@@ -122,7 +136,10 @@ const questionsOf = (item: Readonly<Item>, via: ChoiceVia): DecisionsRequest["qu
 
 const cacheKey = (model: string, item: Readonly<Item>, via: ChoiceVia): unknown => {
   if (item.type === "choice" && via === "noul") {
-    return { model, request: toRequest(item), via };
+    return { model, request: toRequest(item), via, readout: READOUT };
+  }
+  if (item.type === "choice") {
+    return { model, request: toRequest(item), readout: READOUT };
   }
   return { model, request: toRequest(item) };
 };

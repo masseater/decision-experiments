@@ -8,7 +8,7 @@ import { percent } from "./format";
 import { Section } from "./section";
 
 const NOTE =
-  "各タスクの skill の平均です。skill は Decision Index と同じく chance で正規化した値で、0 がランダム、100 が全問正解です。受け付けない形式のタスクは 0 として数えます。";
+  "性質の違うタスクをまたぐ参考値です。指数 = 100 × 各タスクの skill の単純平均。skill = (raw − chance) ÷ (1 − chance) を 0〜1 に収めた値で、0 がランダム、1 が満点です。Jev Decision Index と同じく、未対応・エラーの問題は 0 点として分母に残します。各タスクの成績は下の枠を見てください。";
 
 const rows: readonly ChartRow[] = rankedModels.map((model) => ({
   status: "measured",
@@ -19,7 +19,7 @@ const rows: readonly ChartRow[] = rankedModels.map((model) => ({
 }));
 
 const IndexSection = (): ReactNode => (
-  <Section id="index" title="総合指数" note={NOTE}>
+  <Section id="index" title="総合指数（参考）" note={NOTE}>
     <BarChart title="モデル別の指数（0〜100）" rows={rows} />
   </Section>
 );

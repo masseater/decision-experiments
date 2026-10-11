@@ -22,28 +22,17 @@ const END = "<!-- results:end -->";
 const DATASETS = ["jnli", "rules"] as const;
 
 const TASKS = [
-  { id: "jnli", label: "JNLI 含意関係（Choice）", data: "jnli", format: "choice" },
-  { id: "rules", label: "業務ルール判定（Noul）", data: "rules", format: "noul" },
+  { id: "jnli", label: "JNLI 含意関係", data: "jnli", format: "choice", metric: "macro-f1" },
+  {
+    id: "rules",
+    label: "業務ルール判定",
+    data: "rules",
+    format: "noul",
+    metric: "balanced-accuracy",
+  },
 ] as const;
 
-const MODELS = [
-  { id: "typesafe/jev-1.13", label: "Jev 1.13", choiceVia: "choice" },
-  { id: "liquid/d1", label: "Liquid d1", choiceVia: "choice" },
-  { id: "perplexity/pplx-decider-v1.1-27b", label: "Perplexity Decider v1.1", choiceVia: "choice" },
-  { id: "openai/gpt-6-luna-decisions", label: "GPT-6 Luna Decisions", choiceVia: "choice" },
-  { id: "microsoft/microsoft-decision-1", label: "Microsoft Decision 1", choiceVia: "choice" },
-  { id: "upstage/solar-decide", label: "Solar Decide", choiceVia: "choice" },
-  { id: "upstage/solar-decide-flash", label: "Solar Decide Flash", choiceVia: "choice" },
-  { id: "inception/mercury-decide", label: "Mercury Decide", choiceVia: "choice" },
-  { id: "cloudflare/clef", label: "Clef", choiceVia: "choice" },
-  { id: "cloudflare/clef-flash", label: "Clef Flash", choiceVia: "choice" },
-  { id: "cloudflare/clef-omni", label: "Clef Omni", choiceVia: "choice" },
-  { id: "nace-ai/drex-v1.5", label: "Drex v1.5", choiceVia: "choice" },
-  { id: "togethercomputer/tev1-4b-experimental", label: "Tev1 4B", choiceVia: "choice" },
-  { id: "jaredpalmer/kev-4b", label: "Kev 4B", choiceVia: "choice" },
-  { id: "respan/span-01", label: "span-01", choiceVia: "noul" },
-  { id: "respan/span-01-lite", label: "span-01 lite", choiceVia: "noul" },
-] as const;
+const MODELS = [{ id: "respan/span-01-lite", label: "span-01 lite", choiceVia: "noul" }] as const;
 
 type Task = (typeof TASKS)[number] & Readonly<{ items: readonly Item[] }>;
 
@@ -57,43 +46,47 @@ const pct = (value: number): string => (value * PERCENT).toFixed(PERCENT_DIGITS)
 const humanMatch = (value: Option.Option<number>): string =>
   Option.match(value, { onNone: () => "-", onSome: (rate) => `${pct(rate)}%` });
 
-const modelRows = (summary: Summary): readonly string[] =>
-  summary.models.flatMap((model) =>
-    model.tasks.map((task) =>
-      [
-        model.label,
-        pct(model.index),
-        task.label,
-        pct(task.test.skill),
-        pct(task.test.raw),
-        `${task.test.failed}/${task.test.total}`,
-        `${task.p50Ms} / ${task.p95Ms}`,
-        task.costPer1000Usd.toFixed(COST_DIGITS),
-      ].join(" | "),
-    ),
-  );
+const indexTable = (summary: Summary): readonly string[] => [
+  "| モデル | 指数（参考） |",
+  "| --- | ---: |",
+  ...summary.models.map((model) => `| ${model.label} | ${pct(model.index)} |`),
+];
 
-const labelRows = (summary: Summary): readonly string[] =>
-  summary.labeling.map((stats) =>
-    [
-      stats.task,
-      String(stats.items),
-      String(stats.hard),
-      stats.opusCostUsd.toFixed(LABEL_COST_DIGITS),
-      humanMatch(Option.fromNullishOr(stats.opusMatchesHuman)),
-    ].join(" | "),
-  );
+const labelLine = (stats: Summary["labeling"][number]): string =>
+  `正解ラベル: ${stats.items} 件（hard ${stats.hard} 件）、Opus 5.5 のラベル費用 ${stats.opusCostUsd.toFixed(LABEL_COST_DIGITS)} USD、Opus 5.5 と人の正解の一致率 ${humanMatch(Option.fromNullishOr(stats.opusMatchesHuman))}。`;
+
+const taskTable = (summary: Summary, task: (typeof TASKS)[number]): readonly string[] => [
+  `### ${task.label}（${task.format}、raw は ${task.metric}）`,
+  "",
+  ...summary.labeling.filter((stats) => stats.task === task.data).map((stats) => labelLine(stats)),
+  "",
+  "| モデル | skill | raw | 正解率 | coverage | p50 / p95 (ms) | 1,000 判定あたり (USD) |",
+  "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+  ...summary.models.flatMap((model) =>
+    model.tasks
+      .filter((result) => result.task === task.id)
+      .map((result) =>
+        [
+          "",
+          model.label,
+          pct(result.test.skill),
+          pct(result.test.raw),
+          pct(result.test.accuracy),
+          pct(result.test.coverage),
+          `${result.p50Ms} / ${result.p95Ms}`,
+          result.costPer1000Usd.toFixed(COST_DIGITS),
+          "",
+        ]
+          .join(" | ")
+          .trim(),
+      ),
+  ),
+];
 
 const table = (summary: Summary): string =>
-  [
-    "| モデル | 指数 | タスク | skill（test） | raw（test） | 失敗 | p50 / p95 (ms) | 1,000 判定あたり (USD) |",
-    "| --- | ---: | --- | ---: | ---: | ---: | ---: | ---: |",
-    ...modelRows(summary).map((row) => `| ${row} |`),
-    "",
-    "| タスク | 件数 | hard | Opus 5.5 のラベル費用 (USD) | Opus 5.5 と人の正解の一致率 |",
-    "| --- | ---: | ---: | ---: | ---: |",
-    ...labelRows(summary).map((row) => `| ${row} |`),
-  ].join("\n");
+  [...indexTable(summary), ...TASKS.flatMap((task) => ["", ...taskTable(summary, task)])].join(
+    "\n",
+  );
 
 const supportOf = (
   test: Readonly<{ failed: number; total: number }>,
@@ -118,6 +111,7 @@ const runTask = Effect.fn("runTask")(function* runTask(
     task: task.id,
     label: task.label,
     format: task.format,
+    metric: task.metric,
     support: supportOf(test),
     test,
     hard: metric(rows.filter(({ item }) => item.split === "hard")),
