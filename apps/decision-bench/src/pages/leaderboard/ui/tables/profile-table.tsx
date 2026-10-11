@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { displayLabel } from "#/pages/leaderboard/model/display-label";
+import { colorOf } from "#/pages/leaderboard/model/model-color";
 import type { TaskEntry, TaskInfo } from "#/pages/leaderboard/model/ranking";
 import type { TableColumn } from "#/pages/leaderboard/model/sorting";
 import { decimal, usd } from "#/pages/leaderboard/ui/format";
@@ -11,6 +12,7 @@ const CAPTION = "確信度・速度・費用";
 const LABEL = "モデル";
 
 const keyOf = ({ model }: TaskEntry): string => model.model;
+const modelColor = ({ model }: TaskEntry): string => colorOf(model.model);
 const MISSING = "-";
 const BOTTOM = -1;
 
@@ -69,6 +71,7 @@ const ProfileTable = ({
     label={LABEL}
     rows={supportedOf(entries)}
     keyOf={keyOf}
+    colorOf={modelColor}
     labelOf={displayLabel}
     columns={COLUMNS}
   />

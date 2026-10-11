@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { displayLabel } from "#/pages/leaderboard/model/display-label";
+import { colorOf } from "#/pages/leaderboard/model/model-color";
 import type { TaskEntry, TaskInfo } from "#/pages/leaderboard/model/ranking";
 import type { TableColumn } from "#/pages/leaderboard/model/sorting";
 import { percent, withInterval } from "#/pages/leaderboard/ui/format";
@@ -12,6 +13,7 @@ const CAPTION = "成績（test）";
 const LABEL = "モデル";
 
 const keyOf = ({ model }: TaskEntry): string => model.model;
+const modelColor = ({ model }: TaskEntry): string => colorOf(model.model);
 const UNSUPPORTED = "未対応";
 const MISSING = "-";
 const BOTTOM = -1;
@@ -84,6 +86,7 @@ const ScoreTable = ({
     label={LABEL}
     rows={entries}
     keyOf={keyOf}
+    colorOf={modelColor}
     labelOf={displayLabel}
     columns={columnsOf(task)}
   />

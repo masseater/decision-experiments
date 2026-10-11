@@ -24,6 +24,7 @@ type BarPoint = Readonly<{
   label: string;
   value: number;
   text: string;
+  fill: string;
   detail: Detail;
   error?: readonly [number, number];
 }>;
@@ -34,14 +35,18 @@ const toPoint = (row: ChartRow): readonly BarPoint[] => {
   }
   const value = toPercentPoints(row.ratio);
   if (row.status === "point") {
-    return [{ label: row.label, value, text: pointsOf(value), detail: row.detail }];
+    return [
+      { label: row.label, value, text: pointsOf(value), fill: row.color, detail: row.detail },
+    ];
   }
   const error = errorOf({
     value,
     lower: toPercentPoints(row.interval.lower),
     upper: toPercentPoints(row.interval.upper),
   });
-  return [{ label: row.label, value, text: pointsOf(value), detail: row.detail, error }];
+  return [
+    { label: row.label, value, text: pointsOf(value), fill: row.color, detail: row.detail, error },
+  ];
 };
 
 const toPoints = (rows: readonly ChartRow[]): readonly BarPoint[] =>

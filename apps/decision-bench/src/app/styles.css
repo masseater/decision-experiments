@@ -32,6 +32,9 @@
   --series-6: #008300;
   --series-7: #6250d6;
   --series-8: #e34948;
+  --series-tone-a: 0.6;
+  --series-tone-b: 0.5;
+  --series-chroma: 0.16;
 }
 
 .dark {
@@ -62,6 +65,9 @@
   --series-6: #008300;
   --series-7: #9085e9;
   --series-8: #e66767;
+  --series-tone-a: 0.72;
+  --series-tone-b: 0.62;
+  --series-chroma: 0.15;
 }
 
 @theme inline {

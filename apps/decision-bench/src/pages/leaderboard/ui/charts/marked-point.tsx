@@ -9,6 +9,7 @@ const LEADER_RATIO = 0.6;
 
 const MarkSchema = Schema.Struct({
   mark: Schema.String,
+  color: Schema.String,
   spot: Schema.Struct({
     dx: Schema.Finite,
     dy: Schema.Finite,
@@ -32,7 +33,7 @@ const MarkedPoint = ({
   if (!isMarked(payload)) {
     return <circle cx={cx} cy={cy} r={RADIUS} fill={fill} />;
   }
-  const { mark, spot } = payload;
+  const { mark, spot, color } = payload;
   const leader = {
     near: [],
     far: [
@@ -49,7 +50,7 @@ const MarkedPoint = ({
   return (
     <g>
       {leader[spot.ring]}
-      <circle cx={cx} cy={cy} r={RADIUS} fill={fill} />
+      <circle cx={cx} cy={cy} r={RADIUS} fill={color} />
       <text
         x={cx + spot.dx}
         y={cy + spot.dy}

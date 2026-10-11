@@ -19,6 +19,7 @@ const SortableTable = <Row,>({
   rows,
   keyOf,
   labelOf,
+  colorOf,
   columns,
 }: Readonly<{
   id: string;
@@ -27,6 +28,7 @@ const SortableTable = <Row,>({
   rows: readonly Row[];
   keyOf: (row: Row) => string;
   labelOf: (row: Row) => string;
+  colorOf: (row: Row) => string;
   columns: readonly TableColumn<Row>[];
 }>): ReactNode => {
   const sorted = sortRows({ rows, sort: useSort(id), columns, labelOf });
@@ -38,7 +40,13 @@ const SortableTable = <Row,>({
       </TableHeader>
       <TableBody>
         {sorted.map((row) => (
-          <SortBodyRow key={keyOf(row)} row={row} label={labelOf(row)} columns={columns} />
+          <SortBodyRow
+            key={keyOf(row)}
+            row={row}
+            label={labelOf(row)}
+            color={colorOf(row)}
+            columns={columns}
+          />
         ))}
       </TableBody>
     </Table>

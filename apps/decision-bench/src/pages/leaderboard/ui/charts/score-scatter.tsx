@@ -20,6 +20,7 @@ type ScatterPoint = Readonly<{
   measure: number;
   skill: number;
   error: readonly [number, number];
+  color: string;
   detail: Detail;
 }>;
 

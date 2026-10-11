@@ -1,4 +1,5 @@
 import { displayLabel } from "#/pages/leaderboard/model/display-label";
+import { colorOf } from "#/pages/leaderboard/model/model-color";
 import type { TaskEntry } from "#/pages/leaderboard/model/ranking";
 import { toPercentPoints } from "#/pages/leaderboard/ui/format";
 
@@ -63,6 +64,7 @@ const scatterPoints = ({
     const { lower, upper } = entry.result.test.skillInterval;
     return {
       label: displayLabel(entry),
+      color: colorOf(entry.model.model),
       detail: taskDetail(entry),
       mark: String(entry.mark),
       spot: spots[index] ?? NO_SPOT,

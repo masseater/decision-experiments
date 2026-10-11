@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { colorOf } from "#/pages/leaderboard/model/model-color";
 import type { ModelResult } from "#/pages/leaderboard/model/summary";
 import { useVisibleModels } from "#/pages/leaderboard/model/view";
 
@@ -17,6 +18,7 @@ const rowsOf = (models: readonly ModelResult[]): readonly ChartRow[] =>
     status: "point",
     key: model.model,
     label: model.label,
+    color: colorOf(model.model),
     detail: indexDetail(model),
     ratio: model.index,
   }));

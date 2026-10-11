@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { colorOf } from "#/pages/leaderboard/model/model-color";
 import type { TableColumn } from "#/pages/leaderboard/model/sorting";
 import type { ModelResult } from "#/pages/leaderboard/model/summary";
 import { percent, usd } from "#/pages/leaderboard/ui/format";
@@ -11,6 +12,7 @@ const LABEL = "モデル";
 
 const keyOf = ({ model }: ModelResult): string => model;
 const labelOf = ({ label }: ModelResult): string => label;
+const modelColor = ({ model }: ModelResult): string => colorOf(model);
 
 const COLUMNS: readonly TableColumn<ModelResult>[] = [
   {
@@ -34,6 +36,7 @@ const IndexTable = ({ models }: Readonly<{ models: readonly ModelResult[] }>): R
     label={LABEL}
     rows={models}
     keyOf={keyOf}
+    colorOf={modelColor}
     labelOf={labelOf}
     columns={COLUMNS}
   />

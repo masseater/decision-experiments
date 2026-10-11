@@ -4,11 +4,11 @@ import type { ReactNode } from "react";
 import { Legend, Scatter, ScatterChart } from "recharts";
 
 import { displayLabel } from "#/pages/leaderboard/model/display-label";
+import { colorOf } from "#/pages/leaderboard/model/model-color";
 import type { TaskEntry } from "#/pages/leaderboard/model/ranking";
 import { pointsOf, toPercentPoints } from "#/pages/leaderboard/ui/format";
 import { ChartContainer } from "#/shared/ui/chart";
 
-import { REFERENCE_COLOR } from "./chart-style";
 import { ReliabilityAxes } from "./reliability-axes";
 import { useLegendHandlers, useSeriesStates } from "./reliability-state";
 import type { SeriesState } from "./reliability-state";
@@ -18,18 +18,6 @@ type Point = Readonly<{ label: string; confidence: number; accuracy: number; cou
 type Series = Readonly<{ model: string; name: string; color: string; points: readonly Point[] }>;
 
 type Line = Readonly<{ stroke: string; strokeWidth: number; strokeOpacity: number }>;
-
-const SERIES_COLORS = [
-  "var(--color-series-1)",
-  "var(--color-series-2)",
-  "var(--color-series-3)",
-  "var(--color-series-4)",
-  "var(--color-series-5)",
-  "var(--color-series-6)",
-  "var(--color-series-7)",
-  "var(--color-series-8)",
-] as const;
-const FIRST_MARK = 1;
 
 const MARGIN = { top: 16, right: 24, bottom: 16, left: 0 } as const;
 const LEGEND_STYLE = { fontSize: 12, paddingTop: 16, cursor: "pointer" } as const;
@@ -55,8 +43,6 @@ const legendText = (value: unknown): ReactNode => (
   <span className="text-foreground">{String(value)}</span>
 );
 
-const colorOf = (mark: number): string => SERIES_COLORS[mark - FIRST_MARK] ?? REFERENCE_COLOR;
-
 const seriesOf = (entries: readonly TaskEntry[]): readonly Series[] =>
   entries.flatMap((entry) => {
     const { calibration } = entry.result.test;
@@ -68,7 +54,7 @@ const seriesOf = (entries: readonly TaskEntry[]): readonly Series[] =>
       {
         model: entry.model.model,
         name: `${entry.mark} ${label}`,
-        color: colorOf(entry.mark),
+        color: colorOf(entry.model.model),
         points: calibration.curve.map((bin) => ({
           label,
           confidence: toPercentPoints(bin.meanPredicted),
