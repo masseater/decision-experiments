@@ -1,7 +1,9 @@
 import { summary } from "./summary";
 import type { ModelResult, TaskResult } from "./summary";
 
-type TaskEntry = Readonly<{ model: ModelResult; result: TaskResult }>;
+type TaskEntry = Readonly<{ model: ModelResult; result: TaskResult; mark: number }>;
+
+const FIRST_MARK = 1;
 
 const rankedModels: readonly ModelResult[] = summary.models.toSorted(
   (left, right) => right.index - left.index || left.label.localeCompare(right.label),
@@ -33,9 +35,12 @@ const tasks: readonly TaskInfo[] = [
 ];
 
 const entriesOf = (task: string): readonly TaskEntry[] =>
-  rankedModels.flatMap((model) =>
-    model.tasks.filter((result) => result.task === task).map((result) => ({ model, result })),
-  );
+  rankedModels
+    .flatMap((model) =>
+      model.tasks.filter((result) => result.task === task).map((result) => ({ model, result })),
+    )
+    .toSorted((left, right) => right.result.test.skill - left.result.test.skill)
+    .map(({ model, result }, index) => ({ model, result, mark: index + FIRST_MARK }));
 
 export { entriesOf, rankedModels, tasks };
 export type { TaskEntry, TaskInfo };

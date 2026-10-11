@@ -8,9 +8,13 @@ import { ChartContainer } from "#/shared/ui/chart";
 
 import { AXIS_TICK, PERCENT_SCALE, SERIES_COLOR, TOOLTIP_STYLE } from "./chart-style";
 import { intervalBar } from "./interval-bar";
+import type { LabelSpot } from "./label-placement";
+import { MarkedPoint } from "./marked-point";
 
 type ScatterPoint = Readonly<{
   label: string;
+  mark: string;
+  spot: LabelSpot;
   measure: number;
   skill: number;
   error: readonly [number, number];
@@ -23,7 +27,6 @@ type Axis = Readonly<{
 }>;
 
 const Y_LABEL = { value: "skill", angle: -90, position: "insideLeft", fontSize: 12 } as const;
-const POINT_LABEL = { dataKey: "label", position: "right", fontSize: 12 } as const;
 const MARGIN = { top: 16, right: 24, bottom: 16, left: 0 } as const;
 
 const labelOf = (payload: unknown): string => {
@@ -80,7 +83,7 @@ const ScoreScatter = ({
         label={Y_LABEL}
       />
       <Tooltip contentStyle={TOOLTIP_STYLE} formatter={tooltipFormat} />
-      <Scatter isAnimationActive={false} data={points} fill={SERIES_COLOR} label={POINT_LABEL}>
+      <Scatter isAnimationActive={false} data={points} fill={SERIES_COLOR} shape={MarkedPoint}>
         {intervalBar("y")}
       </Scatter>
     </ScatterChart>
