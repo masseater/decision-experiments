@@ -13,6 +13,8 @@ const MetricSchema = Schema.Struct({
 const TaskResultSchema = Schema.Struct({
   task: Schema.String,
   label: Schema.String,
+  format: Schema.Literals(["choice", "noul", "score"]),
+  support: Schema.Literals(["supported", "unsupported"]),
   test: MetricSchema,
   hard: MetricSchema,
   p50Ms: Schema.Finite,
@@ -24,6 +26,7 @@ const TaskResultSchema = Schema.Struct({
 const ModelResultSchema = Schema.Struct({
   model: Schema.String,
   label: Schema.String,
+  choiceVia: Schema.Literals(["choice", "noul"]),
   index: Schema.Finite,
   costUsd: Schema.Finite,
   tasks: Schema.Array(TaskResultSchema),

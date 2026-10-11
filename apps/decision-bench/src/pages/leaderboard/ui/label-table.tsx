@@ -11,9 +11,9 @@ const LabelTable = ({
   labeling,
   labelledBy,
 }: Readonly<{ labeling: readonly LabelStats[]; labelledBy: string }>): ReactNode => (
-  <table aria-labelledby={labelledBy} className="w-full text-sm">
+  <table aria-labelledby={labelledBy} className="w-full text-xs sm:text-sm">
     <thead>
-      <HeaderRow headers={HEADERS} />
+      <HeaderRow headers={HEADERS} align="end" />
     </thead>
     <tbody>
       {labeling.map((stats) => (

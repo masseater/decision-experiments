@@ -1,10 +1,10 @@
 import { OpenRouter } from "@openrouter/sdk";
 import type { DecisionsRequest, DecisionsResponse } from "@openrouter/sdk/models";
-import { Clock, Config, Effect, Option, Redacted, Result, Schema } from "effect";
+import { Array as Arr, Clock, Config, Effect, Option, Redacted, Result, Schema } from "effect";
 
 import { makeCache } from "./cache.ts";
 import { DecisionSchema, OutcomeSchema } from "./item.ts";
-import type { Decision, Item, Outcome } from "./item.ts";
+import type { ChoiceItem, Decision, Item, Outcome } from "./item.ts";
 import { toRequest } from "./label.ts";
 
 interface DecisionAdapter {
@@ -12,8 +12,12 @@ interface DecisionAdapter {
   readonly decide: (item: Readonly<Item>) => Effect.Effect<Outcome>;
 }
 
+type ChoiceVia = "choice" | "noul";
+
 const QUESTION_ID = "q";
 const NO_COST = 0;
+const NOUL_CRITERIA = { true: "はい", false: "いいえ" };
+const NoulAnswerSchema = Schema.Struct({ type: Schema.Literal("noul"), noul: Schema.Finite });
 
 const isAnswered = (outcome: Outcome): boolean => outcome.status === "answered";
 
@@ -34,20 +38,58 @@ const toQuestions = (item: Readonly<Item>): DecisionsRequest["questions"] => {
   return { [QUESTION_ID]: { type: item.type, instructions, criteria: [...item.options] } };
 };
 
-const decodeDecision = (item: Readonly<Item>, answer: unknown): Option.Option<Decision> =>
-  Option.filter(
-    Schema.decodeUnknownOption(DecisionSchema)(answer),
-    (decision) => decision.type === item.type,
+const toSplitQuestions = (item: Readonly<ChoiceItem>): DecisionsRequest["questions"] =>
+  Object.fromEntries(
+    Object.entries(item.options).map(([key, option]) => [
+      key,
+      {
+        type: "noul",
+        instructions: `${item.criteria}\n次の答えは正しいですか: ${option}`,
+        criteria: NOUL_CRITERIA,
+      },
+    ]),
   );
 
+const decodeSplit = (item: Readonly<ChoiceItem>, answers: unknown): Option.Option<Decision> =>
+  Option.gen(function* split() {
+    const record = yield* Schema.decodeUnknownOption(
+      Schema.Record(Schema.String, NoulAnswerSchema),
+    )(answers);
+    const scored = yield* Option.all(
+      Object.keys(item.options).map((key) =>
+        Option.map(Option.fromNullishOr(record[key]), ({ noul }) => ({ key, noul })),
+      ),
+    );
+    const best = yield* Arr.head(scored.toSorted((left, right) => right.noul - left.noul));
+    return { type: "choice" as const, choice: best.key };
+  });
+
+const decodeDecision = (
+  item: Readonly<Item>,
+  via: ChoiceVia,
+  answers: Readonly<Record<string, unknown>>,
+): Option.Option<Decision> => {
+  if (item.type === "choice" && via === "noul") {
+    return decodeSplit(item, answers);
+  }
+  return Option.filter(
+    Schema.decodeUnknownOption(DecisionSchema)(answers[QUESTION_ID]),
+    (decision) => decision.type === item.type,
+  );
+};
+
 interface Reply {
-  readonly answer: unknown;
+  readonly answers: Readonly<Record<string, unknown>>;
   readonly costUsd: number;
   readonly latencyMs: number;
 }
 
-const toOutcome = (item: Readonly<Item>, { answer, costUsd, latencyMs }: Reply): Outcome =>
-  Option.match(decodeDecision(item, answer), {
+const toOutcome = (
+  item: Readonly<Item>,
+  via: ChoiceVia,
+  { answers, costUsd, latencyMs }: Reply,
+): Outcome =>
+  Option.match(decodeDecision(item, via, answers), {
     onNone: () => failed("answer type mismatch", latencyMs),
     onSome: (decision) => ({ status: "answered", decision, latencyMs, costUsd }),
   });
@@ -55,6 +97,7 @@ const toOutcome = (item: Readonly<Item>, { answer, costUsd, latencyMs }: Reply):
 const callSystemOne = Effect.fn("callSystemOne")(function* callSystemOne(
   create: (item: Readonly<Item>) => Promise<DecisionsResponse>,
   item: Readonly<Item>,
+  via: ChoiceVia,
 ) {
   const started = yield* Clock.currentTimeMillis;
   const response = yield* Effect.tryPromise(() => create(item)).pipe(Effect.result);
@@ -63,22 +106,37 @@ const callSystemOne = Effect.fn("callSystemOne")(function* callSystemOne(
     return failed(String(response.failure.cause), latencyMs);
   }
   const { answers, usage } = response.success;
-  return toOutcome(item, {
-    answer: answers[QUESTION_ID],
+  return toOutcome(item, via, {
+    answers,
     costUsd: usage.cost ?? NO_COST,
     latencyMs,
   });
 });
 
+const questionsOf = (item: Readonly<Item>, via: ChoiceVia): DecisionsRequest["questions"] => {
+  if (item.type === "choice" && via === "noul") {
+    return toSplitQuestions(item);
+  }
+  return toQuestions(item);
+};
+
+const cacheKey = (model: string, item: Readonly<Item>, via: ChoiceVia): unknown => {
+  if (item.type === "choice" && via === "noul") {
+    return { model, request: toRequest(item), via };
+  }
+  return { model, request: toRequest(item) };
+};
+
 const makeOpenRouterAdapter = Effect.fn("makeOpenRouterAdapter")(function* makeOpenRouterAdapter(
   model: string,
+  via: ChoiceVia,
 ) {
   const client = new OpenRouter({
     apiKey: Redacted.value(yield* Config.Redacted("OPENROUTER_API_KEY")),
   });
   const create = (item: Readonly<Item>): Promise<DecisionsResponse> =>
     client.systemOne.create({
-      decisionsRequest: { model, state: item.text, questions: toQuestions(item) },
+      decisionsRequest: { model, state: item.text, questions: questionsOf(item, via) },
     });
   const cached = yield* makeCache(
     `openrouter-${model.replaceAll("/", "__")}`,
@@ -87,9 +145,10 @@ const makeOpenRouterAdapter = Effect.fn("makeOpenRouterAdapter")(function* makeO
   );
   const adapter: DecisionAdapter = {
     model,
-    decide: (item) => cached({ model, request: toRequest(item) }, callSystemOne(create, item)),
+    decide: (item) => cached(cacheKey(model, item, via), callSystemOne(create, item, via)),
   };
   return adapter;
 });
 
 export { makeOpenRouterAdapter };
+export type { ChoiceVia };

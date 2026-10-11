@@ -19,12 +19,31 @@ const LABEL_COST_DIGITS = 2;
 const START = "<!-- results:start -->";
 const END = "<!-- results:end -->";
 
+const DATASETS = ["jnli", "rules"] as const;
+
 const TASKS = [
-  { id: "jnli", label: "JNLI 含意関係（Choice）" },
-  { id: "rules", label: "業務ルール判定（Noul）" },
+  { id: "jnli", label: "JNLI 含意関係（Choice）", data: "jnli", format: "choice" },
+  { id: "rules", label: "業務ルール判定（Noul）", data: "rules", format: "noul" },
 ] as const;
 
-const MODELS = [{ id: "respan/span-01-lite", label: "span-01 lite" }] as const;
+const MODELS = [
+  { id: "typesafe/jev-1.13", label: "Jev 1.13", choiceVia: "choice" },
+  { id: "liquid/d1", label: "Liquid d1", choiceVia: "choice" },
+  { id: "perplexity/pplx-decider-v1.1-27b", label: "Perplexity Decider v1.1", choiceVia: "choice" },
+  { id: "openai/gpt-6-luna-decisions", label: "GPT-6 Luna Decisions", choiceVia: "choice" },
+  { id: "microsoft/microsoft-decision-1", label: "Microsoft Decision 1", choiceVia: "choice" },
+  { id: "upstage/solar-decide", label: "Solar Decide", choiceVia: "choice" },
+  { id: "upstage/solar-decide-flash", label: "Solar Decide Flash", choiceVia: "choice" },
+  { id: "inception/mercury-decide", label: "Mercury Decide", choiceVia: "choice" },
+  { id: "cloudflare/clef", label: "Clef", choiceVia: "choice" },
+  { id: "cloudflare/clef-flash", label: "Clef Flash", choiceVia: "choice" },
+  { id: "cloudflare/clef-omni", label: "Clef Omni", choiceVia: "choice" },
+  { id: "nace-ai/drex-v1.5", label: "Drex v1.5", choiceVia: "choice" },
+  { id: "togethercomputer/tev1-4b-experimental", label: "Tev1 4B", choiceVia: "choice" },
+  { id: "jaredpalmer/kev-4b", label: "Kev 4B", choiceVia: "choice" },
+  { id: "respan/span-01", label: "span-01", choiceVia: "noul" },
+  { id: "respan/span-01-lite", label: "span-01 lite", choiceVia: "noul" },
+] as const;
 
 type Task = (typeof TASKS)[number] & Readonly<{ items: readonly Item[] }>;
 
@@ -76,6 +95,15 @@ const table = (summary: Summary): string =>
     ...labelRows(summary).map((row) => `| ${row} |`),
   ].join("\n");
 
+const supportOf = (
+  test: Readonly<{ failed: number; total: number }>,
+): "supported" | "unsupported" => {
+  if (test.failed === test.total) {
+    return "unsupported";
+  }
+  return "supported";
+};
+
 const runTask = Effect.fn("runTask")(function* runTask(
   adapter: Effect.Success<ReturnType<typeof makeOpenRouterAdapter>>,
   task: Task,
@@ -85,10 +113,13 @@ const runTask = Effect.fn("runTask")(function* runTask(
     (item) => adapter.decide(item).pipe(Effect.map((outcome): Scored => ({ item, outcome }))),
     { concurrency: CONCURRENCY },
   );
+  const test = metric(rows.filter(({ item }) => item.split === "test"));
   const result = {
     task: task.id,
     label: task.label,
-    test: metric(rows.filter(({ item }) => item.split === "test")),
+    format: task.format,
+    support: supportOf(test),
+    test,
     hard: metric(rows.filter(({ item }) => item.split === "hard")),
     ...usage(rows),
   };
@@ -99,7 +130,7 @@ const runModel = Effect.fn("runModel")(function* runModel(
   model: (typeof MODELS)[number],
   tasks: readonly Task[],
 ) {
-  const adapter = yield* makeOpenRouterAdapter(model.id);
+  const adapter = yield* makeOpenRouterAdapter(model.id, model.choiceVia);
   const ran = yield* Effect.forEach(tasks, (task) => runTask(adapter, task), { discard: false });
   const results = ran.map(({ result }) => result);
   yield* writeJson(
@@ -115,6 +146,7 @@ const runModel = Effect.fn("runModel")(function* runModel(
   return {
     model: model.id,
     label: model.label,
+    choiceVia: model.choiceVia,
     index: Num.sumAll(results.map(({ test }) => test.skill)) / results.length,
     costUsd: Num.sumAll(results.map(({ costUsd }) => costUsd)),
     tasks: results,
@@ -122,13 +154,13 @@ const runModel = Effect.fn("runModel")(function* runModel(
 });
 
 const loadTask = Effect.fn("loadTask")(function* loadTask(task: (typeof TASKS)[number]) {
-  const items = yield* readJsonl(ItemSchema, yield* benchPath("data", `${task.id}.jsonl`));
+  const items = yield* readJsonl(ItemSchema, yield* benchPath("data", `${task.data}.jsonl`));
   return { ...task, items };
 });
 
-const loadStats = Effect.fn("loadStats")(function* loadStats(task: (typeof TASKS)[number]) {
+const loadStats = Effect.fn("loadStats")(function* loadStats(data: (typeof DATASETS)[number]) {
   const fileSystem = yield* FileSystem.FileSystem;
-  const text = yield* fileSystem.readFileString(yield* benchPath("data", `${task.id}.stats.json`));
+  const text = yield* fileSystem.readFileString(yield* benchPath("data", `${data}.stats.json`));
   return yield* Schema.decodeEffect(Schema.fromJsonString(LabelStatsSchema))(text);
 });
 
@@ -148,8 +180,10 @@ runBench(
     const tasks = yield* Effect.forEach(TASKS, (task) => loadTask(task), { discard: false });
     const summary: Summary = {
       generatedAt: DateTime.formatIso(yield* DateTime.now),
-      models: yield* Effect.forEach(MODELS, (model) => runModel(model, tasks), { discard: false }),
-      labeling: yield* Effect.forEach(TASKS, (task) => loadStats(task), { discard: false }),
+      models: yield* Effect.forEach(MODELS, (model) => runModel(model, tasks), {
+        concurrency: "unbounded",
+      }),
+      labeling: yield* Effect.forEach(DATASETS, (data) => loadStats(data), { discard: false }),
     };
     yield* writeJson(SummarySchema, yield* benchPath("results", "summary.json"), summary);
     yield* updateReadme(summary);
