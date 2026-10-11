@@ -6,7 +6,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 200
+        "latencyMs": 275
       }
     },
     {
@@ -14,7 +14,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 205
+        "latencyMs": 255
       }
     },
     {
@@ -22,7 +22,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 202
+        "latencyMs": 259
       }
     },
     {
@@ -30,7 +30,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 198
+        "latencyMs": 242
       }
     },
     {
@@ -38,7 +38,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 64
+        "latencyMs": 60
       }
     },
     {
@@ -46,7 +46,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 78
+        "latencyMs": 69
       }
     },
     {
@@ -54,7 +54,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 63
       }
     },
     {
@@ -62,7 +62,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 75
+        "latencyMs": 65
       }
     },
     {
@@ -70,7 +70,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 65
       }
     },
     {
@@ -78,7 +78,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 63
+        "latencyMs": 78
       }
     },
     {
@@ -86,7 +86,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 64
+        "latencyMs": 65
       }
     },
     {
@@ -94,7 +94,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 57
+        "latencyMs": 75
       }
     },
     {
@@ -102,7 +102,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 67
+        "latencyMs": 59
       }
     },
     {
@@ -110,7 +110,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 67
+        "latencyMs": 56
       }
     },
     {
@@ -126,7 +126,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 68
+        "latencyMs": 59
       }
     },
     {
@@ -134,7 +134,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 59
+        "latencyMs": 67
       }
     },
     {
@@ -142,7 +142,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 68
+        "latencyMs": 63
       }
     },
     {
@@ -166,7 +166,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 63
+        "latencyMs": 71
       }
     },
     {
@@ -174,7 +174,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 57
+        "latencyMs": 70
       }
     },
     {
@@ -182,7 +182,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 58
       }
     },
     {
@@ -190,7 +190,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 64
+        "latencyMs": 62
       }
     },
     {
@@ -198,7 +198,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 67
+        "latencyMs": 59
       }
     },
     {
@@ -206,7 +206,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 78
       }
     },
     {
@@ -214,7 +214,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 56
+        "latencyMs": 72
       }
     },
     {
@@ -222,7 +222,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 54
+        "latencyMs": 100
       }
     },
     {
@@ -230,7 +230,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 59
+        "latencyMs": 112
       }
     },
     {
@@ -238,7 +238,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 66
+        "latencyMs": 99
       }
     },
     {
@@ -246,7 +246,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 74
+        "latencyMs": 92
       }
     },
     {
@@ -254,7 +254,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 68
+        "latencyMs": 104
       }
     },
     {
@@ -262,7 +262,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 66
+        "latencyMs": 60
       }
     },
     {
@@ -270,7 +270,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 63
+        "latencyMs": 59
       }
     },
     {
@@ -278,7 +278,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 63
+        "latencyMs": 60
       }
     },
     {
@@ -286,7 +286,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 71
+        "latencyMs": 60
       }
     },
     {
@@ -294,7 +294,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 66
+        "latencyMs": 59
       }
     },
     {
@@ -302,7 +302,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 65
       }
     },
     {
@@ -310,7 +310,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 57
+        "latencyMs": 59
       }
     },
     {
@@ -318,7 +318,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 58
+        "latencyMs": 80
       }
     },
     {
@@ -326,7 +326,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 73
+        "latencyMs": 78
       }
     },
     {
@@ -334,7 +334,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 74
+        "latencyMs": 68
       }
     },
     {
@@ -342,7 +342,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 75
+        "latencyMs": 69
       }
     },
     {
@@ -350,7 +350,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 68
+        "latencyMs": 82
       }
     },
     {
@@ -358,7 +358,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 59
+        "latencyMs": 86
       }
     },
     {
@@ -366,7 +366,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 80
       }
     },
     {
@@ -374,7 +374,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 59
+        "latencyMs": 80
       }
     },
     {
@@ -382,7 +382,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 74
       }
     },
     {
@@ -390,7 +390,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 60
+        "latencyMs": 69
       }
     },
     {
@@ -406,7 +406,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 71
+        "latencyMs": 75
       }
     },
     {
@@ -414,7 +414,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 75
+        "latencyMs": 58
       }
     },
     {
@@ -422,7 +422,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 60
+        "latencyMs": 56
       }
     },
     {
@@ -430,7 +430,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 63
+        "latencyMs": 73
       }
     },
     {
@@ -438,7 +438,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 59
+        "latencyMs": 140
       }
     },
     {
@@ -446,7 +446,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 64
+        "latencyMs": 54
       }
     },
     {
@@ -454,7 +454,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 69
+        "latencyMs": 56
       }
     },
     {
@@ -470,7 +470,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 56
+        "latencyMs": 61
       }
     },
     {
@@ -478,7 +478,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 65
+        "latencyMs": 63
       }
     },
     {
@@ -486,7 +486,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 63
+        "latencyMs": 56
       }
     },
     {
@@ -494,7 +494,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 66
       }
     },
     {
@@ -502,7 +502,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 60
+        "latencyMs": 55
       }
     },
     {
@@ -510,7 +510,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 67
       }
     },
     {
@@ -518,7 +518,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 67
+        "latencyMs": 62
       }
     },
     {
@@ -526,7 +526,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 77
+        "latencyMs": 59
       }
     },
     {
@@ -534,7 +534,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 70
+        "latencyMs": 62
       }
     },
     {
@@ -542,7 +542,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 56
+        "latencyMs": 62
       }
     },
     {
@@ -550,7 +550,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 58
+        "latencyMs": 61
       }
     },
     {
@@ -558,7 +558,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 59
+        "latencyMs": 53
       }
     },
     {
@@ -566,7 +566,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 73
+        "latencyMs": 55
       }
     },
     {
@@ -574,7 +574,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 70
+        "latencyMs": 62
       }
     },
     {
@@ -582,7 +582,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 60
       }
     },
     {
@@ -590,7 +590,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 55
+        "latencyMs": 58
       }
     },
     {
@@ -598,7 +598,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 58
+        "latencyMs": 55
       }
     },
     {
@@ -606,7 +606,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 60
+        "latencyMs": 64
       }
     },
     {
@@ -614,7 +614,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 63
+        "latencyMs": 56
       }
     },
     {
@@ -622,7 +622,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 52
       }
     },
     {
@@ -630,7 +630,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 55
+        "latencyMs": 53
       }
     },
     {
@@ -638,7 +638,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 109
+        "latencyMs": 56
       }
     },
     {
@@ -646,7 +646,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 72
+        "latencyMs": 57
       }
     },
     {
@@ -654,7 +654,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 76
+        "latencyMs": 63
       }
     },
     {
@@ -662,7 +662,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 68
+        "latencyMs": 56
       }
     },
     {
@@ -670,7 +670,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 60
+        "latencyMs": 57
       }
     },
     {
@@ -678,7 +678,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 57
       }
     },
     {
@@ -686,7 +686,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 67
+        "latencyMs": 62
       }
     },
     {
@@ -694,7 +694,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 65
+        "latencyMs": 64
       }
     },
     {
@@ -702,7 +702,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 58
       }
     },
     {
@@ -710,7 +710,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 60
       }
     },
     {
@@ -718,7 +718,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 60
+        "latencyMs": 50
       }
     },
     {
@@ -726,7 +726,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 92
+        "latencyMs": 59
       }
     },
     {
@@ -734,7 +734,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 54
+        "latencyMs": 65
       }
     },
     {
@@ -742,7 +742,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 55
+        "latencyMs": 57
       }
     },
     {
@@ -758,7 +758,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 58
+        "latencyMs": 54
       }
     },
     {
@@ -766,7 +766,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 58
+        "latencyMs": 54
       }
     },
     {
@@ -774,7 +774,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 58
+        "latencyMs": 70
       }
     },
     {
@@ -782,7 +782,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 53
+        "latencyMs": 65
       }
     },
     {
@@ -790,7 +790,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 56
+        "latencyMs": 61
       }
     },
     {
@@ -798,7 +798,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 57
+        "latencyMs": 60
       }
     },
     {
@@ -806,7 +806,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 55
+        "latencyMs": 54
       }
     },
     {
@@ -814,7 +814,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 54
+        "latencyMs": 58
       }
     },
     {
@@ -830,7 +830,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 70
+        "latencyMs": 58
       }
     },
     {
@@ -838,7 +838,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 73
+        "latencyMs": 56
       }
     },
     {
@@ -846,7 +846,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 72
+        "latencyMs": 60
       }
     },
     {
@@ -854,7 +854,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 56
       }
     },
     {
@@ -862,7 +862,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 57
+        "latencyMs": 58
       }
     },
     {
@@ -870,7 +870,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 55
+        "latencyMs": 58
       }
     },
     {
@@ -878,7 +878,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 55
+        "latencyMs": 54
       }
     },
     {
@@ -886,7 +886,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 57
+        "latencyMs": 54
       }
     },
     {
@@ -894,7 +894,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 51
+        "latencyMs": 85
       }
     },
     {
@@ -910,7 +910,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 58
       }
     },
     {
@@ -918,7 +918,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 64
+        "latencyMs": 71
       }
     },
     {
@@ -926,7 +926,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 63
+        "latencyMs": 59
       }
     },
     {
@@ -934,7 +934,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 65
       }
     },
     {
@@ -942,7 +942,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 53
+        "latencyMs": 59
       }
     },
     {
@@ -958,7 +958,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 58
       }
     },
     {
@@ -966,7 +966,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 59
+        "latencyMs": 53
       }
     },
     {
@@ -974,7 +974,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 57
+        "latencyMs": 55
       }
     },
     {
@@ -982,7 +982,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 68
+        "latencyMs": 156
       }
     },
     {
@@ -990,7 +990,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 65
+        "latencyMs": 159
       }
     },
     {
@@ -998,7 +998,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 73
+        "latencyMs": 160
       }
     },
     {
@@ -1006,7 +1006,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 75
+        "latencyMs": 153
       }
     },
     {
@@ -1014,7 +1014,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 70
+        "latencyMs": 65
       }
     },
     {
@@ -1022,7 +1022,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 63
       }
     },
     {
@@ -1030,7 +1030,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 60
+        "latencyMs": 67
       }
     },
     {
@@ -1038,7 +1038,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 57
+        "latencyMs": 63
       }
     },
     {
@@ -1046,7 +1046,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 59
+        "latencyMs": 60
       }
     },
     {
@@ -1054,7 +1054,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 57
+        "latencyMs": 60
       }
     },
     {
@@ -1062,7 +1062,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 55
+        "latencyMs": 59
       }
     },
     {
@@ -1070,7 +1070,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 56
+        "latencyMs": 53
       }
     },
     {
@@ -1078,7 +1078,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 57
       }
     },
     {
@@ -1086,7 +1086,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 59
+        "latencyMs": 66
       }
     },
     {
@@ -1094,7 +1094,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 63
+        "latencyMs": 56
       }
     },
     {
@@ -1102,7 +1102,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 63
+        "latencyMs": 61
       }
     },
     {
@@ -1110,7 +1110,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 220
+        "latencyMs": 54
       }
     },
     {
@@ -1118,7 +1118,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 213
+        "latencyMs": 55
       }
     },
     {
@@ -1126,7 +1126,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 212
+        "latencyMs": 53
       }
     },
     {
@@ -1134,7 +1134,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 207
+        "latencyMs": 56
       }
     },
     {
@@ -1142,7 +1142,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 67
+        "latencyMs": 53
       }
     },
     {
@@ -1150,7 +1150,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 71
+        "latencyMs": 58
       }
     },
     {
@@ -1158,7 +1158,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 76
+        "latencyMs": 78
       }
     },
     {
@@ -1166,7 +1166,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 123
+        "latencyMs": 75
       }
     },
     {
@@ -1174,7 +1174,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 73
+        "latencyMs": 75
       }
     },
     {
@@ -1182,7 +1182,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 69
+        "latencyMs": 63
       }
     },
     {
@@ -1190,7 +1190,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 75
+        "latencyMs": 54
       }
     },
     {
@@ -1198,7 +1198,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 55
       }
     },
     {
@@ -1206,7 +1206,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 60
       }
     },
     {
@@ -1214,7 +1214,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 63
+        "latencyMs": 57
       }
     },
     {
@@ -1222,7 +1222,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 63
+        "latencyMs": 67
       }
     },
     {
@@ -1230,7 +1230,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 60
       }
     },
     {
@@ -1238,7 +1238,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 87
       }
     },
     {
@@ -1246,7 +1246,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 110
       }
     },
     {
@@ -1254,7 +1254,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 60
+        "latencyMs": 98
       }
     },
     {
@@ -1262,7 +1262,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 100
       }
     },
     {
@@ -1270,7 +1270,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 97
       }
     },
     {
@@ -1278,7 +1278,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 54
       }
     },
     {
@@ -1286,7 +1286,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 64
+        "latencyMs": 56
       }
     },
     {
@@ -1294,7 +1294,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 84
+        "latencyMs": 56
       }
     },
     {
@@ -1302,7 +1302,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 78
+        "latencyMs": 59
       }
     },
     {
@@ -1310,7 +1310,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 75
+        "latencyMs": 58
       }
     },
     {
@@ -1318,7 +1318,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 75
+        "latencyMs": 56
       }
     },
     {
@@ -1326,7 +1326,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 56
+        "latencyMs": 54
       }
     },
     {
@@ -1334,7 +1334,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 79
       }
     },
     {
@@ -1342,7 +1342,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 88
+        "latencyMs": 80
       }
     },
     {
@@ -1350,7 +1350,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 55
+        "latencyMs": 79
       }
     },
     {
@@ -1358,7 +1358,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 60
+        "latencyMs": 76
       }
     },
     {
@@ -1366,7 +1366,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 64
+        "latencyMs": 57
       }
     },
     {
@@ -1374,7 +1374,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 60
+        "latencyMs": 125
       }
     },
     {
@@ -1382,7 +1382,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 57
+        "latencyMs": 58
       }
     },
     {
@@ -1390,7 +1390,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 65
+        "latencyMs": 63
       }
     },
     {
@@ -1398,7 +1398,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 58
+        "latencyMs": 61
       }
     },
     {
@@ -1406,7 +1406,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 56
+        "latencyMs": 59
       }
     },
     {
@@ -1414,7 +1414,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 59
+        "latencyMs": 60
       }
     },
     {
@@ -1422,7 +1422,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 59
       }
     },
     {
@@ -1430,7 +1430,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 66
       }
     },
     {
@@ -1438,7 +1438,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 62
+        "latencyMs": 61
       }
     },
     {
@@ -1446,7 +1446,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 56
+        "latencyMs": 68
       }
     },
     {
@@ -1454,7 +1454,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 73
+        "latencyMs": 56
       }
     },
     {
@@ -1462,7 +1462,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 78
+        "latencyMs": 53
       }
     },
     {
@@ -1470,7 +1470,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 75
+        "latencyMs": 56
       }
     },
     {
@@ -1478,7 +1478,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 67
+        "latencyMs": 56
       }
     },
     {
@@ -1486,7 +1486,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 59
+        "latencyMs": 77
       }
     },
     {
@@ -1494,7 +1494,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 65
+        "latencyMs": 74
       }
     },
     {
@@ -1502,7 +1502,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 75
+        "latencyMs": 67
       }
     },
     {
@@ -1510,7 +1510,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 71
+        "latencyMs": 72
       }
     },
     {
@@ -1518,7 +1518,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 54
       }
     },
     {
@@ -1526,7 +1526,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 61
+        "latencyMs": 54
       }
     },
     {
@@ -1534,7 +1534,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 58
+        "latencyMs": 56
       }
     },
     {
@@ -1542,7 +1542,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 64
+        "latencyMs": 53
       }
     },
     {
@@ -1550,7 +1550,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 65
+        "latencyMs": 82
       }
     },
     {
@@ -1558,7 +1558,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 63
+        "latencyMs": 54
       }
     },
     {
@@ -1566,7 +1566,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 59
+        "latencyMs": 54
       }
     },
     {
@@ -1574,7 +1574,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 101
+        "latencyMs": 53
       }
     },
     {
@@ -1582,7 +1582,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 59
+        "latencyMs": 65
       }
     },
     {
@@ -1590,7 +1590,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 57
+        "latencyMs": 63
       }
     },
     {
@@ -1598,7 +1598,7 @@
       "outcome": {
         "status": "failed",
         "reason": "BadRequestResponseError: Respan only accepts noul questions whose instructions and criteria are plain strings (question \"q\")",
-        "latencyMs": 58
+        "latencyMs": 66
       }
     },
     {
@@ -1609,7 +1609,7 @@
           "type": "noul",
           "noul": 0.7961504
         },
-        "latencyMs": 312,
+        "latencyMs": 359,
         "costUsd": 0
       }
     },
@@ -1621,7 +1621,7 @@
           "type": "noul",
           "noul": 0.049768806
         },
-        "latencyMs": 515,
+        "latencyMs": 289,
         "costUsd": 0
       }
     },
@@ -1633,7 +1633,7 @@
           "type": "noul",
           "noul": 0.87376046
         },
-        "latencyMs": 274,
+        "latencyMs": 316,
         "costUsd": 0
       }
     },
@@ -1645,7 +1645,7 @@
           "type": "noul",
           "noul": 0.8903775
         },
-        "latencyMs": 349,
+        "latencyMs": 411,
         "costUsd": 0
       }
     },
@@ -1657,7 +1657,7 @@
           "type": "noul",
           "noul": 0.04173606
         },
-        "latencyMs": 218,
+        "latencyMs": 219,
         "costUsd": 0
       }
     },
@@ -1669,7 +1669,7 @@
           "type": "noul",
           "noul": 0.7963906
         },
-        "latencyMs": 343,
+        "latencyMs": 242,
         "costUsd": 0
       }
     },
@@ -1681,7 +1681,7 @@
           "type": "noul",
           "noul": 0.045512322
         },
-        "latencyMs": 184,
+        "latencyMs": 251,
         "costUsd": 0
       }
     },
@@ -1693,7 +1693,7 @@
           "type": "noul",
           "noul": 0.5861218
         },
-        "latencyMs": 204,
+        "latencyMs": 228,
         "costUsd": 0
       }
     },
@@ -1705,7 +1705,7 @@
           "type": "noul",
           "noul": 0.057371944
         },
-        "latencyMs": 225,
+        "latencyMs": 265,
         "costUsd": 0
       }
     },
@@ -1717,7 +1717,7 @@
           "type": "noul",
           "noul": 0.8614312
         },
-        "latencyMs": 244,
+        "latencyMs": 175,
         "costUsd": 0
       }
     },
@@ -1729,7 +1729,7 @@
           "type": "noul",
           "noul": 0.07435008
         },
-        "latencyMs": 182,
+        "latencyMs": 204,
         "costUsd": 0
       }
     },
@@ -1741,7 +1741,7 @@
           "type": "noul",
           "noul": 0.83213216
         },
-        "latencyMs": 226,
+        "latencyMs": 256,
         "costUsd": 0
       }
     },
@@ -1753,7 +1753,7 @@
           "type": "noul",
           "noul": 0.13149033
         },
-        "latencyMs": 215,
+        "latencyMs": 197,
         "costUsd": 0
       }
     },
@@ -1765,7 +1765,7 @@
           "type": "noul",
           "noul": 0.7737823
         },
-        "latencyMs": 223,
+        "latencyMs": 250,
         "costUsd": 0
       }
     },
@@ -1777,7 +1777,7 @@
           "type": "noul",
           "noul": 0.08653265
         },
-        "latencyMs": 249,
+        "latencyMs": 172,
         "costUsd": 0
       }
     },
@@ -1789,7 +1789,7 @@
           "type": "noul",
           "noul": 0.04547843
         },
-        "latencyMs": 197,
+        "latencyMs": 179,
         "costUsd": 0
       }
     },
@@ -1801,7 +1801,7 @@
           "type": "noul",
           "noul": 0.5011461
         },
-        "latencyMs": 212,
+        "latencyMs": 187,
         "costUsd": 0
       }
     },
@@ -1813,7 +1813,7 @@
           "type": "noul",
           "noul": 0.9271314
         },
-        "latencyMs": 212,
+        "latencyMs": 180,
         "costUsd": 0
       }
     },
@@ -1825,7 +1825,7 @@
           "type": "noul",
           "noul": 0.09198401
         },
-        "latencyMs": 186,
+        "latencyMs": 185,
         "costUsd": 0
       }
     },
@@ -1837,7 +1837,7 @@
           "type": "noul",
           "noul": 0.16248466
         },
-        "latencyMs": 207,
+        "latencyMs": 314,
         "costUsd": 0
       }
     },
@@ -1849,7 +1849,7 @@
           "type": "noul",
           "noul": 0.822224
         },
-        "latencyMs": 286,
+        "latencyMs": 321,
         "costUsd": 0
       }
     },
@@ -1861,7 +1861,7 @@
           "type": "noul",
           "noul": 0.04429305
         },
-        "latencyMs": 285,
+        "latencyMs": 318,
         "costUsd": 0
       }
     },
@@ -1873,7 +1873,7 @@
           "type": "noul",
           "noul": 0.045940775
         },
-        "latencyMs": 563,
+        "latencyMs": 310,
         "costUsd": 0
       }
     },
@@ -1885,7 +1885,7 @@
           "type": "noul",
           "noul": 0.09533517
         },
-        "latencyMs": 247,
+        "latencyMs": 322,
         "costUsd": 0
       }
     },
@@ -1897,7 +1897,7 @@
           "type": "noul",
           "noul": 0.04461947
         },
-        "latencyMs": 258,
+        "latencyMs": 319,
         "costUsd": 0
       }
     },
@@ -1909,7 +1909,7 @@
           "type": "noul",
           "noul": 0.76984894
         },
-        "latencyMs": 494,
+        "latencyMs": 321,
         "costUsd": 0
       }
     },
@@ -1921,7 +1921,7 @@
           "type": "noul",
           "noul": 0.9096237
         },
-        "latencyMs": 196,
+        "latencyMs": 323,
         "costUsd": 0
       }
     },
@@ -1933,7 +1933,7 @@
           "type": "noul",
           "noul": 0.040892936
         },
-        "latencyMs": 183,
+        "latencyMs": 216,
         "costUsd": 0
       }
     },
@@ -1945,7 +1945,7 @@
           "type": "noul",
           "noul": 0.5318709
         },
-        "latencyMs": 177,
+        "latencyMs": 213,
         "costUsd": 0
       }
     },
@@ -1957,7 +1957,7 @@
           "type": "noul",
           "noul": 0.02877342
         },
-        "latencyMs": 531,
+        "latencyMs": 211,
         "costUsd": 0
       }
     },
@@ -1969,7 +1969,7 @@
           "type": "noul",
           "noul": 0.37025023
         },
-        "latencyMs": 185,
+        "latencyMs": 207,
         "costUsd": 0
       }
     },
@@ -1981,7 +1981,7 @@
           "type": "noul",
           "noul": 0.058942042
         },
-        "latencyMs": 183,
+        "latencyMs": 174,
         "costUsd": 0
       }
     },
@@ -1993,7 +1993,7 @@
           "type": "noul",
           "noul": 0.060505345
         },
-        "latencyMs": 186,
+        "latencyMs": 176,
         "costUsd": 0
       }
     },
@@ -2005,7 +2005,7 @@
           "type": "noul",
           "noul": 0.07013694
         },
-        "latencyMs": 187,
+        "latencyMs": 257,
         "costUsd": 0
       }
     },
@@ -2017,7 +2017,7 @@
           "type": "noul",
           "noul": 0.08295033
         },
-        "latencyMs": 193,
+        "latencyMs": 172,
         "costUsd": 0
       }
     },
@@ -2029,7 +2029,7 @@
           "type": "noul",
           "noul": 0.5789132
         },
-        "latencyMs": 183,
+        "latencyMs": 185,
         "costUsd": 0
       }
     },
@@ -2041,7 +2041,7 @@
           "type": "noul",
           "noul": 0.10270639
         },
-        "latencyMs": 215,
+        "latencyMs": 182,
         "costUsd": 0
       }
     },
@@ -2053,7 +2053,7 @@
           "type": "noul",
           "noul": 0.86470276
         },
-        "latencyMs": 220,
+        "latencyMs": 222,
         "costUsd": 0
       }
     },
@@ -2065,7 +2065,7 @@
           "type": "noul",
           "noul": 0.14755398
         },
-        "latencyMs": 661,
+        "latencyMs": 213,
         "costUsd": 0
       }
     },
@@ -2077,7 +2077,7 @@
           "type": "noul",
           "noul": 0.86283207
         },
-        "latencyMs": 228,
+        "latencyMs": 222,
         "costUsd": 0
       }
     },
@@ -2089,7 +2089,7 @@
           "type": "noul",
           "noul": 0.04484575
         },
-        "latencyMs": 216,
+        "latencyMs": 218,
         "costUsd": 0
       }
     },
@@ -2101,7 +2101,7 @@
           "type": "noul",
           "noul": 0.24924716
         },
-        "latencyMs": 210,
+        "latencyMs": 194,
         "costUsd": 0
       }
     },
@@ -2113,7 +2113,7 @@
           "type": "noul",
           "noul": 0.6822411
         },
-        "latencyMs": 195,
+        "latencyMs": 196,
         "costUsd": 0
       }
     },
@@ -2125,7 +2125,7 @@
           "type": "noul",
           "noul": 0.061655983
         },
-        "latencyMs": 188,
+        "latencyMs": 205,
         "costUsd": 0
       }
     },
@@ -2137,7 +2137,7 @@
           "type": "noul",
           "noul": 0.13727367
         },
-        "latencyMs": 255,
+        "latencyMs": 208,
         "costUsd": 0
       }
     },
@@ -2149,7 +2149,7 @@
           "type": "noul",
           "noul": 0.8847493
         },
-        "latencyMs": 180,
+        "latencyMs": 183,
         "costUsd": 0
       }
     },
@@ -2161,7 +2161,7 @@
           "type": "noul",
           "noul": 0.079971954
         },
-        "latencyMs": 187,
+        "latencyMs": 260,
         "costUsd": 0
       }
     },
@@ -2173,7 +2173,7 @@
           "type": "noul",
           "noul": 0.9140066
         },
-        "latencyMs": 182,
+        "latencyMs": 253,
         "costUsd": 0
       }
     },
@@ -2185,7 +2185,7 @@
           "type": "noul",
           "noul": 0.50981534
         },
-        "latencyMs": 238,
+        "latencyMs": 256,
         "costUsd": 0
       }
     },
@@ -2197,7 +2197,7 @@
           "type": "noul",
           "noul": 0.061412193
         },
-        "latencyMs": 170,
+        "latencyMs": 237,
         "costUsd": 0
       }
     },
@@ -2209,7 +2209,7 @@
           "type": "noul",
           "noul": 0.06277756
         },
-        "latencyMs": 199,
+        "latencyMs": 183,
         "costUsd": 0
       }
     },
@@ -2221,7 +2221,7 @@
           "type": "noul",
           "noul": 0.7897453
         },
-        "latencyMs": 498,
+        "latencyMs": 221,
         "costUsd": 0
       }
     },
@@ -2233,7 +2233,7 @@
           "type": "noul",
           "noul": 0.08848672
         },
-        "latencyMs": 214,
+        "latencyMs": 264,
         "costUsd": 0
       }
     },
@@ -2245,7 +2245,7 @@
           "type": "noul",
           "noul": 0.058360774
         },
-        "latencyMs": 193,
+        "latencyMs": 268,
         "costUsd": 0
       }
     },
@@ -2257,7 +2257,7 @@
           "type": "noul",
           "noul": 0.061440352
         },
-        "latencyMs": 281,
+        "latencyMs": 244,
         "costUsd": 0
       }
     },
@@ -2269,7 +2269,7 @@
           "type": "noul",
           "noul": 0.90529144
         },
-        "latencyMs": 207,
+        "latencyMs": 238,
         "costUsd": 0
       }
     },
@@ -2281,7 +2281,7 @@
           "type": "noul",
           "noul": 0.2860816
         },
-        "latencyMs": 246,
+        "latencyMs": 176,
         "costUsd": 0
       }
     },
@@ -2293,7 +2293,7 @@
           "type": "noul",
           "noul": 0.91170394
         },
-        "latencyMs": 188,
+        "latencyMs": 184,
         "costUsd": 0
       }
     },
@@ -2305,7 +2305,7 @@
           "type": "noul",
           "noul": 0.049152866
         },
-        "latencyMs": 188,
+        "latencyMs": 185,
         "costUsd": 0
       }
     },
@@ -2317,7 +2317,7 @@
           "type": "noul",
           "noul": 0.67372274
         },
-        "latencyMs": 189,
+        "latencyMs": 339,
         "costUsd": 0
       }
     },
@@ -2329,7 +2329,7 @@
           "type": "noul",
           "noul": 0.04702716
         },
-        "latencyMs": 196,
+        "latencyMs": 353,
         "costUsd": 0
       }
     },
@@ -2341,7 +2341,7 @@
           "type": "noul",
           "noul": 0.08146086
         },
-        "latencyMs": 177,
+        "latencyMs": 346,
         "costUsd": 0
       }
     },
@@ -2353,7 +2353,7 @@
           "type": "noul",
           "noul": 0.04579454
         },
-        "latencyMs": 185,
+        "latencyMs": 345,
         "costUsd": 0
       }
     },
@@ -2365,7 +2365,7 @@
           "type": "noul",
           "noul": 0.48036236
         },
-        "latencyMs": 188,
+        "latencyMs": 206,
         "costUsd": 0
       }
     },
@@ -2377,7 +2377,7 @@
           "type": "noul",
           "noul": 0.78598475
         },
-        "latencyMs": 284,
+        "latencyMs": 372,
         "costUsd": 0
       }
     },
@@ -2389,7 +2389,7 @@
           "type": "noul",
           "noul": 0.06582816
         },
-        "latencyMs": 274,
+        "latencyMs": 373,
         "costUsd": 0
       }
     },
@@ -2401,7 +2401,7 @@
           "type": "noul",
           "noul": 0.84547204
         },
-        "latencyMs": 255,
+        "latencyMs": 428,
         "costUsd": 0
       }
     },
@@ -2413,7 +2413,7 @@
           "type": "noul",
           "noul": 0.12696277
         },
-        "latencyMs": 256,
+        "latencyMs": 368,
         "costUsd": 0
       }
     },
@@ -2425,7 +2425,7 @@
           "type": "noul",
           "noul": 0.04979865
         },
-        "latencyMs": 205,
+        "latencyMs": 209,
         "costUsd": 0
       }
     },
@@ -2437,7 +2437,7 @@
           "type": "noul",
           "noul": 0.7849391
         },
-        "latencyMs": 206,
+        "latencyMs": 226,
         "costUsd": 0
       }
     },
@@ -2449,7 +2449,7 @@
           "type": "noul",
           "noul": 0.06244261
         },
-        "latencyMs": 208,
+        "latencyMs": 244,
         "costUsd": 0
       }
     },
@@ -2461,7 +2461,7 @@
           "type": "noul",
           "noul": 0.06138718
         },
-        "latencyMs": 232,
+        "latencyMs": 175,
         "costUsd": 0
       }
     },
@@ -2473,7 +2473,7 @@
           "type": "noul",
           "noul": 0.78249574
         },
-        "latencyMs": 194,
+        "latencyMs": 213,
         "costUsd": 0
       }
     },
@@ -2485,7 +2485,7 @@
           "type": "noul",
           "noul": 0.17859274
         },
-        "latencyMs": 203,
+        "latencyMs": 191,
         "costUsd": 0
       }
     },
@@ -2497,7 +2497,7 @@
           "type": "noul",
           "noul": 0.101821125
         },
-        "latencyMs": 203,
+        "latencyMs": 176,
         "costUsd": 0
       }
     },
@@ -2509,7 +2509,7 @@
           "type": "noul",
           "noul": 0.8727455
         },
-        "latencyMs": 183,
+        "latencyMs": 177,
         "costUsd": 0
       }
     },
@@ -2521,7 +2521,7 @@
           "type": "noul",
           "noul": 0.32062805
         },
-        "latencyMs": 210,
+        "latencyMs": 216,
         "costUsd": 0
       }
     },
@@ -2533,7 +2533,7 @@
           "type": "noul",
           "noul": 0.61944926
         },
-        "latencyMs": 204,
+        "latencyMs": 250,
         "costUsd": 0
       }
     },
@@ -2545,7 +2545,7 @@
           "type": "noul",
           "noul": 0.0874861
         },
-        "latencyMs": 223,
+        "latencyMs": 235,
         "costUsd": 0
       }
     },
@@ -2557,7 +2557,7 @@
           "type": "noul",
           "noul": 0.038611125
         },
-        "latencyMs": 209,
+        "latencyMs": 231,
         "costUsd": 0
       }
     },
@@ -2569,7 +2569,7 @@
           "type": "noul",
           "noul": 0.13115494
         },
-        "latencyMs": 170,
+        "latencyMs": 220,
         "costUsd": 0
       }
     },
@@ -2581,7 +2581,7 @@
           "type": "noul",
           "noul": 0.36170086
         },
-        "latencyMs": 170,
+        "latencyMs": 188,
         "costUsd": 0
       }
     },
@@ -2593,7 +2593,7 @@
           "type": "noul",
           "noul": 0.24126242
         },
-        "latencyMs": 189,
+        "latencyMs": 196,
         "costUsd": 0
       }
     },
@@ -2605,7 +2605,7 @@
           "type": "noul",
           "noul": 0.09010857
         },
-        "latencyMs": 196,
+        "latencyMs": 188,
         "costUsd": 0
       }
     },
@@ -2617,7 +2617,7 @@
           "type": "noul",
           "noul": 0.05622886
         },
-        "latencyMs": 193,
+        "latencyMs": 174,
         "costUsd": 0
       }
     },
@@ -2629,7 +2629,7 @@
           "type": "noul",
           "noul": 0.9205077
         },
-        "latencyMs": 191,
+        "latencyMs": 189,
         "costUsd": 0
       }
     },
@@ -2641,7 +2641,7 @@
           "type": "noul",
           "noul": 0.060037877
         },
-        "latencyMs": 186,
+        "latencyMs": 187,
         "costUsd": 0
       }
     },
@@ -2653,7 +2653,7 @@
           "type": "noul",
           "noul": 0.92436683
         },
-        "latencyMs": 198,
+        "latencyMs": 196,
         "costUsd": 0
       }
     },
@@ -2665,7 +2665,7 @@
           "type": "noul",
           "noul": 0.356077
         },
-        "latencyMs": 191,
+        "latencyMs": 180,
         "costUsd": 0
       }
     },
@@ -2677,7 +2677,7 @@
           "type": "noul",
           "noul": 0.54256773
         },
-        "latencyMs": 190,
+        "latencyMs": 192,
         "costUsd": 0
       }
     },
@@ -2689,7 +2689,7 @@
           "type": "noul",
           "noul": 0.7546386
         },
-        "latencyMs": 210,
+        "latencyMs": 185,
         "costUsd": 0
       }
     },
@@ -2701,7 +2701,7 @@
           "type": "noul",
           "noul": 0.060997
         },
-        "latencyMs": 200,
+        "latencyMs": 194,
         "costUsd": 0
       }
     },
@@ -2713,7 +2713,7 @@
           "type": "noul",
           "noul": 0.09560923
         },
-        "latencyMs": 270,
+        "latencyMs": 198,
         "costUsd": 0
       }
     },
@@ -2725,7 +2725,7 @@
           "type": "noul",
           "noul": 0.09030047
         },
-        "latencyMs": 187,
+        "latencyMs": 185,
         "costUsd": 0
       }
     },
@@ -2737,7 +2737,7 @@
           "type": "noul",
           "noul": 0.04241917
         },
-        "latencyMs": 181,
+        "latencyMs": 190,
         "costUsd": 0
       }
     },
@@ -2749,7 +2749,7 @@
           "type": "noul",
           "noul": 0.76824313
         },
-        "latencyMs": 181,
+        "latencyMs": 184,
         "costUsd": 0
       }
     },
@@ -2761,7 +2761,7 @@
           "type": "noul",
           "noul": 0.5341218
         },
-        "latencyMs": 213,
+        "latencyMs": 187,
         "costUsd": 0
       }
     },
@@ -2773,7 +2773,7 @@
           "type": "noul",
           "noul": 0.07549185
         },
-        "latencyMs": 211,
+        "latencyMs": 174,
         "costUsd": 0
       }
     },
@@ -2785,7 +2785,7 @@
           "type": "noul",
           "noul": 0.050225895
         },
-        "latencyMs": 212,
+        "latencyMs": 192,
         "costUsd": 0
       }
     },
@@ -2797,7 +2797,7 @@
           "type": "noul",
           "noul": 0.79789364
         },
-        "latencyMs": 221,
+        "latencyMs": 178,
         "costUsd": 0
       }
     },
@@ -2809,7 +2809,7 @@
           "type": "noul",
           "noul": 0.18133076
         },
-        "latencyMs": 184,
+        "latencyMs": 186,
         "costUsd": 0
       }
     },
@@ -2821,7 +2821,7 @@
           "type": "noul",
           "noul": 0.5487513
         },
-        "latencyMs": 177,
+        "latencyMs": 179,
         "costUsd": 0
       }
     },
@@ -2833,7 +2833,7 @@
           "type": "noul",
           "noul": 0.069997415
         },
-        "latencyMs": 192,
+        "latencyMs": 176,
         "costUsd": 0
       }
     },
@@ -2845,7 +2845,7 @@
           "type": "noul",
           "noul": 0.06847456
         },
-        "latencyMs": 191,
+        "latencyMs": 193,
         "costUsd": 0
       }
     },
@@ -2857,7 +2857,7 @@
           "type": "noul",
           "noul": 0.06915344
         },
-        "latencyMs": 178,
+        "latencyMs": 179,
         "costUsd": 0
       }
     },
@@ -2869,7 +2869,7 @@
           "type": "noul",
           "noul": 0.046962127
         },
-        "latencyMs": 194,
+        "latencyMs": 184,
         "costUsd": 0
       }
     },
@@ -2881,7 +2881,7 @@
           "type": "noul",
           "noul": 0.058635045
         },
-        "latencyMs": 194,
+        "latencyMs": 179,
         "costUsd": 0
       }
     },
@@ -2893,7 +2893,7 @@
           "type": "noul",
           "noul": 0.7748099
         },
-        "latencyMs": 187,
+        "latencyMs": 180,
         "costUsd": 0
       }
     },
@@ -2905,7 +2905,7 @@
           "type": "noul",
           "noul": 0.9228106
         },
-        "latencyMs": 182,
+        "latencyMs": 179,
         "costUsd": 0
       }
     },
@@ -2917,7 +2917,7 @@
           "type": "noul",
           "noul": 0.6425851
         },
-        "latencyMs": 187,
+        "latencyMs": 219,
         "costUsd": 0
       }
     },
@@ -2929,7 +2929,7 @@
           "type": "noul",
           "noul": 0.741532
         },
-        "latencyMs": 172,
+        "latencyMs": 213,
         "costUsd": 0
       }
     },
@@ -2941,7 +2941,7 @@
           "type": "noul",
           "noul": 0.4584325
         },
-        "latencyMs": 197,
+        "latencyMs": 198,
         "costUsd": 0
       }
     },
@@ -2953,7 +2953,7 @@
           "type": "noul",
           "noul": 0.052505076
         },
-        "latencyMs": 192,
+        "latencyMs": 207,
         "costUsd": 0
       }
     },
@@ -2977,7 +2977,7 @@
           "type": "noul",
           "noul": 0.11457473
         },
-        "latencyMs": 192,
+        "latencyMs": 196,
         "costUsd": 0
       }
     },
@@ -2989,7 +2989,7 @@
           "type": "noul",
           "noul": 0.7405871
         },
-        "latencyMs": 174,
+        "latencyMs": 181,
         "costUsd": 0
       }
     },
@@ -3001,7 +3001,7 @@
           "type": "noul",
           "noul": 0.37506342
         },
-        "latencyMs": 179,
+        "latencyMs": 605,
         "costUsd": 0
       }
     },
@@ -3013,7 +3013,7 @@
           "type": "noul",
           "noul": 0.34565023
         },
-        "latencyMs": 172,
+        "latencyMs": 533,
         "costUsd": 0
       }
     },
@@ -3025,7 +3025,7 @@
           "type": "noul",
           "noul": 0.06279761
         },
-        "latencyMs": 183,
+        "latencyMs": 486,
         "costUsd": 0
       }
     },
@@ -3037,7 +3037,7 @@
           "type": "noul",
           "noul": 0.17162234
         },
-        "latencyMs": 173,
+        "latencyMs": 567,
         "costUsd": 0
       }
     },
@@ -3049,7 +3049,7 @@
           "type": "noul",
           "noul": 0.44039464
         },
-        "latencyMs": 185,
+        "latencyMs": 232,
         "costUsd": 0
       }
     },
@@ -3061,7 +3061,7 @@
           "type": "noul",
           "noul": 0.046840455
         },
-        "latencyMs": 189,
+        "latencyMs": 268,
         "costUsd": 0
       }
     },
@@ -3073,7 +3073,7 @@
           "type": "noul",
           "noul": 0.93893826
         },
-        "latencyMs": 211,
+        "latencyMs": 306,
         "costUsd": 0
       }
     },
@@ -3085,7 +3085,7 @@
           "type": "noul",
           "noul": 0.115375854
         },
-        "latencyMs": 193,
+        "latencyMs": 284,
         "costUsd": 0
       }
     },
@@ -3097,7 +3097,7 @@
           "type": "noul",
           "noul": 0.09674021
         },
-        "latencyMs": 179,
+        "latencyMs": 197,
         "costUsd": 0
       }
     },
@@ -3109,7 +3109,7 @@
           "type": "noul",
           "noul": 0.9116163
         },
-        "latencyMs": 176,
+        "latencyMs": 205,
         "costUsd": 0
       }
     },
@@ -3121,7 +3121,7 @@
           "type": "noul",
           "noul": 0.15916705
         },
-        "latencyMs": 196,
+        "latencyMs": 203,
         "costUsd": 0
       }
     },
@@ -3133,7 +3133,7 @@
           "type": "noul",
           "noul": 0.8697019
         },
-        "latencyMs": 216,
+        "latencyMs": 189,
         "costUsd": 0
       }
     },
@@ -3145,7 +3145,7 @@
           "type": "noul",
           "noul": 0.91454226
         },
-        "latencyMs": 223,
+        "latencyMs": 186,
         "costUsd": 0
       }
     },
@@ -3157,7 +3157,7 @@
           "type": "noul",
           "noul": 0.04422782
         },
-        "latencyMs": 208,
+        "latencyMs": 191,
         "costUsd": 0
       }
     },
@@ -3169,7 +3169,7 @@
           "type": "noul",
           "noul": 0.30010566
         },
-        "latencyMs": 203,
+        "latencyMs": 187,
         "costUsd": 0
       }
     },
@@ -3181,7 +3181,7 @@
           "type": "noul",
           "noul": 0.058672797
         },
-        "latencyMs": 202,
+        "latencyMs": 178,
         "costUsd": 0
       }
     },
@@ -3193,7 +3193,7 @@
           "type": "noul",
           "noul": 0.06553267
         },
-        "latencyMs": 258,
+        "latencyMs": 179,
         "costUsd": 0
       }
     },
@@ -3205,7 +3205,7 @@
           "type": "noul",
           "noul": 0.87499475
         },
-        "latencyMs": 178,
+        "latencyMs": 193,
         "costUsd": 0
       }
     },
@@ -3217,7 +3217,7 @@
           "type": "noul",
           "noul": 0.052665643
         },
-        "latencyMs": 198,
+        "latencyMs": 199,
         "costUsd": 0
       }
     },
@@ -3229,7 +3229,7 @@
           "type": "noul",
           "noul": 0.05040897
         },
-        "latencyMs": 203,
+        "latencyMs": 186,
         "costUsd": 0
       }
     },
@@ -3241,7 +3241,7 @@
           "type": "noul",
           "noul": 0.86223036
         },
-        "latencyMs": 187,
+        "latencyMs": 189,
         "costUsd": 0
       }
     },
@@ -3253,7 +3253,7 @@
           "type": "noul",
           "noul": 0.7779041
         },
-        "latencyMs": 186,
+        "latencyMs": 168,
         "costUsd": 0
       }
     },
@@ -3265,7 +3265,7 @@
           "type": "noul",
           "noul": 0.078437045
         },
-        "latencyMs": 173,
+        "latencyMs": 187,
         "costUsd": 0
       }
     },
@@ -3277,7 +3277,7 @@
           "type": "noul",
           "noul": 0.86673117
         },
-        "latencyMs": 172,
+        "latencyMs": 178,
         "costUsd": 0
       }
     },
@@ -3289,7 +3289,7 @@
           "type": "noul",
           "noul": 0.4069942
         },
-        "latencyMs": 185,
+        "latencyMs": 181,
         "costUsd": 0
       }
     },
@@ -3301,7 +3301,7 @@
           "type": "noul",
           "noul": 0.054519866
         },
-        "latencyMs": 184,
+        "latencyMs": 186,
         "costUsd": 0
       }
     },
@@ -3313,7 +3313,7 @@
           "type": "noul",
           "noul": 0.79680663
         },
-        "latencyMs": 177,
+        "latencyMs": 284,
         "costUsd": 0
       }
     },
@@ -3325,7 +3325,7 @@
           "type": "noul",
           "noul": 0.9202594
         },
-        "latencyMs": 212,
+        "latencyMs": 288,
         "costUsd": 0
       }
     },
@@ -3337,7 +3337,7 @@
           "type": "noul",
           "noul": 0.79150325
         },
-        "latencyMs": 207,
+        "latencyMs": 300,
         "costUsd": 0
       }
     },
@@ -3349,7 +3349,7 @@
           "type": "noul",
           "noul": 0.052970506
         },
-        "latencyMs": 202,
+        "latencyMs": 280,
         "costUsd": 0
       }
     },
@@ -3361,7 +3361,7 @@
           "type": "noul",
           "noul": 0.041422006
         },
-        "latencyMs": 217,
+        "latencyMs": 178,
         "costUsd": 0
       }
     },
@@ -3373,7 +3373,7 @@
           "type": "noul",
           "noul": 0.051745996
         },
-        "latencyMs": 226,
+        "latencyMs": 179,
         "costUsd": 0
       }
     },
@@ -3385,7 +3385,7 @@
           "type": "noul",
           "noul": 0.117352664
         },
-        "latencyMs": 225,
+        "latencyMs": 187,
         "costUsd": 0
       }
     },
@@ -3397,7 +3397,7 @@
           "type": "noul",
           "noul": 0.87978774
         },
-        "latencyMs": 226,
+        "latencyMs": 237,
         "costUsd": 0
       }
     },
@@ -3409,7 +3409,7 @@
           "type": "noul",
           "noul": 0.8649474
         },
-        "latencyMs": 212,
+        "latencyMs": 225,
         "costUsd": 0
       }
     },
@@ -3421,7 +3421,7 @@
           "type": "noul",
           "noul": 0.053258926
         },
-        "latencyMs": 190,
+        "latencyMs": 313,
         "costUsd": 0
       }
     },
@@ -3433,7 +3433,7 @@
           "type": "noul",
           "noul": 0.20116884
         },
-        "latencyMs": 173,
+        "latencyMs": 208,
         "costUsd": 0
       }
     },
@@ -3445,7 +3445,7 @@
           "type": "noul",
           "noul": 0.6787423
         },
-        "latencyMs": 199,
+        "latencyMs": 174,
         "costUsd": 0
       }
     },
@@ -3457,7 +3457,7 @@
           "type": "noul",
           "noul": 0.050875723
         },
-        "latencyMs": 188,
+        "latencyMs": 180,
         "costUsd": 0
       }
     },
@@ -3469,7 +3469,7 @@
           "type": "noul",
           "noul": 0.041270066
         },
-        "latencyMs": 181,
+        "latencyMs": 193,
         "costUsd": 0
       }
     },
@@ -3481,7 +3481,7 @@
           "type": "noul",
           "noul": 0.31836528
         },
-        "latencyMs": 191,
+        "latencyMs": 186,
         "costUsd": 0
       }
     },
@@ -3493,7 +3493,7 @@
           "type": "noul",
           "noul": 0.7970818
         },
-        "latencyMs": 210,
+        "latencyMs": 221,
         "costUsd": 0
       }
     },
@@ -3505,7 +3505,7 @@
           "type": "noul",
           "noul": 0.096790776
         },
-        "latencyMs": 208,
+        "latencyMs": 211,
         "costUsd": 0
       }
     },
@@ -3529,7 +3529,7 @@
           "type": "noul",
           "noul": 0.7579868
         },
-        "latencyMs": 207,
+        "latencyMs": 198,
         "costUsd": 0
       }
     },
@@ -3541,7 +3541,7 @@
           "type": "noul",
           "noul": 0.047718298
         },
-        "latencyMs": 180,
+        "latencyMs": 194,
         "costUsd": 0
       }
     },
@@ -3553,7 +3553,7 @@
           "type": "noul",
           "noul": 0.051983662
         },
-        "latencyMs": 199,
+        "latencyMs": 203,
         "costUsd": 0
       }
     },
@@ -3565,7 +3565,7 @@
           "type": "noul",
           "noul": 0.057398252
         },
-        "latencyMs": 208,
+        "latencyMs": 185,
         "costUsd": 0
       }
     },
@@ -3577,7 +3577,7 @@
           "type": "noul",
           "noul": 0.64477384
         },
-        "latencyMs": 185,
+        "latencyMs": 193,
         "costUsd": 0
       }
     },
@@ -3589,7 +3589,7 @@
           "type": "noul",
           "noul": 0.038788356
         },
-        "latencyMs": 199,
+        "latencyMs": 190,
         "costUsd": 0
       }
     },
@@ -3601,7 +3601,7 @@
           "type": "noul",
           "noul": 0.9154607
         },
-        "latencyMs": 169,
+        "latencyMs": 185,
         "costUsd": 0
       }
     },
@@ -3613,7 +3613,7 @@
           "type": "noul",
           "noul": 0.84653974
         },
-        "latencyMs": 173,
+        "latencyMs": 190,
         "costUsd": 0
       }
     },
@@ -3625,7 +3625,7 @@
           "type": "noul",
           "noul": 0.046988092
         },
-        "latencyMs": 195,
+        "latencyMs": 188,
         "costUsd": 0
       }
     },
@@ -3637,7 +3637,7 @@
           "type": "noul",
           "noul": 0.1686412
         },
-        "latencyMs": 174,
+        "latencyMs": 190,
         "costUsd": 0
       }
     },
@@ -3649,7 +3649,7 @@
           "type": "noul",
           "noul": 0.3099846
         },
-        "latencyMs": 338,
+        "latencyMs": 186,
         "costUsd": 0
       }
     },
@@ -3661,7 +3661,7 @@
           "type": "noul",
           "noul": 0.08334949
         },
-        "latencyMs": 242,
+        "latencyMs": 178,
         "costUsd": 0
       }
     },
@@ -3673,7 +3673,7 @@
           "type": "noul",
           "noul": 0.8285752
         },
-        "latencyMs": 273,
+        "latencyMs": 175,
         "costUsd": 0
       }
     },
@@ -3685,7 +3685,7 @@
           "type": "noul",
           "noul": 0.8263536
         },
-        "latencyMs": 274,
+        "latencyMs": 194,
         "costUsd": 0
       }
     },
@@ -3697,7 +3697,7 @@
           "type": "noul",
           "noul": 0.88582474
         },
-        "latencyMs": 184,
+        "latencyMs": 182,
         "costUsd": 0
       }
     },
@@ -3709,7 +3709,7 @@
           "type": "noul",
           "noul": 0.06543694
         },
-        "latencyMs": 200,
+        "latencyMs": 219,
         "costUsd": 0
       }
     },
@@ -3721,7 +3721,7 @@
           "type": "noul",
           "noul": 0.89655274
         },
-        "latencyMs": 212,
+        "latencyMs": 218,
         "costUsd": 0
       }
     },
@@ -3733,7 +3733,7 @@
           "type": "noul",
           "noul": 0.098213986
         },
-        "latencyMs": 187,
+        "latencyMs": 202,
         "costUsd": 0
       }
     },
@@ -3745,7 +3745,7 @@
           "type": "noul",
           "noul": 0.05522717
         },
-        "latencyMs": 173,
+        "latencyMs": 231,
         "costUsd": 0
       }
     },
@@ -3757,7 +3757,7 @@
           "type": "noul",
           "noul": 0.5507464
         },
-        "latencyMs": 196,
+        "latencyMs": 187,
         "costUsd": 0
       }
     },
@@ -3769,7 +3769,7 @@
           "type": "noul",
           "noul": 0.066987805
         },
-        "latencyMs": 183,
+        "latencyMs": 180,
         "costUsd": 0
       }
     },
@@ -3781,7 +3781,7 @@
           "type": "noul",
           "noul": 0.8624094
         },
-        "latencyMs": 201,
+        "latencyMs": 184,
         "costUsd": 0
       }
     },
@@ -3793,7 +3793,7 @@
           "type": "noul",
           "noul": 0.042081803
         },
-        "latencyMs": 195,
+        "latencyMs": 185,
         "costUsd": 0
       }
     },
@@ -3805,7 +3805,7 @@
           "type": "noul",
           "noul": 0.88389975
         },
-        "latencyMs": 196,
+        "latencyMs": 185,
         "costUsd": 0
       }
     },
@@ -3817,7 +3817,7 @@
           "type": "noul",
           "noul": 0.89399654
         },
-        "latencyMs": 199,
+        "latencyMs": 218,
         "costUsd": 0
       }
     },
@@ -3829,7 +3829,7 @@
           "type": "noul",
           "noul": 0.049844895
         },
-        "latencyMs": 203,
+        "latencyMs": 218,
         "costUsd": 0
       }
     },
@@ -3841,7 +3841,7 @@
           "type": "noul",
           "noul": 0.93817
         },
-        "latencyMs": 192,
+        "latencyMs": 203,
         "costUsd": 0
       }
     },
@@ -3853,7 +3853,7 @@
           "type": "noul",
           "noul": 0.87577856
         },
-        "latencyMs": 173,
+        "latencyMs": 184,
         "costUsd": 0
       }
     },
@@ -3865,7 +3865,7 @@
           "type": "noul",
           "noul": 0.92290616
         },
-        "latencyMs": 180,
+        "latencyMs": 176,
         "costUsd": 0
       }
     },
@@ -3877,7 +3877,7 @@
           "type": "noul",
           "noul": 0.038740203
         },
-        "latencyMs": 177,
+        "latencyMs": 221,
         "costUsd": 0
       }
     },
@@ -3889,7 +3889,7 @@
           "type": "noul",
           "noul": 0.44984582
         },
-        "latencyMs": 183,
+        "latencyMs": 220,
         "costUsd": 0
       }
     },
@@ -3901,7 +3901,7 @@
           "type": "noul",
           "noul": 0.9023485
         },
-        "latencyMs": 192,
+        "latencyMs": 620,
         "costUsd": 0
       }
     },
@@ -3913,7 +3913,7 @@
           "type": "noul",
           "noul": 0.123239115
         },
-        "latencyMs": 177,
+        "latencyMs": 569,
         "costUsd": 0
       }
     },
@@ -3925,7 +3925,7 @@
           "type": "noul",
           "noul": 0.07654227
         },
-        "latencyMs": 185,
+        "latencyMs": 484,
         "costUsd": 0
       }
     },
@@ -3937,7 +3937,7 @@
           "type": "noul",
           "noul": 0.03912726
         },
-        "latencyMs": 185,
+        "latencyMs": 540,
         "costUsd": 0
       }
     },
@@ -3949,7 +3949,7 @@
           "type": "noul",
           "noul": 0.6282028
         },
-        "latencyMs": 176,
+        "latencyMs": 272,
         "costUsd": 0
       }
     },
@@ -3961,7 +3961,7 @@
           "type": "noul",
           "noul": 0.05010794
         },
-        "latencyMs": 199,
+        "latencyMs": 233,
         "costUsd": 0
       }
     },
@@ -3973,7 +3973,7 @@
           "type": "noul",
           "noul": 0.050911438
         },
-        "latencyMs": 181,
+        "latencyMs": 192,
         "costUsd": 0
       }
     },
@@ -3985,7 +3985,7 @@
           "type": "noul",
           "noul": 0.053285103
         },
-        "latencyMs": 182,
+        "latencyMs": 201,
         "costUsd": 0
       }
     },
@@ -3997,7 +3997,7 @@
           "type": "noul",
           "noul": 0.8698152
         },
-        "latencyMs": 260,
+        "latencyMs": 188,
         "costUsd": 0
       }
     }

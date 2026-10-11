@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T04:27:55.627Z",
+  "generatedAt": "2026-10-11T04:34:49.983Z",
   "models": [
     {
       "model": "respan/span-01-lite",
@@ -24,8 +24,8 @@
             "chance": 0.33333333333333337,
             "skill": 0
           },
-          "p50Ms": 62,
-          "p95Ms": 101,
+          "p50Ms": 60,
+          "p95Ms": 112,
           "costUsd": 0,
           "costPer1000Usd": 0
         },
@@ -46,8 +46,8 @@
             "chance": 0,
             "skill": 0
           },
-          "p50Ms": 196,
-          "p95Ms": 286,
+          "p50Ms": 198,
+          "p95Ms": 373,
           "costUsd": 0,
           "costPer1000Usd": 0
         }
