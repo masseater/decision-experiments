@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import type { TaskInfo } from "#/pages/leaderboard/model/ranking";
 
+import { ReliabilityFigures } from "./charts/reliability-figures";
 import { TaskCharts } from "./charts/task-charts";
 import { NoteList } from "./note-list";
 import { Section } from "./section";
@@ -15,6 +16,7 @@ const TaskBlock = ({ task }: Readonly<{ task: TaskInfo }>): ReactNode => (
     <TaskCharts task={task.task} />
     <ScoreTable task={task} />
     <ProfileTable task={task} />
+    <ReliabilityFigures task={task.task} />
   </Section>
 );
 

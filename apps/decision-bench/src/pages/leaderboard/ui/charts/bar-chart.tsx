@@ -21,8 +21,15 @@ import { errorOf, intervalBar } from "./interval-bar";
 const LABEL_WIDTH = 104;
 const BAR_SIZE = 14;
 const BAR_RADIUS: [number, number, number, number] = [ORIGIN, MARK_RADIUS, MARK_RADIUS, ORIGIN];
-const VALUE_LABEL: LabelListProps = { position: "top", fontSize: 12, formatter: pointsOf };
+const VALUE_LABEL: LabelListProps = {
+  position: "right",
+  offset: 20,
+  fontSize: 12,
+  formatter: pointsOf,
+};
 const MARGIN = { right: 24 } as const;
+const ROW_HEIGHT = 36;
+const AXIS_HEIGHT = 40;
 
 type BarPoint = Readonly<{ label: string; value: number; error?: readonly [number, number] }>;
 
@@ -54,7 +61,7 @@ const BarChart = ({
   rows,
   title,
 }: Readonly<{ rows: readonly ChartRow[]; title: string }>): ReactNode => (
-  <ChartContainer size="compact">
+  <ChartContainer size="fit" height={rows.length * ROW_HEIGHT + AXIS_HEIGHT}>
     <Chart
       title={title}
       desc={describe(rows)}

@@ -5,7 +5,10 @@ import { ResponsiveContainer } from "recharts";
 
 import { cn } from "#/shared/lib/utils";
 
-const SIZE_CLASSES = { default: "aspect-video", compact: "h-28" } as const;
+const SIZE_CLASSES = {
+  default: "aspect-video",
+  fit: "",
+} as const;
 
 const INITIAL_DIMENSION = { width: 320, height: 200 } as const;
 
@@ -13,11 +16,13 @@ const ChartContainer = ({
   className,
   children,
   size = "default",
+  height = "100%",
   ...props
 }: ComponentProps<"div"> &
   Readonly<{
     children: ComponentProps<typeof ResponsiveContainer>["children"];
     size?: keyof typeof SIZE_CLASSES;
+    height?: number | "100%";
   }>): ReactNode => (
   <div
     data-slot="chart"
@@ -28,7 +33,9 @@ const ChartContainer = ({
     )}
     {...props}
   >
-    <ResponsiveContainer initialDimension={INITIAL_DIMENSION}>{children}</ResponsiveContainer>
+    <ResponsiveContainer height={height} initialDimension={INITIAL_DIMENSION}>
+      {children}
+    </ResponsiveContainer>
   </div>
 );
 

@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { displayLabel } from "#/pages/leaderboard/model/display-label";
 import { entriesOf } from "#/pages/leaderboard/model/ranking";
 import type { TaskEntry } from "#/pages/leaderboard/model/ranking";
-import { toPercentPoints, usd } from "#/pages/leaderboard/ui/format";
+import { toPercentPoints } from "#/pages/leaderboard/ui/format";
 
 import { BarChart } from "./bar-chart";
 import { ChartFigure } from "./chart-figure";
@@ -18,7 +18,9 @@ const LATENCY_TITLE = "skill × p50 レイテンシ";
 const COST_TITLE = "skill × タスク全体の費用";
 const HEADROOM = 1.3;
 const LATENCY_STEP = 100;
-const MIN_COST_USD = 0.01;
+const MIN_COST_USD = 0.1;
+const COST_PRECISION = 1000;
+const COST_STEP = 10;
 
 const LATENCY_AXIS: Axis = {
   name: "p50 ms",
@@ -28,8 +30,11 @@ const LATENCY_AXIS: Axis = {
 
 const COST_AXIS: Axis = {
   name: "USD",
-  domain: [ORIGIN, (max) => Math.max(max * HEADROOM, MIN_COST_USD)],
-  format: (value) => usd(Number(value)),
+  domain: [
+    ORIGIN,
+    (max) => Math.max(Math.ceil(max * HEADROOM * COST_STEP) / COST_STEP, MIN_COST_USD),
+  ],
+  format: (value) => `$${Math.round(Number(value) * COST_PRECISION) / COST_PRECISION}`,
 };
 
 const skillRows = (task: string): readonly ChartRow[] =>

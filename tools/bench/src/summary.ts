@@ -2,12 +2,19 @@ import { Schema } from "effect";
 
 import { LabelStatsSchema } from "./labeling.ts";
 
+const CalibrationBinSchema = Schema.Struct({
+  meanPredicted: Schema.Finite,
+  observedFrequency: Schema.Finite,
+  count: Schema.Finite,
+});
+
 const CalibrationSchema = Schema.Union([
   Schema.Struct({
     status: Schema.Literal("measured"),
     ece: Schema.Finite,
     brier: Schema.Finite,
     forecasts: Schema.Finite,
+    curve: Schema.Array(CalibrationBinSchema),
   }),
   Schema.Struct({ status: Schema.Literal("unavailable") }),
 ]);

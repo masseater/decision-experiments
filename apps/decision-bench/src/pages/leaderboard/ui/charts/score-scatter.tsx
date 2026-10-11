@@ -26,6 +26,19 @@ const Y_LABEL = { value: "skill", angle: -90, position: "insideLeft", fontSize: 
 const POINT_LABEL = { dataKey: "label", position: "right", fontSize: 12 } as const;
 const MARGIN = { top: 16, right: 24, bottom: 16, left: 0 } as const;
 
+const labelOf = (payload: unknown): string => {
+  if (typeof payload === "object" && payload !== null && "label" in payload) {
+    return String(payload.label);
+  }
+  return "";
+};
+
+const tooltipFormat = (
+  value: unknown,
+  name: unknown,
+  item: Readonly<{ payload?: unknown }>,
+): [string, string] => [pointsOf(value), `${labelOf(item.payload)} ${String(name)}`];
+
 const xLabel = (name: string): Readonly<Record<string, number | string>> => ({
   value: name,
   position: "insideBottom",
@@ -66,7 +79,7 @@ const ScoreScatter = ({
         tick={AXIS_TICK}
         label={Y_LABEL}
       />
-      <Tooltip contentStyle={TOOLTIP_STYLE} formatter={pointsOf} />
+      <Tooltip contentStyle={TOOLTIP_STYLE} formatter={tooltipFormat} />
       <Scatter isAnimationActive={false} data={points} fill={SERIES_COLOR} label={POINT_LABEL}>
         {intervalBar("y")}
       </Scatter>

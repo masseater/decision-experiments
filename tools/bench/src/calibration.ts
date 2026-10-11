@@ -1,5 +1,5 @@
 import { Number as Num, Option } from "effect";
-import { brierScore, expectedCalibrationError } from "forecast-calibration-kit";
+import { brierScore, calibrationCurve, expectedCalibrationError } from "forecast-calibration-kit";
 import type { BinaryOutcome, Sample } from "forecast-calibration-kit";
 
 import type { ChoiceItem, Decision, NoulItem } from "./item.ts";
@@ -91,6 +91,13 @@ const calibrationOf = (rows: readonly Scored[]): TaskResult["test"]["calibration
     ece: expectedCalibrationError(samples, { bins: CALIBRATION_BINS }),
     brier: Num.sumAll(forecasts.map(({ brier }) => brier)) / forecasts.length,
     forecasts: forecasts.length,
+    curve: calibrationCurve(samples, { bins: CALIBRATION_BINS }).map(
+      ({ meanPredicted, observedFrequency, count }) => ({
+        meanPredicted,
+        observedFrequency,
+        count,
+      }),
+    ),
   };
 };
 
