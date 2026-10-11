@@ -34,7 +34,7 @@ const toPoints = (
   });
 
 const BarChart = ({ rows }: Readonly<{ rows: readonly ChartRow[] }>): ReactNode => (
-  <ChartContainer className="aspect-auto h-28">
+  <ChartContainer size="compact">
     <Chart data={toPoints(rows)} layout="vertical" margin={MARGIN}>
       <CartesianGrid horizontal={false} />
       <XAxis type="number" dataKey="value" domain={PERCENT_SCALE} tick={AXIS_TICK} />
