@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-11T04:38:55.235Z",
+  "generatedAt": "2026-10-11T05:16:37.988Z",
   "models": [
     {
       "model": "respan/span-01-lite",
       "label": "span-01 lite",
-      "index": 0.23107310731073105,
+      "index": 0.2043387096774194,
       "costUsd": 0,
       "tasks": [
         {
@@ -24,8 +24,8 @@
             "chance": 0.33333333333333337,
             "skill": 0
           },
-          "p50Ms": 60,
-          "p95Ms": 82,
+          "p50Ms": 61,
+          "p95Ms": 79,
           "costUsd": 0,
           "costPer1000Usd": 0
         },
@@ -33,21 +33,21 @@
           "task": "rules",
           "label": "業務ルール判定（Noul）",
           "test": {
-            "total": 200,
+            "total": 498,
             "failed": 0,
-            "raw": 0.731073107310731,
+            "raw": 0.7043387096774194,
             "chance": 0.5,
-            "skill": 0.4621462146214621
+            "skill": 0.4086774193548388
           },
           "hard": {
-            "total": 0,
+            "total": 2,
             "failed": 0,
             "raw": 0,
-            "chance": 0,
+            "chance": 0.5,
             "skill": 0
           },
           "p50Ms": 198,
-          "p95Ms": 373,
+          "p95Ms": 361,
           "costUsd": 0,
           "costPer1000Usd": 0
         }
@@ -65,9 +65,9 @@
     },
     {
       "task": "rules",
-      "items": 200,
-      "hard": 0,
-      "opusCostUsd": 8.46449779999999
+      "items": 500,
+      "hard": 2,
+      "opusCostUsd": 22.22309499999999
     }
   ]
 }
