@@ -4,18 +4,20 @@ import type { InferEnv } from "alchemy/Cloudflare";
 import { Config, Effect, Schema } from "effect";
 
 import { APP_NAME, CI_TELEMETRY_AUDIENCE, LIST_PREFIX, requireAppPrefix } from "./app-name.ts";
+import { BASE_PATH } from "./base-path.ts";
 
 const TRACE_SAMPLING_RATE = 0.1;
 const ZONE = "masseater.dev";
-const BASE_PATH = "/decision-bench";
 const LEGACY_HOST = "mst-ja-decision-bench.masseater.dev";
 const LEGACY_REDIRECT_LIST = `${LIST_PREFIX}legacy_host`;
+
+const COMPATIBILITY = { date: "2026-08-25" } as const;
 
 const web = Effect.gen(function* web() {
   const DB = yield* D1.Database("DB", { migrations: "./drizzle" });
   const BETTER_AUTH_SECRET = yield* makeRandom("BetterAuthSecret");
   return yield* Website.Vite("Web", {
-    compatibility: { date: "2026-08-25" },
+    compatibility: COMPATIBILITY,
     domain: LEGACY_HOST,
     routes: [{ pattern: `${ZONE}${BASE_PATH}*`, zoneName: ZONE }],
     env: { BETTER_AUTH_SECRET, DB },
@@ -68,7 +70,7 @@ const ciTelemetry = Effect.gen(function* ciTelemetry() {
   return yield* Workers.Worker("CiTelemetry", {
     name: CI_TELEMETRY_AUDIENCE,
     main: "./ci-telemetry.worker.ts",
-    compatibility: { date: "2026-08-25" },
+    compatibility: COMPATIBILITY,
     env: { GITHUB_REPOSITORY },
     observability: {
       enabled: true,

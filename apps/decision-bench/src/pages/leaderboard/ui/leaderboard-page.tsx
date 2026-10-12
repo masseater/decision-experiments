@@ -1,6 +1,8 @@
 import { FlaskConical, Tag } from "lucide-react";
 import type { ReactNode } from "react";
 
+import { SITE_TITLE } from "#/shared/config";
+
 import { EnglishSection } from "./english-section";
 import { IndexSection } from "./index-section";
 import { MethodLink } from "./method-link";
@@ -8,8 +10,6 @@ import { NoteList } from "./note-list";
 import type { Note } from "./note-list";
 import { PageShell } from "./page-shell";
 import { TaskLinks } from "./task-links";
-
-const TITLE = "日本語 decision model ベンチマーク";
 
 const NOTES: readonly Note[] = [
   {
@@ -21,7 +21,7 @@ const NOTES: readonly Note[] = [
 
 const HEADER = (
   <>
-    <h1 className="text-2xl font-bold">{TITLE}</h1>
+    <h1 className="text-2xl font-bold">{SITE_TITLE}</h1>
     <NoteList notes={NOTES} />
     <MethodLink />
   </>

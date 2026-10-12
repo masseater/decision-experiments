@@ -1,5 +1,6 @@
 import { Asterisk, ListChecks, Ruler, Tag } from "lucide-react";
 
+import { SPLIT_MARK } from "#/pages/leaderboard/model/display-label";
 import type { TaskInfo } from "#/pages/leaderboard/model/ranking";
 import { summary } from "#/pages/leaderboard/model/summary";
 import type { LabelStats } from "#/pages/leaderboard/model/summary";
@@ -10,7 +11,7 @@ import type { Note } from "./note-list";
 
 const SPLIT_NOTE: Note = {
   icon: <Asterisk aria-hidden="true" />,
-  text: "* は選択肢ごとに Noul で聞いた結果",
+  text: `${SPLIT_MARK} は選択肢ごとに Noul で聞いた結果`,
 };
 
 const goldNote = (stats: Readonly<LabelStats>): Note => {

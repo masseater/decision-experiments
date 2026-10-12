@@ -5,8 +5,10 @@ import viteReact from "@vitejs/plugin-react";
 import rsc from "@vitejs/plugin-rsc";
 import { defineConfig } from "vite-plus";
 
+import { BASE_PATH } from "./base-path.ts";
+
 export default defineConfig({
-  base: "/decision-bench/",
+  base: `${BASE_PATH}/`,
   resolve: { tsconfigPaths: true },
   test: {
     projects: [

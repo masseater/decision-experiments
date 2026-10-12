@@ -11,6 +11,10 @@ const common = {
   split: Schema.Literals(["test", "hard"]),
 };
 
+const NOUL_CRITERIA = { true: "はい", false: "いいえ" };
+
+const NOUL_THRESHOLD = 0.5;
+
 const ChoiceItemSchema = Schema.Struct({
   ...common,
   type: Schema.Literal("choice"),
@@ -73,5 +77,10 @@ const OutcomeSchema = Schema.Union([
 type Outcome = typeof OutcomeSchema.Type;
 type Decision = typeof DecisionSchema.Type;
 
-export { DecisionSchema, ItemSchema, OutcomeSchema };
-export type { ChoiceItem, Decision, Item, NoulItem, Outcome, Question, ScoreItem };
+interface Scored {
+  readonly item: Item;
+  readonly outcome: Outcome;
+}
+
+export { DecisionSchema, ItemSchema, NOUL_CRITERIA, NOUL_THRESHOLD, OutcomeSchema };
+export type { ChoiceItem, Decision, Item, NoulItem, Outcome, Question, Scored, ScoreItem };

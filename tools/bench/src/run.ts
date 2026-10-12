@@ -1,34 +1,23 @@
+import { percent as pct, percentRange, usdAmount } from "bench-summary/format";
 import { LabelStatsSchema, SummarySchema } from "bench-summary/schema";
-import type { Summary, TaskResult } from "bench-summary/schema";
+import type { Summary, Support, TaskResult } from "bench-summary/schema";
 import { DateTime, Effect, FileSystem, Number as Num, Option, Schema } from "effect";
 
 import { ItemSchema, OutcomeSchema } from "./item.ts";
-import type { Item } from "./item.ts";
+import type { Item, Scored } from "./item.ts";
 import { makeOpenRouterAdapter } from "./openrouter.ts";
 import { runBench } from "./runtime.ts";
 import { metric, usage } from "./score.ts";
-import type { Scored } from "./score.ts";
-import { benchPath, readJsonl, writeJson } from "./store.ts";
+import { benchPath, dataPath, modelSlug, readJsonl, writeJson } from "./store.ts";
 
 const CONCURRENCY = 4;
-const PERCENT = 100;
-const PERCENT_DIGITS = 1;
-const COST_DIGITS = 4;
 const LABEL_COST_DIGITS = 2;
 const START = "<!-- results:start -->";
 const END = "<!-- results:end -->";
 
-const DATASETS = ["jnli", "rules"] as const;
-
 const TASKS = [
-  { id: "jnli", label: "JNLI 含意関係", data: "jnli", format: "choice", metric: "macro-f1" },
-  {
-    id: "rules",
-    label: "業務ルール判定",
-    data: "rules",
-    format: "noul",
-    metric: "balanced-accuracy",
-  },
+  { id: "jnli", label: "JNLI 含意関係", format: "choice", metric: "macro-f1" },
+  { id: "rules", label: "業務ルール判定", format: "noul", metric: "balanced-accuracy" },
 ] as const;
 
 const MODELS = [
@@ -92,26 +81,21 @@ const DetailSchema = Schema.Struct({
   outcomes: Schema.Array(Schema.Struct({ id: Schema.String, outcome: OutcomeSchema })),
 });
 
-const pct = (value: number): string => (value * PERCENT).toFixed(PERCENT_DIGITS);
-
 const humanMatch = (value: Option.Option<number>): string =>
   Option.match(value, { onNone: () => "-", onSome: (rate) => `${pct(rate)}%` });
-
-const intervalCell = (interval: Readonly<{ lower: number; upper: number }>): string =>
-  `${pct(interval.lower)}〜${pct(interval.upper)}`;
 
 const pairCell = (pairs: TaskResult["test"]["pairs"]): string => {
   if (pairs.status === "unavailable") {
     return "-";
   }
-  return `${pct(pairs.accuracy)}（${intervalCell(pairs.interval)}）`;
+  return `${pct(pairs.accuracy)}（${percentRange(pairs.interval)}）`;
 };
 
 const indexTable = (summary: Summary): readonly string[] => [
   "| モデル | 指数（参考） | 全タスクの費用 (USD) |",
   "| --- | ---: | ---: |",
   ...summary.models.map(
-    (model) => `| ${model.label} | ${pct(model.index)} | ${model.costUsd.toFixed(COST_DIGITS)} |`,
+    (model) => `| ${model.label} | ${pct(model.index)} | ${usdAmount(model.costUsd)} |`,
   ),
 ];
 
@@ -121,7 +105,7 @@ const labelLine = (stats: Summary["labeling"][number]): string =>
 const taskTable = (summary: Summary, task: (typeof TASKS)[number]): readonly string[] => [
   `### ${task.label}（${task.format}、raw は ${task.metric}）`,
   "",
-  ...summary.labeling.filter((stats) => stats.task === task.data).map((stats) => labelLine(stats)),
+  ...summary.labeling.filter((stats) => stats.task === task.id).map((stats) => labelLine(stats)),
   "",
   "| モデル | skill（95% 区間） | raw | 正解率 | 対の正解率（95% 区間） | coverage | p50 / p95 (ms) | タスク全体の費用 (USD) |",
   "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
@@ -132,13 +116,13 @@ const taskTable = (summary: Summary, task: (typeof TASKS)[number]): readonly str
         [
           "",
           model.label,
-          `${pct(result.test.skill)}（${intervalCell(result.test.skillInterval)}）`,
+          `${pct(result.test.skill)}（${percentRange(result.test.skillInterval)}）`,
           pct(result.test.raw),
           pct(result.test.accuracy),
           pairCell(result.test.pairs),
           pct(result.test.coverage),
           `${result.p50Ms} / ${result.p95Ms}`,
-          result.costUsd.toFixed(COST_DIGITS),
+          usdAmount(result.costUsd),
           "",
         ]
           .join(" | ")
@@ -152,9 +136,7 @@ const table = (summary: Summary): string =>
     "\n",
   );
 
-const supportOf = (
-  test: Readonly<{ failed: number; total: number }>,
-): "supported" | "unsupported" => {
+const supportOf = (test: Readonly<{ failed: number; total: number }>): Support => {
   if (test.failed === test.total) {
     return "unsupported";
   }
@@ -191,16 +173,12 @@ const runModel = Effect.fn("runModel")(function* runModel(
   const adapter = yield* makeOpenRouterAdapter(model.id, model.choiceVia);
   const ran = yield* Effect.forEach(tasks, (task) => runTask(adapter, task), { discard: false });
   const results = ran.map(({ result }) => result);
-  yield* writeJson(
-    DetailSchema,
-    yield* benchPath("results", `${model.id.replaceAll("/", "__")}.json`),
-    {
-      model: model.id,
-      outcomes: ran.flatMap(({ rows }) =>
-        rows.map(({ item, outcome }) => ({ id: item.id, outcome })),
-      ),
-    },
-  );
+  yield* writeJson(DetailSchema, yield* benchPath("results", `${modelSlug(model.id)}.json`), {
+    model: model.id,
+    outcomes: ran.flatMap(({ rows }) =>
+      rows.map(({ item, outcome }) => ({ id: item.id, outcome })),
+    ),
+  });
   return {
     provider: model.provider,
     model: model.id,
@@ -213,13 +191,18 @@ const runModel = Effect.fn("runModel")(function* runModel(
 });
 
 const loadTask = Effect.fn("loadTask")(function* loadTask(task: (typeof TASKS)[number]) {
-  const items = yield* readJsonl(ItemSchema, yield* benchPath("data", `${task.data}.jsonl`));
+  const items = yield* readJsonl(
+    ItemSchema,
+    yield* dataPath({ task: task.id, extension: "jsonl" }),
+  );
   return { ...task, items };
 });
 
-const loadStats = Effect.fn("loadStats")(function* loadStats(data: (typeof DATASETS)[number]) {
+const loadStats = Effect.fn("loadStats")(function* loadStats(task: (typeof TASKS)[number]) {
   const fileSystem = yield* FileSystem.FileSystem;
-  const text = yield* fileSystem.readFileString(yield* benchPath("data", `${data}.stats.json`));
+  const text = yield* fileSystem.readFileString(
+    yield* dataPath({ task: task.id, extension: "stats.json" }),
+  );
   return yield* Schema.decodeEffect(Schema.fromJsonString(LabelStatsSchema))(text);
 });
 
@@ -242,7 +225,7 @@ runBench(
       models: yield* Effect.forEach(MODELS, (model) => runModel(model, tasks), {
         concurrency: "unbounded",
       }),
-      labeling: yield* Effect.forEach(DATASETS, (data) => loadStats(data), { discard: false }),
+      labeling: yield* Effect.forEach(TASKS, (task) => loadStats(task), { discard: false }),
     };
     yield* writeJson(
       SummarySchema,

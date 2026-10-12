@@ -1,13 +1,13 @@
 import { LabelStatsSchema } from "bench-summary/schema";
 import { Effect, Number as Num, Schema } from "effect";
 
-import { ItemSchema } from "./item.ts";
-import type { NoulItem } from "./item.ts";
-import { askThrice, tally } from "./label.ts";
-import { splitOf as splitByVotes } from "./labeling.ts";
+import { ItemSchema, NOUL_CRITERIA } from "./item.ts";
+import type { Item, NoulItem } from "./item.ts";
+import { askThrice, splitOf as splitByVotes, tally } from "./label.ts";
 import { Opus, runBench } from "./runtime.ts";
-import { benchPath, writeJson, writeJsonl } from "./store.ts";
+import { dataPath, writeJson, writeJsonl } from "./store.ts";
 
+const TASK = "rules";
 const PAIRS_PER_ROUND = 5;
 const CONCURRENCY = 12;
 const MIN_ARTICLES = 8;
@@ -185,7 +185,7 @@ const generateCases = Effect.fn("generateCases")(function* generateCases(
   });
 });
 
-const splitOf = (agreement: number, asIntended: boolean): "test" | "hard" => {
+const splitOf = (agreement: number, asIntended: boolean): Item["split"] => {
   if (asIntended) {
     return splitByVotes(agreement);
   }
@@ -242,12 +242,12 @@ const labelDraft = Effect.fn("labelDraft")(function* labelDraft(
     type: "noul" as const,
     text: `規程:\n${draft.regulation}\n\n事例:\n${draft.situation}`,
     criteria: draft.criterion,
-    options: { true: "はい", false: "いいえ" },
+    options: NOUL_CRITERIA,
   };
   const { answers, costUsd } = yield* askThrice(question);
   const { mode, agreement } = tally(answers);
   const item: NoulItem = {
-    id: `rules-${draft.themeIndex}-${draft.key}`,
+    id: `${TASK}-${draft.themeIndex}-${draft.key}`,
     ...question,
     gold: mode === "true",
     gold_source: "llm",
@@ -269,9 +269,9 @@ runBench(
     );
     const labeled = yield* Effect.forEach(drafts, labelDraft, { concurrency: CONCURRENCY });
     const items = labeled.map(({ item }) => item);
-    yield* writeJsonl(ItemSchema, yield* benchPath("data", "rules.jsonl"), items);
-    yield* writeJson(LabelStatsSchema, yield* benchPath("data", "rules.stats.json"), {
-      task: "rules",
+    yield* writeJsonl(ItemSchema, yield* dataPath({ task: TASK, extension: "jsonl" }), items);
+    yield* writeJson(LabelStatsSchema, yield* dataPath({ task: TASK, extension: "stats.json" }), {
+      task: TASK,
       items: items.length,
       hard: items.filter(({ split }) => split === "hard").length,
       opusCostUsd: Num.sumAll([...generated, ...labeled].map(({ costUsd }) => costUsd)),

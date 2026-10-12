@@ -1,3 +1,4 @@
+import type { TaskId } from "bench-summary/schema";
 import { Option, Schema } from "effect";
 
 import referenceJson from "./english-reference.json";
@@ -34,7 +35,7 @@ type EnglishRow = Readonly<{
   japanese: Scores;
 }>;
 
-const JAPANESE_TASK = "rules";
+const JAPANESE_TASK: TaskId = "rules";
 
 const EMPTY: Reference = {
   source: { name: "", url: "", commit: "", retrievedAt: "", license: "" },

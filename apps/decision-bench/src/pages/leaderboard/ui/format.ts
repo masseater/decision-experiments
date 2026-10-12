@@ -1,10 +1,8 @@
-const PERCENT = 100;
-const PERCENT_DIGITS = 1;
-const COST_DIGITS = 4;
+import { PERCENT, PERCENT_DIGITS, percent, percentRange, usdAmount } from "bench-summary/format";
+import type { Interval } from "bench-summary/schema";
+
 const SCORE_DIGITS = 3;
 const NO_CHANGE = 0;
-
-const percent = (value: number): string => (value * PERCENT).toFixed(PERCENT_DIGITS);
 
 const gap = (value: number): string => {
   const text = percent(value);
@@ -20,14 +18,15 @@ const pointsOf = (value: unknown): string => points(Number(value));
 
 const toPercentPoints = (ratio: number): number => ratio * PERCENT;
 
-const usd = (value: number): string => `$${value.toFixed(COST_DIGITS)}`;
+const usd = (value: number): string => `$${usdAmount(value)}`;
 
 const withInterval = ({
   value,
   interval,
-}: Readonly<{ value: number; interval: Readonly<{ lower: number; upper: number }> }>): string =>
-  `${percent(value)}（${percent(interval.lower)}〜${percent(interval.upper)}）`;
+}: Readonly<{ value: number; interval: Readonly<Interval> }>): string =>
+  `${percent(value)}（${percentRange(interval)}）`;
 
 const decimal = (value: number): string => value.toFixed(SCORE_DIGITS);
 
-export { decimal, gap, percent, pointsOf, toPercentPoints, usd, withInterval };
+export { percent } from "bench-summary/format";
+export { decimal, gap, pointsOf, toPercentPoints, usd, withInterval };

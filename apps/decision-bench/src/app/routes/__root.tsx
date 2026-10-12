@@ -2,6 +2,7 @@ import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext } from "@tanstack/react-router";
 
 import { RootDocument } from "#/app/shell/root-document";
+import { SITE_TITLE } from "#/shared/config";
 
 import appCss from "#/app/styles.css?url";
 
@@ -10,7 +11,7 @@ const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
     meta: [
       { charSet: "utf8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "日本語 decision model ベンチマーク" },
+      { title: SITE_TITLE },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
   }),

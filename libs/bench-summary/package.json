@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     "./summary": "./summary.json",
-    "./schema": "./src/summary.ts"
+    "./schema": "./src/summary.ts",
+    "./format": "./src/format.ts"
   },
   "dependencies": {
     "effect": "catalog:stack"
