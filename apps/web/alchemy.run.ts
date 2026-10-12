@@ -4,9 +4,12 @@ import type { InferEnv } from "alchemy/Cloudflare";
 import { Config, Effect, Option, Schema } from "effect";
 
 import { APP_NAME, CI_TELEMETRY_AUDIENCE, requireAppPrefix } from "./app-name.ts";
+import { BASE_PATH } from "./base-path.ts";
 import { edgeGuard } from "./edge-guard.ts";
 
 const TRACE_SAMPLING_RATE = 0.1;
+
+const ZONE = "masseater.dev";
 
 const COMPATIBILITY = { date: "2026-08-25" } as const;
 
@@ -17,6 +20,7 @@ const web = Effect.gen(function* web() {
   const BETTER_AUTH_SECRET = yield* makeRandom("BetterAuthSecret");
   return yield* Website.Vite("Web", {
     compatibility: COMPATIBILITY,
+    routes: [{ pattern: `${ZONE}${BASE_PATH}*`, zoneName: ZONE }],
     env: { BETTER_AUTH_SECRET, DB },
     observability: {
       enabled: true,

@@ -1,3 +1,4 @@
+import { LockKeyhole } from "lucide-react";
 import { useCallback } from "react";
 import type { ReactNode } from "react";
 
@@ -15,6 +16,8 @@ import type { Run } from "#/pages/inspect/model/draft";
 import { Button } from "#/shared/ui/button";
 
 import { ApiKeyField } from "./api-key-field";
+import { ExampleList } from "./example-list";
+import { Note } from "./note";
 import { OverlaidText } from "./overlaid-text";
 
 const FIRST_RUN = 0;
@@ -44,6 +47,7 @@ const InspectForm = ({ state }: Readonly<{ state: InspectState }>): ReactNode =>
   const ready = !isRunning(state) && text.trim() !== "" && apiKey !== "";
   return (
     <section className="flex flex-col gap-3">
+      <ExampleList />
       <OverlaidText state={state} />
       <div className="flex flex-wrap gap-2">
         <ApiKeyField />
@@ -51,7 +55,9 @@ const InspectForm = ({ state }: Readonly<{ state: InspectState }>): ReactNode =>
           {COPY.submit}
         </Button>
       </div>
-      <p className="text-muted-foreground text-xs">{COPY.keyNote}</p>
+      <Note text={COPY.keyNote}>
+        <LockKeyhole />
+      </Note>
     </section>
   );
 };
