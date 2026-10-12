@@ -10,7 +10,7 @@ const DEFAULT_MODEL = "respan/span-01-lite";
 
 const DEFAULT_CUTOFF = 0.5;
 
-const DEFAULT_BRANCHES = 4;
+const MIN_BRANCHES = 2;
 
 const ONE_SENTENCE = 1;
 
@@ -22,11 +22,13 @@ interface DetectOptions {
   readonly branches?: number;
 }
 
-const DEFAULTS: Required<DetectOptions> = {
+const DEFAULTS: Required<Omit<DetectOptions, "branches">> = {
   model: DEFAULT_MODEL,
   cutoff: DEFAULT_CUTOFF,
-  branches: DEFAULT_BRANCHES,
 };
+
+const branchesFor = (sentenceCount: number): number =>
+  Math.max(MIN_BRANCHES, Math.ceil(Math.sqrt(sentenceCount)));
 
 interface Region extends Span {
   readonly probability: number;
@@ -171,10 +173,12 @@ const detect = Effect.fn("injection-bisect.detect")(function* detect(
 ) {
   const probes = yield* Ref.make<readonly Probe[]>([]);
   const asked = yield* Ref.make(FIRST);
+  const sentences = sentencesOf(text);
   const query: Query = {
     text,
     ...DEFAULTS,
     ...options,
+    branches: options.branches ?? branchesFor(sentences.length),
     record: (probe) => Ref.update(probes, (recorded) => [...recorded, probe]),
     nextId: Ref.getAndUpdate(asked, (count) => count + ONE_SENTENCE),
   };
@@ -186,7 +190,6 @@ const detect = Effect.fn("injection-bisect.detect")(function* detect(
       probes: yield* Ref.get(probes),
     } satisfies Detection;
   }
-  const sentences = sentencesOf(text);
   const regions = yield* locate(query, sentences, {
     from: FIRST,
     to: sentences.length,
@@ -201,5 +204,5 @@ const detect = Effect.fn("injection-bisect.detect")(function* detect(
   } satisfies Detection;
 });
 
-export { DEFAULT_BRANCHES, DEFAULT_CUTOFF, DEFAULT_MODEL, ProbeListener, detect };
+export { DEFAULT_CUTOFF, DEFAULT_MODEL, ProbeListener, branchesFor, detect };
 export type { Detection, DetectOptions, Probe, ProbeEvent, Region };

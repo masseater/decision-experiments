@@ -1,9 +1,4 @@
-import {
-  DEFAULT_BRANCHES,
-  DEFAULT_CUTOFF,
-  DEFAULT_MODEL,
-  PRODUCT_NAME,
-} from "@injection-bisect/core";
+import { DEFAULT_CUTOFF, DEFAULT_MODEL, PRODUCT_NAME } from "@injection-bisect/core";
 
 const COPY = {
   title: PRODUCT_NAME,
@@ -11,10 +6,10 @@ const COPY = {
   steps: [
     `文章全体を ${DEFAULT_MODEL} に1回問い合わせ、インジェクションを含む確率を受け取る`,
     `${DEFAULT_CUTOFF} 未満なら終わる`,
-    `${DEFAULT_CUTOFF} 以上なら文の切れ目で${DEFAULT_BRANCHES}つに分け、別々のリクエストで同時に問い合わせる`,
+    `${DEFAULT_CUTOFF} 以上なら、文の数の平方根（切り上げ）個に文の切れ目で分け、別々のリクエストで同時に問い合わせる`,
     `${DEFAULT_CUTOFF} 以上の区間だけを、1文になるまで同じように分ける`,
   ],
-  cost: `問い合わせはおよそ 1 + ${DEFAULT_BRANCHES}·log${DEFAULT_BRANCHES}n 回、往復は log${DEFAULT_BRANCHES}n 段`,
+  cost: "n 文なら問い合わせはおよそ 1 + 2√n 回、往復は3段ほど",
   separate:
     "1リクエストに全区間を並べると注入より後ろの文まで陽性になるため、区間ごとに別リクエストにする",
   question: "判定モデルへの質問",
@@ -28,6 +23,7 @@ const COPY = {
   failed: "失敗しました",
   queries: "問い合わせ",
   perSentence: "1文ずつなら",
+  branches: "分割数",
   times: "回",
   elapsed: "経過",
   tokens: "入力トークン",

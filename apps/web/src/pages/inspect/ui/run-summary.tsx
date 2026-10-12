@@ -1,4 +1,4 @@
-import { sentencesOf } from "@injection-bisect/core";
+import { branchesFor, sentencesOf } from "@injection-bisect/core";
 import type { ReactNode } from "react";
 
 import { COPY } from "#/pages/inspect/model/copy";
@@ -45,9 +45,10 @@ const RunSummary = ({ text, trace }: Readonly<{ text: string; trace: Trace }>): 
       {labelOf(trace.phase)}
     </h2>
     <FailureReason phase={trace.phase} />
-    <dl className="grid grid-cols-2 gap-x-6 gap-y-2 font-mono text-sm sm:grid-cols-5">
+    <dl className="grid grid-cols-2 gap-x-6 gap-y-2 font-mono text-sm sm:grid-cols-6">
       <Stat label={COPY.queries} value={`${trace.rows.length}${COPY.times}`} />
       <Stat label={COPY.perSentence} value={`${sentencesOf(text).length}${COPY.times}`} />
+      <Stat label={COPY.branches} value={String(branchesFor(sentencesOf(text).length))} />
       <Stat label={COPY.elapsed} value={`${formatCount(Math.round(trace.elapsed))}ms`} />
       <Stat
         label={COPY.tokens}
