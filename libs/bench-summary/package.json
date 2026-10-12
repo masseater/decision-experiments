@@ -1,0 +1,13 @@
+{
+  "name": "bench-summary",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./summary": "./summary.json",
+    "./schema": "./src/summary.ts"
+  },
+  "dependencies": {
+    "effect": "catalog:stack"
+  }
+}

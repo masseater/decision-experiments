@@ -1,3 +1,4 @@
+import type { TaskResult } from "bench-summary/schema";
 import { Array as Arr, Number as Num, Option, pipe } from "effect";
 import { ConfusionMatrix } from "ml-confusion-matrix";
 import seedrandom from "seedrandom";
@@ -5,7 +6,6 @@ import { quantile, sampleWithReplacement } from "simple-statistics";
 
 import { calibrationOf } from "./calibration.ts";
 import type { ChoiceItem, Decision, Item, NoulItem, Outcome, ScoreItem } from "./item.ts";
-import type { TaskResult } from "./summary.ts";
 
 interface Scored {
   readonly item: Item;

@@ -1,6 +1,13 @@
 import { Schema } from "effect";
 
-import { LabelStatsSchema } from "./labeling.ts";
+const LabelStatsSchema = Schema.Struct({
+  task: Schema.String,
+  items: Schema.Finite,
+  hard: Schema.Finite,
+  opusCostUsd: Schema.Finite,
+  opusMatchesHuman: Schema.optionalKey(Schema.Finite),
+  opusSampled: Schema.optionalKey(Schema.Finite),
+});
 
 const CalibrationBinSchema = Schema.Struct({
   meanPredicted: Schema.Finite,
@@ -76,5 +83,5 @@ const SummarySchema = Schema.Struct({
 type Summary = typeof SummarySchema.Type;
 type TaskResult = typeof TaskResultSchema.Type;
 
-export { SummarySchema };
+export { LabelStatsSchema, SummarySchema };
 export type { Summary, TaskResult };

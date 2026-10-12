@@ -1,15 +1,14 @@
+import { LabelStatsSchema, SummarySchema } from "bench-summary/schema";
+import type { Summary, TaskResult } from "bench-summary/schema";
 import { DateTime, Effect, FileSystem, Number as Num, Option, Schema } from "effect";
 
 import { ItemSchema, OutcomeSchema } from "./item.ts";
 import type { Item } from "./item.ts";
-import { LabelStatsSchema } from "./labeling.ts";
 import { makeOpenRouterAdapter } from "./openrouter.ts";
 import { runBench } from "./runtime.ts";
 import { metric, usage } from "./score.ts";
 import type { Scored } from "./score.ts";
 import { benchPath, readJsonl, writeJson } from "./store.ts";
-import { SummarySchema } from "./summary.ts";
-import type { Summary, TaskResult } from "./summary.ts";
 
 const CONCURRENCY = 4;
 const PERCENT = 100;
@@ -245,7 +244,11 @@ runBench(
       }),
       labeling: yield* Effect.forEach(DATASETS, (data) => loadStats(data), { discard: false }),
     };
-    yield* writeJson(SummarySchema, yield* benchPath("results", "summary.json"), summary);
+    yield* writeJson(
+      SummarySchema,
+      yield* benchPath("..", "..", "libs", "bench-summary", "summary.json"),
+      summary,
+    );
     yield* updateReadme(summary);
   }),
 );
