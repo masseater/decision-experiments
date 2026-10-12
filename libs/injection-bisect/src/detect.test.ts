@@ -1,7 +1,7 @@
 import { Effect, Ref } from "effect";
 import { expect, test } from "vite-plus/test";
 
-import { ProbeListener, detect } from "./detect.ts";
+import { ProbeListener, branchesFor, detect } from "./detect.ts";
 import type { Detection, ProbeEvent } from "./detect.ts";
 import type { JudgeError } from "./judge-error.ts";
 import { InjectionJudge } from "./judge.ts";
@@ -28,6 +28,13 @@ const FIRST = 0;
 const NO_COST = 0;
 
 const MODEL = "test/model";
+
+const SPLITS = [
+  { sentences: 1, branches: 2 },
+  { sentences: 4, branches: 2 },
+  { sentences: 12, branches: 4 },
+  { sentences: 53, branches: 8 },
+] as const;
 
 const byNumber = (left: number, right: number): number => left - right;
 
@@ -121,3 +128,9 @@ test("reports each question when it is asked and when it is answered", () =>
       expect(answeredIds.toSorted(byNumber)).toStrictEqual(askedIds.toSorted(byNumber));
     }),
   ));
+
+test("splits into about the square root of the sentence count", () => {
+  expect(SPLITS.map(({ sentences }) => branchesFor(sentences))).toStrictEqual(
+    SPLITS.map(({ branches }) => branches),
+  );
+});

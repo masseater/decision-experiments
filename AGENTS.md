@@ -47,6 +47,7 @@ release. Add a tool name to select part of the graph. For example, run
 ## Cloudflare
 
 - Cloudflare は Workers Paid プランを契約している前提でよい。Paid プランでしか使えない機能や上限を前提に設計してよい。
+- GitHub Secret の `CLOUDFLARE_API_TOKEN` には、Workers の編集に加えて masseater.dev ゾーンの Workers Routes Edit が要る。`alchemy.run.ts` が `masseater.dev/injection-bisect*` のルートを作るためで、無いとデプロイが Forbidden で落ちる。
 - `.php` や `.env` を総当たりする脆弱性スキャンは、ゾーンの WAF カスタムルールで block する。`/.env` と `/wp-login.php` だけはハニーポットの Worker が受け、404 を返して Analytics Engine に 1 件ずつ記録する。どちらも `apps/web/edge-guard.ts` にある。block した分は Security Events に残り、Worker に届かないので普段の Workers Logs やトレースには混ざらない。
 - ゾーンの WAF カスタムルールは、1 つのゾーンにつき 1 つのスタックだけが持つ。ゾーンを持つリポだけが `apps/web/alchemy.run.ts` の `OWNED_ZONE` にゾーン名を入れる。サブドメインで動くリポは入れず、ゾーンを持つリポのルールで守られる。今の持ち主は masseater.dev ゾーンの masseater/masseater.dev である。
 - Bot Fight Mode は、GitHub Actions からの送信や MCP クライアントのような正当な自動アクセスまで止めるので使わない。
@@ -111,7 +112,7 @@ Effect から外部 API や SaaS を呼ぶクライアントは手で包まず�
 
 - このリポジトリは、フロンティアモデルに渡す前の入力にプロンプトインジェクションが含まれるか、含まれるならどこかを、decision モデルで速く安く判定する。ライブラリは `libs/injection-bisect`、CLI は `tools/cli` にある。
 - 判定は入力全体への 1 回の問い合わせから始める。確率がしきい値未満なら、それ以上問い合わせない。
-- しきい値を超えたら、文単位で `DEFAULT_BRANCHES`（4）つに分けて別々のリクエストで並列に問い、超えた区間だけを再帰する。どの区間も超えなければ、文をまたぐか文脈が要るものとして親の区間を返す。2026-10-12 に例文 6 件×3 回で測ると、2 分割は平均 1,402ms・8.3 回、4 分割は 884ms・7.8 回、8 分割は 929ms・10.3 回で、注入箇所は 1 件を除き同じだった。
+- しきい値を超えたら、文単位で文の数の平方根（切り上げ、最低 2）個に分けて（`branchesFor`）別々のリクエストで並列に問い、超えた区間だけを再帰する。どの区間も超えなければ、文をまたぐか文脈が要るものとして親の区間を返す。2026-10-12 の計測では、8〜12 文の例文 6 件×3 回で 2 分割 1,402ms・8.3 回、4 分割 884ms・7.8 回、8 分割 929ms・10.3 回、53 文のニュース記事×3 回で 2 分割 1,708ms・13 回、4 分割 1,073ms・12 回、8 分割 808ms・15 回、16 分割 1,203ms・20 回だった。短い文章は 4、長い文章は 8 が速く、どちらも平方根に近い。
 - 1 リクエストに区間ごとの質問を並べる方式は使わない。注入より後ろの無害な行まで陽性になり、位置を絞れないことを計測で確かめたためである。
 - 既定のモデルは無料の `respan/span-01-lite` である。2026-10-12 の計測では、日本語の間接インジェクションは span-01-lite で取れたが、英語や独語の直接的な乗っ取りは `perplexity/pplx-decider-v1.1-27b` のほうがよく取れた。モデルの既定を変えるときは、計測し直してユーザーに確認する。
 - 判定モデルは `InjectionJudge` サービスの裏に置く。OpenRouter は Effect 公式の `@effect/ai-openrouter` の `OpenRouterClient.createDecisions` で呼び、`HTTP-Referer`・`X-Title`・`X-OpenRouter-App-Visibility: hidden` を付ける。
