@@ -455,6 +455,9 @@ importers:
       '@elysiajs/eden':
         specifier: catalog:stack
         version: 1.4.9(elysia@1.4.30(@sinclair/typebox@0.34.52)(exact-mirror@1.2.6)(file-type@22.1.1(supports-color@7.2.0))(openapi-types@12.1.3)(typescript@7.0.2))
+      '@injection-bisect/core':
+        specifier: workspace:*
+        version: link:../../libs/injection-bisect
       '@openfeature/core':
         specifier: 1.12.0
         version: 1.12.0
