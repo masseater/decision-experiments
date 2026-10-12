@@ -50,7 +50,7 @@ const DecisionSchema = Schema.Union([
   Schema.Struct({
     type: Schema.Literal("choice"),
     choice: Schema.String,
-    probabilities: Schema.optionalKey(ProbabilitiesSchema),
+    probabilities: Schema.optional(ProbabilitiesSchema),
   }),
   Schema.Struct({ type: Schema.Literal("noul"), noul: Schema.Finite }),
   Schema.Struct({ type: Schema.Literal("score"), score: Schema.Finite }),

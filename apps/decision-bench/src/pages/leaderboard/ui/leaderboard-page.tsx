@@ -1,6 +1,7 @@
 import { FlaskConical, Tag } from "lucide-react";
 import type { ReactNode } from "react";
 
+import { EnglishSection } from "./english-section";
 import { IndexSection } from "./index-section";
 import { MethodLink } from "./method-link";
 import { NoteList } from "./note-list";
@@ -30,6 +31,7 @@ const LeaderboardPage = (): ReactNode => (
   <PageShell header={HEADER}>
     <TaskLinks />
     <IndexSection />
+    <EnglishSection />
   </PageShell>
 );
 

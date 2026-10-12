@@ -36,18 +36,19 @@ const multiClassBrier = (classes: readonly Readonly<Sample>[]): number =>
   classes.length * brierScore(classes);
 
 const choiceForecast = (item: ChoiceItem, decision: Decision): Option.Option<Forecast> => {
-  if (decision.type !== "choice" || !("probabilities" in decision)) {
+  if (decision.type !== "choice") {
     return Option.none();
   }
-  const { probabilities } = decision;
-  const labels = Object.keys(item.options);
-  const probabilityOf = (label: string): number => probabilities[label] ?? NONE;
-  const confidence = Math.max(NONE, ...labels.map((label) => probabilityOf(label)));
-  return Option.some({
-    sample: sampleOf(confidence, decision.choice === item.gold),
-    brier: multiClassBrier(
-      labels.map((label) => sampleOf(probabilityOf(label), label === item.gold)),
-    ),
+  return Option.map(Option.fromNullishOr(decision.probabilities), (probabilities) => {
+    const labels = Object.keys(item.options);
+    const probabilityOf = (label: string): number => probabilities[label] ?? NONE;
+    const confidence = Math.max(NONE, ...labels.map((label) => probabilityOf(label)));
+    return {
+      sample: sampleOf(confidence, decision.choice === item.gold),
+      brier: multiClassBrier(
+        labels.map((label) => sampleOf(probabilityOf(label), label === item.gold)),
+      ),
+    };
   });
 };
 
