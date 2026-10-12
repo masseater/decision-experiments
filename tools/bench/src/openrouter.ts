@@ -171,6 +171,8 @@ const makeOpenRouterAdapter = Effect.fn("makeOpenRouterAdapter")(function* makeO
 ) {
   const client = new OpenRouter({
     apiKey: Redacted.value(yield* Config.Redacted("OPENROUTER_API_KEY")),
+    httpReferer: "https://github.com/masseater/mst-ja-decision-bench",
+    appTitle: "mst-ja-decision-bench",
   });
   const create = (item: Readonly<Item>): Promise<DecisionsResponse> =>
     client.systemOne.create({
