@@ -1,3 +1,5 @@
 import { createAuthClient } from "better-auth/client";
 
-export const authClient = createAuthClient();
+import { BASE_PATH } from "#/shared/config";
+
+export const authClient = createAuthClient({ basePath: `${BASE_PATH}/api/auth` });

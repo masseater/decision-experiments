@@ -6,6 +6,7 @@ import rsc from "@vitejs/plugin-rsc";
 import { defineConfig } from "vite-plus";
 
 export default defineConfig({
+  base: "/decision-bench/",
   resolve: { tsconfigPaths: true },
   plugins: [
     devtools(),
