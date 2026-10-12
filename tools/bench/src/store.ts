@@ -1,12 +1,30 @@
 import type { TaskId } from "bench-summary/schema";
-import { Crypto, Effect, FileSystem, Path, Schema } from "effect";
-import { Hex } from "effect/encoding";
+import { Context, Effect, Schema } from "effect";
+import type { Scope } from "effect";
 
 const INDENT = 2;
 
+type Cached<Value> = (key: unknown, compute: Effect.Effect<Value>) => Effect.Effect<Value>;
+
+class BenchStore extends Context.Service<
+  BenchStore,
+  {
+    readonly benchPath: (...segments: readonly string[]) => string;
+    readonly exists: (file: string) => Effect.Effect<boolean>;
+    readonly readText: (file: string) => Effect.Effect<string>;
+    readonly writeText: (file: string, text: string) => Effect.Effect<void>;
+    readonly sha256Hex: (text: string) => Effect.Effect<string>;
+    readonly cache: <Codec extends Schema.Codec<unknown, unknown>>(
+      storeId: string,
+      success: Codec,
+      keep: (value: Codec["Type"]) => boolean,
+    ) => Effect.Effect<Cached<Codec["Type"]>, never, Scope.Scope>;
+  }
+>()("bench/store/BenchStore") {}
+
 const benchPath = Effect.fn("benchPath")(function* benchPath(...segments: readonly string[]) {
-  const path = yield* Path.Path;
-  return path.join(path.resolve(import.meta.dirname, ".."), ...segments);
+  const store = yield* BenchStore;
+  return store.benchPath(...segments);
 });
 
 const dataPath = ({
@@ -17,21 +35,25 @@ const dataPath = ({
 
 const modelSlug = (model: string): string => model.replaceAll("/", "__");
 
-const ensureParent = Effect.fn("ensureParent")(function* ensureParent(file: string) {
-  const fs = yield* FileSystem.FileSystem;
-  const path = yield* Path.Path;
-  yield* fs.makeDirectory(path.dirname(file), { recursive: true });
+const readText = Effect.fn("readText")(function* readText(file: string) {
+  const store = yield* BenchStore;
+  return yield* store.readText(file);
+});
+
+const writeText = Effect.fn("writeText")(function* writeText(file: string, text: string) {
+  const store = yield* BenchStore;
+  yield* store.writeText(file, text);
 });
 
 const readJsonl = Effect.fn("readJsonl")(function* readJsonl<Codec extends Schema.Top>(
   schema: Codec,
   file: string,
 ) {
-  const fs = yield* FileSystem.FileSystem;
-  if (!(yield* fs.exists(file))) {
+  const store = yield* BenchStore;
+  if (!(yield* store.exists(file))) {
     return [];
   }
-  const text = yield* fs.readFileString(file);
+  const text = yield* store.readText(file);
   const decode = Schema.decodeUnknownEffect(Schema.fromJsonString(schema));
   return yield* Effect.forEach(
     text.split("\n").filter((line) => line.trim() !== ""),
@@ -44,11 +66,9 @@ const writeJsonl = Effect.fn("writeJsonl")(function* writeJsonl<Codec extends Sc
   file: string,
   rows: readonly Codec["Type"][],
 ) {
-  const fs = yield* FileSystem.FileSystem;
   const encode = Schema.encodeEffect(Schema.fromJsonString(schema));
   const lines = yield* Effect.forEach(rows, (row) => encode(row), { concurrency: "unbounded" });
-  yield* ensureParent(file);
-  yield* fs.writeFileString(file, lines.map((line) => `${line}\n`).join(""));
+  yield* writeText(file, lines.map((line) => `${line}\n`).join(""));
 });
 
 const writeJson = Effect.fn("writeJson")(function* writeJson<Codec extends Schema.Top>(
@@ -56,10 +76,8 @@ const writeJson = Effect.fn("writeJson")(function* writeJson<Codec extends Schem
   file: string,
   value: Codec["Type"],
 ) {
-  const fs = yield* FileSystem.FileSystem;
   const text = yield* Schema.encodeEffect(Schema.fromJsonString(schema, { space: INDENT }))(value);
-  yield* ensureParent(file);
-  yield* fs.writeFileString(file, `${text}\n`);
+  yield* writeText(file, `${text}\n`);
 });
 
 const encodeJson = Schema.encodeEffect(Schema.fromJsonString(Schema.Unknown));
@@ -67,9 +85,29 @@ const encodeJson = Schema.encodeEffect(Schema.fromJsonString(Schema.Unknown));
 const toJson = (value: unknown): Effect.Effect<string, Schema.SchemaError> => encodeJson(value);
 
 const sha256 = Effect.fn("sha256")(function* sha256(value: unknown) {
-  const crypto = yield* Crypto.Crypto;
-  const json = yield* toJson(value);
-  return Hex.encode(yield* crypto.digest("SHA-256", new TextEncoder().encode(json)));
+  const store = yield* BenchStore;
+  return yield* store.sha256Hex(yield* toJson(value));
 });
 
-export { benchPath, dataPath, modelSlug, readJsonl, sha256, toJson, writeJson, writeJsonl };
+const makeCache = Effect.fn("makeCache")(function* makeCache<
+  Codec extends Schema.Codec<unknown, unknown>,
+>(storeId: string, success: Codec, keep: (value: Codec["Type"]) => boolean) {
+  const store = yield* BenchStore;
+  return yield* store.cache(storeId, success, keep);
+});
+
+export {
+  BenchStore,
+  benchPath,
+  dataPath,
+  makeCache,
+  modelSlug,
+  readJsonl,
+  readText,
+  sha256,
+  toJson,
+  writeJson,
+  writeJsonl,
+  writeText,
+};
+export type { Cached };

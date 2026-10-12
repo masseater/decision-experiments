@@ -1,14 +1,22 @@
 import { percent as pct, percentRange, usdAmount } from "bench-summary/format";
 import { LabelStatsSchema, SummarySchema } from "bench-summary/schema";
 import type { Summary, Support, TaskResult } from "bench-summary/schema";
-import { DateTime, Effect, FileSystem, Number as Num, Option, Schema } from "effect";
+import { DateTime, Effect, Number as Num, Option, Schema } from "effect";
 
 import { ItemSchema, OutcomeSchema } from "./item.ts";
 import type { Item, Scored } from "./item.ts";
 import { makeOpenRouterAdapter } from "./openrouter.ts";
 import { runBench } from "./runtime.ts";
 import { metric, usage } from "./score.ts";
-import { benchPath, dataPath, modelSlug, readJsonl, writeJson } from "./store.ts";
+import {
+  benchPath,
+  dataPath,
+  modelSlug,
+  readJsonl,
+  readText,
+  writeJson,
+  writeText,
+} from "./store.ts";
 
 const CONCURRENCY = 4;
 const LABEL_COST_DIGITS = 2;
@@ -199,22 +207,15 @@ const loadTask = Effect.fn("loadTask")(function* loadTask(task: (typeof TASKS)[n
 });
 
 const loadStats = Effect.fn("loadStats")(function* loadStats(task: (typeof TASKS)[number]) {
-  const fileSystem = yield* FileSystem.FileSystem;
-  const text = yield* fileSystem.readFileString(
-    yield* dataPath({ task: task.id, extension: "stats.json" }),
-  );
+  const text = yield* readText(yield* dataPath({ task: task.id, extension: "stats.json" }));
   return yield* Schema.decodeEffect(Schema.fromJsonString(LabelStatsSchema))(text);
 });
 
 const updateReadme = Effect.fn("updateReadme")(function* updateReadme(summary: Summary) {
-  const fileSystem = yield* FileSystem.FileSystem;
   const readme = yield* benchPath("..", "..", "README.md");
-  const [head = "", rest = ""] = (yield* fileSystem.readFileString(readme)).split(START);
+  const [head = "", rest = ""] = (yield* readText(readme)).split(START);
   const [, tail = ""] = rest.split(END);
-  yield* fileSystem.writeFileString(
-    readme,
-    `${head}${START}\n\n${table(summary)}\n\n${END}${tail}`,
-  );
+  yield* writeText(readme, `${head}${START}\n\n${table(summary)}\n\n${END}${tail}`);
 });
 
 runBench(

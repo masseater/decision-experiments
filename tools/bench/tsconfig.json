@@ -6,12 +6,17 @@
       {
         "name": "@effect/language-service",
         "allowedUnstableApis": [
-          "effect/process/ChildProcess",
-          "effect/process/ChildProcessSpawner#ChildProcessSpawner",
+          "@effect/platform-node/NodeRuntime#runMain",
+          "@effect/platform-node/NodeServices#layer",
+          "effect/Crypto#Crypto",
+          "effect/FileSystem#FileSystem",
+          "effect/Path#Path",
           "effect/persistence/KeyValueStore",
           "effect/persistence/Persistable",
           "effect/persistence/PersistedCache",
-          "effect/persistence/Persistence"
+          "effect/persistence/Persistence",
+          "effect/process/ChildProcess",
+          "effect/process/ChildProcessSpawner#ChildProcessSpawner"
         ]
       }
     ]

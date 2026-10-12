@@ -18,11 +18,10 @@ import {
   Schema,
 } from "effect";
 
-import { makeCache } from "./cache.ts";
 import { DecisionSchema, NOUL_CRITERIA, OutcomeSchema } from "./item.ts";
 import type { ChoiceItem, Decision, Item, Outcome } from "./item.ts";
 import { toRequest } from "./label.ts";
-import { modelSlug } from "./store.ts";
+import { makeCache, modelSlug } from "./store.ts";
 
 interface DecisionAdapter {
   readonly model: string;
