@@ -1,4 +1,5 @@
 import { OpenRouterClient, layerConfig } from "@effect/ai-openrouter/OpenRouterClient";
+import { withClientTransform } from "@effect/ai-openrouter/OpenRouterConfig";
 import type { Answer as AnswerSchema } from "@effect/ai-openrouter/OpenRouterSchema";
 import { Config, Effect, Layer, Option } from "effect";
 import { FetchHttpClient, HttpClient, HttpClientRequest } from "effect/http";
@@ -19,14 +20,13 @@ type NoulAnswer = Extract<Answer, Readonly<{ type: "noul" }>>;
 
 const isNoul = (answer: Answer): answer is NoulAnswer => answer.type === "noul";
 
-const client = layerConfig({
-  apiKey: Config.Redacted("OPENROUTER_API_KEY"),
+const site = {
   siteReferrer: Config.succeed("https://github.com/masseater/injection-bisect"),
   siteTitle: Config.succeed("injection-bisect"),
   transformClient: HttpClient.mapRequest(
     HttpClientRequest.setHeader("X-OpenRouter-App-Visibility", "hidden"),
   ),
-});
+};
 
 const judge = Effect.gen(function* makeJudge() {
   const openRouter = yield* OpenRouterClient;
@@ -59,9 +59,25 @@ const judge = Effect.gen(function* makeJudge() {
   return { verdictOf };
 });
 
-const openRouter = Layer.effect(InjectionJudge, judge).pipe(
-  Layer.provide(client),
+const judgeLayer = Layer.effect(InjectionJudge, judge);
+
+const keyedClient = layerConfig({ apiKey: Config.Redacted("OPENROUTER_API_KEY"), ...site });
+
+const openRouter = judgeLayer.pipe(
+  Layer.provide(keyedClient),
   Layer.provide(FetchHttpClient.layer),
 );
 
-export { openRouter };
+const openRouterPerRequest = judgeLayer.pipe(
+  Layer.provide(layerConfig(site)),
+  Layer.provide(FetchHttpClient.layer),
+);
+
+const withApiKey = (
+  apiKey: string,
+): (<Success, Failure, Requirements>(
+  effect: Effect.Effect<Success, Failure, Requirements>,
+) => Effect.Effect<Success, Failure, Requirements>) =>
+  withClientTransform(HttpClient.mapRequest(HttpClientRequest.bearerToken(apiKey)));
+
+export { openRouter, openRouterPerRequest, withApiKey };
