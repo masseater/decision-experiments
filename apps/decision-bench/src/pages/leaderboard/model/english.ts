@@ -1,4 +1,4 @@
-import { Schema } from "effect";
+import { Option, Schema } from "effect";
 
 import referenceJson from "./english-reference.json";
 import { rankedModels } from "./ranking";
@@ -41,14 +41,10 @@ const EMPTY: Reference = {
   models: [],
 };
 
-const toReference = (value: unknown): Reference => {
-  if (Schema.is(ReferenceSchema)(value)) {
-    return value;
-  }
-  return EMPTY;
-};
-
-const reference = toReference(referenceJson);
+const reference = Option.getOrElse(
+  Schema.decodeOption(ReferenceSchema)(referenceJson),
+  (): Reference => EMPTY,
+);
 
 const japaneseOf = (result: TaskResult): readonly Scores[] => {
   if (result.test.pairs.status === "unavailable") {
