@@ -8,6 +8,12 @@ import { defineConfig } from "vite-plus";
 export default defineConfig({
   base: "/decision-bench/",
   resolve: { tsconfigPaths: true },
+  test: {
+    projects: [
+      { extends: true, test: { name: "app", include: ["src/**/*.test.{ts,tsx}"] } },
+      { extends: false, test: { name: "alchemy", include: ["*.test.ts"] } },
+    ],
+  },
   plugins: [
     devtools(),
     tailwindcss(),
