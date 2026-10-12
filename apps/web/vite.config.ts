@@ -3,9 +3,11 @@ import { devtools } from "@tanstack/devtools-vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import rsc from "@vitejs/plugin-rsc";
+import { Option } from "effect";
 import { defineConfig } from "vite-plus";
 
 import { BASE_PATH } from "./base-path.ts";
+import { SEARCH_INDEX_ORIGIN, SITEMAP_FILE } from "./src/shared/config/search.ts";
 
 export default defineConfig({
   base: `${BASE_PATH}/`,
@@ -19,7 +21,15 @@ export default defineConfig({
   plugins: [
     devtools(),
     tailwindcss(),
-    tanstackStart({ srcDirectory: "src/app", rsc: { enabled: true } }),
+    tanstackStart({
+      srcDirectory: "src/app",
+      rsc: { enabled: true },
+      pages: [{ path: "/" }],
+      sitemap: Option.match(SEARCH_INDEX_ORIGIN, {
+        onNone: () => ({ enabled: false }),
+        onSome: (host) => ({ host, outputPath: SITEMAP_FILE }),
+      }),
+    }),
     rsc(),
     viteReact(),
   ],

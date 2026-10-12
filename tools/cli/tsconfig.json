@@ -6,6 +6,8 @@
       {
         "name": "@effect/language-service",
         "allowedUnstableApis": [
+          "@effect/platform-node/NodeRuntime#runMain",
+          "@effect/platform-node/NodeServices#layer",
           "effect/cli/Argument#String",
           "effect/cli/Argument#optional",
           "effect/cli/Command#make",
