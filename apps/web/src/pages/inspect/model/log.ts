@@ -30,10 +30,10 @@ const verdictOf = (probability: number): string => {
 
 const resultOf = (event: Extract<InspectEvent, { type: "done" }>): string => {
   if (event.detection.status === "clean") {
-    return `✓ ${COPY.clean}  ${formatPercent(event.detection.probability)}`;
+    return `${COPY.clean}  ${formatPercent(event.detection.probability)}`;
   }
   const regions = event.detection.regions.map((region: Region) => rangeOf(region)).join(" ");
-  return `✓ ${COPY.injected}  ${COPY.regions} ${regions}`;
+  return `${COPY.injected}  ${COPY.regions} ${regions}`;
 };
 
 const lineOf = (event: InspectEvent): LogLine => {
@@ -42,20 +42,20 @@ const lineOf = (event: InspectEvent): LogLine => {
     return {
       key: `asked-${event.id}`,
       tone: "asked",
-      text: `${at}  → #${event.id}  ${event.depth + NEXT}${COPY.depth}  ${rangeOf(event)}  ${formatCount(event.end - event.start)}${COPY.chars}`,
+      text: `${at}  #${event.id}  ${event.depth + NEXT}${COPY.depth}  ${rangeOf(event)}  ${formatCount(event.end - event.start)}${COPY.chars}`,
     };
   }
   if (event.type === "answered") {
     return {
       key: `answered-${event.id}`,
       tone: "answered",
-      text: `${at}  ← #${event.id}  ${formatPercent(event.probability)} ${verdictOf(event.probability)}  ${Math.round(event.millis)}ms  ${formatCount(event.inputTokens)} tok  ${formatDollars(event.cost)}  ${event.model}`,
+      text: `${at}  #${event.id}  ${formatPercent(event.probability)} ${verdictOf(event.probability)}  ${Math.round(event.millis)}ms  ${formatCount(event.inputTokens)} tok  ${formatDollars(event.cost)}  ${event.model}`,
     };
   }
   if (event.type === "done") {
     return { key: "done", tone: "done", text: `${at}  ${resultOf(event)}` };
   }
-  return { key: "failed", tone: "failed", text: `${at}  ✗ ${COPY.failed}: ${event.reason}` };
+  return { key: "failed", tone: "failed", text: `${at}  ${event.reason}` };
 };
 
 const logOf = (events: readonly InspectEvent[]): readonly LogLine[] =>

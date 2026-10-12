@@ -1,9 +1,11 @@
 import { DEFAULT_MODEL, QUESTION } from "@injection-bisect/core";
+import { Clock, Split } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { COPY } from "#/pages/inspect/model/copy";
 
 import { Legend } from "./legend";
+import { Note } from "./note";
 
 const Mechanism = (): ReactNode => (
   <section className="flex flex-col gap-3 text-sm leading-relaxed">
@@ -13,7 +15,12 @@ const Mechanism = (): ReactNode => (
         <li key={text}>{text}</li>
       ))}
     </ol>
-    <p className="text-muted-foreground">{COPY.cost}</p>
+    <Note text={COPY.cost}>
+      <Clock />
+    </Note>
+    <Note text={COPY.separate}>
+      <Split />
+    </Note>
     <details className="rounded-md border px-3 py-2">
       <summary className="cursor-pointer">{COPY.question}</summary>
       <p className="text-muted-foreground mt-2 font-mono text-xs">{DEFAULT_MODEL}</p>

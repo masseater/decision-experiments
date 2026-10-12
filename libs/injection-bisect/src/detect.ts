@@ -10,7 +10,7 @@ const DEFAULT_MODEL = "respan/span-01-lite";
 
 const DEFAULT_CUTOFF = 0.5;
 
-const HALF = 2;
+const DEFAULT_BRANCHES = 4;
 
 const ONE_SENTENCE = 1;
 
@@ -19,7 +19,14 @@ const FIRST = 0;
 interface DetectOptions {
   readonly model?: string;
   readonly cutoff?: number;
+  readonly branches?: number;
 }
+
+const DEFAULTS: Required<DetectOptions> = {
+  model: DEFAULT_MODEL,
+  cutoff: DEFAULT_CUTOFF,
+  branches: DEFAULT_BRANCHES,
+};
 
 interface Region extends Span {
   readonly probability: number;
@@ -58,6 +65,7 @@ interface Query {
   readonly text: string;
   readonly model: string;
   readonly cutoff: number;
+  readonly branches: number;
   readonly record: (probe: Probe) => Effect.Effect<void>;
   readonly nextId: Effect.Effect<number>;
 }
@@ -115,12 +123,12 @@ const spanOfRange = (sentences: readonly Span[], { from, to }: Range): Span => (
   }),
 });
 
-const halvesOf = ({ from, to }: Range): readonly [Range, Range] => {
-  const middle = Math.floor((from + to) / HALF);
-  return [
-    { from, to: middle },
-    { from: middle, to },
-  ];
+const partsOf = ({ from, to }: Range, branches: number): readonly Range[] => {
+  const count = Math.min(branches, to - from);
+  return Arr.makeBy(count, (index) => ({
+    from: from + Math.floor(((to - from) * index) / count),
+    to: from + Math.floor(((to - from) * (index + ONE_SENTENCE)) / count),
+  }));
 };
 
 const locate = (
@@ -136,11 +144,11 @@ const locate = (
       return whole;
     }
     const scored = yield* Effect.forEach(
-      halvesOf(found),
-      (half) =>
-        ask(query, spanOfRange(sentences, half), found.depth + ONE_SENTENCE).pipe(
+      partsOf(found, query.branches),
+      (part) =>
+        ask(query, spanOfRange(sentences, part), found.depth + ONE_SENTENCE).pipe(
           Effect.map((probability) => ({
-            ...half,
+            ...part,
             probability,
             depth: found.depth + ONE_SENTENCE,
           })),
@@ -165,8 +173,8 @@ const detect = Effect.fn("injection-bisect.detect")(function* detect(
   const asked = yield* Ref.make(FIRST);
   const query: Query = {
     text,
-    model: options.model ?? DEFAULT_MODEL,
-    cutoff: options.cutoff ?? DEFAULT_CUTOFF,
+    ...DEFAULTS,
+    ...options,
     record: (probe) => Ref.update(probes, (recorded) => [...recorded, probe]),
     nextId: Ref.getAndUpdate(asked, (count) => count + ONE_SENTENCE),
   };
@@ -193,5 +201,5 @@ const detect = Effect.fn("injection-bisect.detect")(function* detect(
   } satisfies Detection;
 });
 
-export { DEFAULT_CUTOFF, DEFAULT_MODEL, ProbeListener, detect };
+export { DEFAULT_BRANCHES, DEFAULT_CUTOFF, DEFAULT_MODEL, ProbeListener, detect };
 export type { Detection, DetectOptions, Probe, ProbeEvent, Region };

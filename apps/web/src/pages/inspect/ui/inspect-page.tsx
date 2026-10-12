@@ -12,10 +12,7 @@ const InspectPage = (): ReactNode => {
   const state = useInspect(useRun());
   return (
     <main className="mx-auto flex max-w-4xl flex-col gap-10 px-4 py-10 md:px-8">
-      <header className="flex flex-col gap-2">
-        <h1 className="font-mono text-2xl font-bold">{COPY.title}</h1>
-        <p className="text-muted-foreground">{COPY.lead}</p>
-      </header>
+      <h1 className="font-mono text-2xl font-bold">{COPY.title}</h1>
       <Mechanism />
       <InspectForm state={state} />
       <RunView state={state} />
