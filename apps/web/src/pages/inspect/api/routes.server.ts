@@ -16,6 +16,8 @@ const InspectRequest = Schema.Struct({
   apiKey: Schema.String.check(Schema.isNonEmpty()),
 });
 
+type InspectInput = typeof InspectRequest.Type;
+
 const inspectBody = Schema.toStandardSchemaV1(InspectRequest);
 
 const inspect = Effect.fn("inspect.request")(function* inspect(text: string) {
@@ -50,5 +52,5 @@ const inspectRoutes = createRouter("/api/inspect").post(
 
 type InspectRoutes = typeof inspectRoutes;
 
-export type { InspectResponse, InspectRoutes };
+export type { InspectInput, InspectResponse, InspectRoutes };
 export { inspectRoutes };

@@ -1,5 +1,7 @@
+import { PRODUCT_NAME } from "@injection-bisect/core";
+
 const COPY = {
-  title: "injection-bisect",
+  title: PRODUCT_NAME,
   apiKey: "OpenRouter API キー",
   submit: "インジェクションを探す",
   pending: "探しています…",

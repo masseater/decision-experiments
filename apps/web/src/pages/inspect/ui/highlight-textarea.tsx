@@ -1,4 +1,4 @@
-import type { ComponentProps, ReactNode } from "react";
+import type { ChangeEventHandler, ReactNode } from "react";
 
 import { cn } from "#/shared/lib/utils";
 
@@ -7,10 +7,16 @@ const LAYER =
 
 const HighlightTextarea = ({
   children,
-  className,
-  ...props
-}: ComponentProps<"textarea">): ReactNode => (
-  <div data-slot="highlight-textarea" className={cn("grid", className)}>
+  maxLength,
+  value,
+  onChange,
+}: Readonly<{
+  children: ReactNode;
+  maxLength: number;
+  value: string;
+  onChange: ChangeEventHandler<HTMLTextAreaElement>;
+}>): ReactNode => (
+  <div data-slot="highlight-textarea" className="grid">
     <div aria-hidden="true" className={cn(LAYER, "border-transparent text-transparent")}>
       {children}{" "}
     </div>
@@ -19,7 +25,9 @@ const HighlightTextarea = ({
         LAYER,
         "resize-none overflow-hidden border-input bg-transparent shadow-xs transition-colors outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50",
       )}
-      {...props}
+      maxLength={maxLength}
+      value={value}
+      onChange={onChange}
     />
   </div>
 );

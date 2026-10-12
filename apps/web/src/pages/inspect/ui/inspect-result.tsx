@@ -1,6 +1,7 @@
 import type { Detection } from "@injection-bisect/core";
 import type { ReactNode } from "react";
 
+import type { Inspected } from "#/pages/inspect/api/use-inspect";
 import { COPY } from "#/pages/inspect/model/copy";
 import {
   formatDollars,
@@ -19,9 +20,7 @@ const labelOf = (status: Detection["status"]): string => {
   return COPY.injected;
 };
 
-const InspectResult = ({
-  detection,
-}: Readonly<{ detection: Detection & { readonly millis: number } }>): ReactNode => (
+const InspectResult = ({ detection }: Readonly<{ detection: Inspected }>): ReactNode => (
   <div className="flex flex-col gap-3">
     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
       <h2
