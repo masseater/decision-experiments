@@ -5,6 +5,7 @@ import { Opus } from "./runtime.ts";
 import { toJson } from "./store.ts";
 
 const SAMPLE_COUNT = 3;
+const UNANIMOUS = 1;
 
 const SYSTEM =
   "あなたは日本語の判定タスクに答える評価者です。state を読み、question に指定された形式で答えだけを返してください。";
@@ -64,4 +65,11 @@ const tally = (answers: readonly string[]): Readonly<{ mode: string; agreement: 
   };
 };
 
-export { askThrice, tally, toRequest };
+const splitOf = (agreement: number): Item["split"] => {
+  if (agreement === UNANIMOUS) {
+    return "test";
+  }
+  return "hard";
+};
+
+export { askThrice, splitOf, tally, toRequest };

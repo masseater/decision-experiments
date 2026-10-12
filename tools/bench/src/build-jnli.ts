@@ -3,12 +3,13 @@ import { Config, Effect, Number as Num, Schema } from "effect";
 
 import { ItemSchema } from "./item.ts";
 import type { ChoiceItem } from "./item.ts";
-import { askThrice, tally } from "./label.ts";
-import { LABEL_CONCURRENCY, splitOf } from "./labeling.ts";
+import { askThrice, splitOf, tally } from "./label.ts";
 import { runBench } from "./runtime.ts";
-import { benchPath, readJsonl, sha256, writeJson, writeJsonl } from "./store.ts";
+import { dataPath, readJsonl, sha256, writeJson, writeJsonl } from "./store.ts";
 
+const TASK = "jnli";
 const OPUS_SAMPLE = 200;
+const LABEL_CONCURRENCY = 4;
 const FIRST = 0;
 const JGLUE_COMMIT = "6f071c09316baae89c3d083a90985b4b1cb9968c";
 const SOURCE = `JGLUE JNLI v1.3 valid (yahoojapan/JGLUE@${JGLUE_COMMIT})`;
@@ -30,7 +31,7 @@ const JnliRowSchema = Schema.Struct({
 type JnliRow = typeof JnliRowSchema.Type;
 
 const toItem = (row: JnliRow): ChoiceItem => ({
-  id: `jnli-${row.sentence_pair_id}`,
+  id: `${TASK}-${row.sentence_pair_id}`,
   type: "choice",
   text: `文1: ${row.sentence1}\n文2: ${row.sentence2}`,
   criteria: "文1と文2の関係として正しいものを選んでください。",
@@ -73,9 +74,9 @@ runBench(
       ...labeled.map(({ item }) => item),
       ...ordered.slice(OPUS_SAMPLE).map((row) => toItem(row)),
     ];
-    yield* writeJsonl(ItemSchema, yield* benchPath("data", "jnli.jsonl"), items);
-    yield* writeJson(LabelStatsSchema, yield* benchPath("data", "jnli.stats.json"), {
-      task: "jnli",
+    yield* writeJsonl(ItemSchema, yield* dataPath({ task: TASK, extension: "jsonl" }), items);
+    yield* writeJson(LabelStatsSchema, yield* dataPath({ task: TASK, extension: "stats.json" }), {
+      task: TASK,
       items: items.length,
       hard: items.filter(({ split }) => split === "hard").length,
       opusCostUsd: Num.sumAll(labeled.map(({ costUsd }) => costUsd)),

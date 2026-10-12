@@ -1,3 +1,4 @@
+import type { TaskId } from "bench-summary/schema";
 import { Crypto, Effect, FileSystem, Path, Schema } from "effect";
 import { Hex } from "effect/encoding";
 
@@ -7,6 +8,14 @@ const benchPath = Effect.fn("benchPath")(function* benchPath(...segments: readon
   const path = yield* Path.Path;
   return path.join(path.resolve(import.meta.dirname, ".."), ...segments);
 });
+
+const dataPath = ({
+  task,
+  extension,
+}: Readonly<{ task: TaskId; extension: "jsonl" | "stats.json" }>): ReturnType<typeof benchPath> =>
+  benchPath("data", `${task}.${extension}`);
+
+const modelSlug = (model: string): string => model.replaceAll("/", "__");
 
 const ensureParent = Effect.fn("ensureParent")(function* ensureParent(file: string) {
   const fs = yield* FileSystem.FileSystem;
@@ -63,4 +72,4 @@ const sha256 = Effect.fn("sha256")(function* sha256(value: unknown) {
   return Hex.encode(yield* crypto.digest("SHA-256", new TextEncoder().encode(json)));
 });
 
-export { benchPath, readJsonl, sha256, toJson, writeJson, writeJsonl };
+export { benchPath, dataPath, modelSlug, readJsonl, sha256, toJson, writeJson, writeJsonl };

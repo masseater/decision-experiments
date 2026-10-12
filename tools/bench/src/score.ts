@@ -5,16 +5,11 @@ import seedrandom from "seedrandom";
 import { quantile, sampleWithReplacement } from "simple-statistics";
 
 import { calibrationOf } from "./calibration.ts";
-import type { ChoiceItem, Decision, Item, NoulItem, Outcome, ScoreItem } from "./item.ts";
-
-interface Scored {
-  readonly item: Item;
-  readonly outcome: Outcome;
-}
+import { NOUL_THRESHOLD } from "./item.ts";
+import type { ChoiceItem, Decision, Item, NoulItem, Outcome, Scored, ScoreItem } from "./item.ts";
 
 const NONE = 0;
 const FULL = 1;
-const NOUL_THRESHOLD = 0.5;
 const NOUL_OPTIONS = 2;
 const P50 = 0.5;
 const P95 = 0.95;
@@ -276,4 +271,3 @@ const usage = (rows: readonly Scored[]): Pick<TaskResult, "p50Ms" | "p95Ms" | "c
 };
 
 export { metric, usage };
-export type { Scored };

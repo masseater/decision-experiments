@@ -1,6 +1,9 @@
 import { OpenRouter } from "@openrouter/sdk";
+import { HTTPClient } from "@openrouter/sdk/lib/http.js";
 import type { DecisionsRequest, DecisionsResponse } from "@openrouter/sdk/models";
 import { isUnknown } from "@openrouter/sdk/types/discriminatedUnion.js";
+import { isSplitChoice } from "bench-summary/schema";
+import type { ChoiceVia } from "bench-summary/schema";
 import {
   Array as Arr,
   Clock,
@@ -15,24 +18,56 @@ import {
   Schema,
 } from "effect";
 
-import { attribution } from "./attribution.ts";
 import { makeCache } from "./cache.ts";
-import { DecisionSchema, OutcomeSchema } from "./item.ts";
+import { DecisionSchema, NOUL_CRITERIA, OutcomeSchema } from "./item.ts";
 import type { ChoiceItem, Decision, Item, Outcome } from "./item.ts";
 import { toRequest } from "./label.ts";
+import { modelSlug } from "./store.ts";
 
 interface DecisionAdapter {
   readonly model: string;
   readonly decide: (item: Readonly<Item>) => Effect.Effect<Outcome>;
 }
 
-type ChoiceVia = "choice" | "noul";
-
 const QUESTION_ID = "q";
 const NO_COST = 0;
 const MIN_TOTAL = Number.EPSILON;
 const READOUT = "probabilities";
-const NOUL_CRITERIA = { true: "はい", false: "いいえ" };
+
+const REPO = "masseater/mst-ja-decision-bench";
+const APP = `https://github.com/${REPO}/bench`;
+
+const isSet = (name: string): Effect.Effect<boolean> =>
+  Config.option(Config.NonEmptyString(name)).pipe(
+    Effect.map(Option.isSome),
+    Effect.orElseSucceed(() => false),
+  );
+
+const contextOf = Effect.gen(function* contextOf() {
+  if (yield* isSet("GITHUB_ACTIONS")) {
+    return "github-actions";
+  }
+  if (yield* isSet("CLAUDE_CODE_REMOTE")) {
+    return "claude-code-cloud";
+  }
+  if (yield* isSet("CLAUDECODE")) {
+    return "claude-code";
+  }
+  return "local";
+});
+
+const hiddenApp = (): HTTPClient =>
+  new HTTPClient().addHook("beforeRequest", (request) => {
+    request.headers.set("X-OpenRouter-App-Visibility", "hidden");
+  });
+
+const attribution = contextOf.pipe(
+  Effect.map((context) => ({
+    httpReferer: `${APP}/${context}`,
+    appTitle: `${REPO} ${context} bench`,
+    httpClient: hiddenApp(),
+  })),
+);
 
 type Answers = Readonly<DecisionsResponse["answers"]>;
 type Answer = Answers[string];
@@ -105,7 +140,7 @@ const decodeDecision = (
   via: ChoiceVia,
   answers: Answers,
 ): Option.Option<Decision> => {
-  if (item.type === "choice" && via === "noul") {
+  if (item.type === "choice" && isSplitChoice({ format: item.type, choiceVia: via })) {
     return decodeSplit(item, answers);
   }
   return Option.filter(
@@ -150,14 +185,14 @@ const callSystemOne = Effect.fn("callSystemOne")(function* callSystemOne(
 });
 
 const questionsOf = (item: Readonly<Item>, via: ChoiceVia): DecisionsRequest["questions"] => {
-  if (item.type === "choice" && via === "noul") {
+  if (item.type === "choice" && isSplitChoice({ format: item.type, choiceVia: via })) {
     return toSplitQuestions(item);
   }
   return toQuestions(item);
 };
 
 const cacheKey = (model: string, item: Readonly<Item>, via: ChoiceVia): unknown => {
-  if (item.type === "choice" && via === "noul") {
+  if (item.type === "choice" && isSplitChoice({ format: item.type, choiceVia: via })) {
     return { model, request: toRequest(item), via, readout: READOUT };
   }
   if (item.type === "choice") {
@@ -178,11 +213,7 @@ const makeOpenRouterAdapter = Effect.fn("makeOpenRouterAdapter")(function* makeO
     client.systemOne.create({
       decisionsRequest: { model, state: item.text, questions: questionsOf(item, via) },
     });
-  const cached = yield* makeCache(
-    `openrouter-${model.replaceAll("/", "__")}`,
-    OutcomeSchema,
-    isAnswered,
-  );
+  const cached = yield* makeCache(`openrouter-${modelSlug(model)}`, OutcomeSchema, isAnswered);
   const adapter: DecisionAdapter = {
     model,
     decide: (item) => cached(cacheKey(model, item, via), callSystemOne(create, item, via)),
@@ -191,4 +222,3 @@ const makeOpenRouterAdapter = Effect.fn("makeOpenRouterAdapter")(function* makeO
 });
 
 export { makeOpenRouterAdapter };
-export type { ChoiceVia };

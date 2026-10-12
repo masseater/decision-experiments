@@ -2,8 +2,6 @@
   "extends": "../../tsconfig.base.json",
   "include": ["src", "*.ts"],
   "compilerOptions": {
-    "types": ["node"],
-    "resolveJsonModule": true,
     "plugins": [
       {
         "name": "@effect/language-service",
