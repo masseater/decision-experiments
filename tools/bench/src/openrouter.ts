@@ -15,6 +15,7 @@ import {
   Schema,
 } from "effect";
 
+import { attribution } from "./attribution.ts";
 import { makeCache } from "./cache.ts";
 import { DecisionSchema, OutcomeSchema } from "./item.ts";
 import type { ChoiceItem, Decision, Item, Outcome } from "./item.ts";
@@ -171,8 +172,7 @@ const makeOpenRouterAdapter = Effect.fn("makeOpenRouterAdapter")(function* makeO
 ) {
   const client = new OpenRouter({
     apiKey: Redacted.value(yield* Config.Redacted("OPENROUTER_API_KEY")),
-    httpReferer: "https://github.com/masseater/mst-ja-decision-bench",
-    appTitle: "mst-ja-decision-bench",
+    ...(yield* attribution),
   });
   const create = (item: Readonly<Item>): Promise<DecisionsResponse> =>
     client.systemOne.create({
