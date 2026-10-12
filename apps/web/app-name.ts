@@ -1,5 +1,6 @@
-import { Stack } from "alchemy";
-import { Array as Arr, Effect, Option, Schema } from "effect";
+import { Stack, isResourceOfType } from "alchemy";
+import { Zone } from "alchemy/Cloudflare";
+import { Array as Arr, Effect, Match, Option, Schema } from "effect";
 
 const APP_NAME = "injection-bisect";
 
@@ -7,15 +8,22 @@ const PREFIX = `${APP_NAME}-`;
 
 const CI_TELEMETRY_AUDIENCE = `${PREFIX}ci-telemetry`;
 
+const isZone = (resource: unknown): boolean => isResourceOfType(resource, Zone.Zone.Type);
+
 const decodeNamed = Schema.decodeUnknownOption(Schema.Struct({ name: Schema.String }));
 
-const describeUnprefixed = ({
-  FQN,
-  Props,
-}: Readonly<{ FQN: string; Props: unknown }>): readonly string[] =>
-  decodeNamed(Props).pipe(
-    Option.filter(({ name }) => !name.startsWith(PREFIX)),
-    Option.map(({ name }) => `${FQN}: ${name}`),
+const prefixOf = (resource: unknown): string =>
+  Match.value(resource).pipe(
+    Match.when(isZone, () => ""),
+    Match.orElse(() => PREFIX),
+  );
+
+const describeUnprefixed = (
+  resource: Readonly<{ FQN: string; Props: unknown }>,
+): readonly string[] =>
+  decodeNamed(resource.Props).pipe(
+    Option.filter(({ name }) => !name.startsWith(prefixOf(resource))),
+    Option.map(({ name }) => `${resource.FQN}: ${name}`),
     Option.toArray,
   );
 
@@ -28,7 +36,7 @@ const requireAppPrefix = Effect.gen(function* requireAppPrefix() {
   if (Arr.isReadonlyArrayNonEmpty(offenders)) {
     return yield* Effect.die(
       new Error(
-        `Alchemy のスタック名は "${APP_NAME}"、リソース名は "${PREFIX}" で始める: ${offenders.join(", ")}`,
+        `Alchemy のスタック名は "${APP_NAME}"、リソース名は "${PREFIX}"（Zone はドメインそのもの）で始める: ${offenders.join(", ")}`,
       ),
     );
   }
