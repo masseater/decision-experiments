@@ -163,11 +163,14 @@ OPENROUTER_API_KEY=... vp run bench
 
 リポジトリの Actions secrets に次を登録する。
 
-| 名前                      | 用途                                       |
-| ------------------------- | ------------------------------------------ |
-| `OPENROUTER_API_KEY`      | verify ワークフローの jev-lint             |
-| `CLAUDE_CODE_OAUTH_TOKEN` | verify 失敗時に Claude Code が自動修正する |
-| `CLOUDFLARE_ACCOUNT_ID`   | ダッシュボードのデプロイ                   |
-| `CLOUDFLARE_API_TOKEN`    | ダッシュボードのデプロイ                   |
+| 名前                      | 用途                                                |
+| ------------------------- | --------------------------------------------------- |
+| `OPENROUTER_API_KEY`      | verify ワークフローの oxlint-plugin-decision の判定 |
+| `CLAUDE_CODE_OAUTH_TOKEN` | verify 失敗時に Claude Code が自動修正する          |
+| `CLOUDFLARE_ACCOUNT_ID`   | ダッシュボードのデプロイ                            |
+| `CLOUDFLARE_API_TOKEN`    | ダッシュボードのデプロイ                            |
 
 Cloudflare の認証情報は、手元の環境変数に置かず、Alchemy のプロファイル（`~/.alchemy`）で管理する。
+
+Actions の secrets、Actions による PR 作成の許可、PR を作れる人の制限、既定ブランチのルールセットは gh で設定する。
+手順は `setup-github` スキル（`docs/skills/setup-github/SKILL.md`）にある。
