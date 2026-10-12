@@ -1,47 +1,63 @@
-import { useMutation } from "@tanstack/react-query";
-import { useCallback } from "react";
+import {
+  experimental_streamedQuery as streamedQuery,
+  queryOptions,
+  skipToken,
+  useQuery,
+} from "@tanstack/react-query";
+import type { QueryFunction, SkipToken, UseQueryOptions } from "@tanstack/react-query";
 
-import { inspectQueries } from "./queries";
-import type { InspectInput, InspectResponse } from "./routes.server";
+import type { Run } from "#/pages/inspect/model/draft";
+import { traceOf } from "#/pages/inspect/model/trace";
+import type { Trace } from "#/pages/inspect/model/trace";
 
-type Inspected = Exclude<InspectResponse, Readonly<{ status: "failed" }>>;
+import { inspectEvents } from "./inspect-events";
+import type { InspectEvent } from "./inspect-events";
 
-type InspectOutcome =
-  | { readonly status: "idle" | "pending" }
+type InspectState =
+  | { readonly status: "idle" }
   | { readonly status: "error"; readonly message: string }
-  | { readonly status: "success"; readonly text: string; readonly response: Inspected };
+  | {
+      readonly status: "streaming";
+      readonly text: string;
+      readonly events: readonly InspectEvent[];
+      readonly trace: Trace;
+    };
 
-interface Inspect {
-  readonly submit: (input: InspectInput) => void;
-  readonly outcome: InspectOutcome;
-}
+const NO_RUN = Number.NaN;
 
-const inspectMutation = inspectQueries.api.inspect.post.mutationOptions();
-
-const settled = (text: string, response: InspectResponse): InspectOutcome => {
-  if (response.status === "failed") {
-    return { status: "error", message: response.reason };
+const keyOf = (run: Run): readonly ["inspect", number] => {
+  if (run.status === "idle") {
+    return ["inspect", NO_RUN];
   }
-  return { status: "success", text, response };
+  return ["inspect", run.id];
 };
 
-const useInspect = (): Inspect => {
-  const mutation = useMutation(inspectMutation);
-  const { mutate } = mutation;
-  const submit = useCallback(
-    (input: InspectInput) => {
-      mutate(input);
-    },
-    [mutate],
-  );
-  if (mutation.status === "success") {
-    return { submit, outcome: settled(mutation.variables.text, mutation.data) };
+const streamOf = (run: Run): QueryFunction<InspectEvent[]> | SkipToken => {
+  if (run.status === "idle") {
+    return skipToken;
   }
-  if (mutation.status === "error") {
-    return { submit, outcome: { status: "error", message: mutation.error.message } };
-  }
-  return { submit, outcome: { status: mutation.status } };
+  return streamedQuery({ streamFn: () => inspectEvents(run) });
 };
 
-export type { Inspected, InspectOutcome };
+const inspectQuery = (run: Run): UseQueryOptions<InspectEvent[], Error, InspectEvent[]> =>
+  queryOptions({
+    queryKey: keyOf(run),
+    queryFn: streamOf(run),
+    staleTime: Number.POSITIVE_INFINITY,
+    retry: false,
+  });
+
+const useInspect = (run: Run): InspectState => {
+  const query = useQuery(inspectQuery(run));
+  if (run.status === "idle") {
+    return { status: "idle" };
+  }
+  if (query.status === "error") {
+    return { status: "error", message: query.error.message };
+  }
+  const events = query.data ?? [];
+  return { status: "streaming", text: run.text, events, trace: traceOf(events) };
+};
+
+export type { InspectState };
 export { useInspect };

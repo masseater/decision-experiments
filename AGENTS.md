@@ -107,4 +107,4 @@ Effect から外部 API や SaaS を呼ぶクライアントは手で包まず�
 - 判定モデルは `InjectionJudge` サービスの裏に置く。OpenRouter は Effect 公式の `@effect/ai-openrouter` の `OpenRouterClient.createDecisions` で呼び、`HTTP-Referer`・`X-Title`・`X-OpenRouter-App-Visibility: hidden` を付ける。
 - 問い合わせは 1 回ずつ `injection-bisect.ask` スパン（区間の開始位置と文字数）と、その子の `injection-bisect.openrouter` スパン（モデル・入力トークン・費用・確率）にする。所要時間はスパンの長さで読む。
 - 精度・費用・時間の比較は、無害な入力と注入を含む入力の両方を含むデータで、フロンティアモデルに直接判定させた場合と並べて計測する。OpenRouter のキーには月の上限があるので、計測の前後に `GET https://openrouter.ai/api/v1/key` で残りを確かめる。
-- 公開する Web のデモはサーバーに OpenRouter のキーを持たず、見る人が入力したキーで判定する（`openRouterPerRequest` と `withApiKey`）。第三者にリポジトリ所有者のキーを使わせないためである。
+- 公開する Web のデモ（`/inspect`）は、見る人が入力したキーでブラウザから OpenRouter を直接呼び、二分探索もブラウザで動かす（`openRouterPerRequest` と `withApiKey`）。サーバーはキーを持たず、受け取りもしない。第三者にリポジトリ所有者のキーを使わせないためである。問い合わせの経過は `ProbeListener` で流して画面に出す。
