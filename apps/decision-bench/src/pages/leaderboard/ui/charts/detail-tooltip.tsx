@@ -1,5 +1,6 @@
 import { Schema } from "effect";
 import type { ReactNode } from "react";
+import type { TooltipContentProps } from "recharts";
 
 const RowSchema = Schema.Struct({ name: Schema.String, value: Schema.String });
 
@@ -12,12 +13,9 @@ const hasDetail = Schema.is(DetailSchema);
 const DetailTooltip = ({
   active,
   payload,
-}: Readonly<{
-  active?: boolean | undefined;
-  payload?: readonly Readonly<{ payload?: unknown }>[] | undefined;
-}>): ReactNode => {
-  const [point] = (payload ?? []).map(({ payload: inner }): unknown => inner);
-  if (active !== true || !hasDetail(point)) {
+}: Readonly<Pick<TooltipContentProps, "active" | "payload">>): ReactNode => {
+  const [point] = payload.map(({ payload: inner }): unknown => inner);
+  if (!active || !hasDetail(point)) {
     return "";
   }
   const { title, rows } = point.detail;

@@ -1,5 +1,6 @@
 import { OpenRouter } from "@openrouter/sdk";
 import type { DecisionsRequest, DecisionsResponse } from "@openrouter/sdk/models";
+import { isUnknown } from "@openrouter/sdk/types/discriminatedUnion.js";
 import {
   Array as Arr,
   Clock,
@@ -7,6 +8,8 @@ import {
   Number as Num,
   Effect,
   Option,
+  pipe,
+  Record as Rec,
   Redacted,
   Result,
   Schema,
@@ -29,7 +32,27 @@ const NO_COST = 0;
 const MIN_TOTAL = Number.EPSILON;
 const READOUT = "probabilities";
 const NOUL_CRITERIA = { true: "はい", false: "いいえ" };
-const NoulAnswerSchema = Schema.Struct({ type: Schema.Literal("noul"), noul: Schema.Finite });
+
+type Answers = Readonly<DecisionsResponse["answers"]>;
+type Answer = Answers[string];
+
+const decodeKnown = (answer: Answer): Option.Option<Decision> => {
+  if (isUnknown<"type">(answer)) {
+    return Option.none();
+  }
+  return Schema.decodeOption(DecisionSchema)(answer);
+};
+
+const decodeAnswer = (answer: Answer | undefined): Option.Option<Decision> =>
+  Option.flatMap(Option.fromNullishOr(answer), decodeKnown);
+
+const noulOf = (answer: Answer): Option.Option<number> =>
+  Option.flatMap(decodeAnswer(answer), (decision) => {
+    if (decision.type !== "noul") {
+      return Option.none();
+    }
+    return Option.some(decision.noul);
+  });
 
 const isAnswered = (outcome: Outcome): boolean => outcome.status === "answered";
 
@@ -62,14 +85,12 @@ const toSplitQuestions = (item: Readonly<ChoiceItem>): DecisionsRequest["questio
     ]),
   );
 
-const decodeSplit = (item: Readonly<ChoiceItem>, answers: unknown): Option.Option<Decision> =>
+const decodeSplit = (item: Readonly<ChoiceItem>, answers: Answers): Option.Option<Decision> =>
   Option.gen(function* split() {
-    const record = yield* Schema.decodeUnknownOption(
-      Schema.Record(Schema.String, NoulAnswerSchema),
-    )(answers);
+    const record = yield* Option.all(pipe(answers, Rec.map(noulOf)));
     const scored = yield* Option.all(
       Object.keys(item.options).map((key) =>
-        Option.map(Option.fromNullishOr(record[key]), ({ noul }) => ({ key, noul })),
+        Option.map(Option.fromNullishOr(record[key]), (noul) => ({ key, noul })),
       ),
     );
     const best = yield* Arr.head(scored.toSorted((left, right) => right.noul - left.noul));
@@ -81,19 +102,19 @@ const decodeSplit = (item: Readonly<ChoiceItem>, answers: unknown): Option.Optio
 const decodeDecision = (
   item: Readonly<Item>,
   via: ChoiceVia,
-  answers: Readonly<Record<string, unknown>>,
+  answers: Answers,
 ): Option.Option<Decision> => {
   if (item.type === "choice" && via === "noul") {
     return decodeSplit(item, answers);
   }
   return Option.filter(
-    Schema.decodeUnknownOption(DecisionSchema)(answers[QUESTION_ID]),
+    decodeAnswer(answers[QUESTION_ID]),
     (decision) => decision.type === item.type,
   );
 };
 
 interface Reply {
-  readonly answers: Readonly<Record<string, unknown>>;
+  readonly answers: Answers;
   readonly costUsd: number;
   readonly latencyMs: number;
 }
