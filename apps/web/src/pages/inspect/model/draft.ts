@@ -1,7 +1,16 @@
 import { useAtomSet, useAtomValue } from "@effect/atom-react";
 import { Atom } from "effect/reactivity";
 
-type View = { readonly status: "result" } | { readonly status: "step"; readonly depth: number };
+type Run =
+  | { readonly status: "idle" }
+  | {
+      readonly status: "started";
+      readonly id: number;
+      readonly text: string;
+      readonly apiKey: string;
+    };
+
+type Focus = { readonly status: "none" } | { readonly status: "probe"; readonly id: number };
 
 const SAMPLE = [
   "来週の定例について共有します。",
@@ -11,13 +20,17 @@ const SAMPLE = [
   "質問があれば返信してください。",
 ].join("\n");
 
-const RESULT: View = { status: "result" };
+const IDLE: Run = { status: "idle" };
+
+const NO_FOCUS: Focus = { status: "none" };
 
 const draftTextAtom = Atom.make(SAMPLE);
 
 const apiKeyAtom = Atom.make("");
 
-const viewAtom = Atom.make<View>(RESULT);
+const runAtom = Atom.make<Run>(IDLE);
+
+const focusAtom = Atom.make<Focus>(NO_FOCUS);
 
 const useDraftText = (): string => useAtomValue(draftTextAtom);
 
@@ -27,9 +40,23 @@ const useApiKey = (): string => useAtomValue(apiKeyAtom);
 
 const useSetApiKey = (): ((apiKey: string) => void) => useAtomSet(apiKeyAtom);
 
-const useView = (): View => useAtomValue(viewAtom);
+const useRun = (): Run => useAtomValue(runAtom);
 
-const useSetView = (): ((view: View) => void) => useAtomSet(viewAtom);
+const useSetRun = (): ((run: Run) => void) => useAtomSet(runAtom);
 
-export type { View };
-export { RESULT, useApiKey, useDraftText, useSetApiKey, useSetDraftText, useSetView, useView };
+const useFocus = (): Focus => useAtomValue(focusAtom);
+
+const useSetFocus = (): ((focus: Focus) => void) => useAtomSet(focusAtom);
+
+export type { Focus, Run };
+export {
+  NO_FOCUS,
+  useApiKey,
+  useDraftText,
+  useFocus,
+  useRun,
+  useSetApiKey,
+  useSetDraftText,
+  useSetFocus,
+  useSetRun,
+};

@@ -1,36 +1,24 @@
-import { useCallback } from "react";
 import type { ReactNode } from "react";
 
 import { useInspect } from "#/pages/inspect/api/use-inspect";
 import { COPY } from "#/pages/inspect/model/copy";
-import { RESULT, useApiKey, useDraftText, useSetView } from "#/pages/inspect/model/draft";
-import { Button } from "#/shared/ui/button";
+import { useRun } from "#/pages/inspect/model/draft";
 
-import { ApiKeyField } from "./api-key-field";
-import { InspectOutcome } from "./inspect-outcome";
-import { OverlaidText } from "./overlaid-text";
+import { InspectForm } from "./inspect-form";
+import { Mechanism } from "./mechanism";
+import { RunView } from "./run-view";
 
 const InspectPage = (): ReactNode => {
-  const text = useDraftText();
-  const apiKey = useApiKey();
-  const setView = useSetView();
-  const { submit: inspect, outcome } = useInspect();
-  const submit = useCallback(() => {
-    setView(RESULT);
-    inspect({ text, apiKey });
-  }, [inspect, setView, text, apiKey]);
-  const ready = outcome.status !== "pending" && text.trim() !== "" && apiKey !== "";
+  const state = useInspect(useRun());
   return (
-    <main className="mx-auto flex max-w-3xl flex-col gap-6 p-8">
-      <h1 className="text-2xl font-bold">{COPY.title}</h1>
-      <OverlaidText outcome={outcome} />
-      <div className="flex flex-wrap gap-2">
-        <ApiKeyField />
-        <Button disabled={!ready} onClick={submit}>
-          {COPY.submit}
-        </Button>
-      </div>
-      <InspectOutcome outcome={outcome} />
+    <main className="mx-auto flex max-w-4xl flex-col gap-10 px-4 py-10 md:px-8">
+      <header className="flex flex-col gap-2">
+        <h1 className="font-mono text-2xl font-bold">{COPY.title}</h1>
+        <p className="text-muted-foreground">{COPY.lead}</p>
+      </header>
+      <Mechanism />
+      <InspectForm state={state} />
+      <RunView state={state} />
     </main>
   );
 };

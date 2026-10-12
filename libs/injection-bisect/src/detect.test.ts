@@ -1,8 +1,8 @@
 import { Effect, Ref } from "effect";
 import { expect, test } from "vite-plus/test";
 
-import { detect } from "./detect.ts";
-import type { Detection } from "./detect.ts";
+import { ProbeListener, detect } from "./detect.ts";
+import type { Detection, ProbeEvent } from "./detect.ts";
 import type { JudgeError } from "./judge-error.ts";
 import { InjectionJudge } from "./judge.ts";
 import type { Verdict } from "./judge.ts";
@@ -27,11 +27,15 @@ const FIRST = 0;
 
 const NO_COST = 0;
 
+const MODEL = "test/model";
+
+const byNumber = (left: number, right: number): number => left - right;
+
 const verdictFor = (text: string): Verdict => {
   if (text.includes("無視して")) {
-    return { probability: INJECTED, cost: NO_COST };
+    return { probability: INJECTED, cost: NO_COST, model: MODEL, inputTokens: NO_COST };
   }
-  return { probability: CLEAN, cost: NO_COST };
+  return { probability: CLEAN, cost: NO_COST, model: MODEL, inputTokens: NO_COST };
 };
 
 interface Recorded {
@@ -94,5 +98,26 @@ test("records every request as a probe", () =>
       expect(
         detection.probes.map(({ start, end }) => text.slice(start, end)).toSorted(),
       ).toStrictEqual(asked.toSorted());
+    }),
+  ));
+
+test("reports each question when it is asked and when it is answered", () =>
+  Effect.runPromise(
+    Effect.gen(function* reported() {
+      const events = yield* Ref.make<readonly ProbeEvent[]>([]);
+      const text = withInjectionAt(SENTENCES.indexOf("次回は来週。"));
+      const detection = yield* detect(text, {}).pipe(
+        Effect.provideService(InjectionJudge, {
+          verdictOf: (state) => Effect.succeed(verdictFor(state)),
+        }),
+        Effect.provideService(ProbeListener, (event) =>
+          Ref.update(events, (seen) => [...seen, event]),
+        ),
+      );
+      const seen = yield* Ref.get(events);
+      const askedIds = seen.filter(({ type }) => type === "asked").map(({ id }) => id);
+      const answeredIds = seen.filter(({ type }) => type === "answered").map(({ id }) => id);
+      expect(askedIds).toHaveLength(detection.probes.length);
+      expect(answeredIds.toSorted(byNumber)).toStrictEqual(askedIds.toSorted(byNumber));
     }),
   ));

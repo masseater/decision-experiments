@@ -52,12 +52,10 @@ const judge = Effect.gen(function* makeJudge() {
     const verdict = {
       probability: answer.value.noul,
       cost: Option.getOrElse(Option.fromUndefinedOr(body.usage.cost), () => NO_COST),
-    };
-    yield* Effect.annotateCurrentSpan({
       model: body.model,
       inputTokens: body.usage.input_tokens,
-      ...verdict,
-    });
+    };
+    yield* Effect.annotateCurrentSpan(verdict);
     return verdict;
   });
   return { verdictOf };
@@ -84,4 +82,4 @@ const withApiKey = (
 ) => Effect.Effect<Success, Failure, Requirements>) =>
   withClientTransform(HttpClient.mapRequest(HttpClientRequest.bearerToken(apiKey)));
 
-export { PRODUCT_NAME, openRouter, openRouterPerRequest, withApiKey };
+export { PRODUCT_NAME, QUESTION, openRouter, openRouterPerRequest, withApiKey };

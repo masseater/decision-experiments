@@ -6,6 +6,8 @@ import type { JudgeError } from "./judge-error.ts";
 interface Verdict {
   readonly probability: number;
   readonly cost: number;
+  readonly model: string;
+  readonly inputTokens: number;
 }
 
 class InjectionJudge extends Context.Service<

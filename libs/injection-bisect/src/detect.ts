@@ -1,7 +1,8 @@
-import { Array as Arr, Clock, Effect, Option, Ref } from "effect";
+import { Array as Arr, Context, Duration, Effect, Option, Ref } from "effect";
 
 import type { JudgeError } from "./judge-error.ts";
 import { InjectionJudge } from "./judge.ts";
+import type { Verdict } from "./judge.ts";
 import { sentencesOf } from "./segment.ts";
 import type { Span } from "./segment.ts";
 
@@ -24,12 +25,21 @@ interface Region extends Span {
   readonly probability: number;
 }
 
-interface Probe extends Span {
+interface Probe extends Span, Verdict {
   readonly depth: number;
-  readonly probability: number;
-  readonly cost: number;
   readonly millis: number;
 }
+
+type ProbeEvent =
+  | (Span & { readonly type: "asked"; readonly id: number; readonly depth: number })
+  | (Probe & { readonly type: "answered"; readonly id: number });
+
+const ignore = (): Effect.Effect<void> => Effect.void;
+
+const ProbeListener = Context.Reference<(event: ProbeEvent) => Effect.Effect<void>>(
+  "@injection-bisect/core/detect/ProbeListener",
+  { defaultValue: () => ignore },
+);
 
 type Detection =
   | {
@@ -49,6 +59,7 @@ interface Query {
   readonly model: string;
   readonly cutoff: number;
   readonly record: (probe: Probe) => Effect.Effect<void>;
+  readonly nextId: Effect.Effect<number>;
 }
 
 interface Range {
@@ -62,11 +73,16 @@ const ask = Effect.fn("injection-bisect.ask")(function* ask(
   depth: number,
 ) {
   const judge = yield* InjectionJudge;
+  const listen = yield* ProbeListener;
+  const id = yield* query.nextId;
   yield* Effect.annotateCurrentSpan({ start: span.start, chars: span.end - span.start, depth });
-  const startedAt = yield* Clock.currentTimeMillis;
-  const verdict = yield* judge.verdictOf(query.text.slice(span.start, span.end), query.model);
-  const finishedAt = yield* Clock.currentTimeMillis;
-  yield* query.record({ ...span, depth, ...verdict, millis: finishedAt - startedAt });
+  yield* listen({ type: "asked", id, ...span, depth });
+  const [elapsed, verdict] = yield* Effect.timed(
+    judge.verdictOf(query.text.slice(span.start, span.end), query.model),
+  );
+  const probe = { ...span, depth, ...verdict, millis: Duration.toMillis(elapsed) };
+  yield* query.record(probe);
+  yield* listen({ type: "answered", id, ...probe });
   return verdict.probability;
 });
 
@@ -146,11 +162,13 @@ const detect = Effect.fn("injection-bisect.detect")(function* detect(
   options: DetectOptions,
 ) {
   const probes = yield* Ref.make<readonly Probe[]>([]);
+  const asked = yield* Ref.make(FIRST);
   const query: Query = {
     text,
     model: options.model ?? DEFAULT_MODEL,
     cutoff: options.cutoff ?? DEFAULT_CUTOFF,
     record: (probe) => Ref.update(probes, (recorded) => [...recorded, probe]),
+    nextId: Ref.getAndUpdate(asked, (count) => count + ONE_SENTENCE),
   };
   const probability = yield* ask(query, { start: FIRST, end: text.length }, FIRST);
   if (probability < query.cutoff) {
@@ -175,5 +193,5 @@ const detect = Effect.fn("injection-bisect.detect")(function* detect(
   } satisfies Detection;
 });
 
-export { DEFAULT_CUTOFF, DEFAULT_MODEL, detect };
-export type { Detection, DetectOptions, Probe, Region };
+export { DEFAULT_CUTOFF, DEFAULT_MODEL, ProbeListener, detect };
+export type { Detection, DetectOptions, Probe, ProbeEvent, Region };
