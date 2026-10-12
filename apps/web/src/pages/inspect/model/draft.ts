@@ -1,7 +1,7 @@
 import { useAtomSet, useAtomValue } from "@effect/atom-react";
 import { Atom } from "effect/reactivity";
 
-import type { ModelChoice } from "./models";
+type View = { readonly status: "result" } | { readonly status: "step"; readonly depth: number };
 
 const SAMPLE = [
   "来週の定例について共有します。",
@@ -11,16 +11,25 @@ const SAMPLE = [
   "質問があれば返信してください。",
 ].join("\n");
 
+const RESULT: View = { status: "result" };
+
 const draftTextAtom = Atom.make(SAMPLE);
 
-const modelChoiceAtom = Atom.make<ModelChoice>("span");
+const apiKeyAtom = Atom.make("");
+
+const viewAtom = Atom.make<View>(RESULT);
 
 const useDraftText = (): string => useAtomValue(draftTextAtom);
 
 const useSetDraftText = (): ((text: string) => void) => useAtomSet(draftTextAtom);
 
-const useModelChoice = (): ModelChoice => useAtomValue(modelChoiceAtom);
+const useApiKey = (): string => useAtomValue(apiKeyAtom);
 
-const useSelectModel = (): ((model: ModelChoice) => void) => useAtomSet(modelChoiceAtom);
+const useSetApiKey = (): ((apiKey: string) => void) => useAtomSet(apiKeyAtom);
 
-export { useDraftText, useModelChoice, useSelectModel, useSetDraftText };
+const useView = (): View => useAtomValue(viewAtom);
+
+const useSetView = (): ((view: View) => void) => useAtomSet(viewAtom);
+
+export type { View };
+export { RESULT, useApiKey, useDraftText, useSetApiKey, useSetDraftText, useSetView, useView };

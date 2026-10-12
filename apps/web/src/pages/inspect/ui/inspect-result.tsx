@@ -1,41 +1,49 @@
+import type { Detection } from "@injection-bisect/core";
 import type { ReactNode } from "react";
 
-import type { InspectResponse } from "#/pages/inspect/api/routes.server";
 import { COPY } from "#/pages/inspect/model/copy";
-import { formatDollars, formatMillis, totalCost } from "#/pages/inspect/model/format";
+import {
+  formatDollars,
+  formatMillis,
+  formatPercent,
+  totalCost,
+} from "#/pages/inspect/model/format";
+import { cn } from "#/shared/lib/utils";
 
-import { HighlightedText } from "./highlighted-text";
-import { ProbeList } from "./probe-list";
-import { Verdict } from "./verdict";
+import { StepBar } from "./step-bar";
+
+const labelOf = (status: Detection["status"]): string => {
+  if (status === "clean") {
+    return COPY.clean;
+  }
+  return COPY.injected;
+};
 
 const InspectResult = ({
-  text,
-  response,
-}: Readonly<{ text: string; response: InspectResponse }>): ReactNode => {
-  if (response.status === "failed") {
-    return (
-      <p className="text-destructive text-sm">
-        {COPY.failed}
-        {response.reason}
-      </p>
-    );
-  }
-  return (
-    <section className="flex flex-col gap-4">
-      <Verdict status={response.status} probability={response.probability} />
-      <p className="text-muted-foreground text-sm">
-        {COPY.requests}
-        {response.probes.length}
+  detection,
+}: Readonly<{ detection: Detection & { readonly millis: number } }>): ReactNode => (
+  <div className="flex flex-col gap-3">
+    <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+      <h2
+        className={cn(
+          "text-lg font-semibold",
+          detection.status === "injected" && "text-destructive",
+        )}
+      >
+        {labelOf(detection.status)}
+      </h2>
+      <span className="font-mono text-sm">{formatPercent(detection.probability)}</span>
+      <span className="text-muted-foreground text-sm">
+        {detection.probes.length}
         {COPY.times}
-        {COPY.separator}
-        {formatMillis(response.millis)}
-        {COPY.separator}
-        {formatDollars(totalCost(response.probes))}
-      </p>
-      {response.status === "injected" && <HighlightedText text={text} regions={response.regions} />}
-      <ProbeList text={text} probes={response.probes} />
-    </section>
-  );
-};
+      </span>
+      <span className="text-muted-foreground text-sm">{formatMillis(detection.millis)}</span>
+      <span className="text-muted-foreground text-sm">
+        {formatDollars(totalCost(detection.probes))}
+      </span>
+    </div>
+    <StepBar probes={detection.probes} />
+  </div>
+);
 
 export { InspectResult };
