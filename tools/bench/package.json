@@ -3,10 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "exports": {
-    "./summary": "./results/summary.json",
-    "./summary-schema": "./src/summary.ts"
-  },
   "scripts": {
     "build:jnli": "node src/build-jnli.ts",
     "build:rules": "node src/build-rules.ts",
@@ -15,6 +11,7 @@
   "dependencies": {
     "@effect/platform-node": "catalog:",
     "@openrouter/sdk": "catalog:",
+    "bench-summary": "workspace:*",
     "effect": "catalog:stack",
     "forecast-calibration-kit": "catalog:",
     "ml-confusion-matrix": "catalog:",

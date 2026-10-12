@@ -1,9 +1,10 @@
+import { LabelStatsSchema } from "bench-summary/schema";
 import { Effect, Number as Num, Schema } from "effect";
 
 import { ItemSchema } from "./item.ts";
 import type { NoulItem } from "./item.ts";
 import { askThrice, tally } from "./label.ts";
-import { LabelStatsSchema, splitOf as splitByVotes } from "./labeling.ts";
+import { splitOf as splitByVotes } from "./labeling.ts";
 import { Opus, runBench } from "./runtime.ts";
 import { benchPath, writeJson, writeJsonl } from "./store.ts";
 

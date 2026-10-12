@@ -1,10 +1,10 @@
+import type { TaskResult } from "bench-summary/schema";
 import { Number as Num, Option } from "effect";
 import { brierScore, calibrationCurve, expectedCalibrationError } from "forecast-calibration-kit";
 import type { BinaryOutcome, Sample } from "forecast-calibration-kit";
 
 import type { ChoiceItem, Decision, NoulItem } from "./item.ts";
 import type { Scored } from "./score.ts";
-import type { TaskResult } from "./summary.ts";
 
 const NONE = 0;
 const FULL = 1;

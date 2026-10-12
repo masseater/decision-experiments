@@ -1,6 +1,6 @@
-import summaryJson from "bench/summary";
-import { SummarySchema } from "bench/summary-schema";
-import type { Summary } from "bench/summary-schema";
+import { SummarySchema } from "bench-summary/schema";
+import type { Summary } from "bench-summary/schema";
+import summaryJson from "bench-summary/summary";
 import { Option, Schema } from "effect";
 
 type ModelResult = Summary["models"][number];

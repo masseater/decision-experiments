@@ -1,9 +1,10 @@
+import { LabelStatsSchema } from "bench-summary/schema";
 import { Config, Effect, Number as Num, Schema } from "effect";
 
 import { ItemSchema } from "./item.ts";
 import type { ChoiceItem } from "./item.ts";
 import { askThrice, tally } from "./label.ts";
-import { LABEL_CONCURRENCY, LabelStatsSchema, splitOf } from "./labeling.ts";
+import { LABEL_CONCURRENCY, splitOf } from "./labeling.ts";
 import { runBench } from "./runtime.ts";
 import { benchPath, readJsonl, sha256, writeJson, writeJsonl } from "./store.ts";
 
