@@ -1,7 +1,7 @@
 import { Stack } from "alchemy";
 import { Array as Arr, Effect, Option, Schema } from "effect";
 
-const APP_NAME = "typescript-template";
+const APP_NAME = "injection-bisect";
 
 const PREFIX = `${APP_NAME}-`;
 
