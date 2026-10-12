@@ -8,7 +8,8 @@ import type { InspectOutcome } from "#/pages/inspect/api/use-inspect";
 import { useDraftText, useSetDraftText, useView } from "#/pages/inspect/model/draft";
 import type { View } from "#/pages/inspect/model/draft";
 import { MAX_CHARS } from "#/pages/inspect/model/models";
-import { HighlightTextarea } from "#/shared/ui/highlight-textarea";
+
+import { HighlightTextarea } from "./highlight-textarea";
 
 type Tone = "none" | "miss" | "hit" | "injection";
 

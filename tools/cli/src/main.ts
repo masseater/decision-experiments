@@ -1,13 +1,21 @@
 import { NodeRuntime, NodeServices } from "@effect/platform-node";
-import { DEFAULT_CUTOFF, DEFAULT_MODEL, detect, openRouter } from "@injection-bisect/core";
+import {
+  DEFAULT_CUTOFF,
+  DEFAULT_MODEL,
+  PRODUCT_NAME,
+  detect,
+  openRouter,
+} from "@injection-bisect/core";
 import type { Detection } from "@injection-bisect/core";
 import { Console, Effect, Layer, Option, Schema } from "effect";
 import { Argument, Command, Flag } from "effect/cli";
 import { FetchHttpClient } from "effect/http";
 import { OtlpSerialization, OtlpTracer } from "effect/observability";
 
+import pkg from "#package.json" with { type: "json" };
+
 const tracing = OtlpTracer.layerFromConfig({
-  resource: { serviceName: "injection-bisect" },
+  resource: { serviceName: PRODUCT_NAME },
 }).pipe(Layer.provide(OtlpSerialization.layerJson));
 
 const services = Layer.mergeAll(openRouter, tracing).pipe(
@@ -31,7 +39,7 @@ const reportOf = (detection: Detection, input: string): unknown => {
 };
 
 const command = Command.make(
-  "injection-bisect",
+  PRODUCT_NAME,
   {
     text: Argument.String("text").pipe(Argument.optional),
     file: Flag.FileText("file").pipe(Flag.optional),
@@ -49,7 +57,7 @@ const command = Command.make(
     }),
 );
 
-const program = Command.run(command, { version: "0.0.0" });
+const program = Command.run(command, { version: pkg.version });
 
 NodeRuntime.runMain(
   Layer.build(services).pipe(

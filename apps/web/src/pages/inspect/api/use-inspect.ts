@@ -2,14 +2,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useCallback } from "react";
 
 import { inspectQueries } from "./queries";
-import type { InspectResponse } from "./routes.server";
+import type { InspectInput, InspectResponse } from "./routes.server";
 
 type Inspected = Exclude<InspectResponse, Readonly<{ status: "failed" }>>;
-
-interface InspectInput {
-  readonly text: string;
-  readonly apiKey: string;
-}
 
 type InspectOutcome =
   | { readonly status: "idle" | "pending" }
@@ -48,5 +43,5 @@ const useInspect = (): Inspect => {
   return { submit, outcome: { status: mutation.status } };
 };
 
-export type { InspectOutcome };
+export type { Inspected, InspectOutcome };
 export { useInspect };

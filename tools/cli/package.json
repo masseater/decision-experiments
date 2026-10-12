@@ -6,6 +6,9 @@
     "injection-bisect": "./src/main.ts"
   },
   "type": "module",
+  "imports": {
+    "#package.json": "./package.json"
+  },
   "scripts": {
     "start": "node src/main.ts"
   },
