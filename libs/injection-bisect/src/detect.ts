@@ -1,4 +1,4 @@
-import { Array as Arr, Effect, Option } from "effect";
+import { Array as Arr, Clock, Effect, Option, Ref } from "effect";
 
 import type { JudgeError } from "./judge-error.ts";
 import { InjectionJudge } from "./judge.ts";
@@ -24,18 +24,31 @@ interface Region extends Span {
   readonly probability: number;
 }
 
+interface Probe extends Span {
+  readonly depth: number;
+  readonly probability: number;
+  readonly cost: number;
+  readonly millis: number;
+}
+
 type Detection =
-  | { readonly status: "clean"; readonly probability: number }
+  | {
+      readonly status: "clean";
+      readonly probability: number;
+      readonly probes: readonly Probe[];
+    }
   | {
       readonly status: "injected";
       readonly probability: number;
       readonly regions: readonly Region[];
+      readonly probes: readonly Probe[];
     };
 
-interface Probe {
+interface Query {
   readonly text: string;
   readonly model: string;
   readonly cutoff: number;
+  readonly record: (probe: Probe) => Effect.Effect<void>;
 }
 
 interface Range {
@@ -43,10 +56,18 @@ interface Range {
   readonly to: number;
 }
 
-const ask = Effect.fn("injection-bisect.ask")(function* ask(probe: Probe, span: Span) {
+const ask = Effect.fn("injection-bisect.ask")(function* ask(
+  query: Query,
+  span: Span,
+  depth: number,
+) {
   const judge = yield* InjectionJudge;
-  yield* Effect.annotateCurrentSpan({ start: span.start, chars: span.end - span.start });
-  return yield* judge.probabilityOf(probe.text.slice(span.start, span.end), probe.model);
+  yield* Effect.annotateCurrentSpan({ start: span.start, chars: span.end - span.start, depth });
+  const startedAt = yield* Clock.currentTimeMillis;
+  const verdict = yield* judge.verdictOf(query.text.slice(span.start, span.end), query.model);
+  const finishedAt = yield* Clock.currentTimeMillis;
+  yield* query.record({ ...span, depth, ...verdict, millis: finishedAt - startedAt });
+  return verdict.probability;
 });
 
 const joinRegions = (text: string, regions: readonly Region[]): readonly Region[] => {
@@ -87,9 +108,9 @@ const halvesOf = ({ from, to }: Range): readonly [Range, Range] => {
 };
 
 const locate = (
-  probe: Probe,
+  query: Query,
   sentences: readonly Span[],
-  found: Readonly<Range & { probability: number }>,
+  found: Readonly<Range & { probability: number; depth: number }>,
 ): Effect.Effect<readonly Region[], JudgeError, InjectionJudge> =>
   Effect.gen(function* locateRange() {
     const whole: readonly Region[] = [
@@ -101,16 +122,20 @@ const locate = (
     const scored = yield* Effect.forEach(
       halvesOf(found),
       (half) =>
-        ask(probe, spanOfRange(sentences, half)).pipe(
-          Effect.map((probability) => ({ ...half, probability })),
+        ask(query, spanOfRange(sentences, half), found.depth + ONE_SENTENCE).pipe(
+          Effect.map((probability) => ({
+            ...half,
+            probability,
+            depth: found.depth + ONE_SENTENCE,
+          })),
         ),
       { concurrency: "unbounded" },
     );
-    const hits = scored.filter(({ probability }) => probability >= probe.cutoff);
+    const hits = scored.filter(({ probability }) => probability >= query.cutoff);
     if (Arr.isReadonlyArrayEmpty(hits)) {
       return whole;
     }
-    const nested = yield* Effect.forEach(hits, (hit) => locate(probe, sentences, hit), {
+    const nested = yield* Effect.forEach(hits, (hit) => locate(query, sentences, hit), {
       concurrency: "unbounded",
     });
     return nested.flat();
@@ -120,27 +145,35 @@ const detect = Effect.fn("injection-bisect.detect")(function* detect(
   text: string,
   options: DetectOptions,
 ) {
-  const probe: Probe = {
+  const probes = yield* Ref.make<readonly Probe[]>([]);
+  const query: Query = {
     text,
     model: options.model ?? DEFAULT_MODEL,
     cutoff: options.cutoff ?? DEFAULT_CUTOFF,
+    record: (probe) => Ref.update(probes, (recorded) => [...recorded, probe]),
   };
-  const probability = yield* ask(probe, { start: FIRST, end: text.length });
-  if (probability < probe.cutoff) {
-    return { status: "clean", probability } satisfies Detection;
+  const probability = yield* ask(query, { start: FIRST, end: text.length }, FIRST);
+  if (probability < query.cutoff) {
+    return {
+      status: "clean",
+      probability,
+      probes: yield* Ref.get(probes),
+    } satisfies Detection;
   }
   const sentences = sentencesOf(text);
-  const regions = yield* locate(probe, sentences, {
+  const regions = yield* locate(query, sentences, {
     from: FIRST,
     to: sentences.length,
     probability,
+    depth: FIRST,
   });
   return {
     status: "injected",
     probability,
     regions: joinRegions(text, regions),
+    probes: yield* Ref.get(probes),
   } satisfies Detection;
 });
 
 export { DEFAULT_CUTOFF, DEFAULT_MODEL, detect };
-export type { Detection, DetectOptions, Region };
+export type { Detection, DetectOptions, Probe, Region };

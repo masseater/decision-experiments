@@ -30,7 +30,7 @@ const client = layerConfig({
 
 const judge = Effect.gen(function* makeJudge() {
   const openRouter = yield* OpenRouterClient;
-  const probabilityOf = Effect.fn("injection-bisect.openrouter")(function* probabilityOf(
+  const verdictOf = Effect.fn("injection-bisect.openrouter")(function* verdictOf(
     text: string,
     model: string,
   ) {
@@ -45,15 +45,18 @@ const judge = Effect.gen(function* makeJudge() {
     if (Option.isNone(answer)) {
       return yield* new JudgeError({ reason: `${body.model} returned no probability` });
     }
+    const verdict = {
+      probability: answer.value.noul,
+      cost: Option.getOrElse(Option.fromUndefinedOr(body.usage.cost), () => NO_COST),
+    };
     yield* Effect.annotateCurrentSpan({
       model: body.model,
       inputTokens: body.usage.input_tokens,
-      cost: Option.getOrElse(Option.fromUndefinedOr(body.usage.cost), () => NO_COST),
-      probability: answer.value.noul,
+      ...verdict,
     });
-    return answer.value.noul;
+    return verdict;
   });
-  return { probabilityOf };
+  return { verdictOf };
 });
 
 const openRouter = Layer.effect(InjectionJudge, judge).pipe(
