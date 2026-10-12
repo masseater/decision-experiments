@@ -92,3 +92,14 @@ Effect から外部 API や SaaS を呼ぶクライアントは手で包まず�
 ## ベース
 
 - このリポジトリのベースは https://github.com/masseater/typescript-template である。テンプレート由来の構成・方針はテンプレートに従う。
+
+## injection-bisect
+
+- このリポジトリは、フロンティアモデルに渡す前の入力にプロンプトインジェクションが含まれるか、含まれるならどこかを、decision モデルで速く安く判定する。ライブラリは `libs/injection-bisect`、CLI は `tools/cli` にある。
+- 判定は入力全体への 1 回の問い合わせから始める。確率がしきい値未満なら、それ以上問い合わせない。
+- しきい値を超えたら、文単位で前半と後半に分けて別々のリクエストで並列に問い、超えた側だけを再帰する。どちらの半分も超えなければ、文をまたぐか文脈が要るものとして親の区間を返す。
+- 1 リクエストに区間ごとの質問を並べる方式は使わない。注入より後ろの無害な行まで陽性になり、位置を絞れないことを計測で確かめたためである。
+- 既定のモデルは無料の `respan/span-01-lite` である。2026-10-12 の計測では、日本語の間接インジェクションは span-01-lite で取れたが、英語や独語の直接的な乗っ取りは `perplexity/pplx-decider-v1.1-27b` のほうがよく取れた。モデルの既定を変えるときは、計測し直してユーザーに確認する。
+- 判定モデルは `InjectionJudge` サービスの裏に置く。OpenRouter は Effect 公式の `@effect/ai-openrouter` の `OpenRouterClient.createDecisions` で呼び、`HTTP-Referer`・`X-Title`・`X-OpenRouter-App-Visibility: hidden` を付ける。
+- 問い合わせは 1 回ずつ `injection-bisect.ask` スパン（区間の開始位置と文字数）と、その子の `injection-bisect.openrouter` スパン（モデル・入力トークン・費用・確率）にする。所要時間はスパンの長さで読む。
+- 精度・費用・時間の比較は、無害な入力と注入を含む入力の両方を含むデータで、フロンティアモデルに直接判定させた場合と並べて計測する。OpenRouter のキーには月の上限があるので、計測の前後に `GET https://openrouter.ai/api/v1/key` で残りを確かめる。
