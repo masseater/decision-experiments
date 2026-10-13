@@ -1,5 +1,9 @@
 # injection-bisect
 
+## 公開先
+
+- Web のデモ: https://masseater.dev/injection-bisect/
+
 ## セットアップ
 
 ```sh
