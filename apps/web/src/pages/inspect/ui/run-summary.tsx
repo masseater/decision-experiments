@@ -1,4 +1,4 @@
-import { branchesFor, sentencesOf } from "@injection-bisect/core";
+import { asksTogether, branchesFor, sentencesOf } from "@injection-bisect/core";
 import type { ReactNode } from "react";
 
 import { COPY } from "#/pages/inspect/model/copy";
@@ -40,7 +40,25 @@ const sumOf = (rows: readonly Row[], pick: (answered: Answered) => number): numb
   return sum;
 };
 
-const RunSummary = ({ text, trace }: Readonly<{ text: string; trace: Trace }>): ReactNode => (
+const requestsOf = (model: string, rows: readonly Row[]): number => {
+  if (asksTogether(model)) {
+    return new Set(rows.map(({ depth }) => depth)).size;
+  }
+  return rows.length;
+};
+
+const branchesOf = (model: string, sentences: number): number => {
+  if (asksTogether(model)) {
+    return sentences;
+  }
+  return branchesFor(sentences);
+};
+
+const RunSummary = ({
+  text,
+  model,
+  trace,
+}: Readonly<{ text: string; model: string; trace: Trace }>): ReactNode => (
   <div className="flex flex-col gap-2">
     <h2 className={cn("text-xl font-semibold", isAlarm(trace.phase) && "text-destructive")}>
       {labelOf(trace.phase)}
@@ -48,9 +66,9 @@ const RunSummary = ({ text, trace }: Readonly<{ text: string; trace: Trace }>): 
     <FailureReason phase={trace.phase} />
     <GradeLine text={text} phase={trace.phase} />
     <dl className="grid grid-cols-2 gap-x-6 gap-y-2 font-mono text-sm sm:grid-cols-6">
-      <Stat label={COPY.queries} value={`${trace.rows.length}${COPY.times}`} />
+      <Stat label={COPY.queries} value={`${requestsOf(model, trace.rows)}${COPY.times}`} />
       <Stat label={COPY.perSentence} value={`${sentencesOf(text).length}${COPY.times}`} />
-      <Stat label={COPY.branches} value={String(branchesFor(sentencesOf(text).length))} />
+      <Stat label={COPY.branches} value={String(branchesOf(model, sentencesOf(text).length))} />
       <Stat label={COPY.elapsed} value={`${formatCount(Math.round(trace.elapsed))}ms`} />
       <Stat
         label={COPY.tokens}

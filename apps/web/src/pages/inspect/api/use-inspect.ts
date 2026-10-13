@@ -19,6 +19,7 @@ type InspectState =
   | {
       readonly status: "streaming";
       readonly text: string;
+      readonly model: string;
       readonly events: readonly InspectEvent[];
       readonly trace: Trace;
     };
@@ -56,7 +57,7 @@ const useInspect = (run: Run): InspectState => {
     return { status: "error", message: query.error.message };
   }
   const events = query.data ?? [];
-  return { status: "streaming", text: run.text, events, trace: traceOf(events) };
+  return { status: "streaming", text: run.text, model: run.model, events, trace: traceOf(events) };
 };
 
 export type { InspectState };
