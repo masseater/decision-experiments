@@ -1,16 +1,54 @@
-import type { ReactNode } from "react";
+import { Array as Arr, Option } from "effect";
+import { useCallback } from "react";
+import type { ChangeEvent, ReactNode } from "react";
 
 import { COPY } from "#/pages/inspect/model/copy";
+import { useDraftText, useSetDraftText } from "#/pages/inspect/model/draft";
 import { EXAMPLES } from "#/pages/inspect/model/examples";
+import type { Example } from "#/pages/inspect/model/examples";
 
-import { ExamplePicker } from "./example-picker";
+import { SELECT_CLASS } from "./select-class";
 
-const ExampleList = (): ReactNode => (
-  <div aria-label={COPY.examples} className="flex flex-wrap gap-2">
-    {EXAMPLES.map((example) => (
-      <ExamplePicker key={example.name} example={example} />
-    ))}
-  </div>
-);
+const GROUPS = [
+  { kind: "injected", label: COPY.injected },
+  { kind: "clean", label: COPY.clean },
+] as const satisfies readonly { kind: Example["kind"]; label: string }[];
+
+const UNPICKED = "";
+
+const ExampleList = (): ReactNode => {
+  const text = useDraftText();
+  const setText = useSetDraftText();
+  const picked = Arr.findFirst(EXAMPLES, (example) => example.text === text).pipe(
+    Option.match({ onNone: () => UNPICKED, onSome: ({ name }) => name }),
+  );
+  const pick = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      Option.map(
+        Arr.findFirst(EXAMPLES, ({ name }) => name === event.target.value),
+        (example) => {
+          setText(example.text);
+        },
+      );
+    },
+    [setText],
+  );
+  return (
+    <select aria-label={COPY.examples} value={picked} onChange={pick} className={SELECT_CLASS}>
+      <option value={UNPICKED} disabled>
+        {COPY.examples}
+      </option>
+      {GROUPS.map(({ kind, label }) => (
+        <optgroup key={kind} label={label}>
+          {EXAMPLES.filter((example) => example.kind === kind).map(({ name }) => (
+            <option key={name} value={name}>
+              {name}
+            </option>
+          ))}
+        </optgroup>
+      ))}
+    </select>
+  );
+};
 
 export { ExampleList };

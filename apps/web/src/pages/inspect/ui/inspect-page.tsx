@@ -4,7 +4,6 @@ import { useInspect } from "#/pages/inspect/api/use-inspect";
 import { COPY } from "#/pages/inspect/model/copy";
 import { useRun } from "#/pages/inspect/model/draft";
 
-import { ExampleList } from "./example-list";
 import { InspectForm } from "./inspect-form";
 import { Mechanism } from "./mechanism";
 import { RunView } from "./run-view";
@@ -15,7 +14,6 @@ const InspectPage = (): ReactNode => {
     <main className="mx-auto flex max-w-7xl flex-col gap-10 px-4 py-10 md:px-8">
       <h1 className="font-mono text-2xl font-bold">{COPY.title}</h1>
       <Mechanism />
-      <ExampleList />
       <div className="grid items-start gap-8 lg:grid-cols-2">
         <InspectForm state={state} />
         <RunView state={state} />

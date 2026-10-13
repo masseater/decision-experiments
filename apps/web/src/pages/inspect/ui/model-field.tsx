@@ -4,6 +4,9 @@ import type { ChangeEvent, ReactNode } from "react";
 import { COPY } from "#/pages/inspect/model/copy";
 import { useModel, useSetModel } from "#/pages/inspect/model/draft";
 import { MODELS } from "#/pages/inspect/model/models";
+import { cn } from "#/shared/lib/utils";
+
+import { SELECT_CLASS } from "./select-class";
 
 const ModelField = (): ReactNode => {
   const model = useModel();
@@ -19,7 +22,7 @@ const ModelField = (): ReactNode => {
       aria-label={COPY.model}
       value={model}
       onChange={pick}
-      className="border-input focus-visible:border-ring focus-visible:ring-ring/50 dark:bg-input/30 h-9 rounded-md border bg-transparent px-2 font-mono text-sm shadow-xs outline-none focus-visible:ring-3"
+      className={cn(SELECT_CLASS, "font-mono")}
     >
       {MODELS.map((id) => (
         <option key={id} value={id}>
