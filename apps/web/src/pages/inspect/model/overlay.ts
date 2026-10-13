@@ -1,5 +1,5 @@
-import { DEFAULT_CUTOFF } from "@injection-bisect/core";
-import type { Region } from "@injection-bisect/core";
+import { DEFAULT_CUTOFF } from "@r_masseater/injection-bisect";
+import type { Region } from "@r_masseater/injection-bisect";
 import { Array as Arr, Option, Order } from "effect";
 
 import type { Focus } from "./draft";

@@ -1,4 +1,4 @@
-import { QUESTION, asksTogether } from "@injection-bisect/core";
+import { QUESTION, asksTogether } from "@r_masseater/injection-bisect";
 import { Clock, Split } from "lucide-react";
 import type { ReactNode } from "react";
 

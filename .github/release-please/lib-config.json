@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "packages": {
+    "libs/injection-bisect": {
+      "release-type": "node",
+      "component": "injection-bisect",
+      "include-component-in-tag": true,
+      "bump-patch-for-minor-pre-major": true,
+      "changelog-sections": [{ "type": "feat", "section": "Features" }]
+    }
+  }
+}

@@ -1,5 +1,10 @@
-import { ProbeListener, detect, openRouterPerRequest, withApiKey } from "@injection-bisect/core";
-import type { Detection, InjectionJudge, ProbeEvent } from "@injection-bisect/core";
+import {
+  ProbeListener,
+  detect,
+  openRouterPerRequest,
+  withApiKey,
+} from "@r_masseater/injection-bisect";
+import type { Detection, InjectionJudge, ProbeEvent } from "@r_masseater/injection-bisect";
 import { Clock, Effect, Queue, Stream } from "effect";
 
 type Finished =

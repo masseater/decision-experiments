@@ -51,7 +51,7 @@ type ProbeEvent =
 const ignore = (): Effect.Effect<void> => Effect.void;
 
 const ProbeListener = Context.Reference<(event: ProbeEvent) => Effect.Effect<void>>(
-  "@injection-bisect/core/detect/ProbeListener",
+  "@r_masseater/injection-bisect/detect/ProbeListener",
   { defaultValue: () => ignore },
 );
 

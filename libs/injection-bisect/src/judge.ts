@@ -25,7 +25,7 @@ class InjectionJudge extends Context.Service<
       query: Readonly<{ text: string; parts: readonly string[]; model: string }>,
     ) => Effect.Effect<Verdicts, JudgeError>;
   }
->()("@injection-bisect/core/judge/InjectionJudge") {}
+>()("@r_masseater/injection-bisect/judge/InjectionJudge") {}
 
 export { InjectionJudge };
 export type { Verdict, Verdicts };

@@ -1,4 +1,4 @@
-import type { Detection, Region } from "@injection-bisect/core";
+import type { Detection, Region } from "@r_masseater/injection-bisect";
 import { Array as Arr, Option } from "effect";
 
 import { EXAMPLES } from "./examples";

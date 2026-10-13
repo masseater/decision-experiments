@@ -1,4 +1,4 @@
-import type { Detection, Probe } from "@injection-bisect/core";
+import type { Detection, Probe } from "@r_masseater/injection-bisect";
 
 import type { InspectEvent } from "#/pages/inspect/api/inspect-events";
 

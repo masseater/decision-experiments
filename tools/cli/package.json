@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@effect/platform-node": "catalog:",
-    "@injection-bisect/core": "workspace:*",
+    "@r_masseater/injection-bisect": "workspace:*",
     "effect": "catalog:stack"
   },
   "devDependencies": {
