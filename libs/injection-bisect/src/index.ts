@@ -17,4 +17,6 @@ export {
   openRouterPerRequest,
   withApiKey,
 } from "./openrouter.ts";
-export { sentencesOf } from "./segment.ts";
+export { htmlParser } from "./html.ts";
+export type { Parser, Span, Unit } from "./parser.ts";
+export { DEFAULT_PARSERS, plainParser, segmenterOf, sentencesOf } from "./segment.ts";
