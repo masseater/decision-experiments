@@ -8,6 +8,8 @@ const HEADERS = [
   COPY.bench.falseAlarms,
   COPY.bench.located,
   COPY.bench.extra,
+  COPY.bench.time,
+  COPY.bench.cost,
 ] as const;
 
 const BenchHead = (): ReactNode => (
