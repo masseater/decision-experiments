@@ -3,15 +3,27 @@ import { DEFAULT_CUTOFF, PRODUCT_NAME } from "@injection-bisect/core";
 const COPY = {
   title: PRODUCT_NAME,
   mechanism: "仕組み",
-  steps: [
-    `文章全体を判定モデルに1回問い合わせ、インジェクションを含む確率を受け取る`,
-    `${DEFAULT_CUTOFF} 未満なら終わる`,
-    `${DEFAULT_CUTOFF} 以上なら、文の数の平方根（切り上げ）個に文の切れ目で分け、別々のリクエストで同時に問い合わせる`,
-    `${DEFAULT_CUTOFF} 以上の区間だけを、1文になるまで同じように分ける`,
-  ],
-  cost: "n 文なら問い合わせはおよそ 1 + 2√n 回、往復は3段ほど",
-  separate:
-    "1リクエストに全区間を並べると注入より後ろの文まで陽性になるため、区間ごとに別リクエストにする",
+  steps: {
+    bisect: [
+      `文章全体を判定モデルに1回問い合わせ、インジェクションを含む確率を受け取る`,
+      `${DEFAULT_CUTOFF} 未満なら終わる`,
+      `${DEFAULT_CUTOFF} 以上なら、文の数の平方根（切り上げ）個に文の切れ目で分け、別々のリクエストで同時に問い合わせる`,
+      `${DEFAULT_CUTOFF} 以上の区間だけを、1文になるまで同じように分ける`,
+    ],
+    together: [
+      `文章全体を判定モデルに1回問い合わせ、インジェクションを含む確率を受け取る`,
+      `${DEFAULT_CUTOFF} 未満なら終わる`,
+      `${DEFAULT_CUTOFF} 以上なら、文ごとの質問を1リクエストにまとめて問い合わせ、${DEFAULT_CUTOFF} 以上の文を注入箇所とする`,
+    ],
+  },
+  cost: {
+    bisect: "n 文なら問い合わせはおよそ 1 + 2√n 回、往復は3段ほど",
+    together: "問い合わせも往復も2回",
+  },
+  separate: {
+    bisect: "span は1リクエストに質問を並べるとすべて陽性になるため、区間ごとに別リクエストにする",
+    together: "span 以外のモデルは質問ごとに答えを分けられるため、1リクエストにまとめる",
+  },
   question: "判定モデルへの質問",
   examples: "例",
   model: "判定モデル",

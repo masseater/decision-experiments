@@ -23,18 +23,22 @@ const PERCENT = 100;
 const exampleOf = (text: string): Option.Option<Example> =>
   Arr.findFirst(EXAMPLES, (example) => example.text === text);
 
-const answerSpanOf = (text: string): Option.Option<Span> =>
+const spanIn = (text: string, answer: string): Span => {
+  const start = text.indexOf(answer);
+  return { start, end: start + answer.length };
+};
+
+const answerSpansOf = (text: string): Option.Option<readonly Span[]> =>
   exampleOf(text).pipe(
     Option.flatMap((example) => {
       if (example.kind === "clean") {
         return Option.none();
       }
-      const start = example.text.indexOf(example.answer);
-      return Option.some({ start, end: start + example.answer.length });
+      return Option.some(example.answers.map((answer) => spanIn(example.text, answer)));
     }),
   );
 
-const answerOf = (text: string): readonly Span[] => Option.toArray(answerSpanOf(text));
+const answerOf = (text: string): readonly Span[] => Option.getOrElse(answerSpansOf(text), () => []);
 
 const visibleIn = (text: string, { start, end }: Span): number =>
   text.slice(start, end).replaceAll(/\s/gu, "").length;
@@ -44,16 +48,22 @@ const overlapOf = (left: Span, right: Span): Span => ({
   end: Math.max(Math.max(left.start, right.start), Math.min(left.end, right.end)),
 });
 
-const foundGrade = (text: string, answer: Span, regions: readonly Region[]): Grade => {
+const foundGrade = (text: string, answers: readonly Span[], regions: readonly Region[]): Grade => {
   let hit = 0;
   let found = 0;
+  let expected = 0;
+  for (const answer of answers) {
+    expected += visibleIn(text, answer);
+    for (const region of regions) {
+      hit += visibleIn(text, overlapOf(answer, region));
+    }
+  }
   for (const region of regions) {
-    hit += visibleIn(text, overlapOf(answer, region));
     found += visibleIn(text, region);
   }
   return {
     status: "found",
-    covered: Math.round((hit / visibleIn(text, answer)) * PERCENT),
+    covered: Math.round((hit / expected) * PERCENT),
     extra: found - hit,
   };
 };
@@ -65,11 +75,11 @@ const cleanGrade = (detection: Detection): Grade => {
   return { status: "false-alarm" };
 };
 
-const injectedGrade = (text: string, detection: Detection, answer: Span): Grade => {
+const injectedGrade = (text: string, detection: Detection, answers: readonly Span[]): Grade => {
   if (detection.status === "clean") {
     return { status: "missed" };
   }
-  return foundGrade(text, answer, detection.regions);
+  return foundGrade(text, answers, detection.regions);
 };
 
 const gradeOf = ({ text, phase }: Readonly<{ text: string; phase: Phase }>): Grade => {
@@ -79,9 +89,9 @@ const gradeOf = ({ text, phase }: Readonly<{ text: string; phase: Phase }>): Gra
   if (phase.status === "running") {
     return { status: "pending" };
   }
-  return Option.match(answerSpanOf(text), {
+  return Option.match(answerSpansOf(text), {
     onNone: () => cleanGrade(phase.detection),
-    onSome: (answer) => injectedGrade(text, phase.detection, answer),
+    onSome: (answers) => injectedGrade(text, phase.detection, answers),
   });
 };
 
