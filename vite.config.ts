@@ -135,6 +135,19 @@ export default defineConfig({
             { from: "package", package: "clsx", name: "ClassValue" },
             {
               from: "package",
+              package: "parse5",
+              name: [
+                "Document",
+                "DocumentFragment",
+                "DocumentType",
+                "Element",
+                "Template",
+                "CommentNode",
+                "TextNode",
+              ],
+            },
+            {
+              from: "package",
               package: "effect",
               name: ["Cause", "Context", "Effect", "Exit", "Layer", "Option"],
             },

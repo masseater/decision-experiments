@@ -1,3 +1,5 @@
+import { htmlUnitsOf, looksLikeHtml } from "./html.ts";
+
 interface Span {
   readonly start: number;
   readonly end: number;
@@ -15,8 +17,17 @@ const spanOf = (sentence: string, index: number): readonly Span[] => {
   return [{ start: index, end: index + sentence.length }];
 };
 
-const sentencesOf = (text: string): readonly Span[] =>
-  [...text.matchAll(SENTENCE)].flatMap((match) => spanOf(match[FIRST], match.index));
+const sentencesIn = (text: string, { start, end }: Span): readonly Span[] =>
+  [...text.slice(start, end).matchAll(SENTENCE)].flatMap((match) =>
+    spanOf(match[FIRST], start + match.index),
+  );
+
+const sentencesOf = (text: string): readonly Span[] => {
+  if (looksLikeHtml(text)) {
+    return htmlUnitsOf(text).flatMap((unit) => sentencesIn(text, unit));
+  }
+  return sentencesIn(text, { start: FIRST, end: text.length });
+};
 
 export { sentencesOf };
 export type { Span };
