@@ -7,6 +7,7 @@ import type { Answer, Phase, Row, Trace } from "#/pages/inspect/model/trace";
 import { cn } from "#/shared/lib/utils";
 
 import { FailureReason } from "./failure-reason";
+import { GradeLine } from "./grade-line";
 import { Stat } from "./stat";
 
 type Answered = Extract<Answer, Readonly<{ status: "answered" }>>;
@@ -45,6 +46,7 @@ const RunSummary = ({ text, trace }: Readonly<{ text: string; trace: Trace }>): 
       {labelOf(trace.phase)}
     </h2>
     <FailureReason phase={trace.phase} />
+    <GradeLine text={text} phase={trace.phase} />
     <dl className="grid grid-cols-2 gap-x-6 gap-y-2 font-mono text-sm sm:grid-cols-6">
       <Stat label={COPY.queries} value={`${trace.rows.length}${COPY.times}`} />
       <Stat label={COPY.perSentence} value={`${sentencesOf(text).length}${COPY.times}`} />

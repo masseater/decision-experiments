@@ -11,6 +11,12 @@ interface Piece {
   readonly start: number;
   readonly text: string;
   readonly tone: Tone;
+  readonly answer: boolean;
+}
+
+interface Span {
+  readonly start: number;
+  readonly end: number;
 }
 
 const FIRST = 0;
@@ -31,8 +37,7 @@ const toneOf = (answer: Answer): Tone => {
   return "miss";
 };
 
-const covers = (span: Readonly<{ start: number; end: number }>, at: number): boolean =>
-  span.start <= at && at < span.end;
+const covers = (span: Span, at: number): boolean => span.start <= at && at < span.end;
 
 const regionsOf = (phase: Phase): readonly Region[] => {
   if (phase.status === "done" && phase.detection.status === "injected") {
@@ -70,9 +75,15 @@ const piecesOf = ({
   text,
   trace,
   focus,
-}: Readonly<{ text: string; trace: Trace; focus: Focus }>): readonly Piece[] => {
+  answer,
+}: Readonly<{
+  text: string;
+  trace: Trace;
+  focus: Focus;
+  answer: readonly Span[];
+}>): readonly Piece[] => {
   const cuts = new Set([FIRST, text.length]);
-  for (const span of [...trace.rows, ...regionsOf(trace.phase)]) {
+  for (const span of [...trace.rows, ...regionsOf(trace.phase), ...answer]) {
     cuts.add(span.start);
     cuts.add(span.end);
   }
@@ -81,6 +92,7 @@ const piecesOf = ({
     start,
     text: text.slice(start, sorted[index + NEXT]),
     tone: toneAt(trace, focus, start),
+    answer: answer.some((span) => covers(span, start)),
   }));
 };
 

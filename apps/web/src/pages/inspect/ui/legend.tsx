@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { COPY } from "#/pages/inspect/model/copy";
 import type { Tone } from "#/pages/inspect/model/overlay";
 
-import { TONE_CLASS } from "./tone";
+import { ANSWER_CLASS, TONE_CLASS } from "./tone";
 
 const ITEMS: readonly (readonly [Tone, string])[] = [
   ["pending", COPY.legendPending],
@@ -20,6 +20,10 @@ const Legend = (): ReactNode => (
         {label}
       </li>
     ))}
+    <li className="flex items-center gap-1.5">
+      <span className={ANSWER_CLASS}>{COPY.sample}</span>
+      {COPY.answer}
+    </li>
   </ul>
 );
 

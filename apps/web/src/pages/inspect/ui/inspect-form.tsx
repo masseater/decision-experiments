@@ -16,7 +16,6 @@ import {
 import type { Run } from "#/pages/inspect/model/draft";
 import { Button } from "#/shared/ui/button";
 
-import { ExampleList } from "./example-list";
 import { Note } from "./note";
 import { OverlaidText } from "./overlaid-text";
 import { RunSettings } from "./run-settings";
@@ -49,7 +48,6 @@ const InspectForm = ({ state }: Readonly<{ state: InspectState }>): ReactNode =>
   const ready = !isRunning(state) && text.trim() !== "" && apiKey !== "" && model.trim() !== "";
   return (
     <section className="flex flex-col gap-3">
-      <ExampleList />
       <OverlaidText state={state} />
       <div className="flex flex-wrap gap-2">
         <RunSettings />
