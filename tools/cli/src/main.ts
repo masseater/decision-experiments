@@ -1,6 +1,6 @@
 import { NodeRuntime, NodeServices } from "@effect/platform-node";
 import {
-  DEFAULT_CUTOFF,
+  cutoffFor,
   DEFAULT_MODEL,
   PRODUCT_NAME,
   detect,
@@ -44,7 +44,7 @@ const command = Command.make(
     text: Argument.String("text").pipe(Argument.optional),
     file: Flag.FileText("file").pipe(Flag.optional),
     model: Flag.String("model").pipe(Flag.withDefault(DEFAULT_MODEL)),
-    cutoff: Flag.Finite("cutoff").pipe(Flag.withDefault(DEFAULT_CUTOFF)),
+    cutoff: Flag.Finite("cutoff").pipe(Flag.optional),
   },
   ({ text, file, model, cutoff }) =>
     Effect.gen(function* inspect() {
@@ -52,7 +52,10 @@ const command = Command.make(
         Option.orElse(text, () => file),
         () => "",
       );
-      const detection = yield* detect(input, { model, cutoff });
+      const detection = yield* detect(input, {
+        model,
+        cutoff: Option.getOrElse(cutoff, () => cutoffFor(model)),
+      });
       yield* Console.log(yield* encodeJson(reportOf(detection, input)));
     }),
 );

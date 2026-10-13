@@ -1,5 +1,6 @@
 import { Array as Arr, Context, Duration, Effect, Option, Ref } from "effect";
 
+import { cutoffFor } from "./cutoff.ts";
 import type { JudgeError } from "./judge-error.ts";
 import { InjectionJudge } from "./judge.ts";
 import type { Verdict } from "./judge.ts";
@@ -7,8 +8,6 @@ import type { Parser, Span } from "./parser.ts";
 import { DEFAULT_PARSERS, segmenterOf } from "./segment.ts";
 
 const DEFAULT_MODEL = "respan/span-01-lite";
-
-const DEFAULT_CUTOFF = 0.5;
 
 const MIN_BRANCHES = 2;
 
@@ -24,11 +23,6 @@ interface DetectOptions {
   readonly branches?: number;
   readonly parsers?: readonly Parser[];
 }
-
-const DEFAULTS: Required<Omit<DetectOptions, "branches" | "parsers">> = {
-  model: DEFAULT_MODEL,
-  cutoff: DEFAULT_CUTOFF,
-};
 
 const branchesFor = (sentenceCount: number): number =>
   Math.max(MIN_BRANCHES, Math.ceil(Math.sqrt(sentenceCount)));
@@ -249,6 +243,18 @@ const locateAll = (
   return locate(query, sentences, { from: FIRST, to: sentences.length, probability, depth: FIRST });
 };
 
+const settingsOf = (
+  options: DetectOptions,
+  sentenceCount: number,
+): Pick<Query, "model" | "cutoff" | "branches"> => {
+  const model = options.model ?? DEFAULT_MODEL;
+  return {
+    model,
+    cutoff: options.cutoff ?? cutoffFor(model),
+    branches: options.branches ?? branchesFor(sentenceCount),
+  };
+};
+
 const detect = Effect.fn("injection-bisect.detect")(function* detect(
   text: string,
   options: DetectOptions,
@@ -258,9 +264,7 @@ const detect = Effect.fn("injection-bisect.detect")(function* detect(
   const sentences = segmenterOf(options.parsers ?? DEFAULT_PARSERS)(text);
   const query: Query = {
     text,
-    ...DEFAULTS,
-    ...options,
-    branches: options.branches ?? branchesFor(sentences.length),
+    ...settingsOf(options, sentences.length),
     record: (probe) => Ref.update(probes, (recorded) => [...recorded, probe]),
     nextId: Ref.getAndUpdate(asked, (count) => count + ONE_SENTENCE),
   };
@@ -281,5 +285,5 @@ const detect = Effect.fn("injection-bisect.detect")(function* detect(
   } satisfies Detection;
 });
 
-export { DEFAULT_CUTOFF, DEFAULT_MODEL, ProbeListener, asksTogether, branchesFor, detect };
+export { DEFAULT_MODEL, ProbeListener, asksTogether, branchesFor, detect };
 export type { Detection, DetectOptions, Probe, ProbeEvent, Region };

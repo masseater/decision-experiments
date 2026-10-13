@@ -1,5 +1,5 @@
-import { QUESTION, asksTogether } from "@r_masseater/injection-bisect";
-import { Clock, Split } from "lucide-react";
+import { QUESTION, asksTogether, cutoffFor } from "@r_masseater/injection-bisect";
+import { Clock, Gauge, Split } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { COPY } from "#/pages/inspect/model/copy";
@@ -16,12 +16,13 @@ const modeOf = (model: string): keyof typeof COPY.steps => {
 };
 
 const Mechanism = (): ReactNode => {
-  const mode = modeOf(useModel());
+  const model = useModel();
+  const mode = modeOf(model);
   return (
     <section className="flex flex-col gap-3 text-sm leading-relaxed">
       <h2 className="text-lg font-semibold">{COPY.mechanism}</h2>
       <ol className="list-decimal space-y-1 pl-5">
-        {COPY.steps[mode].map((text) => (
+        {COPY.steps[mode](cutoffFor(model)).map((text) => (
           <li key={text}>{text}</li>
         ))}
       </ol>
@@ -30,6 +31,9 @@ const Mechanism = (): ReactNode => {
       </Note>
       <Note text={COPY.separate[mode]}>
         <Split />
+      </Note>
+      <Note text={COPY.cutoffNote}>
+        <Gauge />
       </Note>
       <details className="rounded-md border px-3 py-2">
         <summary className="cursor-pointer">{COPY.question}</summary>

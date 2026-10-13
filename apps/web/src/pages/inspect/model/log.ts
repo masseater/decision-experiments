@@ -1,5 +1,5 @@
 import type { Region } from "@r_masseater/injection-bisect";
-import { DEFAULT_CUTOFF } from "@r_masseater/injection-bisect";
+import { cutoffFor } from "@r_masseater/injection-bisect";
 
 import type { InspectEvent } from "#/pages/inspect/api/inspect-events";
 
@@ -21,11 +21,15 @@ const stamp = (at: number): string => `+${String(Math.round(at)).padStart(TIME_W
 const rangeOf = ({ start, end }: Readonly<{ start: number; end: number }>): string =>
   `[${start}, ${end})`;
 
-const verdictOf = (probability: number): string => {
-  if (probability >= DEFAULT_CUTOFF) {
-    return COPY.over;
+const verdictOf = ({
+  probability,
+  model,
+}: Readonly<{ probability: number; model: string }>): string => {
+  const cutoff = cutoffFor(model);
+  if (probability >= cutoff) {
+    return COPY.over(cutoff);
   }
-  return COPY.under;
+  return COPY.under(cutoff);
 };
 
 const resultOf = (event: Extract<InspectEvent, { type: "done" }>): string => {
@@ -49,7 +53,7 @@ const lineOf = (event: InspectEvent): LogLine => {
     return {
       key: `answered-${event.id}`,
       tone: "answered",
-      text: `${at}  #${event.id}  ${formatPercent(event.probability)} ${verdictOf(event.probability)}  ${Math.round(event.millis)}ms  ${formatCount(event.inputTokens)} tok  ${formatDollars(event.cost)}  ${event.model}`,
+      text: `${at}  #${event.id}  ${formatPercent(event.probability)} ${verdictOf(event)}  ${Math.round(event.millis)}ms  ${formatCount(event.inputTokens)} tok  ${formatDollars(event.cost)}  ${event.model}`,
     };
   }
   if (event.type === "done") {

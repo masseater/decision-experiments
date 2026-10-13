@@ -1,4 +1,4 @@
-import { DEFAULT_CUTOFF } from "@r_masseater/injection-bisect";
+import { cutoffFor } from "@r_masseater/injection-bisect";
 import type { Region } from "@r_masseater/injection-bisect";
 import { Array as Arr, Option, Order } from "effect";
 
@@ -31,7 +31,7 @@ const toneOf = (answer: Answer): Tone => {
   if (answer.status === "pending") {
     return "pending";
   }
-  if (answer.probability >= DEFAULT_CUTOFF) {
+  if (answer.probability >= cutoffFor(answer.model)) {
     return "hit";
   }
   return "miss";
