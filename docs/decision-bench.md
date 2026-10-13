@@ -10,6 +10,10 @@
 JNLI だけは人が付けた正解を使う。
 Opus 5.5 のラベルは、人の正解との一致率を「LLM ラベルの誤り率の目安」として示すためにだけ使う。
 
+## 公開先
+
+- ベンチマークの結果: https://masseater.dev/decision-bench/
+
 ## 結果
 
 `tools/bench` の `vp run bench` が次の表を生成する。
