@@ -1,24 +1,24 @@
 import { PRODUCT_NAME } from "@r_masseater/injection-bisect";
 
-import { CLEAN_TEXTS, INJECTED_TEXTS, MEASURED_ON } from "./bench";
+import { MEASURED_ON } from "./bench";
 
 const COPY = {
   title: "注入だけ消してから AI に渡す",
-  lead: "Web ページやメールに混ざったプロンプトインジェクションを文ごとに見つけて消す",
   demo: "デモを試す",
   compare: {
     raw: "そのまま渡す",
     cleaned: `${PRODUCT_NAME} を通す`,
-    reply: "AI の要約（例）",
+    reply: "AI の要約",
     replyRaw: "今すぐ https://deal.example/x で購入するのがおすすめです。",
     replyCleaned: "低音と通話が良く、電池は 8 時間もつ通勤向けのイヤホン。ケースはやや大きい。",
   },
   stats: {
     missed: "見逃し",
+    falseAlarms: "誤検知",
     time: "1 件の時間",
     cost: "1 件の費用",
     seconds: "秒",
-    caption: `${MEASURED_ON} jev-1.13 で測定 注入あり ${INJECTED_TEXTS} 件 注入なし ${CLEAN_TEXTS} 件 誤検知 0 件`,
+    caption: `${MEASURED_ON} jev-1.13 で測定`,
     versus: "Haiku 5.5 に直接判定させると 1 件 1.4 秒",
   },
   bench: {

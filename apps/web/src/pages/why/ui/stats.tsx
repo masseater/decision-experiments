@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { HEADLINE, INJECTED_TEXTS } from "#/pages/why/model/bench";
+import { CLEAN_TEXTS, HEADLINE, INJECTED_TEXTS } from "#/pages/why/model/bench";
 import { COPY } from "#/pages/why/model/copy";
 
 import { Stat } from "./stat";
@@ -13,8 +13,9 @@ const SECOND_DIGITS = 1;
 
 const Stats = (): ReactNode => (
   <section className="flex flex-col gap-3">
-    <dl className="grid gap-4 md:grid-cols-3">
+    <dl className="grid grid-cols-2 gap-4 md:grid-cols-4">
       <Stat label={COPY.stats.missed} value={`${HEADLINE.missed} / ${INJECTED_TEXTS}`} />
+      <Stat label={COPY.stats.falseAlarms} value={`${HEADLINE.falseAlarms} / ${CLEAN_TEXTS}`} />
       <Stat
         label={COPY.stats.time}
         value={`${(HEADLINE.medianMs / MS_PER_SECOND).toLocaleString("ja-JP", { maximumFractionDigits: SECOND_DIGITS })} ${COPY.stats.seconds}`}
