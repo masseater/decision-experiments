@@ -76,8 +76,6 @@ interface Query {
   readonly nextId: Effect.Effect<number>;
 }
 
-type Located = Readonly<Record<"top" | "regions", readonly Region[]>>;
-
 interface Range {
   readonly from: number;
   readonly to: number;
@@ -186,7 +184,7 @@ const askTogether = Effect.fn("injection-bisect.ask-together")(function* askToge
 ) {
   const judge = yield* InjectionJudge;
   const listen = yield* ProbeListener;
-  const depth = FIRST;
+  const depth = ONE_SENTENCE;
   const ids = yield* Effect.replicateEffect(query.nextId, sentences.length);
   yield* Effect.annotateCurrentSpan({ sentences: sentences.length });
   yield* Effect.forEach(
@@ -221,49 +219,32 @@ const askTogether = Effect.fn("injection-bisect.ask-together")(function* askToge
   return probes;
 });
 
-const hitsOf = <Scored extends Region>(
-  query: Query,
-  regions: readonly Scored[],
-): readonly Scored[] => regions.filter(({ probability }) => probability >= query.cutoff);
-
-const locateSplit = (
+const locateTogether = (
   query: Query,
   sentences: readonly Span[],
-): Effect.Effect<Located, JudgeError, InjectionJudge> =>
-  Effect.gen(function* locateTop() {
-    const top = yield* Effect.forEach(
-      partsOf({ from: FIRST, to: sentences.length }, query.branches),
-      (part) => {
-        const span = spanOfRange(sentences, part);
-        return ask(query, span, FIRST).pipe(
-          Effect.map((probability) => ({ ...part, ...span, probability, depth: FIRST })),
-        );
-      },
-      { concurrency: "unbounded" },
-    );
-    const nested = yield* Effect.forEach(
-      hitsOf(query, top),
-      (hit) => locate(query, sentences, hit),
-      {
-        concurrency: "unbounded",
-      },
-    );
-    return { top, regions: nested.flat() };
-  });
+  probability: number,
+): Effect.Effect<readonly Region[], JudgeError, InjectionJudge> =>
+  askTogether(query, sentences).pipe(
+    Effect.map((probes) => {
+      const hits = probes
+        .filter((probe) => probe.probability >= query.cutoff)
+        .map(({ start, end, probability: found }) => ({ start, end, probability: found }));
+      if (Arr.isReadonlyArrayEmpty(hits)) {
+        return [{ start: FIRST, end: query.text.length, probability }];
+      }
+      return hits;
+    }),
+  );
 
 const locateAll = (
   query: Query,
   sentences: readonly Span[],
-): Effect.Effect<Located, JudgeError, InjectionJudge> => {
-  if (Arr.isReadonlyArrayEmpty(sentences)) {
-    return Effect.succeed({ top: [], regions: [] });
-  }
+  probability: number,
+): Effect.Effect<readonly Region[], JudgeError, InjectionJudge> => {
   if (asksTogether(query.model)) {
-    return askTogether(query, sentences).pipe(
-      Effect.map((top) => ({ top, regions: hitsOf(query, top) })),
-    );
+    return locateTogether(query, sentences, probability);
   }
-  return locateSplit(query, sentences);
+  return locate(query, sentences, { from: FIRST, to: sentences.length, probability, depth: FIRST });
 };
 
 const detect = Effect.fn("injection-bisect.detect")(function* detect(
@@ -281,11 +262,15 @@ const detect = Effect.fn("injection-bisect.detect")(function* detect(
     record: (probe) => Ref.update(probes, (recorded) => [...recorded, probe]),
     nextId: Ref.getAndUpdate(asked, (count) => count + ONE_SENTENCE),
   };
-  const { top, regions } = yield* locateAll(query, sentences);
-  const probability = Math.max(FIRST, ...top.map((region) => region.probability));
-  if (Arr.isReadonlyArrayEmpty(regions)) {
-    return { status: "clean", probability, probes: yield* Ref.get(probes) } satisfies Detection;
+  const probability = yield* ask(query, { start: FIRST, end: text.length }, FIRST);
+  if (probability < query.cutoff) {
+    return {
+      status: "clean",
+      probability,
+      probes: yield* Ref.get(probes),
+    } satisfies Detection;
   }
+  const regions = yield* locateAll(query, sentences, probability);
   return {
     status: "injected",
     probability,
