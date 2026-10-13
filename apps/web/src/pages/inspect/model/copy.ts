@@ -1,28 +1,30 @@
-import { DEFAULT_CUTOFF, PRODUCT_NAME } from "@r_masseater/injection-bisect";
+import { PRODUCT_NAME } from "@r_masseater/injection-bisect";
 
 const COPY = {
   title: PRODUCT_NAME,
   mechanism: "仕組み",
+  why: "前段に置く理由",
   steps: {
-    bisect: [
+    bisect: (cutoff: number): readonly string[] => [
       `文章全体を判定モデルに1回問い合わせ、インジェクションを含む確率を受け取る`,
-      `${DEFAULT_CUTOFF} 未満なら終わる`,
-      `${DEFAULT_CUTOFF} 以上なら、文の数の平方根（切り上げ）個に文の切れ目で分け、別々のリクエストで同時に問い合わせる`,
-      `${DEFAULT_CUTOFF} 以上の区間だけを、1文になるまで同じように分ける`,
+      `${cutoff} 未満なら終わる`,
+      `${cutoff} 以上なら、文の数の平方根（切り上げ）個に文の切れ目で分け、別々のリクエストで同時に問い合わせる`,
+      `${cutoff} 以上の区間だけを、1文になるまで同じように分ける`,
     ],
-    together: [
+    together: (cutoff: number): readonly string[] => [
       `文章全体を判定モデルに1回問い合わせ、インジェクションを含む確率を受け取る`,
-      `${DEFAULT_CUTOFF} 未満なら終わる`,
-      `${DEFAULT_CUTOFF} 以上なら、文ごとの質問を1リクエストにまとめて問い合わせ、${DEFAULT_CUTOFF} 以上の文を注入箇所とする`,
+      `${cutoff} 未満なら終わる`,
+      `${cutoff} 以上なら、文ごとの質問を1リクエストにまとめて問い合わせ、${cutoff} 以上の文を注入箇所とする`,
     ],
   },
+  cutoffNote:
+    "閾値は 0.8 以上。モデルごとに、注入あり・なしの例で測った確率の分かれ目から決めている",
   cost: {
     bisect: "n 文なら問い合わせはおよそ 1 + 2√n 回、往復は3段ほど",
     together: "問い合わせも往復も2回",
   },
   separate: {
-    bisect:
-      "span は1リクエストに質問を並べるとすべて陽性になり、pplx は確率が 0.5 付近に固まるため、区間ごとに別リクエストにする",
+    bisect: "span は1リクエストに質問を並べるとすべて陽性になるため、区間ごとに別リクエストにする",
     together: "jev と mercury は質問ごとに答えを分けられるため、1リクエストにまとめる",
   },
   question: "判定モデルへの質問",
@@ -46,8 +48,8 @@ const COPY = {
   log: "ログ",
   depth: "段",
   chars: "字",
-  over: `≥ ${DEFAULT_CUTOFF}`,
-  under: `< ${DEFAULT_CUTOFF}`,
+  over: (cutoff: number): string => `≥ ${cutoff}`,
+  under: (cutoff: number): string => `< ${cutoff}`,
   regions: "注入箇所",
   answer: "正解",
   sample: "あいう",
@@ -56,8 +58,8 @@ const COPY = {
   missed: "見逃し",
   covered: "正解を検出",
   extra: "余分",
-  legendHit: `${DEFAULT_CUTOFF} 以上`,
-  legendMiss: `${DEFAULT_CUTOFF} 未満`,
+  legendHit: "閾値以上",
+  legendMiss: "閾値未満",
   legendPending: "応答待ち",
 } as const;
 

@@ -1,11 +1,5 @@
-export {
-  DEFAULT_CUTOFF,
-  DEFAULT_MODEL,
-  ProbeListener,
-  asksTogether,
-  branchesFor,
-  detect,
-} from "./detect.ts";
+export { DEFAULT_CUTOFF, cutoffFor } from "./cutoff.ts";
+export { DEFAULT_MODEL, ProbeListener, asksTogether, branchesFor, detect } from "./detect.ts";
 export type { Detection, DetectOptions, Probe, ProbeEvent, Region } from "./detect.ts";
 export { InjectionJudge } from "./judge.ts";
 export type { Verdict, Verdicts } from "./judge.ts";
