@@ -6,7 +6,6 @@ import { COPY } from "#/pages/inspect/model/copy";
 import { useRun } from "#/pages/inspect/model/draft";
 
 import { InspectForm } from "./inspect-form";
-import { Mechanism } from "./mechanism";
 import { RunView } from "./run-view";
 
 const InspectPage = (): ReactNode => {
@@ -19,7 +18,6 @@ const InspectPage = (): ReactNode => {
           {COPY.why}
         </Link>
       </header>
-      <Mechanism />
       <div className="grid items-start gap-8 lg:grid-cols-2">
         <InspectForm state={state} />
         <RunView state={state} />
