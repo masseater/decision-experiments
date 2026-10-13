@@ -5,8 +5,8 @@ import {
   PRODUCT_NAME,
   detect,
   openRouter,
-} from "@injection-bisect/core";
-import type { Detection } from "@injection-bisect/core";
+} from "@r_masseater/injection-bisect";
+import type { Detection } from "@r_masseater/injection-bisect";
 import { Console, Effect, Layer, Option, Schema } from "effect";
 import { Argument, Command, Flag } from "effect/cli";
 import { FetchHttpClient } from "effect/http";

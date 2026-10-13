@@ -1,5 +1,5 @@
 import { useAtomSet, useAtomValue } from "@effect/atom-react";
-import { DEFAULT_MODEL } from "@injection-bisect/core";
+import { DEFAULT_MODEL } from "@r_masseater/injection-bisect";
 import { Atom } from "effect/reactivity";
 
 import { EXAMPLES } from "./examples";

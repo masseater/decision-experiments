@@ -1,4 +1,4 @@
-import { DEFAULT_MODEL } from "@injection-bisect/core";
+import { DEFAULT_MODEL } from "@r_masseater/injection-bisect";
 
 const MAX_CHARS = 8000;
 

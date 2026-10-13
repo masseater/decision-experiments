@@ -1,4 +1,4 @@
-import { asksTogether, branchesFor, sentencesOf } from "@injection-bisect/core";
+import { asksTogether, branchesFor, sentencesOf } from "@r_masseater/injection-bisect";
 import type { ReactNode } from "react";
 
 import { COPY } from "#/pages/inspect/model/copy";

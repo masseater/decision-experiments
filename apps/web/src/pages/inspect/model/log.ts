@@ -1,5 +1,5 @@
-import type { Region } from "@injection-bisect/core";
-import { DEFAULT_CUTOFF } from "@injection-bisect/core";
+import type { Region } from "@r_masseater/injection-bisect";
+import { DEFAULT_CUTOFF } from "@r_masseater/injection-bisect";
 
 import type { InspectEvent } from "#/pages/inspect/api/inspect-events";
 

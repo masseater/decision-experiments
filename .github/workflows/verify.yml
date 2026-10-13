@@ -128,8 +128,37 @@ jobs:
           manifest-file: .github/release-please/manifest.json
           skip-github-release: true
 
+  release-lib:
+    needs: verify
+    if: github.repository == 'masseater/injection-bisect'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    concurrency:
+      group: release-lib
+    steps:
+      - id: tagged
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        with:
+          config-file: .github/release-please/lib-config.json
+          manifest-file: .github/release-please/lib-manifest.json
+          skip-github-pull-request: true
+      - if: github.event_name == 'workflow_dispatch'
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        with:
+          config-file: .github/release-please/lib-config.json
+          manifest-file: .github/release-please/lib-manifest.json
+          skip-github-release: true
+      - if: steps.tagged.outputs['libs/injection-bisect--release_created'] == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.tagged.outputs['libs/injection-bisect--tag_name'] }}
+        run: gh workflow run publish.yml --repo "$GITHUB_REPOSITORY" --ref main -f ref="$TAG"
+
   ci-telemetry:
-    needs: [verify, autofix, deploy, release]
+    needs: [verify, autofix, deploy, release, release-lib]
     if: always()
     runs-on: ubuntu-latest
     permissions:

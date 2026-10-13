@@ -442,7 +442,7 @@ importers:
       '@effect/atom-react':
         specifier: catalog:stack
         version: 4.0.2(effect@4.0.2)(react@19.3.0)(scheduler@0.28.0)
-      '@injection-bisect/core':
+      '@r_masseater/injection-bisect':
         specifier: workspace:*
         version: link:../../libs/injection-bisect
       '@tanstack/react-devtools':
@@ -570,7 +570,7 @@ importers:
       '@effect/platform-node':
         specifier: 'catalog:'
         version: 4.0.2(effect@4.0.2)(redis@6.2.1(@opentelemetry/api@1.9.1))
-      '@injection-bisect/core':
+      '@r_masseater/injection-bisect':
         specifier: workspace:*
         version: link:../../libs/injection-bisect
       effect:

@@ -1,4 +1,4 @@
-import { DEFAULT_CUTOFF, PRODUCT_NAME } from "@injection-bisect/core";
+import { DEFAULT_CUTOFF, PRODUCT_NAME } from "@r_masseater/injection-bisect";
 
 const COPY = {
   title: PRODUCT_NAME,

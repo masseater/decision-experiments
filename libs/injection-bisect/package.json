@@ -1,13 +1,48 @@
 {
-  "name": "@injection-bisect/core",
+  "name": "@r_masseater/injection-bisect",
   "version": "0.0.0",
-  "private": true,
+  "description": "Find whether and where a prompt injection hides in text with fast, cheap decision models.",
+  "keywords": [
+    "effect",
+    "llm",
+    "openrouter",
+    "prompt-injection",
+    "security"
+  ],
+  "homepage": "https://github.com/masseater/injection-bisect#readme",
+  "bugs": {
+    "url": "https://github.com/masseater/injection-bisect/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masseater/injection-bisect.git",
+    "directory": "libs/injection-bisect"
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "./package.json": "./package.json"
+    },
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
-    "test": "vp test run"
+    "build": "vp pack",
+    "test": "vp test run",
+    "prepublishOnly": "vp run build"
   },
   "dependencies": {
     "@effect/ai-openrouter": "catalog:",
