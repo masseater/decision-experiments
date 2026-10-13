@@ -21,17 +21,19 @@ const INJECTED_TEXTS = 19;
 
 const CLEAN_TEXTS = 6;
 
+const HEADLINE: BenchRow = {
+  model: "typesafe/jev-1.13",
+  judge: "decision",
+  missed: 0,
+  falseAlarms: 0,
+  located: 18,
+  extra: { status: "measured", chars: 7 },
+  medianMs: 406,
+  dollarsPerText: 0.000148,
+};
+
 const BENCH: readonly BenchRow[] = [
-  {
-    model: "typesafe/jev-1.13",
-    judge: "decision",
-    missed: 0,
-    falseAlarms: 0,
-    located: 18,
-    extra: { status: "measured", chars: 7 },
-    medianMs: 406,
-    dollarsPerText: 0.000148,
-  },
+  HEADLINE,
   {
     model: "inception/mercury-decide",
     judge: "decision",
@@ -90,5 +92,5 @@ const BENCH: readonly BenchRow[] = [
   },
 ];
 
-export { BENCH, CLEAN_TEXTS, INJECTED_TEXTS, MEASURED_ON };
+export { BENCH, CLEAN_TEXTS, HEADLINE, INJECTED_TEXTS, MEASURED_ON };
 export type { BenchRow, Extra, Judge };

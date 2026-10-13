@@ -19,6 +19,13 @@ const extraOf = (extra: Extra): string => {
   return COPY.bench.unmeasured;
 };
 
+const COST_DIGITS = 2;
+
+const msOf = ({ medianMs }: BenchRow): string => `${medianMs.toLocaleString("ja-JP")}ms`;
+
+const dollarsOf = ({ dollarsPerText }: BenchRow): string =>
+  `$${dollarsPerText.toLocaleString("en-US", { maximumSignificantDigits: COST_DIGITS })}`;
+
 const BenchLine = ({ row }: Readonly<{ row: BenchRow }>): ReactNode => (
   <tr className="border-t">
     <ModelCell row={row} />
@@ -26,6 +33,8 @@ const BenchLine = ({ row }: Readonly<{ row: BenchRow }>): ReactNode => (
     <td className={countClass(row.falseAlarms)}>{`${row.falseAlarms}/${CLEAN_TEXTS}`}</td>
     <td className="px-2 py-1 font-mono">{`${row.located}/${INJECTED_TEXTS}`}</td>
     <td className="px-2 py-1 font-mono">{extraOf(row.extra)}</td>
+    <td className="px-2 py-1 font-mono">{msOf(row)}</td>
+    <td className="px-2 py-1 font-mono">{dollarsOf(row)}</td>
   </tr>
 );
 
