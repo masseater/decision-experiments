@@ -12,6 +12,7 @@ import { SEARCH_INDEX_ORIGIN, SITEMAP_FILE } from "./src/shared/config/search.ts
 export default defineConfig({
   base: `${BASE_PATH}/`,
   resolve: { tsconfigPaths: true },
+  environments: { client: { build: { outDir: `dist/client${BASE_PATH}` } } },
   test: {
     projects: [
       { extends: true, test: { name: "app", include: ["src/**/*.test.{ts,tsx}"] } },
@@ -24,6 +25,7 @@ export default defineConfig({
     tanstackStart({
       srcDirectory: "src/app",
       rsc: { enabled: true },
+      prerender: { enabled: true, crawlLinks: true },
       pages: [{ path: "/" }],
       sitemap: Option.match(SEARCH_INDEX_ORIGIN, {
         onNone: () => ({ enabled: false }),

@@ -1,3 +1,13 @@
+import { DEFAULT_MODEL } from "@injection-bisect/core";
+
 const MAX_CHARS = 8000;
 
-export { MAX_CHARS };
+const MODELS = [
+  DEFAULT_MODEL,
+  "respan/span-01",
+  "perplexity/pplx-decider-v1.1-27b",
+  "typesafe/jev-1.13",
+  "inception/mercury-decide",
+] as const;
+
+export { MAX_CHARS, MODELS };

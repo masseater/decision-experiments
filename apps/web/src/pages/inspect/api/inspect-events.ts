@@ -8,8 +8,11 @@ type Finished =
 
 type InspectEvent = (ProbeEvent | Finished) & { readonly at: number };
 
-const finish = (text: string): Effect.Effect<Finished, never, InjectionJudge> =>
-  detect(text, {}).pipe(
+const finish = ({
+  text,
+  model,
+}: Readonly<{ text: string; model: string }>): Effect.Effect<Finished, never, InjectionJudge> =>
+  detect(text, { model }).pipe(
     Effect.map((detection): Finished => ({ type: "done", detection })),
     Effect.catchTag("JudgeError", ({ reason }) =>
       Effect.succeed<Finished>({ type: "failed", reason }),
@@ -19,7 +22,8 @@ const finish = (text: string): Effect.Effect<Finished, never, InjectionJudge> =>
 const inspectEvents = ({
   text,
   apiKey,
-}: Readonly<{ text: string; apiKey: string }>): AsyncIterable<InspectEvent> =>
+  model,
+}: Readonly<{ text: string; apiKey: string; model: string }>): AsyncIterable<InspectEvent> =>
   Stream.callback<InspectEvent, never, InjectionJudge>((queue) =>
     Effect.gen(function* emit() {
       const startedAt = yield* Clock.currentTimeMillis;
@@ -28,7 +32,7 @@ const inspectEvents = ({
           Effect.flatMap((now) => Queue.offer(queue, { ...event, at: now - startedAt })),
           Effect.asVoid,
         );
-      const last = yield* finish(text).pipe(Effect.provideService(ProbeListener, push));
+      const last = yield* finish({ text, model }).pipe(Effect.provideService(ProbeListener, push));
       yield* push(last);
       yield* Queue.end(queue);
     }).pipe(withApiKey(apiKey)),
