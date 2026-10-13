@@ -90,12 +90,12 @@ const regionTexts = (text: string, detection: Detection): readonly string[] => {
 const withInjectionAt = (position: number): string =>
   [...SENTENCES.slice(FIRST, position), INJECTION, ...SENTENCES.slice(position)].join("");
 
-test("stops after the first split when the input is clean", () =>
+test("asks once and stops when the whole input is clean", () =>
   Effect.runPromise(
     Effect.gen(function* clean() {
       const { detection, asked } = yield* detectRecording(SENTENCES.join(""));
       expect(detection.status).toBe("clean");
-      expect(asked).toHaveLength(branchesFor(SENTENCES.length));
+      expect(asked).toHaveLength(ONE_REQUEST);
     }),
   ));
 
@@ -112,12 +112,12 @@ test("narrows an injection down to its own sentence", () =>
     }),
   ));
 
-test("never asks about the whole input at once", () =>
+test("asks about each half in its own request", () =>
   Effect.runPromise(
     Effect.gen(function* split() {
       const text = withInjectionAt(SENTENCES.indexOf("資料は共有済み。"));
       const { asked } = yield* detectRecording(text);
-      expect(asked.every((state) => state.length < text.length)).toBe(true);
+      expect(asked.slice(ONE_REQUEST).every((state) => state.length < text.length)).toBe(true);
     }),
   ));
 
@@ -189,7 +189,7 @@ test("asks every sentence in one request when the model takes many questions", (
     Effect.gen(function* together() {
       const text = withTwoInjections();
       const { detection, asked } = yield* detectRecording(text, TOGETHER);
-      expect(asked).toHaveLength(ONE_REQUEST);
+      expect(asked).toHaveLength(TWO_REQUESTS);
       expect(regionTexts(text, detection)).toHaveLength(TWO_REQUESTS);
     }),
   ));
