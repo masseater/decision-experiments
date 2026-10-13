@@ -5,7 +5,8 @@ interface Span {
 
 const FIRST = 0;
 
-const SENTENCE = /(?:[^\n。．！？.!?]|[.!?](?!\s|$))+[。．！？.!?]*[^\S\n]*\n*/gu;
+const SENTENCE =
+  /(?:[^\n。．！？.!?]|[.!?](?!\s|$)|(?<![>\n])\n(?![^\S\n]*(?:\n|[-*#<>|]|\d+[.)]|$)))+[。．！？.!?]*[^\S\n]*\n*/gu;
 
 const spanOf = (sentence: string, index: number): readonly Span[] => {
   if (sentence.trim() === "") {

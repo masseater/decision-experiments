@@ -21,3 +21,20 @@ test("splits English at punctuation followed by a space", () => {
     "はい。",
   ]);
 });
+
+test("joins a sentence wrapped across lines", () => {
+  expect(textsOf("前の文です。\nこの文は途中で\n折り返しています。\n次の文です。")).toStrictEqual([
+    "前の文です。\n",
+    "この文は途中で\n折り返しています。\n",
+    "次の文です。",
+  ]);
+});
+
+test("keeps lines that end a tag or start a list item apart", () => {
+  expect(textsOf("<p>本文</p>\n<!-- 指示\n続き -->\n- 項目\n- 次の項目")).toStrictEqual([
+    "<p>本文</p>\n",
+    "<!-- 指示\n続き -->\n",
+    "- 項目\n",
+    "- 次の項目",
+  ]);
+});
