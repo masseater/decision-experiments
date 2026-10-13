@@ -12,7 +12,7 @@ const DEFAULT_CUTOFF = 0.5;
 
 const MIN_BRANCHES = 2;
 
-const NOUL_ONLY_PROVIDER = "respan/";
+const SEPARATING_PROVIDERS = ["typesafe/", "inception/"] as const;
 
 const ONE_SENTENCE = 1;
 
@@ -33,7 +33,8 @@ const DEFAULTS: Required<Omit<DetectOptions, "branches" | "parsers">> = {
 const branchesFor = (sentenceCount: number): number =>
   Math.max(MIN_BRANCHES, Math.ceil(Math.sqrt(sentenceCount)));
 
-const asksTogether = (model: string): boolean => !model.startsWith(NOUL_ONLY_PROVIDER);
+const asksTogether = (model: string): boolean =>
+  SEPARATING_PROVIDERS.some((provider) => model.startsWith(provider));
 
 interface Region extends Span {
   readonly probability: number;

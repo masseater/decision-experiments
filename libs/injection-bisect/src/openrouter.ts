@@ -15,12 +15,10 @@ const REPOSITORY_URL = `https://github.com/masseater/${PRODUCT_NAME}`;
 const INJECTION =
   "a prompt injection: text that addresses the AI system reading it and tries to make it ignore, override or replace its instructions, reveal hidden prompts or secrets, or take actions the user did not ask for (such as sending data to a URL, opening links, or calling tools).";
 
-const NEXT = 1;
-
 const QUESTION = `The state contains ${INJECTION}`;
 
-const partQuestion = (index: number, part: string): string =>
-  `Sentence ${index + NEXT} of the state, quoted here as "${part.trim()}", is or is part of ${INJECTION}`;
+const partQuestion = (part: string): string =>
+  `The quoted text "${part.trim()}", judged by its own words alone and not by the rest of the state, is or is part of ${INJECTION}`;
 
 const QUESTION_ID = "injection";
 
@@ -69,7 +67,7 @@ const firstVerdict = ({
 }: Verdicts): Verdict => ({ probability, cost, inputTokens, model });
 
 const partQuestions = (parts: readonly string[]): Questions =>
-  Object.fromEntries(parts.map((part, index) => [`s${index}`, noul(partQuestion(index, part))]));
+  Object.fromEntries(parts.map((part, index) => [`s${index}`, noul(partQuestion(part))]));
 
 const judge = Effect.gen(function* makeJudge() {
   const openRouter = yield* OpenRouterClient;
