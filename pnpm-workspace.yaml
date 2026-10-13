@@ -38,6 +38,7 @@ catalog:
   "@tanstack/intent": 0.5.5
   "@yarnpkg/parsers": 3.1.0
   jose: 6.2.12
+  parse5: ^8.0.1
 catalogs:
   stack:
     "@distilled.cloud/cloudflare": 1.0.0-rc.13
