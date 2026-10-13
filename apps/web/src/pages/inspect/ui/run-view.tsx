@@ -18,7 +18,7 @@ const RunView = ({ state }: Readonly<{ state: InspectState }>): ReactNode => {
       aria-live="polite"
       className="flex min-w-0 flex-col gap-8 lg:sticky lg:top-0 lg:max-h-dvh lg:overflow-y-auto lg:py-4"
     >
-      <RunSummary text={state.text} trace={state.trace} />
+      <RunSummary text={state.text} model={state.model} trace={state.trace} />
       <TraceView text={state.text} trace={state.trace} />
       <EventLog events={state.events} />
     </section>
