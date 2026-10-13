@@ -2,7 +2,7 @@ import { Array as Arr, Match, Option, Order } from "effect";
 import { parse } from "parse5";
 import type { DefaultTreeAdapterMap } from "parse5";
 
-import type { Span } from "./segment.ts";
+import type { Parser, Span } from "./parser.ts";
 
 type Node = DefaultTreeAdapterMap["node"];
 
@@ -131,4 +131,10 @@ const htmlUnitsOf = (text: string): readonly Span[] =>
     byStart,
   );
 
-export { htmlUnitsOf, looksLikeHtml };
+const htmlParser: Parser = {
+  format: "html",
+  accepts: looksLikeHtml,
+  unitsOf: (text) => htmlUnitsOf(text).map(({ start, end }) => ({ kind: "prose", start, end })),
+};
+
+export { htmlParser };

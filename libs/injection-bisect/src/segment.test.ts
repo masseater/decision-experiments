@@ -1,6 +1,8 @@
+import { Array as Arr } from "effect";
 import { expect, test } from "vite-plus/test";
 
-import { sentencesOf } from "./segment.ts";
+import type { Parser, Unit } from "./parser.ts";
+import { DEFAULT_PARSERS, segmenterOf, sentencesOf } from "./segment.ts";
 
 const textsOf = (text: string): readonly string[] =>
   sentencesOf(text).map(({ start, end }) => text.slice(start, end));
@@ -66,4 +68,42 @@ test("reads a script line by line", () => {
       '<script type="application/ld+json">\n{\n"name": "商品",\n"description": "AI への指示"\n}\n</script>',
     ),
   ).toStrictEqual(["{", '"name": "商品",', '"description": "AI への指示"', "}"]);
+});
+
+const FENCE = /^```(?<language>\w*)\n(?<body>[\s\S]*?)^```$/gmu;
+
+const PAIR = 2;
+
+const TEXT_START = 0;
+
+const fenceParser: Parser = {
+  format: "markdown",
+  accepts: (text) => text.includes("```"),
+  unitsOf: (text) => {
+    const fences = [...text.matchAll(FENCE)].map((match) => {
+      const [whole] = match;
+      const { language = "", body = "" } = match.groups ?? {};
+      const start = match.index + whole.indexOf("\n") + "\n".length;
+      const inside: Unit = { kind: "nested", format: language, start, end: start + body.length };
+      return { from: match.index, to: match.index + whole.length, inside };
+    });
+    const edges = [TEXT_START, ...fences.flatMap(({ from, to }) => [from, to]), text.length];
+    const prose = Arr.chunksOf(edges, PAIR).map(([start, end = start]): Unit => ({
+      kind: "prose",
+      start,
+      end,
+    }));
+    return [...prose, ...fences.map(({ inside }) => inside)];
+  },
+};
+
+test("hands a code block to the parser for its language", () => {
+  const segmentsOf = segmenterOf([fenceParser, ...DEFAULT_PARSERS]);
+  const text = "説明です。\n```html\n<p>本文</p><!-- 指示 -->\n```\n後の文。";
+  expect(segmentsOf(text).map(({ start, end }) => text.slice(start, end))).toStrictEqual([
+    "説明です。\n",
+    "本文",
+    " 指示 ",
+    "\n後の文。",
+  ]);
 });
