@@ -228,7 +228,6 @@ export default defineConfig({
           "renovate",
           "actions-lint",
           "steiger-all",
-          "db-check-all",
           "fallow-all",
           "gitleaks",
           "audit",
@@ -238,7 +237,6 @@ export default defineConfig({
       eslint: "NODE_OPTIONS=--max-old-space-size=4096 eslint --max-warnings 0 .",
       syncpack: "syncpack lint",
       "steiger-all": "vp run -r steiger",
-      "db-check-all": "vp run -r db:check",
       "fallow-all": "vp run -r fallow",
       audit: {
         command: "vp pm audit",

@@ -8,6 +8,7 @@ import {
   NO_FOCUS,
   useApiKey,
   useDraftText,
+  useModel,
   useRun,
   useSetFocus,
   useSetRun,
@@ -15,10 +16,10 @@ import {
 import type { Run } from "#/pages/inspect/model/draft";
 import { Button } from "#/shared/ui/button";
 
-import { ApiKeyField } from "./api-key-field";
 import { ExampleList } from "./example-list";
 import { Note } from "./note";
 import { OverlaidText } from "./overlaid-text";
+import { RunSettings } from "./run-settings";
 
 const FIRST_RUN = 0;
 
@@ -37,20 +38,21 @@ const isRunning = (state: InspectState): boolean =>
 const InspectForm = ({ state }: Readonly<{ state: InspectState }>): ReactNode => {
   const text = useDraftText();
   const apiKey = useApiKey();
+  const model = useModel();
   const run = useRun();
   const setRun = useSetRun();
   const setFocus = useSetFocus();
   const submit = useCallback(() => {
     setFocus(NO_FOCUS);
-    setRun({ status: "started", id: nextIdOf(run), text, apiKey });
-  }, [setFocus, setRun, run, text, apiKey]);
-  const ready = !isRunning(state) && text.trim() !== "" && apiKey !== "";
+    setRun({ status: "started", id: nextIdOf(run), text, apiKey, model });
+  }, [setFocus, setRun, run, text, apiKey, model]);
+  const ready = !isRunning(state) && text.trim() !== "" && apiKey !== "" && model.trim() !== "";
   return (
     <section className="flex flex-col gap-3">
       <ExampleList />
       <OverlaidText state={state} />
       <div className="flex flex-wrap gap-2">
-        <ApiKeyField />
+        <RunSettings />
         <Button disabled={!ready} onClick={submit}>
           {COPY.submit}
         </Button>

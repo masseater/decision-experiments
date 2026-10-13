@@ -51,7 +51,7 @@ release. Add a tool name to select part of the graph. For example, run
 - `.php` や `.env` を総当たりする脆弱性スキャンは、ゾーンの WAF カスタムルールで block する。`/.env` と `/wp-login.php` だけはハニーポットの Worker が受け、404 を返して Analytics Engine に 1 件ずつ記録する。どちらも `apps/web/edge-guard.ts` にある。block した分は Security Events に残り、Worker に届かないので普段の Workers Logs やトレースには混ざらない。
 - ゾーンの WAF カスタムルールは、1 つのゾーンにつき 1 つのスタックだけが持つ。ゾーンを持つリポだけが `apps/web/alchemy.run.ts` の `OWNED_ZONE` にゾーン名を入れる。サブドメインで動くリポは入れず、ゾーンを持つリポのルールで守られる。今の持ち主は masseater.dev ゾーンの masseater/masseater.dev である。
 - Workers Logs は 7 日で消えるので、Worker にはすべて `logpush: true` を付け、Workers Logpush で R2 に日付ごとに書き出して残す。Logpush のジョブと R2 のバケットはアカウントに 1 つあれば全 Worker の分を受けられるので、`OWNED_ZONE` を持つリポ（masseater/masseater.dev）だけが持ち、保持日数とサンプリングもそこで決める。このリポは持たない。
-- 検索に載せるアプリだけが、`apps/web/src/shared/config/search.ts` の `SEARCH_INDEX_ORIGIN` に公開する origin を入れる。入れると TanStack Start が `sitemap.xml` を生成する。入れないアプリは、すべての応答に `X-Robots-Tag: noindex` が付く。このリポは `/injection-bisect` の下で動き、`robots.txt` はゾーンの持ち主が配るので持たない。
+- 検索に載せるアプリだけが、`apps/web/src/shared/config/search.ts` の `SEARCH_INDEX_ORIGIN` に公開する origin を入れる。入れると TanStack Start が `sitemap.xml` を生成する。入れないアプリは、すべての応答に `X-Robots-Tag: noindex` が付く。このリポは静的に書き出すので応答ヘッダーを足す処理を持たず、代わりに HTML の `<meta name="robots" content="noindex">` を出す。このリポは `/injection-bisect` の下で動き、`robots.txt` はゾーンの持ち主が配るので持たない。
 - Bot Fight Mode は、GitHub Actions からの送信や MCP クライアントのような正当な自動アクセスまで止めるので使わない。
 
 ## ライブラリの型
@@ -115,9 +115,10 @@ Effect から外部 API や SaaS を呼ぶクライアントは手で包まず�
 - このリポジトリは、フロンティアモデルに渡す前の入力にプロンプトインジェクションが含まれるか、含まれるならどこかを、decision モデルで速く安く判定する。ライブラリは `libs/injection-bisect`、CLI は `tools/cli` にある。
 - 判定は入力全体への 1 回の問い合わせから始める。確率がしきい値未満なら、それ以上問い合わせない。
 - しきい値を超えたら、文単位で文の数の平方根（切り上げ、最低 2）個に分けて（`branchesFor`）別々のリクエストで並列に問い、超えた区間だけを再帰する。どの区間も超えなければ、文をまたぐか文脈が要るものとして親の区間を返す。2026-10-12 の計測では、8〜12 文の例文 6 件×3 回で 2 分割 1,402ms・8.3 回、4 分割 884ms・7.8 回、8 分割 929ms・10.3 回、53 文のニュース記事×3 回で 2 分割 1,708ms・13 回、4 分割 1,073ms・12 回、8 分割 808ms・15 回、16 分割 1,203ms・20 回だった。短い文章は 4、長い文章は 8 が速く、どちらも平方根に近い。
+- 文の区切りは `segment.ts` が決める。半角の `.`・`?`・`!` は直後が空白か末尾のときだけ文末とする。URL の `?` で注入文が割れると、割れた半分はどちらもしきい値に届かず、隣の文を含む親の区間が返るためである。`Intl.Segmenter` も URL の `?` で割るので使わない。
 - 1 リクエストに区間ごとの質問を並べる方式は使わない。注入より後ろの無害な行まで陽性になり、位置を絞れないことを計測で確かめたためである。
-- 既定のモデルは無料の `respan/span-01-lite` である。2026-10-12 の計測では、日本語の間接インジェクションは span-01-lite で取れたが、英語や独語の直接的な乗っ取りは `perplexity/pplx-decider-v1.1-27b` のほうがよく取れた。モデルの既定を変えるときは、計測し直してユーザーに確認する。
+- 既定のモデルは無料の `respan/span-01-lite` である。2026-10-12 の計測では、日本語の間接インジェクションは span-01-lite で取れたが、英語や独語の直接的な乗っ取りは `perplexity/pplx-decider-v1.1-27b` のほうがよく取れた。モデルの既定を変えるときは、計測し直してユーザーに確認する。デモでは Decisions API が受け付ける `respan/span-01-lite`・`respan/span-01`・`perplexity/pplx-decider-v1.1-27b`・`typesafe/jev-1.13`・`inception/mercury-decide` から見る人が選べる。チャットモデル（Claude など）は Decisions API が受け付けない。2026-10-13 に長文の典型例 9 件（注入 8 件）で測ると、注入を含む区間を返せたのは pplx-decider が 8 件中 8 件、mercury-decide が 7 件、jev-1.13 が 6 件、span-01-lite と span-01 が 5 件だった。span は英文の 2 件を見逃し、サポートメールでは注入の一部の文しか返さなかった。
 - 判定モデルは `InjectionJudge` サービスの裏に置く。OpenRouter は Effect 公式の `@effect/ai-openrouter` の `OpenRouterClient.createDecisions` で呼び、`HTTP-Referer`・`X-Title`・`X-OpenRouter-App-Visibility: hidden` を付ける。
 - 問い合わせは 1 回ずつ `injection-bisect.ask` スパン（区間の開始位置と文字数）と、その子の `injection-bisect.openrouter` スパン（モデル・入力トークン・費用・確率）にする。所要時間はスパンの長さで読む。
 - 精度・費用・時間の比較は、無害な入力と注入を含む入力の両方を含むデータで、フロンティアモデルに直接判定させた場合と並べて計測する。OpenRouter のキーには月の上限があるので、計測の前後に `GET https://openrouter.ai/api/v1/key` で残りを確かめる。
-- 公開する Web のデモ（https://masseater.dev/injection-bisect 、Vite の base と masseater.dev ゾーンの Workers ルートで載せる）は、見る人が入力したキーでブラウザから OpenRouter を直接呼び、二分探索もブラウザで動かす（`openRouterPerRequest` と `withApiKey`）。サーバーはキーを持たず、受け取りもしない。第三者にリポジトリ所有者のキーを使わせないためである。問い合わせの経過は `ProbeListener` で流して画面に出す。
+- 公開する Web のデモ（https://masseater.dev/injection-bisect ）は、ビルド時に静的に書き出し（TanStack Start の prerender、Alchemy の `Website.StaticSite`）、サーバーの処理を持たない。Vite の base に合わせてクライアントの出力を `dist/client/injection-bisect` に置き、masseater.dev ゾーンの Workers ルートで載せる。デモは見る人が入力したキーでブラウザから OpenRouter を直接呼び、二分探索もブラウザで動かす（`openRouterPerRequest` と `withApiKey`）。サーバーはキーを持たず、受け取りもしない。第三者にリポジトリ所有者のキーを使わせないためである。問い合わせの経過は `ProbeListener` で流して画面に出す。

@@ -1,4 +1,4 @@
-import { DEFAULT_MODEL, QUESTION } from "@injection-bisect/core";
+import { QUESTION } from "@injection-bisect/core";
 import { Clock, Split } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -23,8 +23,7 @@ const Mechanism = (): ReactNode => (
     </Note>
     <details className="rounded-md border px-3 py-2">
       <summary className="cursor-pointer">{COPY.question}</summary>
-      <p className="text-muted-foreground mt-2 font-mono text-xs">{DEFAULT_MODEL}</p>
-      <p className="mt-1 font-mono text-xs">{QUESTION}</p>
+      <p className="mt-2 font-mono text-xs">{QUESTION}</p>
     </details>
     <Legend />
   </section>

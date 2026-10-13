@@ -1,4 +1,5 @@
 import { useAtomSet, useAtomValue } from "@effect/atom-react";
+import { DEFAULT_MODEL } from "@injection-bisect/core";
 import { Atom } from "effect/reactivity";
 
 import { EXAMPLES } from "./examples";
@@ -10,6 +11,7 @@ type Run =
       readonly id: number;
       readonly text: string;
       readonly apiKey: string;
+      readonly model: string;
     };
 
 type Focus = { readonly status: "none" } | { readonly status: "probe"; readonly id: number };
@@ -24,6 +26,8 @@ const draftTextAtom = Atom.make(FIRST_EXAMPLE.text);
 
 const apiKeyAtom = Atom.make("");
 
+const modelAtom = Atom.make<string>(DEFAULT_MODEL);
+
 const runAtom = Atom.make<Run>(IDLE);
 
 const focusAtom = Atom.make<Focus>(NO_FOCUS);
@@ -35,6 +39,10 @@ const useSetDraftText = (): ((text: string) => void) => useAtomSet(draftTextAtom
 const useApiKey = (): string => useAtomValue(apiKeyAtom);
 
 const useSetApiKey = (): ((apiKey: string) => void) => useAtomSet(apiKeyAtom);
+
+const useModel = (): string => useAtomValue(modelAtom);
+
+const useSetModel = (): ((model: string) => void) => useAtomSet(modelAtom);
 
 const useRun = (): Run => useAtomValue(runAtom);
 
@@ -50,9 +58,11 @@ export {
   useApiKey,
   useDraftText,
   useFocus,
+  useModel,
   useRun,
   useSetApiKey,
   useSetDraftText,
   useSetFocus,
+  useSetModel,
   useSetRun,
 };
