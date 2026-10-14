@@ -112,3 +112,22 @@ test("reads every message of an mbox file", () =>
       expect(cleaned).toContain("請求書を送ります。");
     }),
   ));
+
+test("reads every file in a zip archive with its own format", () =>
+  Effect.runPromise(
+    Effect.gen(function* archive() {
+      const bytes = yield* zipOf({
+        "docs/readme.md": "# 使い方\n\n設定ファイルを置きます。",
+        "site/index.html": `<p>ようこそ。</p><div hidden>${INJECTION}</div>`,
+        "bin/tool": "\u0000\u0001\u0002",
+        "__MACOSX/._index.html": "ignored",
+      });
+      const { document, found, cleaned } = yield* foundIn(bytes);
+      expect(document.format).toBe("markdown");
+      expect(document.text).toContain("## site/index.html");
+      expect(document.text).not.toContain("bin/tool");
+      expect(document.text).not.toContain("__MACOSX");
+      expect(found.map((text) => text.trim())).toStrictEqual([INJECTION]);
+      expect(cleaned).toContain("設定ファイルを置きます。");
+    }),
+  ));

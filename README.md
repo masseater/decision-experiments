@@ -27,6 +27,7 @@ decision モデルを使った実験プロジェクトの置き場である。
 | Word・PowerPoint・Excel    | `docx`・`pptx`・`xlsx`                                             | 本文、コメント、ノート、画像の説明、セルの文字列                                                                   |
 | OpenDocument               | `odt`・`odp`・`ods`                                                | 本文、見出し、メタデータ、セルの文字列                                                                             |
 | RTF                        | `rtf`                                                              | 本文（隠し文字を含む）。フォント表などの書式情報は読まない                                                         |
+| ZIP                        | `zip`                                                              | 中の各ファイルをファイル名と中身から形式を選んで読む。ファイル名も判定する                                         |
 | EPUB                       | `epub`                                                             | 書誌情報と、目次の順の各章（HTML として読む）                                                                      |
 | Jupyter Notebook           | `ipynb`                                                            | Markdown のセル、コード、出力                                                                                      |
 
