@@ -149,6 +149,11 @@ export default defineConfig({
             },
             {
               from: "package",
+              package: "@types/mdast",
+              name: ["Code", "Nodes"],
+            },
+            {
+              from: "package",
               package: "effect",
               name: ["Cause", "Context", "Effect", "Exit", "Layer", "Option"],
             },

@@ -33,12 +33,10 @@ test("joins a sentence wrapped across lines", () => {
 });
 
 test("keeps lines that start a list item or heading apart", () => {
-  expect(textsOf("本文です\n# 見出し\n- 項目\n- 次の項目")).toStrictEqual([
-    "本文です\n",
-    "# 見出し\n",
-    "- 項目\n",
-    "- 次の項目",
-  ]);
+  const text = "本文です\n# 見出し\n- 項目\n- 次の項目";
+  expect(
+    sentencesOf({ text, format: "plain" }).map(({ start, end }) => text.slice(start, end)),
+  ).toStrictEqual(["本文です\n", "# 見出し\n", "- 項目\n", "- 次の項目"]);
 });
 
 test("reads only the text of HTML", () => {

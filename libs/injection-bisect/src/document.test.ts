@@ -68,7 +68,13 @@ test("fails on a format nobody reads", () =>
   ));
 
 test("lists every format that can be named", () => {
-  expect(formatsOf({ readers: [upperReader] })).toStrictEqual(["auto", "html", "plain", "upper"]);
+  expect(formatsOf({ readers: [upperReader] })).toStrictEqual([
+    "auto",
+    "markdown",
+    "html",
+    "plain",
+    "upper",
+  ]);
 });
 
 test("removes found regions and keeps the rest", () => {

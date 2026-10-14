@@ -1,6 +1,7 @@
 import { Array as Arr, Match, Option, Order } from "effect";
 
 import { htmlParser } from "./html.ts";
+import { markdownParser } from "./markdown.ts";
 import type { Parser, Span } from "./parser.ts";
 
 const FIRST = 0;
@@ -29,7 +30,7 @@ const plainParser: Parser = {
 
 const byStart = Order.mapInput(Order.Number, ({ start }: Span) => start);
 
-const DEFAULT_PARSERS: readonly Parser[] = [htmlParser];
+const DEFAULT_PARSERS: readonly Parser[] = [markdownParser, htmlParser];
 
 const segmenterOf = (
   parsers: readonly Parser[],
@@ -49,6 +50,7 @@ const segmenterOf = (
       const inner = text.slice(unit.start, unit.end);
       const spans = Match.value(unit).pipe(
         Match.when({ kind: "prose" }, () => proseSentencesOf(inner)),
+        Match.when({ kind: "whole" }, () => spanOf(inner, FIRST)),
         Match.when({ kind: "nested" }, ({ format }) => segmentsOf(named(format, inner), inner)),
         Match.exhaustive,
       );
