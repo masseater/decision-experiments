@@ -13,9 +13,12 @@ export {
   openRouterPerRequest,
   withApiKey,
 } from "./openrouter.ts";
+export { csvParser, tsvParser } from "./csv.ts";
 export { htmlParser } from "./html.ts";
 export { jsonParser } from "./json.ts";
 export { markdownParser } from "./markdown.ts";
+export { srtParser, vttParser } from "./subtitles.ts";
+export { xmlParser } from "./xml.ts";
 export { yamlParser } from "./yaml.ts";
 export type { Document, Parser, Reader, Span, Unit } from "./parser.ts";
 export { ReadError } from "./read-error.ts";

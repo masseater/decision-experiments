@@ -1,0 +1,90 @@
+import { Option } from "effect";
+import { Parser as XmlParser } from "htmlparser2";
+
+import type { Parser, Span, Unit } from "./parser.ts";
+import { looksLikeProse } from "./prose.ts";
+
+const DECLARATION = /^\s*(?:<\?xml\b|<(?:rss|feed|rdf:RDF)\b)/u;
+
+const ATTRIBUTE = /\s[\w:.-]+\s*=\s*(?<quote>["'])(?<value>[^"']*)\k<quote>/gu;
+
+const CDATA_OPEN = "<![CDATA[".length;
+
+const CDATA_CLOSE = "]]>".length;
+
+const COMMENT_OPEN = "<!--".length;
+
+const COMMENT_CLOSE = "-->".length;
+
+const INCLUSIVE = 1;
+
+const looksLikeXml = (text: string): boolean => DECLARATION.test(text);
+
+const attributeUnits = (text: string, { start, end }: Span): readonly Unit[] =>
+  [...text.slice(start, end).matchAll(ATTRIBUTE)].flatMap((match) => {
+    const [whole] = match;
+    const value = Option.getOrElse(
+      Option.fromNullishOr(match.groups).pipe(Option.flatMapNullishOr(({ value: found }) => found)),
+      () => "",
+    );
+    if (!looksLikeProse(value)) {
+      return [];
+    }
+    const from = start + match.index + whole.length - value.length - "'".length;
+    return [{ kind: "prose", start: from, end: from + value.length } satisfies Unit];
+  });
+
+const xmlUnitsOf = (text: string): readonly Unit[] => {
+  const units: Unit[] = [];
+  let inCdata = false;
+  const parser = new XmlParser(
+    {
+      onopentag: (): void => {
+        units.push(
+          ...attributeUnits(text, {
+            start: parser.startIndex,
+            end: parser.endIndex + INCLUSIVE,
+          }),
+        );
+      },
+      oncdatastart: (): void => {
+        inCdata = true;
+      },
+      oncdataend: (): void => {
+        inCdata = false;
+      },
+      ontext: (data): void => {
+        const end = parser.endIndex + INCLUSIVE;
+        if (inCdata) {
+          units.push({
+            kind: "nested",
+            format: "",
+            start: parser.startIndex + CDATA_OPEN,
+            end: end - CDATA_CLOSE,
+          });
+        } else if (looksLikeProse(data) && data.trim() !== "") {
+          units.push({ kind: "prose", start: end - data.length, end });
+        }
+      },
+      oncomment: (): void => {
+        units.push({
+          kind: "prose",
+          start: parser.startIndex + COMMENT_OPEN,
+          end: parser.endIndex + INCLUSIVE - COMMENT_CLOSE,
+        });
+      },
+    },
+    { xmlMode: true, decodeEntities: false },
+  );
+  parser.end(text);
+  return units;
+};
+
+const xmlParser: Parser = {
+  format: "xml",
+  extensions: [".xml", ".rss", ".atom", ".rdf", ".svg"],
+  accepts: looksLikeXml,
+  unitsOf: xmlUnitsOf,
+};
+
+export { xmlParser };

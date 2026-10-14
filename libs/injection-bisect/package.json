@@ -47,6 +47,7 @@
   "dependencies": {
     "@effect/ai-openrouter": "catalog:",
     "effect": "catalog:stack",
+    "htmlparser2": "catalog:",
     "jsonc-parser": "catalog:",
     "mdast-util-from-markdown": "catalog:",
     "mdast-util-frontmatter": "catalog:",
