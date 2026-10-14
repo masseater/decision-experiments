@@ -44,6 +44,7 @@ release. Add a tool name to select part of the graph. For example, run
 - `vp check` の decision lint は `apps/*/src` だけに掛かり、`.env` の `OPENROUTER_API_KEY` で判定する。
 - 1 つのテストファイルは、パッケージのディレクトリで `vp test run src/<name>.test.ts` として動かす。ルートの `vp run --filter <package> test -- <file>` ではファイルが絞られない。
 - アプリの起動とデプロイは `apps/<name>` で `vp run dev`・`vp run deploy` を使う。
+- Cloudflare の認証情報は環境変数ではなく Alchemy のプロファイルに置く。`vp exec --filter web alchemy profile edit --add Cloudflare` で入れる。
 
 ## 構成
 
