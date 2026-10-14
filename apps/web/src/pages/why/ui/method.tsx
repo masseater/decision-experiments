@@ -1,7 +1,9 @@
+import { Lock } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { COPY } from "#/pages/why/model/copy";
 
+import { Line } from "./line";
 import { Section } from "./section";
 
 const Method = (): ReactNode => (
@@ -11,7 +13,9 @@ const Method = (): ReactNode => (
         <li key={text}>{text}</li>
       ))}
     </ol>
-    <p className="leading-relaxed">{COPY.method.note}</p>
+    <Line text={COPY.method.note}>
+      <Lock />
+    </Line>
   </Section>
 );
 

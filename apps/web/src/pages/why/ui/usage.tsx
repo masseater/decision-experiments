@@ -9,7 +9,6 @@ const Usage = (): ReactNode => (
   <Section title={COPY.usage.title}>
     <CodeBlock code={COPY.usage.install} />
     <CodeBlock code={COPY.usage.code} />
-    <p className="leading-relaxed">{COPY.usage.note}</p>
   </Section>
 );
 
