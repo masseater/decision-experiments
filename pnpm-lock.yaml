@@ -251,9 +251,6 @@ catalogs:
     cfb:
       specifier: ^1.2.2
       version: 1.2.2
-    escape-string-regexp:
-      specifier: ^5.0.0
-      version: 5.0.0
     eslint:
       specifier: 10.12.0
       version: 10.12.0
@@ -290,6 +287,9 @@ catalogs:
     jsonc-parser:
       specifier: ^3.3.1
       version: 3.3.1
+    linguist-languages:
+      specifier: ^9.5.0
+      version: 9.5.0
     mdast-util-from-markdown:
       specifier: ^2.1.0
       version: 2.1.0
@@ -653,9 +653,6 @@ importers:
       effect:
         specifier: 4.0.2
         version: 4.0.2
-      escape-string-regexp:
-        specifier: 'catalog:'
-        version: 5.0.0
       fast-png:
         specifier: 'catalog:'
         version: 8.0.0
@@ -674,6 +671,9 @@ importers:
       jsonc-parser:
         specifier: 'catalog:'
         version: 3.3.1
+      linguist-languages:
+        specifier: 'catalog:'
+        version: 9.5.0
       mdast-util-from-markdown:
         specifier: 'catalog:'
         version: 2.1.0(supports-color@8.1.1)
@@ -7547,6 +7547,9 @@ packages:
 
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
+
+  linguist-languages@9.5.0:
+    resolution: {integrity: sha512-Wtg9O6iHNBYFJQVtPNwWCaWkNEqZqiCGI4gSkeH8TqvgZUyb1IUWmFSa9Z9UhT392/aX6Peoa91bH9sDah1ZVw==}
 
   linkify-it@6.1.0:
     resolution: {integrity: sha512-wJ/TwpSDTLepCrQoYWYIExIKg5Zchex2Nn5yk2mFnB+6PtdkHtyLx742md9csRjjOnGkKIS/RrbY7l8D6gT9Vw==}
@@ -17018,6 +17021,8 @@ snapshots:
   lilconfig@2.1.0: {}
 
   lines-and-columns@1.2.4: {}
+
+  linguist-languages@9.5.0: {}
 
   linkify-it@6.1.0:
     dependencies:

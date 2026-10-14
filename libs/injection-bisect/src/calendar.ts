@@ -6,8 +6,6 @@ import type { Parser, Unit } from "./parser.ts";
 
 type Component = InstanceType<typeof ICAL.Component>;
 
-const FOLD = String.raw`(?:\r\n|\r|\n)?[ \t]?`;
-
 const escaped = (value: string): string =>
   value
     .replaceAll("\\", String.raw`\\`)
@@ -25,7 +23,7 @@ const textsIn = (component: Component): readonly string[] => [
 ];
 
 const valueUnitsOf = (text: string): readonly Unit[] =>
-  proseUnitsOf({ text, between: FOLD })(
+  proseUnitsOf({ text, folded: true })(
     Result.match(
       Result.try(() => ICAL.Component.fromString(text)),
       {

@@ -9,26 +9,26 @@ decision モデルを使った実験プロジェクトの置き場である。
 
 ## injection-bisect の読める形式
 
-| 形式                                      | 名前                                                               | 判定するところ                                                                                                     |
-| ----------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| テキスト                                  | `plain`（.txt・.log・.tex・.rst・.adoc など）                      | 全文                                                                                                               |
-| HTML                                      | `html`（Vue・Svelte・Astro のファイルも）                          | 本文、コメント、属性の値、`script`（JSON-LD を含む）と `style` の各行                                              |
-| Markdown                                  | `markdown`                                                         | 見出し、段落、表のセル、画像（alt と title）、リンクの title、コードブロック（言語ごとに読む）、HTML、front matter |
-| JSON                                      | `json`・`jsonl`（JSON Lines）                                      | 文字列の値とコメント（JSON with Comments）。Slack・Discord・GitHub の書き出しもこれで読む                          |
-| YAML                                      | `yaml`                                                             | 文字列の値とコメント                                                                                               |
-| XML・RSS・Atom・SVG・XLIFF                | `xml`                                                              | テキスト、コメント、属性の値、CDATA（中身の形式で読む）                                                            |
-| CSV・TSV                                  | `csv`・`tsv`                                                       | 各セル                                                                                                             |
-| 字幕                                      | `srt`・`vtt`・`ass`                                                | 字幕の文、NOTE、タイトル                                                                                           |
-| カレンダー・連絡先                        | `ics`・`vcard`                                                     | 件名、説明、場所、メモ、肩書きなど文字の項目                                                                       |
-| ソースコード・設定ファイル                | `typescript`・`python`・`go`・`toml`・`ini`・`docker` など 64 種類 | コメント、文字列リテラル、設定の値                                                                                 |
-| メール                                    | `email`・`mbox`・`msg`（Outlook）                                  | 差出人・宛先・件名、テキストと HTML の本文、添付ファイルの名前（Outlook）                                          |
-| PDF                                       | `pdf`                                                              | 各ページのテキスト。テキストの無いページは画像を OCR で読む                                                        |
-| 画像                                      | `image`（PNG・JPEG・WebP・GIF・BMP・TIFF）                         | OCR で読んだ文字（日本語と英語）                                                                                   |
-| Word・PowerPoint・OpenDocument・RTF・EPUB | `docx`・`pptx`・`odt`・`odp`・`rtf`・`epub`                        | 本文、表、ノート、コメント、隠し文字（Markdown に直して読む）                                                      |
-| Word・PowerPoint 97-2003                  | `doc`・`ppt`                                                       | 本文、スライドとノートの文字                                                                                       |
-| 表計算                                    | `xls`・`xlsx`・`xlsb`・`ods`・`numbers`                            | 各シートのセル                                                                                                     |
-| ZIP・tar・gzip                            | `zip`・`tar`・`gzip`                                               | 中の各ファイルをファイル名と中身から形式を選んで読む。ファイル名も判定する                                         |
-| Jupyter Notebook                          | `ipynb`                                                            | Markdown のセル、コード、出力                                                                                      |
+| 形式                                      | 名前                                                                | 判定するところ                                                                                                     |
+| ----------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| テキスト                                  | `plain`（.txt・.log・.tex・.rst・.adoc など）                       | 全文                                                                                                               |
+| HTML                                      | `html`（Vue・Svelte・Astro のファイルも）                           | 本文、コメント、属性の値、`script`（JSON-LD を含む）と `style` の各行                                              |
+| Markdown                                  | `markdown`                                                          | 見出し、段落、表のセル、画像（alt と title）、リンクの title、コードブロック（言語ごとに読む）、HTML、front matter |
+| JSON                                      | `json`・`jsonl`（JSON Lines）                                       | 文字列の値とコメント（JSON with Comments）。Slack・Discord・GitHub の書き出しもこれで読む                          |
+| YAML                                      | `yaml`                                                              | 文字列の値とコメント                                                                                               |
+| XML・RSS・Atom・SVG・XLIFF                | `xml`                                                               | テキスト、コメント、属性の値、CDATA（中身の形式で読む）                                                            |
+| CSV・TSV                                  | `csv`・`tsv`                                                        | 各セル                                                                                                             |
+| 字幕                                      | `srt`・`vtt`・`ass`                                                 | 字幕の文、NOTE、タイトル                                                                                           |
+| カレンダー・連絡先                        | `ics`・`vcard`                                                      | 件名、説明、場所、メモ、肩書きなど文字の項目                                                                       |
+| ソースコード・設定ファイル                | `typescript`・`python`・`go`・`toml`・`ini`・`docker` など 195 種類 | コメント、文字列リテラル、設定の値                                                                                 |
+| メール                                    | `email`・`mbox`・`msg`（Outlook）                                   | 差出人・宛先・件名、テキストと HTML の本文、添付ファイルの名前（Outlook）                                          |
+| PDF                                       | `pdf`                                                               | 各ページのテキスト。テキストの無いページは画像を OCR で読む                                                        |
+| 画像                                      | `image`（PNG・JPEG・WebP・GIF・BMP・TIFF）                          | OCR で読んだ文字（日本語と英語）                                                                                   |
+| Word・PowerPoint・OpenDocument・RTF・EPUB | `docx`・`pptx`・`odt`・`odp`・`rtf`・`epub`                         | 本文、表、ノート、コメント、隠し文字（Markdown に直して読む）                                                      |
+| Word・PowerPoint 97-2003                  | `doc`・`ppt`                                                        | 本文、スライドとノートの文字                                                                                       |
+| 表計算                                    | `xls`・`xlsx`・`xlsb`・`ods`・`numbers`                             | 各シートのセル                                                                                                     |
+| ZIP・tar・gzip                            | `zip`・`tar`・`gzip`                                                | 中の各ファイルをファイル名と中身から形式を選んで読む。ファイル名も判定する                                         |
+| Jupyter Notebook                          | `ipynb`                                                             | Markdown のセル、コード、出力                                                                                      |
 
 CLI は `--format` で形式を指定する。指定しなければ、ファイルの拡張子と中身から選ぶ。
 Web のデモでは形式を選ぶか、ファイルを開く。

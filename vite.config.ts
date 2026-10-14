@@ -115,6 +115,7 @@ export default defineConfig({
       "node/no-top-level-await": "off",
       "eslint/one-var": ["error", "never"],
       "eslint/no-restricted-imports": ["error", restrictedImports],
+      "import/no-namespace": ["error", { ignore: ["linguist-languages"] }],
       "typescript/prefer-readonly-parameter-types": [
         "error",
         {
