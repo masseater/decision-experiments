@@ -1,10 +1,9 @@
 import { Array as Arr, Effect, Option, Order } from "effect";
-import { strFromU8, unzip } from "fflate";
 import type { Unzipped } from "fflate";
 import { Parser as XmlParser } from "htmlparser2";
 
 import type { Reader } from "./parser.ts";
-import { ReadError } from "./read-error.ts";
+import { textIn, unzipped } from "./zip.ts";
 
 const FIRST = 0;
 
@@ -14,11 +13,11 @@ const XML = ".xml";
 
 const NONE = 0;
 
-const TEXT = new Set(["t", "title", "description", "subject", "keywords"]);
+const OOXML_TEXT = ["t", "title", "description", "subject", "keywords"];
 
-const BREAK = new Set(["p", "si", "tr", "br"]);
+const OOXML_BLOCKS = ["p", "si", "tr", "br", "title", "description", "subject", "keywords"];
 
-const ENDS_BLOCK = new Set([...BREAK, ...[...TEXT].filter((name) => name !== "t")]);
+const ODF_TEXT = ["p", "h", "title", "desc", "description", "subject", "keyword"];
 
 const DESCRIBED = new Set(["docPr", "cNvPr"]);
 
@@ -33,7 +32,17 @@ interface Kind {
   readonly extensions: readonly string[];
   readonly marker: string;
   readonly parts: readonly string[];
+  readonly text: readonly string[];
+  readonly blocks: readonly string[];
 }
+
+const OOXML = { text: OOXML_TEXT, blocks: OOXML_BLOCKS } as const;
+
+const ODF = {
+  parts: ["meta.xml", "styles.xml", "content.xml"],
+  text: ODF_TEXT,
+  blocks: ODF_TEXT,
+} as const;
 
 const KINDS = {
   docx: {
@@ -49,18 +58,39 @@ const KINDS = {
       "word/footer",
       "word/comments",
     ],
+    ...OOXML,
   },
   pptx: {
     format: "pptx",
     extensions: [".pptx"],
     marker: "ppt/presentation.xml",
     parts: ["docProps/core.xml", "ppt/slides/slide", "ppt/notesSlides/notesSlide", "ppt/comments/"],
+    ...OOXML,
   },
   xlsx: {
     format: "xlsx",
     extensions: [".xlsx"],
     marker: "xl/workbook.xml",
     parts: ["docProps/core.xml", "xl/sharedStrings.xml", "xl/worksheets/sheet", "xl/comments"],
+    ...OOXML,
+  },
+  odt: {
+    format: "odt",
+    extensions: [".odt", ".ott"],
+    marker: "application/vnd.oasis.opendocument.text",
+    ...ODF,
+  },
+  odp: {
+    format: "odp",
+    extensions: [".odp", ".otp"],
+    marker: "application/vnd.oasis.opendocument.presentation",
+    ...ODF,
+  },
+  ods: {
+    format: "ods",
+    extensions: [".ods", ".ots"],
+    marker: "application/vnd.oasis.opendocument.spreadsheet",
+    ...ODF,
   },
 } as const satisfies Record<string, Kind>;
 
@@ -71,14 +101,14 @@ const descriptionsOf = (attributes: Readonly<Record<string, string>>): readonly 
     Option.toArray(Option.fromNullishOr(attributes[key])),
   ).map((value) => `${value}${PARAGRAPH_BREAK}`);
 
-const textOfXml = (xml: string): string => {
+const textOfXml = (xml: string, { text, blocks }: Pick<Kind, "text" | "blocks">): string => {
   const out: string[] = [];
   let depth = NONE;
   const parser = new XmlParser(
     {
       onopentag: (name, attributes): void => {
         const local = localName(name);
-        depth += Number(TEXT.has(local));
+        depth += Number(text.includes(local));
         if (DESCRIBED.has(local)) {
           out.push(...descriptionsOf(attributes));
         }
@@ -90,8 +120,8 @@ const textOfXml = (xml: string): string => {
       },
       onclosetag: (name): void => {
         const local = localName(name);
-        depth -= Number(TEXT.has(local));
-        if (ENDS_BLOCK.has(local)) {
+        depth -= Number(text.includes(local));
+        if (blocks.includes(local)) {
           out.push(PARAGRAPH_BREAK);
         }
       },
@@ -124,39 +154,19 @@ const orderOf = (parts: readonly string[]): Order.Order<string> =>
 
 const latin1 = new TextDecoder("latin1");
 
-const failure = (cause: unknown): ReadError => new ReadError({ reason: String(cause) });
-
-const settled = (cause: unknown, files: Unzipped): Effect.Effect<Unzipped, ReadError> =>
-  Option.match(Option.fromNullishOr(cause), {
-    onNone: () => Effect.succeed(files),
-    onSome: (error) => Effect.fail(failure(error)),
-  });
-
-const keep =
-  (parts: readonly string[]) =>
-  ({ name }: { readonly name: string }): boolean =>
-    rankIn(parts)(name) !== NOT_FOUND;
-
-const filesOf = (bytes: Uint8Array, parts: readonly string[]): Effect.Effect<Unzipped, ReadError> =>
-  Effect.callback<Unzipped, ReadError>((resume) => {
-    unzip(bytes, { filter: keep(parts) }, (cause, files) => {
-      resume(settled(cause, files));
-    });
-  });
-
-const textOfFiles = (files: Unzipped, parts: readonly string[]): string =>
-  Arr.sort(Object.keys(files), orderOf(parts))
-    .map((name) => textOfXml(strFromU8(files[name] ?? new Uint8Array())))
+const textOfFiles = (files: Unzipped, kind: Kind): string =>
+  Arr.sort(Object.keys(files), orderOf(kind.parts))
+    .map((name) => textOfXml(textIn(files)(name), kind))
     .filter((text) => text !== "")
     .join(PARAGRAPH_BREAK);
 
-const readerOf = ({ format, extensions, marker, parts }: Kind): Reader => ({
-  format,
-  extensions,
-  accepts: (bytes) => latin1.decode(bytes).includes(marker),
+const readerOf = (kind: Kind): Reader => ({
+  format: kind.format,
+  extensions: kind.extensions,
+  accepts: (bytes) => latin1.decode(bytes).includes(kind.marker),
   read: (bytes) =>
-    filesOf(bytes, parts).pipe(
-      Effect.map((files) => ({ text: textOfFiles(files, parts), format: "plain" })),
+    unzipped({ bytes, keep: (name) => rankIn(kind.parts)(name) !== NOT_FOUND }).pipe(
+      Effect.map((files) => ({ text: textOfFiles(files, kind), format: "plain" })),
     ),
 });
 
