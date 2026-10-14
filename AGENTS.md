@@ -38,6 +38,21 @@ release. Add a tool name to select part of the graph. For example, run
 
 <!--VITE PLUS END-->
 
+## コマンド
+
+- `vp run verify` は、ルートの `vp check` にテスト・ESLint・syncpack・textlint と yomiyasu・renovate・actionlint と zizmor・steiger・fallow・gitleaks・audit を足した検査である。
+- `vp check` の decision lint は `apps/*/src` だけに掛かり、`.env` の `OPENROUTER_API_KEY` で判定する。
+- 1 つのテストファイルは、パッケージのディレクトリで `vp test run src/<name>.test.ts` として動かす。ルートの `vp run --filter <package> test -- <file>` ではファイルが絞られない。
+- アプリの起動とデプロイは `apps/<name>` で `vp run dev`・`vp run deploy` を使う。
+
+## 構成
+
+- `libs/injection-bisect` は文書を `Parser` で区間に分け、区間の並びを √n 個の枝に割り、確率が `cutoff` 以上の枝だけを再帰的に細かく問い直す。`apps/web` のデモと `tools/cli` が使う。
+- ワークスペース内のパッケージは `src/index.ts` を直接読む。npm に出すのは `libs/injection-bisect` の `dist` だけで、`publish.yml` を手動で動かして出す。
+- `libs/ocr-decide` は請求書の画像を OCR で断片にし、decision モデルで項目に割り当てる。`apps/ocr-decide` はこれをブラウザーで動かし、計測結果も表示する。
+- 計測は `tools/ocr-measure` で行う。`render` が `data/` の請求書を画像にし、`measure` が `results/details.json` と `libs/ocr-measurements/summary.json` を書き、`rescore` はモデルに問い合わせず details.json から summary.json を書き直す。
+- 2 つのアプリは `infra/start-site` の Vite と Alchemy の設定、`libs/web-ui` の部品を共有し、masseater.dev の `/<APP_NAME>/` で公開される。
+
 ## 環境変数
 
 - 環境変数は環境ごとに変わる値だけにする。変わらない値はコードか Alchemy の設定に、ツールにフラグがあればフラグにする。
