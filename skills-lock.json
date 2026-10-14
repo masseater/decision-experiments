@@ -211,12 +211,12 @@
       "skillPath": ".agents/skills/refresh-skills/SKILL.md",
       "computedHash": "ee96e0a9fe6f55c69609c0fc40866276949fc2db2de3666c5cf954213e68d573"
     },
-    "setup-github": {
+    "setup-template": {
       "source": "masseater/skills",
       "ref": "cba419f98284a6aa1d8dc8e9a8dbddc16d5504ed",
       "sourceType": "github",
-      "skillPath": "skills/setup-github/SKILL.md",
-      "computedHash": "95112c6fadc0712bc49e6c3e7fdb03c8961896e78b0501e092ada6d51dd8c93e"
+      "skillPath": "skills/setup-template/SKILL.md",
+      "computedHash": "163ac8f2e03b840c4655c77b39b89d308fb7599c9255801638ffd74246c47367"
     },
     "shadcn": {
       "source": "shadcn-ui/ui",
