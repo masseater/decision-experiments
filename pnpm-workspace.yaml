@@ -62,6 +62,8 @@ catalog:
   nanotar: ^0.3.0
   xlsx: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
   cfb: ^1.2.2
+  papaparse: ^5.7.0
+  "@types/papaparse": ^5.5.2
 catalogs:
   stack:
     "@distilled.cloud/cloudflare": 1.0.0-rc.13

@@ -227,6 +227,9 @@ catalogs:
     '@types/node':
       specifier: 26.6.5
       version: 26.6.5
+    '@types/papaparse':
+      specifier: ^5.5.2
+      version: 5.5.2
     '@typescript-eslint/parser':
       specifier: 8.71.1
       version: 8.71.1
@@ -296,6 +299,9 @@ catalogs:
     officeparser:
       specifier: ^8.1.1
       version: 8.1.1
+    papaparse:
+      specifier: ^5.7.0
+      version: 5.7.0
     parse5:
       specifier: ^8.0.1
       version: 8.0.1
@@ -665,6 +671,9 @@ importers:
       officeparser:
         specifier: 'catalog:'
         version: 8.1.1(supports-color@8.1.1)
+      papaparse:
+        specifier: 'catalog:'
+        version: 5.7.0
       parse5:
         specifier: 'catalog:'
         version: 8.0.1
@@ -699,6 +708,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.5
+      '@types/papaparse':
+        specifier: 'catalog:'
+        version: 5.5.2
       vite-plus:
         specifier: catalog:stack
         version: 1.1.0(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/ui@5.0.3)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1)
@@ -4692,6 +4704,9 @@ packages:
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
 
+  '@types/papaparse@5.5.2':
+    resolution: {integrity: sha512-gFnFp/JMzLHCwRf7tQHrNnfhN4eYBVYYI897CGX4MY1tzY9l2aLkVyx2IlKZ/SAqDbB3I1AOZW5gTMGGsqWliA==}
+
   '@types/parse-path@7.0.3':
     resolution: {integrity: sha512-LriObC2+KYZD3FzCrgWGv/qufdUy4eXrxcLgQMfYXgPbLIecKIsVBaQgUPmxSSLcjmYbDTQbMgr6qr6l/eb7Bg==}
 
@@ -8218,6 +8233,9 @@ packages:
 
   package-json-from-dist@1.0.1:
     resolution: {integrity: sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}
+
+  papaparse@5.7.0:
+    resolution: {integrity: sha512-qBGxg/7Q3Kl9Wfhrz2Z74UnvnHTXLNG6jmKJFeBvP2+y4lV7So+7SR62+Zd47JvdrCkX+nDcnr0ObPzek/+6RA==}
 
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
@@ -13976,6 +13994,10 @@ snapshots:
 
   '@types/normalize-package-data@2.4.4': {}
 
+  '@types/papaparse@5.5.2':
+    dependencies:
+      '@types/node': 26.6.5
+
   '@types/parse-path@7.0.3': {}
 
   '@types/prismjs@1.26.6': {}
@@ -18045,6 +18067,8 @@ snapshots:
   p-try@2.2.0: {}
 
   package-json-from-dist@1.0.1: {}
+
+  papaparse@5.7.0: {}
 
   parent-module@1.0.1:
     dependencies:
