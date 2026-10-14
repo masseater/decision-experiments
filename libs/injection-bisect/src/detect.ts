@@ -5,7 +5,7 @@ import type { JudgeError } from "./judge-error.ts";
 import { InjectionJudge } from "./judge.ts";
 import type { Verdict } from "./judge.ts";
 import type { Parser, Span } from "./parser.ts";
-import { DEFAULT_PARSERS, segmenterOf } from "./segment.ts";
+import { AUTO, DEFAULT_PARSERS, segmenterOf } from "./segment.ts";
 
 const DEFAULT_MODEL = "respan/span-01-lite";
 
@@ -22,6 +22,7 @@ interface DetectOptions {
   readonly cutoff?: number;
   readonly branches?: number;
   readonly parsers?: readonly Parser[];
+  readonly format?: string;
 }
 
 const branchesFor = (sentenceCount: number): number =>
@@ -261,7 +262,10 @@ const detect = Effect.fn("injection-bisect.detect")(function* detect(
 ) {
   const probes = yield* Ref.make<readonly Probe[]>([]);
   const asked = yield* Ref.make(FIRST);
-  const sentences = segmenterOf(options.parsers ?? DEFAULT_PARSERS)(text);
+  const sentences = segmenterOf(options.parsers ?? DEFAULT_PARSERS)({
+    text,
+    format: options.format ?? AUTO,
+  });
   const query: Query = {
     text,
     ...settingsOf(options, sentences.length),

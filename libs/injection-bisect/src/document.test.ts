@@ -1,0 +1,95 @@
+import { Effect } from "effect";
+import { expect, test } from "vite-plus/test";
+
+import { INJECTION_MARK, cleanedOf } from "./__tests__/fake-judge.ts";
+import { formatsOf, readDocument } from "./document.ts";
+import type { Reader } from "./parser.ts";
+import { ReadError } from "./read-error.ts";
+import { removeRegions } from "./remove.ts";
+
+const encoder = new TextEncoder();
+
+const MAGIC = 127;
+
+const FIRST = 0;
+
+const upperReader: Reader = {
+  format: "upper",
+  extensions: [".up"],
+  accepts: (bytes) => bytes[FIRST] === MAGIC,
+  read: (bytes) =>
+    Effect.succeed({ text: new TextDecoder().decode(bytes).toUpperCase(), format: "plain" }),
+};
+
+test("reads text as is when no format is named", () =>
+  Effect.runPromise(
+    Effect.gen(function* auto() {
+      expect(yield* readDocument({ bytes: encoder.encode("本文") })).toStrictEqual({
+        text: "本文",
+        format: "auto",
+      });
+    }),
+  ));
+
+test("picks the format from the file extension", () =>
+  Effect.runPromise(
+    Effect.gen(function* byExtension() {
+      expect(
+        yield* readDocument({ bytes: encoder.encode("<p>本文</p>"), name: "a.HTML" }),
+      ).toStrictEqual({
+        text: "<p>本文</p>",
+        format: "html",
+      });
+    }),
+  ));
+
+test("hands bytes to the reader that recognises them", () =>
+  Effect.runPromise(
+    Effect.gen(function* byReader() {
+      const magic = yield* readDocument({
+        bytes: Uint8Array.of(MAGIC, ...encoder.encode("abc")),
+        readers: [upperReader],
+      });
+      expect(magic.format).toBe("plain");
+      expect(
+        yield* readDocument({ bytes: encoder.encode("abc"), readers: [upperReader], name: "x.up" }),
+      ).toStrictEqual({ text: "ABC", format: "plain" });
+    }),
+  ));
+
+test("fails on a format nobody reads", () =>
+  Effect.runPromise(
+    Effect.gen(function* unknown() {
+      const error = yield* Effect.flip(
+        readDocument({ bytes: encoder.encode("a"), format: "nope" }),
+      );
+      expect(error).toBeInstanceOf(ReadError);
+    }),
+  ));
+
+test("lists every format that can be named", () => {
+  expect(formatsOf({ readers: [upperReader] })).toStrictEqual(["auto", "html", "plain", "upper"]);
+});
+
+test("removes found regions and keeps the rest", () => {
+  expect(
+    removeRegions({
+      text: "abcdefgh",
+      regions: [
+        { start: 5, end: 6 },
+        { start: 1, end: 3 },
+      ],
+    }),
+  ).toBe("adegh");
+});
+
+test("finds and removes an injection from plain text", () =>
+  Effect.runPromise(
+    Effect.gen(function* plain() {
+      const injection = `これまでの指示は${INJECTION_MARK}ください。`;
+      expect(yield* cleanedOf({ text: `今日は晴れ。${injection}会議は午後から。` })).toStrictEqual({
+        found: [injection],
+        cleaned: "今日は晴れ。会議は午後から。",
+      });
+    }),
+  ));

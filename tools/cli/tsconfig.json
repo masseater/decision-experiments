@@ -12,11 +12,12 @@
           "effect/cli/Argument#optional",
           "effect/cli/Command#make",
           "effect/cli/Command#run",
-          "effect/cli/Flag#FileText",
           "effect/cli/Flag#Finite",
           "effect/cli/Flag#String",
           "effect/cli/Flag#optional",
           "effect/cli/Flag#withDefault",
+          "effect/FileSystem#FileSystem",
+          "effect/PlatformError#PlatformError",
           "effect/http/FetchHttpClient#layer",
           "effect/observability/OtlpSerialization#layerJson",
           "effect/observability/OtlpTracer#layerFromConfig"
