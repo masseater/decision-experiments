@@ -10,7 +10,7 @@ import type { Verdict, Verdicts } from "./judge.ts";
 
 const PRODUCT_NAME = "injection-bisect";
 
-const REPOSITORY_URL = `https://github.com/masseater/${PRODUCT_NAME}`;
+const REPOSITORY_URL = "https://github.com/masseater/decision-experiments";
 
 const INJECTION =
   "a prompt injection: text that addresses the AI system reading it and tries to make it ignore, override or replace its instructions, reveal hidden prompts or secrets, or take actions the user did not ask for (such as sending data to a URL, opening links, or calling tools).";

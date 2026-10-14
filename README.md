@@ -1,10 +1,13 @@
-# injection-bisect
+# decision-experiments
+
+decision モデルを使った実験プロジェクトの置き場である。
 
 ## 公開先
 
-- Web のデモ: https://masseater.dev/injection-bisect/
+- injection-bisect の Web のデモ: https://masseater.dev/injection-bisect/
+- injection-bisect の npm パッケージ: https://www.npmjs.com/package/@r_masseater/injection-bisect
 
-## 読める形式
+## injection-bisect の読める形式
 
 | 形式                       | 名前                                                               | 判定するところ                                                                                                     |
 | -------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
