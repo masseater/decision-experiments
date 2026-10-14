@@ -15,3 +15,5 @@ export type { OcrOptions } from "./ocr.ts";
 export { ModelApi } from "./model-api.ts";
 export type { Part } from "./model-api.ts";
 export { PRODUCT_NAME, openRouter, openRouterPerRequest, withApiKey } from "./openrouter.ts";
+export { METHODS, extract } from "./extract.ts";
+export type { ExtractRequest, Method } from "./extract.ts";

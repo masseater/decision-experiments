@@ -193,7 +193,7 @@ export default defineConfig({
         rules: { "shadcn/no-restyle": "off", "react/jsx-props-no-spreading": "off" },
       },
       {
-        files: ["apps/web/src/**/*.{ts,tsx}"],
+        files: ["apps/*/src/**/*.{ts,tsx}"],
         rules: decisionRules,
       },
       {

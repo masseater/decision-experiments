@@ -28,6 +28,14 @@ describe("isCorrect", () => {
       isCorrect({ field: "issueDate", value: found("令和8年10月8日"), truth: "2026-10-08" }),
     ).toBe(true);
   });
+});
+
+describe("isCorrect for dates", () => {
+  it("keeps the date apart from the time after a space", () => {
+    expect(
+      isCorrect({ field: "issueDate", value: found("2026/10/02 14:02"), truth: "2026/10/02" }),
+    ).toBe(true);
+  });
 
   it("rejects a date with a broken day", () => {
     expect(

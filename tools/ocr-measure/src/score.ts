@@ -12,7 +12,7 @@ const YEAR_PART = 1;
 const compact = (text: string): string => text.normalize("NFKC").replaceAll(/\s/gu, "");
 
 const numbersOf = (text: string): readonly number[] =>
-  Array.from(compact(text).matchAll(/\d+/gu), ([run]) => Number(run));
+  Array.from(text.normalize("NFKC").matchAll(/\d+/gu), ([run]) => Number(run));
 
 const amountsOf = (text: string): readonly number[] =>
   numbersOf(compact(text).replaceAll(/(?<=\d)[,.](?=\d{3})/gu, ""));

@@ -9,7 +9,7 @@ import {
   rereadLowConfidence,
 } from "@r_masseater/ocr-decide";
 import type { DecisionModel, Extraction, Fragment, ModelApi } from "@r_masseater/ocr-decide";
-import { Effect } from "effect";
+import { Array as Arr, Effect, Option } from "effect";
 
 import { costOf, skipped, timed } from "./attempt.ts";
 import type { Attempt, Timed } from "./attempt.ts";
@@ -18,6 +18,11 @@ import type { Document } from "./sample.ts";
 const GENERATOR_LABEL = "Gemini 3.5 Flash Lite";
 
 const ONE_AT_A_TIME = { concurrency: 1 } as const;
+
+const labelOf = (model: string): string =>
+  Arr.findFirst(DECISION_MODELS, ({ id }) => id === model).pipe(
+    Option.match({ onNone: () => GENERATOR_LABEL, onSome: ({ label }) => label }),
+  );
 
 interface Outcome {
   readonly id: string;
@@ -140,5 +145,5 @@ const measureDocument = Effect.fn("ocr-measure.document")(function* measureDocum
   return [...decisions.flat(), generated];
 });
 
-export { measureDocument };
+export { labelOf, measureDocument };
 export type { Outcome };

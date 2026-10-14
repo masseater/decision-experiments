@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import { OEM, createWorker } from "tesseract.js";
 import type { WorkerOptions } from "tesseract.js";
 
 import type { Fragment } from "./fragment.ts";
@@ -32,10 +31,14 @@ const readFragments = ({
   worker = {},
 }: OcrRequest & OcrOptions): Effect.Effect<readonly Fragment[], OcrError> =>
   Effect.acquireUseRelease(
-    Effect.tryPromise({
-      try: () => createWorker([...languages], OEM.LSTM_ONLY, worker),
-      catch: failure,
-    }),
+    Effect.tryPromise({ try: () => import("tesseract.js"), catch: failure }).pipe(
+      Effect.flatMap(({ OEM, createWorker }) =>
+        Effect.tryPromise({
+          try: () => createWorker([...languages], OEM.LSTM_ONLY, worker),
+          catch: failure,
+        }),
+      ),
+    ),
     (tesseract) =>
       Effect.tryPromise({ try: () => tesseract.recognize(image, {}, BLOCKS), catch: failure }),
     (tesseract) => Effect.promise(() => tesseract.terminate()),

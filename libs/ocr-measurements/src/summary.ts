@@ -1,6 +1,5 @@
+import { METHODS } from "@r_masseater/ocr-decide";
 import { Schema } from "effect";
-
-const METHODS = ["ocr-decision", "ocr-reread-decision", "image-generation"] as const;
 
 const MethodSchema = Schema.Literals(METHODS);
 
@@ -35,5 +34,5 @@ type Run = typeof RunSchema.Type;
 
 type Summary = typeof SummarySchema.Type;
 
-export { METHODS, SummarySchema };
+export { SummarySchema };
 export type { Method, Run, Summary };
