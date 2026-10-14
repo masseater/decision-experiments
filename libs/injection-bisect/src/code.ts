@@ -4,24 +4,18 @@ import { refractor } from "refractor";
 import jsx from "refractor/jsx";
 import tsx from "refractor/tsx";
 
+import { GRAMMARS, MORE_LANGUAGES, NEVER } from "./more-languages.ts";
+import type { Language } from "./more-languages.ts";
 import type { Parser, Span, Unit } from "./parser.ts";
 import { looksLikeProse } from "./prose.ts";
 
-const READ = /comment|string/u;
+const READ = /comment|string|attr-value/u;
 
 const FIRST = 0;
 
-refractor.register(jsx);
-refractor.register(tsx);
-
-interface Language {
-  readonly format: string;
-  readonly extensions: readonly string[];
-  readonly aliases: readonly string[];
-  readonly signature: RegExp;
+for (const language of [jsx, tsx, ...GRAMMARS]) {
+  refractor.register(language);
 }
-
-const NEVER = /(?!)/u;
 
 const FENCE = /^\s*(?:```|~~~)/mu;
 
@@ -111,6 +105,7 @@ const LANGUAGES: readonly Language[] = [
     aliases: [],
     signature: /^import (?:SwiftUI|Foundation|UIKit)$/mu,
   },
+  ...MORE_LANGUAGES,
 ];
 
 const isRead = ({ properties }: Element): boolean =>

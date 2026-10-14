@@ -69,9 +69,12 @@ const named = (input: ReadInput, format: string): Effect.Effect<Document, ReadEr
   );
 
 const detected = (input: ReadInput): Effect.Effect<Document, ReadError> => {
-  const extension = extensionOf(input.name ?? "");
-  const byExtension = Arr.findFirst([...readersOf(input), ...parsersOf(input)], ({ extensions }) =>
-    extensions.includes(extension),
+  const name = input.name ?? "";
+  const extension = extensionOf(name);
+  const fileName = name.slice(name.lastIndexOf("/") + "/".length).toLowerCase();
+  const byExtension = Arr.findFirst(
+    [...readersOf(input), ...parsersOf(input)],
+    ({ extensions }) => extensions.includes(extension) || extensions.includes(fileName),
   );
   const byContent = Arr.findFirst(readersOf(input), (reader) => reader.accepts(input.bytes));
   return Option.match(

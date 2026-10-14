@@ -99,3 +99,13 @@ test("finds and removes an injection from plain text", () =>
       });
     }),
   ));
+
+test("picks the format from a file name without an extension", () =>
+  Effect.runPromise(
+    Effect.gen(function* byName() {
+      expect(
+        (yield* readDocument({ bytes: encoder.encode("FROM node:24\n"), name: "app/Dockerfile" }))
+          .format,
+      ).toBe("docker");
+    }),
+  ));

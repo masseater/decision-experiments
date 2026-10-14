@@ -132,7 +132,7 @@ const htmlUnitsOf = (text: string): readonly Span[] =>
 
 const htmlParser: Parser = {
   format: "html",
-  extensions: [".html", ".htm"],
+  extensions: [".html", ".htm", ".xhtml", ".vue", ".svelte", ".astro"],
   accepts: looksLikeHtml,
   unitsOf: (text) => htmlUnitsOf(text).map(({ start, end }) => ({ kind: "prose", start, end })),
 };
