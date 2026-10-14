@@ -1,5 +1,6 @@
 import { Array as Arr, Effect, Option } from "effect";
 
+import { ARCHIVE_FORMAT, archiveReaderOf } from "./archive.ts";
 import type { Document, Parser, Reader } from "./parser.ts";
 import { DEFAULT_PARSERS } from "./parsers.ts";
 import { ReadError } from "./read-error.ts";
@@ -36,10 +37,18 @@ const parsersOf = ({ parsers = DEFAULT_PARSERS }: Formats): readonly Parser[] =>
 
 const readersOf = ({ readers = DEFAULT_READERS }: Formats): readonly Reader[] => readers;
 
+const archivesOf = <Archive>(formats: Formats, archive: Archive): readonly Archive[] => {
+  if (Arr.isReadonlyArrayEmpty(readersOf(formats))) {
+    return [];
+  }
+  return [archive];
+};
+
 const formatsOf = (formats: Formats = {}): readonly string[] => [
   AUTO,
   ...parsersOf(formats).map(({ format }) => format),
   ...readersOf(formats).map(({ format }) => format),
+  ...archivesOf(formats, ARCHIVE_FORMAT),
 ];
 
 const named = (input: ReadInput, format: string): Effect.Effect<Document, ReadError> =>
@@ -75,11 +84,18 @@ const detected = (input: ReadInput): Effect.Effect<Document, ReadError> => {
 };
 
 const readDocument = (input: ReadInput): Effect.Effect<Document, ReadError> => {
+  const archiveReader = archiveReaderOf(({ bytes, name }) =>
+    readDocument({ ...input, bytes, name, format: AUTO }),
+  );
+  const withArchive = {
+    ...input,
+    readers: [...readersOf(input), ...archivesOf(input, archiveReader)],
+  };
   const format = input.format ?? AUTO;
   if (format === AUTO) {
-    return detected(input);
+    return detected(withArchive);
   }
-  return named(input, format);
+  return named(withArchive, format);
 };
 
 export { formatsOf, readDocument };

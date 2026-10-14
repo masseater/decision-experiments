@@ -74,6 +74,7 @@ test("lists every format that can be named", () => {
     ...DEFAULT_PARSERS.map(({ format }) => format),
     "plain",
     "upper",
+    "zip",
   ]);
 });
 
