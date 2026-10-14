@@ -1,14 +1,7 @@
 import { Array as Arr, Match, Option, Order } from "effect";
 
-import { CODE_PARSERS } from "./code.ts";
-import { csvParser, tsvParser } from "./csv.ts";
-import { htmlParser } from "./html.ts";
-import { jsonParser } from "./json.ts";
-import { markdownParser } from "./markdown.ts";
 import type { Parser, Span } from "./parser.ts";
-import { srtParser, vttParser } from "./subtitles.ts";
-import { xmlParser } from "./xml.ts";
-import { yamlParser } from "./yaml.ts";
+import { DEFAULT_PARSERS } from "./parsers.ts";
 
 const FIRST = 0;
 
@@ -42,19 +35,6 @@ const isNamed =
   };
 
 const byStart = Order.mapInput(Order.Number, ({ start }: Span) => start);
-
-const DEFAULT_PARSERS: readonly Parser[] = [
-  jsonParser,
-  vttParser,
-  srtParser,
-  ...CODE_PARSERS,
-  xmlParser,
-  yamlParser,
-  tsvParser,
-  csvParser,
-  markdownParser,
-  htmlParser,
-];
 
 const segmenterOf = (
   parsers: readonly Parser[],
@@ -90,4 +70,4 @@ const segmenterOf = (
 
 const sentencesOf = segmenterOf(DEFAULT_PARSERS);
 
-export { AUTO, DEFAULT_PARSERS, isNamed, plainParser, segmenterOf, sentencesOf };
+export { AUTO, isNamed, plainParser, segmenterOf, sentencesOf };

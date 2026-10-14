@@ -4,9 +4,9 @@ import { expect, test } from "vite-plus/test";
 import { INJECTION_MARK, cleanedOf } from "./__tests__/fake-judge.ts";
 import { formatsOf, readDocument } from "./document.ts";
 import type { Reader } from "./parser.ts";
+import { DEFAULT_PARSERS } from "./parsers.ts";
 import { ReadError } from "./read-error.ts";
 import { removeRegions } from "./remove.ts";
-import { DEFAULT_PARSERS } from "./segment.ts";
 
 const encoder = new TextEncoder();
 
