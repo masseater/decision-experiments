@@ -6,6 +6,7 @@ import { formatsOf, readDocument } from "./document.ts";
 import type { Reader } from "./parser.ts";
 import { ReadError } from "./read-error.ts";
 import { removeRegions } from "./remove.ts";
+import { DEFAULT_PARSERS } from "./segment.ts";
 
 const encoder = new TextEncoder();
 
@@ -70,10 +71,7 @@ test("fails on a format nobody reads", () =>
 test("lists every format that can be named", () => {
   expect(formatsOf({ readers: [upperReader] })).toStrictEqual([
     "auto",
-    "json",
-    "markdown",
-    "html",
-    "yaml",
+    ...DEFAULT_PARSERS.map(({ format }) => format),
     "plain",
     "upper",
   ]);
