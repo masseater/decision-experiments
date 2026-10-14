@@ -215,6 +215,9 @@ catalogs:
     '@tesseract.js-data/eng':
       specifier: ^1.0.0
       version: 1.0.0
+    '@tesseract.js-data/jpn':
+      specifier: ^1.0.0
+      version: 1.0.0
     '@types/hast':
       specifier: ^3.0.5
       version: 3.0.5
@@ -284,6 +287,9 @@ catalogs:
     parse5:
       specifier: ^8.0.1
       version: 8.0.1
+    playwright-core:
+      specifier: 1.64.0
+      version: 1.64.0
     postal-mime:
       specifier: ^4.0.5
       version: 4.0.5
@@ -667,6 +673,40 @@ importers:
         specifier: catalog:stack
         version: 1.1.0(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/ui@5.0.3)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1)
 
+  libs/ocr-decide:
+    dependencies:
+      '@effect/ai-openrouter':
+        specifier: 'catalog:'
+        version: 4.0.2(effect@4.0.2)
+      effect:
+        specifier: 4.0.2
+        version: 4.0.2
+      fast-png:
+        specifier: 'catalog:'
+        version: 8.0.0
+      tesseract.js:
+        specifier: 'catalog:'
+        version: 7.0.0
+    devDependencies:
+      '@tesseract.js-data/eng':
+        specifier: 'catalog:'
+        version: 1.0.0
+      '@tesseract.js-data/jpn':
+        specifier: 'catalog:'
+        version: 1.0.0
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.6.5
+      vite-plus:
+        specifier: catalog:stack
+        version: 1.1.0(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/ui@5.0.3)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1)
+
+  libs/ocr-measurements:
+    dependencies:
+      effect:
+        specifier: 4.0.2
+        version: 4.0.2
+
   tools/cli:
     dependencies:
       '@effect/platform-node':
@@ -682,6 +722,37 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.5
+      vite-plus:
+        specifier: catalog:stack
+        version: 1.1.0(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/ui@5.0.3)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1)
+
+  tools/ocr-measure:
+    dependencies:
+      '@effect/platform-node':
+        specifier: 'catalog:'
+        version: 4.0.2(effect@4.0.2)(redis@6.2.1(@opentelemetry/api@1.9.1))
+      '@ocr-decide/measurements':
+        specifier: workspace:*
+        version: link:../../libs/ocr-measurements
+      '@r_masseater/ocr-decide':
+        specifier: workspace:*
+        version: link:../../libs/ocr-decide
+      effect:
+        specifier: 4.0.2
+        version: 4.0.2
+    devDependencies:
+      '@tesseract.js-data/eng':
+        specifier: 'catalog:'
+        version: 1.0.0
+      '@tesseract.js-data/jpn':
+        specifier: 'catalog:'
+        version: 1.0.0
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.6.5
+      playwright-core:
+        specifier: 'catalog:'
+        version: 1.64.0
       vite-plus:
         specifier: catalog:stack
         version: 1.1.0(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/ui@5.0.3)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1)
@@ -4356,6 +4427,9 @@ packages:
 
   '@tesseract.js-data/eng@1.0.0':
     resolution: {integrity: sha512-mbTumm6KQPUHyzTPQaF3ObXYnx0SqqfV2nabqFVQBwD6Kl7PhGSLSzOlfFTWy0P3BjghaSKA2W9GB19Jk+ZcTg==}
+
+  '@tesseract.js-data/jpn@1.0.0':
+    resolution: {integrity: sha512-nUq2xHUjiWE6FRqkvLIIbByLZ39B8qNaBSOnVP4XIKGPKtZ1e0hiRnK7WhPfl8A+Fe7aNE1u/QoXXUym3TbSCA==}
 
   '@testing-library/dom@10.4.2':
     resolution: {integrity: sha512-yzr2S9HyAIdhz2/6qHgbs665Q7PKVcDF05vsOlHPxG1mo36gKVesdYVeDLnXgfjJ03CrKRk08knc6+E/9m8v2Q==}
@@ -8130,6 +8204,11 @@ packages:
   picomatch@4.0.7:
     resolution: {integrity: sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==}
     engines: {node: '>=12'}
+
+  playwright-core@1.64.0:
+    resolution: {integrity: sha512-T9r+MZkTECl2+oUcZ26YgZzTrYidTsIhYYkJix+6iDOymOb1FB2RLLSOxRGnZGv5DStt+aduIVbt+E8WygXYpg==}
+    engines: {node: '>=20'}
+    hasBin: true
 
   pluralize@2.0.0:
     resolution: {integrity: sha512-TqNZzQCD4S42De9IfnnBvILN7HAW7riLqsCyp8lgjXeysyPlX5HhqKAcJHHHb9XskE4/a+7VGC9zzx8Ls0jOAw==}
@@ -13374,6 +13453,8 @@ snapshots:
 
   '@tesseract.js-data/eng@1.0.0': {}
 
+  '@tesseract.js-data/jpn@1.0.0': {}
+
   '@testing-library/dom@10.4.2':
     dependencies:
       '@babel/code-frame': 7.29.7
@@ -17831,6 +17912,8 @@ snapshots:
   picomatch@2.3.2: {}
 
   picomatch@4.0.7: {}
+
+  playwright-core@1.64.0: {}
 
   pluralize@2.0.0: {}
 
