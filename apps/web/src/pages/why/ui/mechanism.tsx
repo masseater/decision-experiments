@@ -10,7 +10,6 @@ const STEPS: readonly Step[] = ["scan", "narrow", "remove"];
 
 const Mechanism = (): ReactNode => (
   <Section title={COPY.mechanism.title}>
-    <p>{COPY.mechanism.premise}</p>
     <ol className="grid gap-3 md:grid-cols-3">
       {STEPS.map((step) => (
         <StepCard key={step} step={step} />

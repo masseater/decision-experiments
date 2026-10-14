@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { CLEAN_TEXTS, HEADLINE, INJECTED_TEXTS } from "#/pages/why/model/bench";
 import { COPY } from "#/pages/why/model/copy";
 
+import { Section } from "./section";
 import { Stat } from "./stat";
 
 const MS_PER_SECOND = 1000;
@@ -12,7 +13,7 @@ const COST_DIGITS = 2;
 const SECOND_DIGITS = 1;
 
 const Stats = (): ReactNode => (
-  <section className="flex flex-col gap-3">
+  <Section title={COPY.stats.title}>
     <dl className="grid grid-cols-2 gap-4 md:grid-cols-4">
       <Stat label={COPY.stats.missed} value={`${HEADLINE.missed} / ${INJECTED_TEXTS}`} />
       <Stat label={COPY.stats.falseAlarms} value={`${HEADLINE.falseAlarms} / ${CLEAN_TEXTS}`} />
@@ -27,7 +28,7 @@ const Stats = (): ReactNode => (
     </dl>
     <p className="text-muted-foreground text-xs">{COPY.stats.caption}</p>
     <p className="text-sm">{COPY.stats.versus}</p>
-  </section>
+  </Section>
 );
 
 export { Stats };
