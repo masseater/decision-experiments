@@ -4,6 +4,7 @@ import { BenchDetails } from "./bench-details";
 import { Compare } from "./compare";
 import { Hero } from "./hero";
 import { Limits } from "./limits";
+import { Scenarios } from "./scenarios";
 import { Stats } from "./stats";
 
 const WhyPage = (): ReactNode => (
@@ -11,6 +12,7 @@ const WhyPage = (): ReactNode => (
     <Hero />
     <Compare />
     <Stats />
+    <Scenarios />
     <Limits />
     <BenchDetails />
   </main>

@@ -38,11 +38,17 @@ const COPY = {
     cost: "1 件の費用",
     chars: "字",
   },
+  scenarios: {
+    title: "使いどころ",
+    web: { who: "Web を調べるエージェント", when: "検索で開いたページを読ませる前に" },
+    mail: { who: "メールの仕分けと返信", when: "受信メールを AI に渡す前に" },
+    code: { who: "コーディングエージェント", when: "Issue や PR のコメントを読ませる前に" },
+    rag: { who: "社内文書の検索", when: "文書を索引に取り込む前に" },
+  },
   limits: {
     title: "弱点",
     structure: "プレーンテキストと HTML 以外の構造に隠した注入は読めない",
     diluted: "文をまたいで初めて指示になる注入は取りこぼしうる",
-    models: "span-01-lite は 19 件中 2 件を見逃した",
   },
 } as const;
 
