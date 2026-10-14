@@ -11,7 +11,15 @@ import type { ReadError } from "./read-error.ts";
 
 const OCR_TIMEOUT = 120_000;
 
-const readers = readersWith({ languages: ["eng"], worker: { cacheMethod: "none" } });
+const LANGUAGE_DATA = new URL(
+  "../node_modules/@tesseract.js-data/eng/4.0.0_best_int",
+  import.meta.url,
+).pathname;
+
+const readers = readersWith({
+  languages: ["eng"],
+  worker: { langPath: LANGUAGE_DATA, cacheMethod: "none" },
+});
 
 const foundIn = (
   bytes: Uint8Array,

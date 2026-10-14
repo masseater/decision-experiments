@@ -55,6 +55,7 @@ catalog:
   unpdf: ^1.8.1
   fast-png: ^8.0.0
   tesseract.js: ^7.0.0
+  "@tesseract.js-data/eng": ^1.0.0
 catalogs:
   stack:
     "@distilled.cloud/cloudflare": 1.0.0-rc.13
