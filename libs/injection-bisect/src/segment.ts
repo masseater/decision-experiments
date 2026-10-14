@@ -1,8 +1,10 @@
 import { Array as Arr, Match, Option, Order } from "effect";
 
 import { htmlParser } from "./html.ts";
+import { jsonParser } from "./json.ts";
 import { markdownParser } from "./markdown.ts";
 import type { Parser, Span } from "./parser.ts";
+import { yamlParser } from "./yaml.ts";
 
 const FIRST = 0;
 
@@ -30,7 +32,7 @@ const plainParser: Parser = {
 
 const byStart = Order.mapInput(Order.Number, ({ start }: Span) => start);
 
-const DEFAULT_PARSERS: readonly Parser[] = [markdownParser, htmlParser];
+const DEFAULT_PARSERS: readonly Parser[] = [jsonParser, markdownParser, htmlParser, yamlParser];
 
 const segmenterOf = (
   parsers: readonly Parser[],

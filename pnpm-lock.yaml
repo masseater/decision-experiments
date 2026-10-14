@@ -248,6 +248,9 @@ catalogs:
     jose:
       specifier: 6.2.12
       version: 6.2.12
+    jsonc-parser:
+      specifier: ^3.3.1
+      version: 3.3.1
     mdast-util-from-markdown:
       specifier: ^2.1.0
       version: 2.1.0
@@ -275,6 +278,9 @@ catalogs:
     vite:
       specifier: npm:@voidzero-dev/vite-plus-core@1.1.0
       version: 1.1.0
+    yaml:
+      specifier: ^2.9.1
+      version: 2.9.1
   stack:
     '@distilled.cloud/cloudflare':
       specifier: 1.0.0-rc.13
@@ -572,6 +578,9 @@ importers:
       effect:
         specifier: 4.0.2
         version: 4.0.2
+      jsonc-parser:
+        specifier: 'catalog:'
+        version: 3.3.1
       mdast-util-from-markdown:
         specifier: 'catalog:'
         version: 2.1.0(supports-color@8.1.1)
@@ -590,6 +599,9 @@ importers:
       parse5:
         specifier: 'catalog:'
         version: 8.0.1
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.1
     devDependencies:
       '@types/mdast':
         specifier: 'catalog:'
@@ -6996,6 +7008,9 @@ packages:
 
   jsonc-morph@0.3.6:
     resolution: {integrity: sha512-TkGcePt+6p+7wzOXXkIhwuAs/WFJ+UBwJYlnjLOhvC29z0YxKy5AhBW3YWEvpXI/yQXPxEM5oqwZpcK4Q/ouFw==}
+
+  jsonc-parser@3.3.1:
+    resolution: {integrity: sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ==}
 
   jsonc-weaver@0.3.1:
     resolution: {integrity: sha512-a6e90+Hn5e+l7i6MC2YJ57TE6nv9gDKFyCLBIVKt0Jdv48lUBEV7StnnuwC0Y+sjnux41cnPlHJl65DH4+d9eA==}
@@ -16207,6 +16222,8 @@ snapshots:
   jsonata@2.2.1: {}
 
   jsonc-morph@0.3.6: {}
+
+  jsonc-parser@3.3.1: {}
 
   jsonc-weaver@0.3.1:
     dependencies:

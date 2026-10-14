@@ -70,8 +70,10 @@ test("fails on a format nobody reads", () =>
 test("lists every format that can be named", () => {
   expect(formatsOf({ readers: [upperReader] })).toStrictEqual([
     "auto",
+    "json",
     "markdown",
     "html",
+    "yaml",
     "plain",
     "upper",
   ]);
