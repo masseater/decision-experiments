@@ -12,7 +12,7 @@ catalog:
   "@cloudflare/workers-types": 5.20261010.1
   "@effect/platform-node": 4.0.2
   "@effect/ai-openrouter": 4.0.2
-  "@eslint-react/eslint-plugin": 5.24.10
+  "@eslint-react/eslint-plugin": 5.25.0
   "@shadcn/lint": 0.2.1
   "@tanstack/eslint-plugin-query": 5.104.1
   "@tanstack/eslint-plugin-router": 1.162.0
@@ -76,7 +76,7 @@ overrides:
   "@effect/vitest": 4.0.2
   vite@*: "catalog:"
   eslint-plugin-react-hooks>zod-validation-error: ^5.0.0
-  "@hono/node-server@<1.19.15": ^1.19.15
+  "@hono/node-server@<1.19.15": ^2.0.0
   hono@<4.13.7: ^4.13.7
   http-cache-semantics@<=4.2.0: ^4.3.0
   lodash@<=4.17.23: ^4.18.1
