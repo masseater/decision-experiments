@@ -84,7 +84,20 @@ const xmlUnitsOf = (text: string): readonly Unit[] => {
 
 const xmlParser: Parser = {
   format: "xml",
-  extensions: [".xml", ".rss", ".atom", ".rdf", ".svg"],
+  extensions: [
+    ".xml",
+    ".rss",
+    ".atom",
+    ".rdf",
+    ".svg",
+    ".xliff",
+    ".xlf",
+    ".plist",
+    ".kml",
+    ".gpx",
+    ".opml",
+    ".resx",
+  ],
   accepts: looksLikeXml,
   unitsOf: xmlUnitsOf,
 };

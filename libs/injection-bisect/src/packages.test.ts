@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { expect, test } from "vite-plus/test";
 
-import { zipOf } from "./__tests__/archive.ts";
+import { gzipOf, zipOf } from "./__tests__/archive.ts";
 import { INJECTION_MARK, cleanedOf } from "./__tests__/fake-judge.ts";
 import { readDocument } from "./document.ts";
 import type { JudgeError } from "./judge-error.ts";
@@ -110,5 +110,72 @@ test("reads every message of an mbox file", () =>
       expect(document.text).toContain("Subject: invoice");
       expect(found.map((text) => text.trim())).toStrictEqual([INJECTION]);
       expect(cleaned).toContain("請求書を送ります。");
+    }),
+  ));
+
+test("reads every file in a zip archive with its own format", () =>
+  Effect.runPromise(
+    Effect.gen(function* archive() {
+      const bytes = yield* zipOf({
+        "docs/readme.md": "# 使い方\n\n設定ファイルを置きます。",
+        "site/index.html": `<p>ようこそ。</p><div hidden>${INJECTION}</div>`,
+        "bin/tool": "\u0000\u0001\u0002",
+        "__MACOSX/._index.html": "ignored",
+      });
+      const { document, found, cleaned } = yield* foundIn(bytes);
+      expect(document.format).toBe("markdown");
+      expect(document.text).toContain("## site/index.html");
+      expect(document.text).not.toContain("bin/tool");
+      expect(document.text).not.toContain("__MACOSX");
+      expect(found.map((text) => text.trim())).toStrictEqual([INJECTION]);
+      expect(cleaned).toContain("設定ファイルを置きます。");
+    }),
+  ));
+
+const TAR_BLOCK = 512;
+
+const TAR_FIELDS = { size: 124, sizeLength: 11, type: 156, magic: 257 } as const;
+
+const OCTAL = 8;
+
+const TAR_HEADER_BLOCKS = 1;
+
+const TAR_START = 0;
+
+const tarEntryOf = ([name, text]: readonly [string, string]): Uint8Array => {
+  const body = encoder.encode(text);
+  const blocks = Math.ceil(body.length / TAR_BLOCK);
+  const entry = new Uint8Array(TAR_BLOCK * (blocks + TAR_HEADER_BLOCKS));
+  const size = body.length.toString(OCTAL).padStart(TAR_FIELDS.sizeLength, "0");
+  entry.set(encoder.encode(name));
+  entry.set(encoder.encode(size), TAR_FIELDS.size);
+  entry.set(encoder.encode("0"), TAR_FIELDS.type);
+  entry.set(encoder.encode("ustar"), TAR_FIELDS.magic);
+  entry.set(body, TAR_BLOCK);
+  return entry;
+};
+
+const tarOf = (files: Readonly<Record<string, string>>): Uint8Array => {
+  const entries = Object.entries(files).map((file) => tarEntryOf(file));
+  const tar = new Uint8Array(entries.reduce((length, entry) => length + entry.length, TAR_START));
+  let offset = TAR_START;
+  for (const entry of entries) {
+    tar.set(entry, offset);
+    offset += entry.length;
+  }
+  return tar;
+};
+
+test("reads every file in a gzipped tar archive", () =>
+  Effect.runPromise(
+    Effect.gen(function* tarball() {
+      const tar = tarOf({
+        "docs/readme.md": "# 使い方\n\n設定ファイルを置きます。",
+        "site/index.html": `<p>ようこそ。</p><div hidden>${INJECTION}</div>`,
+      });
+      const { document, found, cleaned } = yield* foundIn(yield* gzipOf(tar));
+      expect(document.text).toContain("## docs/readme.md");
+      expect(found.map((text) => text.trim())).toStrictEqual([INJECTION]);
+      expect(cleaned).toContain("設定ファイルを置きます。");
     }),
   ));

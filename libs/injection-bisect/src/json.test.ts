@@ -38,3 +38,20 @@ test("finds and removes an injection in a chat export", () =>
       });
     }),
   ));
+
+test("finds and removes an injection in JSON Lines", () =>
+  Effect.runPromise(
+    Effect.gen(function* jsonLines() {
+      const text = [
+        '{"role": "user", "content": "請求書を送ってください。"}',
+        `{"role": "tool", "content": "${INJECTION}"}`,
+        '{"role": "assistant", "content": "送りました。"}',
+        "",
+      ].join("\n");
+      expect(textsOf(text)).toContain("送りました。");
+      expect(yield* cleanedOf({ text })).toStrictEqual({
+        found: [INJECTION],
+        cleaned: text.replace(INJECTION, ""),
+      });
+    }),
+  ));
