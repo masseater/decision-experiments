@@ -134,7 +134,14 @@ export default defineConfig({
             {
               from: "package",
               package: "@jupyterlab/nbformat",
-              name: ["ICell", "INotebookContent", "IOutput", "MultilineString"],
+              name: [
+                "ICell",
+                "IDisplayData",
+                "IExecuteResult",
+                "INotebookContent",
+                "IOutput",
+                "MultilineString",
+              ],
             },
             {
               from: "package",

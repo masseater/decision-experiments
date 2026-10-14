@@ -6,11 +6,18 @@ import {
   isMarkdown,
   isStream,
 } from "@jupyterlab/nbformat";
-import type { ICell, INotebookContent, IOutput, MultilineString } from "@jupyterlab/nbformat";
-import { Effect, Option, Predicate, Result, Schema } from "effect";
+import type {
+  ICell,
+  IDisplayData,
+  IExecuteResult,
+  INotebookContent,
+  IOutput,
+  MultilineString,
+} from "@jupyterlab/nbformat";
+import { Effect, Match, Option, Predicate, Result, Schema } from "effect";
 
 import type { Document, Reader } from "./parser.ts";
-import { ReadError } from "./read-error.ts";
+import { readErrorOf } from "./read-error.ts";
 
 const isNotebook = (value: unknown): value is INotebookContent =>
   Predicate.hasProperty(value, "nbformat") &&
@@ -44,22 +51,19 @@ const fenced =
   (lines: MultilineString): string =>
     `\`\`\`${language}\n${joined(lines)}\n\`\`\``;
 
-const outputText = (output: IOutput): readonly string[] => {
-  if (isStream(output)) {
-    return [fenced("output")(output.text)];
-  }
-  if (isError(output)) {
-    return [fenced("output")(`${output.ename}: ${output.evalue}`)];
-  }
-  if (isExecuteResult(output) || isDisplayData(output)) {
-    return OUTPUT_TYPES.flatMap(([type, language]) =>
-      Option.toArray(
-        Option.map(Option.liftPredicate(output.data[type], isLines), fenced(language)),
-      ),
-    );
-  }
-  return [];
-};
+const mimeText = ({ data }: IDisplayData | IExecuteResult): readonly string[] =>
+  OUTPUT_TYPES.flatMap(([type, language]) =>
+    Option.toArray(Option.map(Option.liftPredicate(data[type], isLines), fenced(language))),
+  );
+
+const outputText = (output: IOutput): readonly string[] =>
+  Match.value(output).pipe(
+    Match.when(isStream, ({ text }) => [fenced("output")(text)]),
+    Match.when(isError, ({ ename, evalue }) => [fenced("output")(`${ename}: ${evalue}`)]),
+    Match.when(isExecuteResult, mimeText),
+    Match.when(isDisplayData, mimeText),
+    Match.orElse(() => []),
+  );
 
 const cellText =
   (language: string) =>
@@ -91,10 +95,10 @@ const notebookReader: Reader = {
       Effect.flatMap((notebook) =>
         Effect.try({
           try: (): Document => ({ text: markdownOf(notebook), format: "markdown" }),
-          catch: (cause) => new ReadError({ reason: String(cause) }),
+          catch: readErrorOf,
         }),
       ),
-      Effect.mapError((cause) => new ReadError({ reason: String(cause) })),
+      Effect.mapError(readErrorOf),
     ),
 };
 

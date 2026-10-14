@@ -4,7 +4,7 @@ import { Effect, Option, Predicate } from "effect";
 
 import { hasStream } from "./cfb.ts";
 import type { Document, Reader } from "./parser.ts";
-import { ReadError } from "./read-error.ts";
+import { ReadError, readErrorOf } from "./read-error.ts";
 
 const PROPERTY_STREAM = "__substg1.0_";
 
@@ -61,7 +61,7 @@ const outlookReader: Reader = {
     Effect.try({
       try: () =>
         new MsgReader(new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength)).getFileData(),
-      catch: (cause) => new ReadError({ reason: String(cause) }),
+      catch: readErrorOf,
     }).pipe(
       Effect.flatMap((fields) =>
         Option.match(Option.fromNullishOr(fields.error), {

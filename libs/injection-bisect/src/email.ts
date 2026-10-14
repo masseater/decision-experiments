@@ -3,7 +3,8 @@ import PostalMime from "postal-mime";
 import type { Address } from "postal-mime";
 
 import type { Document, Reader } from "./parser.ts";
-import { ReadError } from "./read-error.ts";
+import type { ReadError } from "./read-error.ts";
+import { readErrorOf } from "./read-error.ts";
 
 type Email = Awaited<ReturnType<typeof PostalMime.parse>>;
 
@@ -64,7 +65,7 @@ const documentOf = (email: Email): Document => {
 const emailOf = (bytes: Uint8Array): Effect.Effect<Document, ReadError> =>
   Effect.tryPromise({
     try: () => PostalMime.parse(bytes),
-    catch: (cause) => new ReadError({ reason: String(cause) }),
+    catch: readErrorOf,
   }).pipe(Effect.map((email) => documentOf(email)));
 
 const emailReader: Reader = {

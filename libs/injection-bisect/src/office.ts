@@ -2,7 +2,8 @@ import { Array as Arr, Effect, Record } from "effect";
 import { parseOffice } from "officeparser";
 
 import type { Reader } from "./parser.ts";
-import { ReadError } from "./read-error.ts";
+import type { ReadError } from "./read-error.ts";
+import { readErrorOf } from "./read-error.ts";
 
 const KINDS = {
   docx: [".docx", ".docm", ".dotx"],
@@ -18,12 +19,12 @@ type Kind = keyof typeof KINDS;
 const markdownOf = (bytes: Uint8Array, fileType: Kind): Effect.Effect<string, ReadError> =>
   Effect.tryPromise({
     try: () => parseOffice(bytes, { fileType }),
-    catch: (cause) => new ReadError({ reason: String(cause) }),
+    catch: readErrorOf,
   }).pipe(
     Effect.flatMap((ast) =>
       Effect.tryPromise({
         try: () => ast.to("md"),
-        catch: (cause) => new ReadError({ reason: String(cause) }),
+        catch: readErrorOf,
       }),
     ),
     Effect.map(({ value }) => value),

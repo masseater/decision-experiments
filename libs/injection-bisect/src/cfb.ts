@@ -2,7 +2,7 @@ import { find, read } from "cfb";
 import type { CFB$Container } from "cfb";
 import { Effect, Option, Result } from "effect";
 
-import { ReadError } from "./read-error.ts";
+import { ReadError, readErrorOf } from "./read-error.ts";
 
 const BIT = 2;
 
@@ -21,7 +21,7 @@ const hasFlag =
 const containerOf = (bytes: Uint8Array): Result.Result<CFB$Container, ReadError> =>
   Result.try({
     try: () => read(bytes, { type: "array" }),
-    catch: (cause) => new ReadError({ reason: String(cause) }),
+    catch: readErrorOf,
   });
 
 const hasStream =

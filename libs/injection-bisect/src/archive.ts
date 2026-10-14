@@ -4,7 +4,8 @@ import type { Unzipped } from "fflate";
 import { parseTar } from "nanotar";
 
 import type { Document, Reader } from "./parser.ts";
-import { ReadError } from "./read-error.ts";
+import type { ReadError } from "./read-error.ts";
+import { readErrorOf } from "./read-error.ts";
 
 interface Entry {
   readonly bytes: Uint8Array;
@@ -57,7 +58,7 @@ const sectionsOf =
 const settled = <Data>(cause: unknown, data: Data): Effect.Effect<Data, ReadError> =>
   Option.match(Option.fromNullishOr(cause), {
     onNone: () => Effect.succeed(data),
-    onSome: () => Effect.fail(new ReadError({ reason: String(cause) })),
+    onSome: () => Effect.fail(readErrorOf(cause)),
   });
 
 const unzipped = (bytes: Uint8Array): Effect.Effect<Unzipped, ReadError> =>

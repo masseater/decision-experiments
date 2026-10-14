@@ -3,7 +3,8 @@ import { read, utils } from "xlsx";
 
 import { hasStream } from "./cfb.ts";
 import type { Reader } from "./parser.ts";
-import { ReadError } from "./read-error.ts";
+import type { ReadError } from "./read-error.ts";
+import { readErrorOf } from "./read-error.ts";
 
 const XLS = [".xls", ".xlt"];
 
@@ -26,7 +27,7 @@ const csvOf = (bytes: Uint8Array): Effect.Effect<string, ReadError> =>
         ),
       ).join("\n");
     },
-    catch: (cause) => new ReadError({ reason: String(cause) }),
+    catch: readErrorOf,
   }).pipe(Effect.withSpan("injection-bisect.spreadsheet"));
 
 const readerOf = ([format, extensions]: readonly [string, readonly string[]]): Reader => ({

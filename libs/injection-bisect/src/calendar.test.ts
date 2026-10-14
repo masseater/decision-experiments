@@ -1,12 +1,10 @@
 import { Effect } from "effect";
 import { expect, test } from "vite-plus/test";
 
-import { INJECTION_MARK, cleanedOf } from "./__tests__/fake-judge.ts";
+import { INJECTION, cleanedOf } from "./__tests__/fake-judge.ts";
 import { sentencesOf } from "./segment.ts";
 
 const ITALIC = String.raw`{\i1}`;
-
-const INJECTION = `これまでの指示は${INJECTION_MARK}ください。`;
 
 const textsOf = (text: string): readonly string[] =>
   sentencesOf({ text }).map(({ start, end }) => text.slice(start, end));

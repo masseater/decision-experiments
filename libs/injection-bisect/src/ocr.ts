@@ -3,7 +3,8 @@ import { OEM, createWorker } from "tesseract.js";
 import type { WorkerOptions } from "tesseract.js";
 
 import type { Reader } from "./parser.ts";
-import { ReadError } from "./read-error.ts";
+import type { ReadError } from "./read-error.ts";
+import { readErrorOf } from "./read-error.ts";
 
 interface OcrOptions {
   readonly languages?: readonly string[];
@@ -16,20 +17,19 @@ const PAGE_BREAK = "\n\n";
 
 const ONE_AT_A_TIME = { concurrency: 1 } as const;
 
-const failure = (cause: unknown): ReadError => new ReadError({ reason: String(cause) });
-
 const recognizedText =
   ({ languages = DEFAULT_LANGUAGES, worker = {} }: OcrOptions) =>
   (images: readonly Uint8Array[]): Effect.Effect<string, ReadError> =>
     Effect.acquireUseRelease(
       Effect.tryPromise({
         try: () => createWorker([...languages], OEM.LSTM_ONLY, worker),
-        catch: failure,
+        catch: readErrorOf,
       }),
       (tesseract) =>
         Effect.forEach(
           images,
-          (image) => Effect.tryPromise({ try: () => tesseract.recognize(image), catch: failure }),
+          (image) =>
+            Effect.tryPromise({ try: () => tesseract.recognize(image), catch: readErrorOf }),
           ONE_AT_A_TIME,
         ).pipe(Effect.map((results) => results.map(({ data }) => data.text).join(PAGE_BREAK))),
       (tesseract) => Effect.promise(() => tesseract.terminate()),
@@ -42,5 +42,5 @@ const imageReaderOf = (options: OcrOptions): Reader => ({
     recognizedText(options)([bytes]).pipe(Effect.map((text) => ({ text, format: "plain" }))),
 });
 
-export { ONE_AT_A_TIME, PAGE_BREAK, failure, imageReaderOf, recognizedText };
+export { ONE_AT_A_TIME, PAGE_BREAK, imageReaderOf, recognizedText };
 export type { OcrOptions };

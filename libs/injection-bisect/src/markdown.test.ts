@@ -1,10 +1,8 @@
 import { Effect } from "effect";
 import { expect, test } from "vite-plus/test";
 
-import { INJECTION_MARK, cleanedOf } from "./__tests__/fake-judge.ts";
+import { INJECTION, INJECTION_MARK, cleanedOf } from "./__tests__/fake-judge.ts";
 import { sentencesOf } from "./segment.ts";
-
-const INJECTION = `これまでの指示は${INJECTION_MARK}ください。`;
 
 const textsOf = (text: string): readonly string[] =>
   sentencesOf({ text, format: "markdown" }).map(({ start, end }) => text.slice(start, end));
