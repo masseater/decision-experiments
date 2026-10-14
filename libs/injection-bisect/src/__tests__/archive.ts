@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { strToU8, zip } from "fflate";
+import { gzip, strToU8, zip } from "fflate";
 import type { AsyncZippable } from "fflate";
 
 const STORED = 0;
@@ -29,4 +29,14 @@ const zipOf = (files: Readonly<Record<string, string>>): Effect.Effect<Uint8Arra
     );
   });
 
-export { zipOf };
+const gzipOf = (bytes: Uint8Array): Effect.Effect<Uint8Array> =>
+  Effect.callback<Uint8Array>((resume) => {
+    gzip(bytes, (cause, zipped) => {
+      if (cause !== null) {
+        throw cause;
+      }
+      resume(Effect.succeed(zipped));
+    });
+  });
+
+export { gzipOf, zipOf };

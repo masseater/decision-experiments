@@ -75,6 +75,8 @@ test("lists every format that can be named", () => {
     "plain",
     "upper",
     "zip",
+    "tar",
+    "gzip",
   ]);
 });
 
