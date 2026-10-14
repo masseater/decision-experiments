@@ -47,12 +47,14 @@
   "dependencies": {
     "@effect/ai-openrouter": "catalog:",
     "effect": "catalog:stack",
+    "jsonc-parser": "catalog:",
     "mdast-util-from-markdown": "catalog:",
     "mdast-util-frontmatter": "catalog:",
     "mdast-util-gfm": "catalog:",
     "micromark-extension-frontmatter": "catalog:",
     "micromark-extension-gfm": "catalog:",
-    "parse5": "catalog:"
+    "parse5": "catalog:",
+    "yaml": "catalog:"
   },
   "devDependencies": {
     "@types/mdast": "catalog:",

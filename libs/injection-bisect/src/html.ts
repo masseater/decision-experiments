@@ -3,6 +3,7 @@ import { parse } from "parse5";
 import type { DefaultTreeAdapterMap } from "parse5";
 
 import type { Parser, Span } from "./parser.ts";
+import { looksLikeProse } from "./prose.ts";
 
 type Node = DefaultTreeAdapterMap["node"];
 
@@ -25,8 +26,6 @@ const MARKUP_ATTRIBUTES = new Set([
   "points",
   "transform",
 ]);
-
-const PROSE = /\s|[^ -~]/u;
 
 const QUOTE = /["']/u;
 
@@ -60,7 +59,7 @@ const attributeSpans = (text: string, element: Element): readonly Span[] =>
     Option.fromNullishOr(element.sourceCodeLocation).pipe(
       Option.flatMapNullishOr((location) => location.attrs),
       Option.flatMapNullishOr((attrs) => attrs[name]),
-      Option.filter(() => !MARKUP_ATTRIBUTES.has(name) && PROSE.test(value)),
+      Option.filter(() => !MARKUP_ATTRIBUTES.has(name) && looksLikeProse(value)),
       Option.map(({ startOffset, endOffset }) =>
         valueSpan(text, { start: startOffset, end: endOffset }),
       ),
