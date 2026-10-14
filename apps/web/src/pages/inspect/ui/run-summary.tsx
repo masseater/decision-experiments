@@ -1,10 +1,10 @@
+import { cn } from "@decision-experiments/web-ui";
 import { asksTogether, branchesFor, sentencesOf } from "@r_masseater/injection-bisect";
 import type { ReactNode } from "react";
 
 import { COPY } from "#/pages/inspect/model/copy";
 import { formatCount, formatDollars } from "#/pages/inspect/model/format";
 import type { Answer, Phase, Row, Trace } from "#/pages/inspect/model/trace";
-import { cn } from "#/shared/lib/utils";
 
 import { FailureReason } from "./failure-reason";
 import { GradeLine } from "./grade-line";

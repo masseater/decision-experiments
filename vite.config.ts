@@ -190,11 +190,11 @@ export default defineConfig({
         rules: { "import/no-default-export": "off" },
       },
       {
-        files: ["**/shared/ui/**"],
+        files: ["**/shared/ui/**", "libs/web-ui/src/ui/**"],
         rules: { "shadcn/no-restyle": "off", "react/jsx-props-no-spreading": "off" },
       },
       {
-        files: ["apps/web/src/**/*.{ts,tsx}"],
+        files: ["apps/*/src/**/*.{ts,tsx}"],
         rules: decisionRules,
       },
       {
@@ -259,7 +259,7 @@ export default defineConfig({
         ],
       },
       "test-all": "vp run -r test",
-      eslint: "NODE_OPTIONS=--max-old-space-size=4096 eslint --max-warnings 0 .",
+      eslint: "NODE_OPTIONS=--max-old-space-size=6144 eslint --max-warnings 0 .",
       syncpack: "syncpack lint",
       "steiger-all": "vp run -r steiger",
       "fallow-all": "vp run -r fallow",

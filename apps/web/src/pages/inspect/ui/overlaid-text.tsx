@@ -1,3 +1,4 @@
+import { cn } from "@decision-experiments/web-ui";
 import { useCallback } from "react";
 import type { ChangeEvent, ReactNode } from "react";
 
@@ -9,7 +10,6 @@ import { MAX_CHARS } from "#/pages/inspect/model/models";
 import { piecesOf } from "#/pages/inspect/model/overlay";
 import type { Piece } from "#/pages/inspect/model/overlay";
 import { traceOf } from "#/pages/inspect/model/trace";
-import { cn } from "#/shared/lib/utils";
 
 import { HighlightTextarea } from "./highlight-textarea";
 import { ANSWER_CLASS, TONE_CLASS } from "./tone";

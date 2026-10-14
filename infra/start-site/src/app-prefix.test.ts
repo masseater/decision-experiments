@@ -5,7 +5,9 @@ import { inMemoryState } from "alchemy/State";
 import { Effect, Exit, Layer, Match } from "effect";
 import { expect, test } from "vite-plus/test";
 
-import { APP_NAME, requireAppPrefix } from "./app-name.ts";
+import { requireAppPrefix } from "./app-prefix.ts";
+
+const APP_NAME = "example";
 
 type Resource =
   | Readonly<{ type: "database"; props: Readonly<{ name?: string }> }>
@@ -23,7 +25,7 @@ const deploys = (stackName: string, resource: Resource): Promise<boolean> =>
             zone: ({ name }) => Zone.Zone("Zone", { name }),
           }),
         );
-        yield* requireAppPrefix;
+        yield* requireAppPrefix(APP_NAME);
       }),
     ).pipe(
       Effect.provideService(Stage, "test"),
