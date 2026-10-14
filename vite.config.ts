@@ -122,6 +122,7 @@ export default defineConfig({
           allow: [
             { from: "lib", name: "Request" },
             { from: "lib", name: "Uint8Array" },
+            { from: "lib", name: "DataView" },
             {
               from: "package",
               package: "@cloudflare/workers-types",
