@@ -27,3 +27,11 @@ test("finds and removes an injection in an SRT cue", () =>
       });
     }),
   ));
+
+test("splits cues on any line ending", () => {
+  expect(
+    textsOf(
+      "WEBVTT\r\r00:00:01.000 --> 00:00:03.000\rこんにちは。\r\r00:00:04.000 --> 00:00:06.000\r始めます。\r",
+    ),
+  ).toStrictEqual(["こんにちは。", "始めます。"]);
+});

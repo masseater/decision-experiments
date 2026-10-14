@@ -4,13 +4,15 @@ import type { Parser, Span, Unit } from "./parser.ts";
 
 const NEXT = 1;
 
-const BLOCK = /[^\n]*\S[^\n]*(?:\n[^\n]*\S[^\n]*)*/gu;
+const BLOCK = /[^\r\n]*\S[^\r\n]*(?:(?:\r\n|\r|\n)[^\r\n]*\S[^\r\n]*)*/gu;
+
+const LINE = /[^\r\n]+/gu;
 
 const TIMING = /-->/u;
 
 const VTT_HEADER = /^\s*WEBVTT\b/u;
 
-const SRT_START = /^\s*\d+\s*\r?\n\s*\d{1,2}:\d{2}:\d{2}[,.]\d{3}\s*-->/u;
+const SRT_START = /^\s*\d+[^\S\r\n]*(?:\r\n|\r|\n)\s*\d{1,2}:\d{2}:\d{2}[,.]\d{3}\s*-->/u;
 
 const SKIPPED = /^(?:WEBVTT|STYLE|REGION)\b/u;
 
@@ -20,15 +22,11 @@ const blocksOf = (text: string): readonly Span[] =>
     return { start: match.index, end: match.index + block.length };
   });
 
-const linesOf = (text: string, { start, end }: Span): readonly Span[] => {
-  const lines: Span[] = [];
-  let from = start;
-  for (const line of text.slice(start, end).split("\n")) {
-    lines.push({ start: from, end: from + line.length });
-    from += line.length + "\n".length;
-  }
-  return lines;
-};
+const linesOf = (text: string, { start, end }: Span): readonly Span[] =>
+  [...text.slice(start, end).matchAll(LINE)].map((match) => {
+    const [line] = match;
+    return { start: start + match.index, end: start + match.index + line.length };
+  });
 
 const cueText = (text: string, block: Span): readonly Unit[] => {
   const lines = linesOf(text, block);

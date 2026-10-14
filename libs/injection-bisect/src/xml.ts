@@ -6,7 +6,7 @@ import { looksLikeProse } from "./prose.ts";
 
 const DECLARATION = /^\s*(?:<\?xml\b|<(?:rss|feed|rdf:RDF)\b)/u;
 
-const ATTRIBUTE = /\s[\w:.-]+\s*=\s*(?<quote>["'])(?<value>[^"']*)\k<quote>/gu;
+const ATTRIBUTE = /\s[\w:.-]+\s*=\s*(?:"(?<double>[^"]*)"|'(?<single>[^']*)')/gu;
 
 const CDATA_OPEN = "<![CDATA[".length;
 
@@ -24,7 +24,9 @@ const attributeUnits = (text: string, { start, end }: Span): readonly Unit[] =>
   [...text.slice(start, end).matchAll(ATTRIBUTE)].flatMap((match) => {
     const [whole] = match;
     const value = Option.getOrElse(
-      Option.fromNullishOr(match.groups).pipe(Option.flatMapNullishOr(({ value: found }) => found)),
+      Option.fromNullishOr(match.groups).pipe(
+        Option.flatMapNullishOr(({ double, single }) => double ?? single),
+      ),
       () => "",
     );
     if (!looksLikeProse(value)) {

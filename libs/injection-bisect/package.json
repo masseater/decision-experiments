@@ -55,9 +55,11 @@
     "micromark-extension-frontmatter": "catalog:",
     "micromark-extension-gfm": "catalog:",
     "parse5": "catalog:",
+    "refractor": "catalog:",
     "yaml": "catalog:"
   },
   "devDependencies": {
+    "@types/hast": "catalog:",
     "@types/mdast": "catalog:",
     "@types/node": "catalog:",
     "vite-plus": "catalog:stack"

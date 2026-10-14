@@ -15,6 +15,7 @@ type Unit =
 interface Parser {
   readonly format: string;
   readonly extensions: readonly string[];
+  readonly aliases?: readonly string[];
   readonly accepts: (text: string) => boolean;
   readonly unitsOf: (text: string) => readonly Unit[];
 }
