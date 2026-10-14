@@ -2,14 +2,11 @@ import MsgReaderModule from "@kenjiuno/msgreader";
 import type { FieldsData } from "@kenjiuno/msgreader";
 import { Effect, Option, Predicate } from "effect";
 
+import { hasStream } from "./cfb.ts";
 import type { Document, Reader } from "./parser.ts";
-import { ReadError } from "./read-error.ts";
+import { ReadError, readErrorOf } from "./read-error.ts";
 
-const COMPOUND_FILE = "\u00D0\u00CF\u0011\u00E0\u00A1\u00B1\u001A\u00E1";
-
-const PROPERTY_STREAM = "__substg1.0_".replaceAll(/(?<letter>.)/gu, "$<letter>\0");
-
-const latin1 = new TextDecoder("latin1");
+const PROPERTY_STREAM = "__substg1.0_";
 
 const isMsgReader = (candidate: unknown): candidate is typeof MsgReaderModule =>
   Predicate.isFunction(candidate);
@@ -56,20 +53,15 @@ const documentOf = (fields: FieldsData): Document => {
   });
 };
 
-const looksLikeOutlook = (bytes: Uint8Array): boolean => {
-  const text = latin1.decode(bytes);
-  return text.startsWith(COMPOUND_FILE) && text.includes(PROPERTY_STREAM);
-};
-
 const outlookReader: Reader = {
   format: "msg",
   extensions: [".msg"],
-  accepts: looksLikeOutlook,
+  accepts: hasStream((name) => name.startsWith(PROPERTY_STREAM)),
   read: (bytes) =>
     Effect.try({
       try: () =>
         new MsgReader(new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength)).getFileData(),
-      catch: (cause) => new ReadError({ reason: String(cause) }),
+      catch: readErrorOf,
     }).pipe(
       Effect.flatMap((fields) =>
         Option.match(Option.fromNullishOr(fields.error), {

@@ -58,6 +58,18 @@ catalog:
   "@tesseract.js-data/eng": ^1.0.0
   playwright-core: 1.64.0
   "@kenjiuno/msgreader": ^1.28.0
+  officeparser: ^8.1.1
+  file-type: ^22.1.0
+  nanotar: ^0.3.0
+  xlsx: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
+  cfb: ^1.2.2
+  papaparse: ^5.7.0
+  "@types/papaparse": ^5.5.2
+  ass-compiler: ^0.1.16
+  "@plussub/srt-vtt-parser": ^2.0.5
+  ical.js: ^2.2.1
+  linguist-languages: ^9.5.0
+  "@jupyterlab/nbformat": ^4.5.11
 catalogs:
   stack:
     "@distilled.cloud/cloudflare": 1.0.0-rc.13

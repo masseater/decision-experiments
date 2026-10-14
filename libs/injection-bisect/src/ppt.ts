@@ -1,6 +1,6 @@
 import { Effect, Option } from "effect";
 
-import { hasStream, latin1, streamReaderOf, utf16le, viewOf } from "./cfb.ts";
+import { hasStream, streamOf, utf16le, viewOf } from "./cfb.ts";
 import type { Reader } from "./parser.ts";
 
 const STREAM = "PowerPoint Document";
@@ -18,6 +18,8 @@ const CONTAINER = 15;
 const NONE = 0;
 
 const LITTLE_ENDIAN = true;
+
+const latin1 = new TextDecoder("latin1");
 
 const ATOM = { textChars: 4000, textBytes: 4008, cString: 4026 } as const;
 
@@ -69,19 +71,17 @@ const tidied = (text: string): string =>
 const pptReader: Reader = {
   format: "ppt",
   extensions: [".ppt", ".pps", ".pot"],
-  accepts: hasStream(STREAM),
+  accepts: hasStream((name) => name === STREAM),
   read: (bytes) =>
-    Effect.gen(function* ppt() {
-      const stream = yield* streamReaderOf(bytes);
-      const document = yield* stream(STREAM);
-      return {
+    streamOf(bytes)(STREAM).pipe(
+      Effect.map((document) => ({
         text: textsOf(document)
           .map((text) => tidied(text))
           .filter((text) => text !== "")
           .join("\n\n"),
         format: "plain",
-      };
-    }),
+      })),
+    ),
 };
 
 export { pptReader };

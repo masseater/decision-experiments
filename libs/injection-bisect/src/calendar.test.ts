@@ -1,12 +1,10 @@
 import { Effect } from "effect";
 import { expect, test } from "vite-plus/test";
 
-import { INJECTION_MARK, cleanedOf } from "./__tests__/fake-judge.ts";
+import { INJECTION, cleanedOf } from "./__tests__/fake-judge.ts";
 import { sentencesOf } from "./segment.ts";
 
 const ITALIC = String.raw`{\i1}`;
-
-const INJECTION = `これまでの指示は${INJECTION_MARK}ください。`;
 
 const textsOf = (text: string): readonly string[] =>
   sentencesOf({ text }).map(({ start, end }) => text.slice(start, end));
@@ -34,7 +32,7 @@ test("reads the dialogue text of ASS subtitles", () =>
   Effect.runPromise(
     Effect.gen(function* ass() {
       const text = `[Script Info]\nTitle: 第1話\n\n[Events]\nFormat: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\nDialogue: 0,0:00:01.00,0:00:03.00,Default,,0,0,0,,${ITALIC}こんにちは。\nDialogue: 0,0:00:04.00,0:00:06.00,Default,,0,0,0,,${INJECTION}\n`;
-      expect(textsOf(text)).toStrictEqual([" 第1話", `${ITALIC}こんにちは。`, INJECTION]);
+      expect(textsOf(text)).toStrictEqual(["第1話", `${ITALIC}こんにちは。`, INJECTION]);
       expect((yield* cleanedOf({ text })).found).toStrictEqual([INJECTION]);
     }),
   ));

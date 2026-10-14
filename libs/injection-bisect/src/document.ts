@@ -1,4 +1,5 @@
 import { Array as Arr, Effect, Option } from "effect";
+import { fileTypeFromBuffer } from "file-type";
 
 import { ARCHIVE_FORMATS, archiveReadersOf } from "./archive.ts";
 import type { Document, Parser, Reader } from "./parser.ts";
@@ -68,23 +69,36 @@ const named = (input: ReadInput, format: string): Effect.Effect<Document, ReadEr
     },
   );
 
-const detected = (input: ReadInput): Effect.Effect<Document, ReadError> => {
-  const name = input.name ?? "";
-  const extension = extensionOf(name);
-  const fileName = name.slice(name.lastIndexOf("/") + "/".length).toLowerCase();
-  const byExtension = Arr.findFirst(
-    [...readersOf(input), ...parsersOf(input)],
-    ({ extensions }) => extensions.includes(extension) || extensions.includes(fileName),
+const withExtension =
+  (names: readonly string[]) =>
+  ({ extensions }: { readonly extensions: readonly string[] }): boolean =>
+    names.some((name) => extensions.includes(name));
+
+const sniffed = (bytes: Uint8Array): Effect.Effect<readonly string[]> =>
+  Effect.promise(() => fileTypeFromBuffer(bytes)).pipe(
+    Effect.map((type) =>
+      Option.toArray(Option.map(Option.fromNullishOr(type), ({ ext }) => `.${ext}`)),
+    ),
   );
-  const byContent = Arr.findFirst(readersOf(input), (reader) => reader.accepts(input.bytes));
-  return Option.match(
-    Option.orElse(byExtension, () => byContent),
-    {
+
+const accepting =
+  (bytes: Uint8Array) =>
+  ({ accepts }: Reader): boolean =>
+    Option.exists(Option.fromNullishOr(accepts), (accept) => accept(bytes));
+
+const detected = (input: ReadInput): Effect.Effect<Document, ReadError> =>
+  Effect.gen(function* detect() {
+    const name = input.name ?? "";
+    const fileName = name.slice(name.lastIndexOf("/") + "/".length).toLowerCase();
+    const candidates = [...readersOf(input), ...parsersOf(input)];
+    const byName = Arr.findFirst(candidates, withExtension([extensionOf(name), fileName]));
+    const bySignature = Arr.findFirst(candidates, withExtension(yield* sniffed(input.bytes)));
+    const byContent = Arr.findFirst(readersOf(input), accepting(input.bytes));
+    return yield* Option.match(Option.firstSomeOf([byName, bySignature, byContent]), {
       onSome: ({ format }) => named(input, format),
       onNone: () => Effect.succeed({ text: decoder.decode(input.bytes), format: AUTO }),
-    },
-  );
-};
+    });
+  });
 
 const readDocument = (input: ReadInput): Effect.Effect<Document, ReadError> => {
   const archiveReaders = archiveReadersOf(({ bytes, name }) =>

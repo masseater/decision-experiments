@@ -46,22 +46,33 @@
   },
   "dependencies": {
     "@effect/ai-openrouter": "catalog:",
+    "@jupyterlab/nbformat": "catalog:",
     "@kenjiuno/msgreader": "catalog:",
+    "@plussub/srt-vtt-parser": "catalog:",
+    "ass-compiler": "catalog:",
+    "cfb": "catalog:",
     "effect": "catalog:stack",
     "fast-png": "catalog:",
     "fflate": "catalog:",
+    "file-type": "catalog:",
     "htmlparser2": "catalog:",
+    "ical.js": "catalog:",
     "jsonc-parser": "catalog:",
+    "linguist-languages": "catalog:",
     "mdast-util-from-markdown": "catalog:",
     "mdast-util-frontmatter": "catalog:",
     "mdast-util-gfm": "catalog:",
     "micromark-extension-frontmatter": "catalog:",
     "micromark-extension-gfm": "catalog:",
+    "nanotar": "catalog:",
+    "officeparser": "catalog:",
+    "papaparse": "catalog:",
     "parse5": "catalog:",
     "postal-mime": "catalog:",
     "refractor": "catalog:",
     "tesseract.js": "catalog:",
     "unpdf": "catalog:",
+    "xlsx": "catalog:",
     "yaml": "catalog:"
   },
   "devDependencies": {
@@ -69,6 +80,7 @@
     "@types/hast": "catalog:",
     "@types/mdast": "catalog:",
     "@types/node": "catalog:",
+    "@types/papaparse": "catalog:",
     "vite-plus": "catalog:stack"
   }
 }

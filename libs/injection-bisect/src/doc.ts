@@ -1,6 +1,6 @@
 import { Array as Arr, Effect, Option, Order } from "effect";
 
-import { hasFlag, hasStream, streamReaderOf, utf16le, viewOf } from "./cfb.ts";
+import { hasFlag, hasStream, streamOf, utf16le, viewOf } from "./cfb.ts";
 import type { Reader } from "./parser.ts";
 
 const WORD_DOCUMENT = "WordDocument";
@@ -138,10 +138,10 @@ const textOf = (word: Uint8Array, table: Uint8Array): string => {
 const docReader: Reader = {
   format: "doc",
   extensions: [".doc", ".dot"],
-  accepts: hasStream(WORD_DOCUMENT),
+  accepts: hasStream((name) => name === WORD_DOCUMENT),
   read: (bytes) =>
     Effect.gen(function* doc() {
-      const stream = yield* streamReaderOf(bytes);
+      const stream = streamOf(bytes);
       const word = yield* stream(WORD_DOCUMENT);
       const table = yield* stream(tableName(viewOf(word)));
       return { text: textOf(word, table), format: "plain" };

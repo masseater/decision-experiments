@@ -115,6 +115,7 @@ export default defineConfig({
       "node/no-top-level-await": "off",
       "eslint/one-var": ["error", "never"],
       "eslint/no-restricted-imports": ["error", restrictedImports],
+      "import/no-namespace": ["error", { ignore: ["linguist-languages"] }],
       "typescript/prefer-readonly-parameter-types": [
         "error",
         {
@@ -129,6 +130,19 @@ export default defineConfig({
               name: "AnalyticsEngineDataset",
             },
             { from: "package", package: "@tanstack/query-core", name: "QueryClient" },
+            { from: "package", package: "ical.js", name: "Component" },
+            {
+              from: "package",
+              package: "@jupyterlab/nbformat",
+              name: [
+                "ICell",
+                "IDisplayData",
+                "IExecuteResult",
+                "INotebookContent",
+                "IOutput",
+                "MultilineString",
+              ],
+            },
             {
               from: "package",
               package: "react",

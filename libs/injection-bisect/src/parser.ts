@@ -28,7 +28,7 @@ interface Document {
 interface Reader {
   readonly format: string;
   readonly extensions: readonly string[];
-  readonly accepts: (bytes: Uint8Array) => boolean;
+  readonly accepts?: (bytes: Uint8Array) => boolean;
   readonly read: (bytes: Uint8Array) => Effect.Effect<Document, ReadError>;
 }
 

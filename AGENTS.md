@@ -89,7 +89,7 @@ release. Add a tool name to select part of the graph. For example, run
 ## injection-bisect
 
 - ライブラリの版は手で上げない。
-- 入力の形式ごとの処理は `segment.ts` に足さず、`Parser` として並びに加える。
+- 入力の形式ごとの処理は `segment.ts` に足さず、`Parser` として並びに加える。形式の読み取りは自前で書かず、officeparser・SheetJS・papaparse・ical.js・srt-vtt-parser・ass-compiler・nbformat・linguist-languages と refractor・file-type などのライブラリを使う。
 - `respan/` のモデルには、1 リクエストに区間ごとの質問を並べない。choice の質問も使わない。
 - 既定のモデル `respan/span-01-lite` を変えるときは、計測し直してユーザーに確認する。
 - 精度・費用・時間の比較は、無害な入力と注入を含む入力の両方で、フロンティアモデルに直接判定させた場合と並べる。計測の前後に `GET https://openrouter.ai/api/v1/key` でキーの残りを確かめる。

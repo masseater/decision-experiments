@@ -1,10 +1,11 @@
-import { Effect } from "effect";
-import { gunzip } from "fflate";
+import { Effect, Option } from "effect";
+import { gunzip, unzip } from "fflate";
+import type { Unzipped } from "fflate";
+import { parseTar } from "nanotar";
 
 import type { Document, Reader } from "./parser.ts";
-import { ReadError } from "./read-error.ts";
-import { isTar, tarEntries } from "./tar.ts";
-import { unzipped } from "./zip.ts";
+import type { ReadError } from "./read-error.ts";
+import { readErrorOf } from "./read-error.ts";
 
 interface Entry {
   readonly bytes: Uint8Array;
@@ -12,8 +13,6 @@ interface Entry {
 }
 
 type ReadEntry = (entry: Entry) => Effect.Effect<Document, ReadError>;
-
-const SIGNATURE = "PK\u0003\u0004";
 
 const FENCE = /`+/gu;
 
@@ -23,11 +22,7 @@ const LONGER = 1;
 
 const ARCHIVE_FORMATS = ["zip", "tar", "gzip"] as const;
 
-const GZIP = "\u001F\u008B";
-
 const NUL = "\0";
-
-const HEAD_START = 0;
 
 const SKIPPED = ["__MACOSX/", ".DS_Store"];
 
@@ -60,18 +55,23 @@ const sectionsOf =
       { concurrency: 1 },
     ).pipe(Effect.map((sections) => ({ text: sections.flat().join("\n\n"), format: "markdown" })));
 
-const startsWith = (bytes: Uint8Array, signature: string): boolean =>
-  String.fromCodePoint(...bytes.subarray(HEAD_START, signature.length)) === signature;
+const settled = <Data>(cause: unknown, data: Data): Effect.Effect<Data, ReadError> =>
+  Option.match(Option.fromNullishOr(cause), {
+    onNone: () => Effect.succeed(data),
+    onSome: () => Effect.fail(readErrorOf(cause)),
+  });
+
+const unzipped = (bytes: Uint8Array): Effect.Effect<Unzipped, ReadError> =>
+  Effect.callback<Unzipped, ReadError>((resume) => {
+    unzip(bytes, { filter: ({ name }) => kept(name) }, (cause, files) => {
+      resume(settled(cause, files));
+    });
+  });
 
 const gunzipped = (bytes: Uint8Array): Effect.Effect<Uint8Array, ReadError> =>
   Effect.callback<Uint8Array, ReadError>((resume) => {
     gunzip(bytes, (cause, data) => {
-      if (cause === null) {
-        resume(Effect.succeed(data));
-      } else {
-        const failure = new ReadError({ reason: String(cause) });
-        resume(Effect.fail(failure));
-      }
+      resume(settled(cause, data));
     });
   });
 
@@ -79,9 +79,8 @@ const archiveReadersOf = (read: ReadEntry): readonly Reader[] => [
   {
     format: "zip",
     extensions: [".zip"],
-    accepts: (bytes) => startsWith(bytes, SIGNATURE),
     read: (bytes) =>
-      unzipped({ bytes, keep: kept }).pipe(
+      unzipped(bytes).pipe(
         Effect.map((files) => Object.entries(files).map(([name, data]) => ({ name, bytes: data }))),
         Effect.flatMap(sectionsOf(read)),
       ),
@@ -89,13 +88,21 @@ const archiveReadersOf = (read: ReadEntry): readonly Reader[] => [
   {
     format: "tar",
     extensions: [".tar"],
-    accepts: isTar,
-    read: (bytes) => sectionsOf(read)(tarEntries(bytes).filter(({ name }) => kept(name))),
+    read: (bytes) =>
+      sectionsOf(read)(
+        parseTar(bytes).flatMap(({ name, type, data }) => {
+          if (type !== "file" || !kept(name)) {
+            return [];
+          }
+          return Option.toArray(
+            Option.map(Option.fromNullishOr(data), (body) => ({ name, bytes: body })),
+          );
+        }),
+      ),
   },
   {
     format: "gzip",
-    extensions: [".gz", ".tgz"],
-    accepts: (bytes) => startsWith(bytes, GZIP),
+    extensions: [".gz", ".tgz", ".tar.gz"],
     read: (bytes) =>
       gunzipped(bytes).pipe(Effect.flatMap((inner) => read({ bytes: inner, name: "" }))),
   },

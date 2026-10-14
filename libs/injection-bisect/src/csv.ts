@@ -1,58 +1,37 @@
-import { Option } from "effect";
+import { Array as Arr } from "effect";
+import { parse } from "papaparse";
 
+import { proseUnitsOf } from "./located.ts";
 import type { Parser, Unit } from "./parser.ts";
-import { looksLikeProse } from "./prose.ts";
 
-const COMMA_FIELD = /(?:"(?<quoted>(?:[^"]|"")*)"|(?<plain>[^,\r\n]*))(?:,|\r?\n|$)/gu;
+const DELIMITERS = { comma: ",", tab: "\t" } as const;
 
-const TAB_FIELD = /(?:"(?<quoted>(?:[^"]|"")*)"|(?<plain>[^\t\r\n]*))(?:\t|\r?\n|$)/gu;
+type Delimiter = keyof typeof DELIMITERS;
 
-const QUOTE = '"'.length;
+const ROWS = { comma: 2, tab: 1 } as const;
 
-const FIELDS = { comma: COMMA_FIELD, tab: TAB_FIELD } as const;
-
-const QUOTED = /"(?:[^"]|"")*"/gu;
-
-const LINE_BREAK = /\r\n|\r|\n/u;
-
-const NONE = 0;
-
-const ROWS = { comma: 3, tab: 2 } as const;
-
-const DELIMITERS = { comma: /,/gu, tab: /\t/gu } as const;
-
-const delimitersIn = (line: string, delimiter: keyof typeof FIELDS): number =>
-  [...line.replaceAll(QUOTED, "").matchAll(DELIMITERS[delimiter])].length;
+const COLUMNS = 2;
 
 const looksLikeTable =
-  (delimiter: keyof typeof FIELDS) =>
+  (delimiter: Delimiter) =>
   (text: string): boolean => {
-    const counts = text
-      .split(LINE_BREAK)
-      .filter((line) => line.trim() !== "")
-      .map((line) => delimitersIn(line, delimiter));
-    const [first = NONE] = counts;
+    const { data, errors, meta } = parse(text, {
+      delimiter: DELIMITERS[delimiter],
+      header: true,
+      skipEmptyLines: true,
+    });
     return (
-      counts.length >= ROWS[delimiter] && first > NONE && counts.every((count) => count === first)
+      Arr.isReadonlyArrayEmpty(errors) &&
+      data.length >= ROWS[delimiter] &&
+      (meta.fields ?? []).length >= COLUMNS
     );
   };
 
-const groupOf = (
-  groups: Readonly<Partial<Record<string, string>>> | undefined,
-  name: string,
-): Option.Option<string> =>
-  Option.fromNullishOr(groups).pipe(Option.flatMapNullishOr((found) => found[name]));
-
-const fieldsOf = (text: string, delimiter: keyof typeof FIELDS): readonly Unit[] =>
-  [...text.matchAll(FIELDS[delimiter])].flatMap((match) =>
-    Option.match(groupOf(match.groups, "quoted"), {
-      onSome: (quoted) => [{ start: match.index + QUOTE, value: quoted }],
-      onNone: () => [
-        { start: match.index, value: Option.getOrElse(groupOf(match.groups, "plain"), () => "") },
-      ],
-    })
-      .filter(({ value }) => looksLikeProse(value.trim()))
-      .map(({ start, value }): Unit => ({ kind: "prose", start, end: start + value.length })),
+const fieldsOf = (text: string, delimiter: Delimiter): readonly Unit[] =>
+  proseUnitsOf({ text })(
+    parse<readonly string[]>(text, { delimiter: DELIMITERS[delimiter] })
+      .data.flat()
+      .map((value) => value.replaceAll('"', '""')),
   );
 
 const csvParser: Parser = {
