@@ -35,6 +35,7 @@ export { imageReaderOf } from "./ocr.ts";
 export type { OcrOptions } from "./ocr.ts";
 export { pdfReaderOf } from "./pdf.ts";
 export { ReadError } from "./read-error.ts";
+export { rtfReader } from "./rtf.ts";
 export { removeRegions } from "./remove.ts";
 export { DEFAULT_PARSERS } from "./parsers.ts";
 export { AUTO, plainParser, segmenterOf, sentencesOf } from "./segment.ts";

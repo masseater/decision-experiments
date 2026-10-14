@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 
-import { emailOf, looksLikeEmail } from "./email.ts";
+import { emailOf, emailReader, looksLikeEmail } from "./email.ts";
 import type { Document, Reader } from "./parser.ts";
 
 const SEPARATOR = /^From .*\r?\n/mu;
@@ -58,4 +58,6 @@ const mboxReader: Reader = {
     ),
 };
 
-export { mboxReader };
+const MAIL_READERS: readonly Reader[] = [mboxReader, emailReader];
+
+export { MAIL_READERS, mboxReader };

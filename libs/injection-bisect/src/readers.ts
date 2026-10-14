@@ -1,6 +1,5 @@
-import { emailReader } from "./email.ts";
 import { epubReader } from "./epub.ts";
-import { mboxReader } from "./mbox.ts";
+import { MAIL_READERS } from "./mbox.ts";
 import { notebookReader } from "./notebook.ts";
 import { imageReaderOf } from "./ocr.ts";
 import type { OcrOptions } from "./ocr.ts";
@@ -8,6 +7,7 @@ import { OFFICE_READERS } from "./office.ts";
 import { outlookReader } from "./outlook.ts";
 import type { Reader } from "./parser.ts";
 import { pdfReaderOf } from "./pdf.ts";
+import { rtfReader } from "./rtf.ts";
 
 const readersWith = (ocr: OcrOptions): readonly Reader[] => [
   pdfReaderOf(ocr),
@@ -15,9 +15,9 @@ const readersWith = (ocr: OcrOptions): readonly Reader[] => [
   ...OFFICE_READERS,
   epubReader,
   notebookReader,
-  mboxReader,
   outlookReader,
-  emailReader,
+  ...MAIL_READERS,
+  rtfReader,
 ];
 
 const DEFAULT_READERS = readersWith({});
