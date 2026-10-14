@@ -3,10 +3,10 @@ import { FileUp } from "lucide-react";
 import { useCallback } from "react";
 import type { ChangeEvent, ReactNode } from "react";
 
-import { useOpenPicture } from "#/pages/extract/api/use-open-picture";
+import { usePicture } from "#/pages/extract/api/use-picture";
+import type { Picture } from "#/pages/extract/api/use-picture";
 import { COPY } from "#/pages/extract/model/copy";
-import { usePicture } from "#/pages/extract/model/draft";
-import type { Picture } from "#/pages/extract/model/draft";
+import { useSetChoice } from "#/pages/extract/model/draft";
 import { SAMPLES } from "#/pages/extract/model/samples";
 
 import { SampleButton } from "./sample-button";
@@ -25,17 +25,17 @@ const statusOf = (picture: Picture): string => {
 
 const PicturePicker = (): ReactNode => {
   const picture = usePicture();
-  const open = useOpenPicture();
+  const choose = useSetChoice();
   const pick = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const file = Option.fromNullishOr(event.target.files).pipe(
         Option.flatMapNullishOr((files) => files.item(FIRST)),
       );
       if (Option.isSome(file)) {
-        open(file.value.name, URL.createObjectURL(file.value));
+        choose({ status: "chosen", name: file.value.name, url: URL.createObjectURL(file.value) });
       }
     },
-    [open],
+    [choose],
   );
   return (
     <div className="flex flex-wrap items-center gap-2">
