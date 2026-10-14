@@ -135,6 +135,7 @@ export default defineConfig({
             },
             { from: "package", package: "clsx", name: "ClassValue" },
             { from: "package", package: "unpdf", name: "PDFDocumentProxy" },
+            { from: "package", package: "@kenjiuno/msgreader", name: "FieldsData" },
             {
               from: "package",
               package: "parse5",

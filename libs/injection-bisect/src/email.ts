@@ -61,15 +61,17 @@ const documentOf = (email: Email): Document => {
   return { text: [headers.join("\n"), ...bodies].join("\n\n"), format: formatOf(email) };
 };
 
+const emailOf = (bytes: Uint8Array): Effect.Effect<Document, ReadError> =>
+  Effect.tryPromise({
+    try: () => PostalMime.parse(bytes),
+    catch: (cause) => new ReadError({ reason: String(cause) }),
+  }).pipe(Effect.map((email) => documentOf(email)));
+
 const emailReader: Reader = {
   format: "email",
   extensions: [".eml"],
   accepts: looksLikeEmail,
-  read: (bytes) =>
-    Effect.tryPromise({
-      try: () => PostalMime.parse(bytes),
-      catch: (cause) => new ReadError({ reason: String(cause) }),
-    }).pipe(Effect.map((email) => documentOf(email))),
+  read: emailOf,
 };
 
-export { emailReader };
+export { emailOf, emailReader, looksLikeEmail };

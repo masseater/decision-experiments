@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "@effect/ai-openrouter": "catalog:",
+    "@kenjiuno/msgreader": "catalog:",
     "effect": "catalog:stack",
     "fast-png": "catalog:",
     "fflate": "catalog:",
