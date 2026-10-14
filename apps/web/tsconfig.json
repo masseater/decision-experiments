@@ -6,8 +6,7 @@
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": ["vite/client", "@cloudflare/workers-types"],
     "paths": {
-      "#/*": ["./src/*"],
-      "#docs/*": ["../../docs/*"]
+      "#/*": ["./src/*"]
     },
     "plugins": [
       {

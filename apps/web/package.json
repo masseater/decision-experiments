@@ -4,8 +4,7 @@
   "private": true,
   "type": "module",
   "imports": {
-    "#/*": "./src/*",
-    "#docs/*": "../../docs/*"
+    "#/*": "./src/*"
   },
   "scripts": {
     "dev": "alchemy dev",
