@@ -5,7 +5,8 @@ import type { JudgeError } from "./judge-error.ts";
 import { InjectionJudge } from "./judge.ts";
 import type { Verdict } from "./judge.ts";
 import type { Parser, Span } from "./parser.ts";
-import { AUTO, DEFAULT_PARSERS, segmenterOf } from "./segment.ts";
+import { DEFAULT_PARSERS } from "./parsers.ts";
+import { AUTO, segmenterOf } from "./segment.ts";
 
 const DEFAULT_MODEL = "respan/span-01-lite";
 

@@ -1,5 +1,6 @@
 import { Array as Arr, Option } from "effect";
 
+import { assParser } from "./ass.ts";
 import type { Parser, Span, Unit } from "./parser.ts";
 
 const NEXT = 1;
@@ -65,4 +66,6 @@ const srtParser: Parser = {
   unitsOf: subtitleUnitsOf,
 };
 
-export { srtParser, vttParser };
+const SUBTITLE_PARSERS: readonly Parser[] = [vttParser, srtParser, assParser];
+
+export { SUBTITLE_PARSERS, srtParser, vttParser };

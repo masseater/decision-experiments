@@ -5,9 +5,10 @@ import { imageReaderOf } from "./ocr.ts";
 import type { OcrOptions } from "./ocr.ts";
 import { OFFICE_READERS } from "./office.ts";
 import type { Document, Parser, Reader } from "./parser.ts";
+import { DEFAULT_PARSERS } from "./parsers.ts";
 import { pdfReaderOf } from "./pdf.ts";
 import { ReadError } from "./read-error.ts";
-import { AUTO, DEFAULT_PARSERS, isNamed, plainParser } from "./segment.ts";
+import { AUTO, isNamed, plainParser } from "./segment.ts";
 
 const readersWith = (ocr: OcrOptions): readonly Reader[] => [
   pdfReaderOf(ocr),

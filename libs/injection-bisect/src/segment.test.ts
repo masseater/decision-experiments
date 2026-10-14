@@ -2,7 +2,8 @@ import { Array as Arr, Option } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import type { Parser, Unit } from "./parser.ts";
-import { DEFAULT_PARSERS, plainParser, segmenterOf, sentencesOf } from "./segment.ts";
+import { DEFAULT_PARSERS } from "./parsers.ts";
+import { plainParser, segmenterOf, sentencesOf } from "./segment.ts";
 
 const detectedFormatOf = (text: string): string =>
   Arr.findFirst(DEFAULT_PARSERS, (parser) => parser.accepts(text)).pipe(

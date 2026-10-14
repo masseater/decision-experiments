@@ -14,6 +14,8 @@ export {
   openRouterPerRequest,
   withApiKey,
 } from "./openrouter.ts";
+export { assParser } from "./ass.ts";
+export { icsParser, vcardParser } from "./calendar.ts";
 export { CODE_PARSERS } from "./code.ts";
 export { csvParser, tsvParser } from "./csv.ts";
 export { htmlParser } from "./html.ts";
@@ -29,4 +31,5 @@ export type { OcrOptions } from "./ocr.ts";
 export { pdfReaderOf } from "./pdf.ts";
 export { ReadError } from "./read-error.ts";
 export { removeRegions } from "./remove.ts";
-export { AUTO, DEFAULT_PARSERS, plainParser, segmenterOf, sentencesOf } from "./segment.ts";
+export { DEFAULT_PARSERS } from "./parsers.ts";
+export { AUTO, plainParser, segmenterOf, sentencesOf } from "./segment.ts";
