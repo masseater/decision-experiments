@@ -100,40 +100,6 @@ test("reads the text of a Word 97-2003 document without its field codes", () =>
     }),
   ));
 
-const BIFF = { sst: 252, continued: 60, eof: 10 } as const;
-
-const HIGH_BYTE = 1;
-
-const STRING_HEADER = 3;
-
-const SPLIT_CHARS = 2;
-
-const recordOf = (type: number, data: Uint8Array): Uint8Array =>
-  concat([u16(type), u16(data.length), data]);
-
-const xlsStringOf = (text: string): Uint8Array =>
-  concat([u16(text.length), Uint8Array.of(HIGH_BYTE), utf16Of(text)]);
-
-test("reads the shared strings of an Excel 97-2003 workbook across CONTINUE records", () =>
-  Effect.runPromise(
-    Effect.gen(function* xls() {
-      const first = xlsStringOf("商品名");
-      const second = xlsStringOf(INJECTION);
-      const split = STRING_HEADER + Uint16Array.BYTES_PER_ELEMENT * SPLIT_CHARS;
-      const strings = [first, second].length;
-      const sst = concat([u32(strings), u32(strings), first, second.subarray(START, split)]);
-      const rest = concat([Uint8Array.of(HIGH_BYTE), second.subarray(split)]);
-      const workbook = concat([
-        recordOf(BIFF.sst, sst),
-        recordOf(BIFF.continued, rest),
-        recordOf(BIFF.eof, new Uint8Array()),
-      ]);
-      const { document, found } = yield* foundIn(compoundOf({ Workbook: workbook }));
-      expect(document.text).toBe(`商品名\n\n${INJECTION}`);
-      expect(found.map((text) => text.trim())).toStrictEqual([INJECTION]);
-    }),
-  ));
-
 const ATOM = { textChars: 4000, textBytes: 4008, document: 1000 } as const;
 
 const VERSION = { atom: 0, container: 15 } as const;

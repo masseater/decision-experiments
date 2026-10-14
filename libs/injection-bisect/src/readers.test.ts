@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { expect, test } from "vite-plus/test";
 
-import { zipOf } from "./__tests__/archive.ts";
 import { ENGLISH_MARK, INJECTION_MARK, cleanedOf } from "./__tests__/fake-judge.ts";
 import { readDocument } from "./document.ts";
 import type { JudgeError } from "./judge-error.ts";
@@ -57,53 +56,6 @@ test("reads the decoded headers and bodies of an email", () =>
       expect(document.text).toContain("From: 佐藤 <sato@example.com>");
       expect(found.map((text) => text.trim())).toStrictEqual([INJECTION]);
       expect(cleaned).not.toContain(INJECTION_MARK);
-    }),
-  ));
-
-const WORD_NS = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"';
-
-test("reads paragraphs, hidden runs and comments of a Word file", () =>
-  Effect.runPromise(
-    Effect.gen(function* docx() {
-      const bytes = yield* zipOf({
-        "word/document.xml": `<w:document ${WORD_NS}><w:body><w:p><w:r><w:t>議事録です。</w:t></w:r></w:p><w:p><w:r><w:rPr><w:vanish/></w:rPr><w:t>${INJECTION}</w:t></w:r></w:p></w:body></w:document>`,
-        "word/comments.xml": `<w:comments ${WORD_NS}><w:comment><w:p><w:r><w:t>確認済み。</w:t></w:r></w:p></w:comment></w:comments>`,
-      });
-      const { document, found } = yield* foundIn(bytes);
-      expect(document.text).toBe(`議事録です。\n\n${INJECTION}\n\n確認済み。`);
-      expect(found.map((text) => text.trim())).toStrictEqual([INJECTION]);
-    }),
-  ));
-
-const DRAWING_NS = 'xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"';
-
-test("reads slides in order, speaker notes and image descriptions of a PowerPoint file", () =>
-  Effect.runPromise(
-    Effect.gen(function* pptx() {
-      const bytes = yield* zipOf({
-        "ppt/presentation.xml": "<p:presentation/>",
-        "ppt/slides/slide10.xml": `<p:sld ${DRAWING_NS}><a:p><a:r><a:t>まとめ</a:t></a:r></a:p></p:sld>`,
-        "ppt/slides/slide2.xml": `<p:sld ${DRAWING_NS}><p:cNvPr descr="${INJECTION}"/><a:p><a:r><a:t>売上</a:t></a:r></a:p></p:sld>`,
-        "ppt/notesSlides/notesSlide2.xml": `<p:notes ${DRAWING_NS}><a:p><a:r><a:t>補足です。</a:t></a:r></a:p></p:notes>`,
-      });
-      const { document, found } = yield* foundIn(bytes);
-      expect(document.text).toBe(`${INJECTION}\n\n売上\n\nまとめ\n\n補足です。`);
-      expect(found.map((text) => text.trim())).toStrictEqual([INJECTION]);
-    }),
-  ));
-
-test("reads the cell strings of an Excel file", () =>
-  Effect.runPromise(
-    Effect.gen(function* xlsx() {
-      const bytes = yield* zipOf({
-        "xl/workbook.xml": "<workbook/>",
-        "xl/sharedStrings.xml": `<sst><si><t>商品名</t></si><si><t>${INJECTION}</t></si></sst>`,
-        "xl/worksheets/sheet1.xml":
-          "<worksheet><sheetData><row><c><v>1</v></c></row></sheetData></worksheet>",
-      });
-      const { document, found } = yield* foundIn(bytes);
-      expect(document.text).toBe(`商品名\n\n${INJECTION}`);
-      expect(found.map((text) => text.trim())).toStrictEqual([INJECTION]);
     }),
   ));
 

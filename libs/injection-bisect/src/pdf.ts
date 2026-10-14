@@ -7,22 +7,18 @@ import type { OcrOptions } from "./ocr.ts";
 import type { Reader } from "./parser.ts";
 import type { ReadError } from "./read-error.ts";
 
-const MAGIC = "%PDF-";
-
-const HEAD = 0;
+const NO_IMAGES = 0;
 
 const FIRST_PAGE = 1;
 
 type Pdf = Awaited<ReturnType<typeof getDocumentProxy>>;
-
-const ascii = new TextDecoder("latin1");
 
 const scannedText =
   (options: OcrOptions, pdf: Pdf) =>
   (page: number): Effect.Effect<string, ReadError> =>
     Effect.tryPromise({ try: () => extractImages(pdf, page), catch: failure }).pipe(
       Effect.flatMap((images) => {
-        if (images.length === HEAD) {
+        if (images.length === NO_IMAGES) {
           return Effect.succeed("");
         }
         return recognizedText(options)(
@@ -36,7 +32,6 @@ const scannedText =
 const pdfReaderOf = (options: OcrOptions): Reader => ({
   format: "pdf",
   extensions: [".pdf"],
-  accepts: (bytes) => ascii.decode(bytes.subarray(HEAD, MAGIC.length)) === MAGIC,
   read: (bytes) =>
     Effect.gen(function* read() {
       const pdf = yield* Effect.tryPromise({

@@ -57,6 +57,11 @@ catalog:
   tesseract.js: ^7.0.0
   "@tesseract.js-data/eng": ^1.0.0
   "@kenjiuno/msgreader": ^1.28.0
+  officeparser: ^8.1.1
+  file-type: ^22.1.0
+  nanotar: ^0.3.0
+  xlsx: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
+  cfb: ^1.2.2
 catalogs:
   stack:
     "@distilled.cloud/cloudflare": 1.0.0-rc.13

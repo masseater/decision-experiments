@@ -12,22 +12,11 @@ interface OcrOptions {
 
 const DEFAULT_LANGUAGES = ["jpn", "eng"] as const;
 
-const HEAD = { start: 0, end: 12 } as const;
-
-const SIGNATURES = ["\u0089PNG", "\u00FF\u00D8\u00FF", "GIF8", "II*\u0000", "MM\u0000*"] as const;
-
-const WEBP = /^RIFF[\s\S]{4}WEBP/u;
-
 const PAGE_BREAK = "\n\n";
 
 const ONE_AT_A_TIME = { concurrency: 1 } as const;
 
 const failure = (cause: unknown): ReadError => new ReadError({ reason: String(cause) });
-
-const looksLikeImage = (bytes: Uint8Array): boolean => {
-  const head = String.fromCodePoint(...bytes.subarray(HEAD.start, HEAD.end));
-  return SIGNATURES.some((signature) => head.startsWith(signature)) || WEBP.test(head);
-};
 
 const recognizedText =
   ({ languages = DEFAULT_LANGUAGES, worker = {} }: OcrOptions) =>
@@ -49,7 +38,6 @@ const recognizedText =
 const imageReaderOf = (options: OcrOptions): Reader => ({
   format: "image",
   extensions: [".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp", ".tif", ".tiff"],
-  accepts: looksLikeImage,
   read: (bytes) =>
     recognizedText(options)([bytes]).pipe(Effect.map((text) => ({ text, format: "plain" }))),
 });

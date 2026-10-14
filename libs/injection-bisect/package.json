@@ -47,9 +47,11 @@
   "dependencies": {
     "@effect/ai-openrouter": "catalog:",
     "@kenjiuno/msgreader": "catalog:",
+    "cfb": "catalog:",
     "effect": "catalog:stack",
     "fast-png": "catalog:",
     "fflate": "catalog:",
+    "file-type": "catalog:",
     "htmlparser2": "catalog:",
     "jsonc-parser": "catalog:",
     "mdast-util-from-markdown": "catalog:",
@@ -57,11 +59,14 @@
     "mdast-util-gfm": "catalog:",
     "micromark-extension-frontmatter": "catalog:",
     "micromark-extension-gfm": "catalog:",
+    "nanotar": "catalog:",
+    "officeparser": "catalog:",
     "parse5": "catalog:",
     "postal-mime": "catalog:",
     "refractor": "catalog:",
     "tesseract.js": "catalog:",
     "unpdf": "catalog:",
+    "xlsx": "catalog:",
     "yaml": "catalog:"
   },
   "devDependencies": {
