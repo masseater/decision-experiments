@@ -9,6 +9,7 @@ interface Span {
 
 type Unit =
   | (Span & { readonly kind: "prose" })
+  | (Span & { readonly kind: "whole" })
   | (Span & { readonly kind: "nested"; readonly format: string });
 
 interface Parser {

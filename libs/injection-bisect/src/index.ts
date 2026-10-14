@@ -14,6 +14,7 @@ export {
   withApiKey,
 } from "./openrouter.ts";
 export { htmlParser } from "./html.ts";
+export { markdownParser } from "./markdown.ts";
 export type { Document, Parser, Reader, Span, Unit } from "./parser.ts";
 export { ReadError } from "./read-error.ts";
 export { removeRegions } from "./remove.ts";
