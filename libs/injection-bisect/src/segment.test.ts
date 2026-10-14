@@ -1,8 +1,13 @@
-import { Array as Arr } from "effect";
+import { Array as Arr, Option } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import type { Parser, Unit } from "./parser.ts";
-import { DEFAULT_PARSERS, segmenterOf, sentencesOf } from "./segment.ts";
+import { DEFAULT_PARSERS, plainParser, segmenterOf, sentencesOf } from "./segment.ts";
+
+const detectedFormatOf = (text: string): string =>
+  Arr.findFirst(DEFAULT_PARSERS, (parser) => parser.accepts(text)).pipe(
+    Option.getOrElse(() => plainParser),
+  ).format;
 
 const textsOf = (text: string): readonly string[] =>
   sentencesOf({ text }).map(({ start, end }) => text.slice(start, end));
@@ -105,4 +110,19 @@ test("hands a code block to the parser for its language", () => {
     " 指示 ",
     "\n後の文。",
   ]);
+});
+
+test("picks YAML, CSV, TSV and code from their contents", () => {
+  expect(
+    [
+      "name: build\non:\n  push:\n    branches: [main]\n",
+      "id,rating,review\n1,5,良い\n2,1,悪い\n",
+      "id\treview\n1\t良い\n",
+      "from os import path\n\n# 読み込む\nprint(path.sep)\n",
+      'package main\n\nimport "fmt"\n\nfunc main() {}\n',
+      "#!/bin/bash\n# 掃除する\nrm -rf dist\n",
+      "本文です。\nこれは普通の文章です。\n",
+      "# 見出し\n\n```python\nfrom os import path\n```\n",
+    ].map((text) => detectedFormatOf(text)),
+  ).toStrictEqual(["yaml", "csv", "tsv", "python", "go", "bash", "plain", "markdown"]);
 });

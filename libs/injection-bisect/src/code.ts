@@ -18,26 +18,99 @@ interface Language {
   readonly format: string;
   readonly extensions: readonly string[];
   readonly aliases: readonly string[];
+  readonly signature: RegExp;
 }
 
+const NEVER = /(?!)/u;
+
+const FENCE = /^\s*(?:```|~~~)/mu;
+
 const LANGUAGES: readonly Language[] = [
-  { format: "javascript", extensions: [".js", ".mjs", ".cjs"], aliases: ["js"] },
-  { format: "typescript", extensions: [".ts", ".mts", ".cts"], aliases: ["ts"] },
-  { format: "jsx", extensions: [".jsx"], aliases: [] },
-  { format: "tsx", extensions: [".tsx"], aliases: [] },
-  { format: "python", extensions: [".py"], aliases: ["py"] },
-  { format: "ruby", extensions: [".rb"], aliases: ["rb"] },
-  { format: "go", extensions: [".go"], aliases: ["golang"] },
-  { format: "rust", extensions: [".rs"], aliases: ["rs"] },
-  { format: "java", extensions: [".java"], aliases: [] },
-  { format: "c", extensions: [".c", ".h"], aliases: [] },
-  { format: "cpp", extensions: [".cpp", ".cc", ".hpp"], aliases: ["c++"] },
-  { format: "csharp", extensions: [".cs"], aliases: ["cs", "c#"] },
-  { format: "php", extensions: [".php"], aliases: [] },
-  { format: "bash", extensions: [".sh", ".bash"], aliases: ["sh", "shell", "zsh"] },
-  { format: "sql", extensions: [".sql"], aliases: [] },
-  { format: "kotlin", extensions: [".kt", ".kts"], aliases: ["kt"] },
-  { format: "swift", extensions: [".swift"], aliases: [] },
+  {
+    format: "typescript",
+    extensions: [".ts", ".mts", ".cts"],
+    aliases: ["ts"],
+    signature: /^(?:export )?(?:interface \w+(?:<[^>\n]*>)? \{|type \w+(?:<[^>\n]*>)? = )/mu,
+  },
+  {
+    format: "javascript",
+    extensions: [".js", ".mjs", ".cjs"],
+    aliases: ["js"],
+    signature:
+      /^#!.*\bnode\b|^(?:import .+ from ["']|export (?:default|const|function|class) |const \w+ = require\()/mu,
+  },
+  { format: "jsx", extensions: [".jsx"], aliases: [], signature: NEVER },
+  { format: "tsx", extensions: [".tsx"], aliases: [], signature: NEVER },
+  {
+    format: "python",
+    extensions: [".py"],
+    aliases: ["py"],
+    signature:
+      /^#!.*python|^(?:from [\w.]+ import |def \w+\(.*\)(?: -> .+)?:$|if __name__ == ["']__main__["']:)/mu,
+  },
+  {
+    format: "ruby",
+    extensions: [".rb"],
+    aliases: ["rb"],
+    signature: /^#!.*ruby|^(?:require ["'][\w/]+["']|def \w+[?!]?(?:\(.*\))?)$/mu,
+  },
+  {
+    format: "kotlin",
+    extensions: [".kt", ".kts"],
+    aliases: ["kt"],
+    signature: /^(?:fun main\(|import kotlinx?\.)/mu,
+  },
+  {
+    format: "go",
+    extensions: [".go"],
+    aliases: ["golang"],
+    signature: /^package \w+$(?=[\s\S]*^func )/mu,
+  },
+  {
+    format: "rust",
+    extensions: [".rs"],
+    aliases: ["rs"],
+    signature: /^(?:use (?:std|crate)::|fn main\(\)|pub fn \w+)/mu,
+  },
+  {
+    format: "java",
+    extensions: [".java"],
+    aliases: [],
+    signature: /^(?:package [\w.]+;|import java\.)/mu,
+  },
+  {
+    format: "cpp",
+    extensions: [".cpp", ".cc", ".hpp"],
+    aliases: ["c++"],
+    signature: /^(?:#include <(?:iostream|vector|string|memory)>|using namespace std;)/mu,
+  },
+  { format: "c", extensions: [".c", ".h"], aliases: [], signature: /^#include\s*[<"]/mu },
+  {
+    format: "csharp",
+    extensions: [".cs"],
+    aliases: ["cs", "c#"],
+    signature: /^(?:using System[\w.]*;|namespace [\w.]+)/mu,
+  },
+  { format: "php", extensions: [".php"], aliases: [], signature: /^(?:#!.*php|<\?php)/u },
+  {
+    format: "bash",
+    extensions: [".sh", ".bash"],
+    aliases: ["sh", "shell", "zsh"],
+    signature: /^#!.*\b(?:ba|z|k)?sh\b/u,
+  },
+  {
+    format: "sql",
+    extensions: [".sql"],
+    aliases: [],
+    signature:
+      /^(?:SELECT .+ FROM |INSERT INTO |CREATE (?:TABLE|INDEX|VIEW) |UPDATE \w+ SET |DELETE FROM )/mu,
+  },
+  {
+    format: "swift",
+    extensions: [".swift"],
+    aliases: [],
+    signature: /^import (?:SwiftUI|Foundation|UIKit)$/mu,
+  },
 ];
 
 const isRead = ({ properties }: Element): boolean =>
@@ -76,12 +149,14 @@ const codeUnitsOf =
       .filter(({ start, end }) => looksLikeProse(text.slice(start, end)))
       .map(({ start, end }): Unit => ({ kind: "prose", start, end }));
 
-const CODE_PARSERS: readonly Parser[] = LANGUAGES.map(({ format, extensions, aliases }) => ({
-  format,
-  extensions,
-  aliases,
-  accepts: () => false,
-  unitsOf: codeUnitsOf(format),
-}));
+const CODE_PARSERS: readonly Parser[] = LANGUAGES.map(
+  ({ format, extensions, aliases, signature }) => ({
+    format,
+    extensions,
+    aliases,
+    accepts: (text) => signature.test(text) && !FENCE.test(text),
+    unitsOf: codeUnitsOf(format),
+  }),
+);
 
 export { CODE_PARSERS };

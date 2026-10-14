@@ -1,10 +1,28 @@
-import { Match, Option } from "effect";
-import { Parser as YamlParser } from "yaml";
+import { Array as Arr, Match, Option } from "effect";
+import { Parser as YamlParser, isCollection, parseDocument } from "yaml";
 
 import type { Parser, Span, Unit } from "./parser.ts";
 import { looksLikeProse } from "./prose.ts";
 
 const NOT_FOUND = -1;
+
+const ENTRIES = 2;
+
+const STRUCTURE = /^(?:\s|- |#|---$|\.\.\.$|[^\s:#][^:\n]*:(?:\s|$))/u;
+
+const looksLikeYaml = (text: string): boolean => {
+  const document = parseDocument(text);
+  const { contents } = document;
+  return (
+    Arr.isReadonlyArrayEmpty(document.errors) &&
+    isCollection(contents) &&
+    contents.items.length >= ENTRIES &&
+    text
+      .split("\n")
+      .filter((line) => line.trim() !== "")
+      .every((line) => STRUCTURE.test(line))
+  );
+};
 
 const COMMENT = "#".length;
 
@@ -74,7 +92,7 @@ const yamlUnitsOf = (text: string): readonly Unit[] =>
 const yamlParser: Parser = {
   format: "yaml",
   extensions: [".yaml", ".yml"],
-  accepts: () => false,
+  accepts: looksLikeYaml,
   unitsOf: yamlUnitsOf,
 };
 
