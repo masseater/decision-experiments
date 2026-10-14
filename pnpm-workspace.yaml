@@ -51,7 +51,7 @@ catalogs:
     fallow: 3.33.1
     lucide-react: 1.55.0
     radix-ui: 1.7.0
-    renovate: 44.149.2
+    renovate: 44.149.3
     steiger: 0.7.0
     tailwindcss: 4.3.3
     textlint: 15.8.0
