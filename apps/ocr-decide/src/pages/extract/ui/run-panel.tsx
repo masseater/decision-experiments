@@ -4,8 +4,9 @@ import { useCallback } from "react";
 import type { ReactNode } from "react";
 
 import { useExtract } from "#/pages/extract/api/use-extract";
+import { usePicture } from "#/pages/extract/api/use-picture";
 import { COPY } from "#/pages/extract/model/copy";
-import { useApiKey, usePicture, useWay } from "#/pages/extract/model/draft";
+import { useApiKey, useWay } from "#/pages/extract/model/draft";
 import { WAYS } from "#/pages/extract/model/ways";
 
 import { ExtractResult } from "./extract-result";

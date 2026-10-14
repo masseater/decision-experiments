@@ -3,28 +3,21 @@ import { Atom } from "effect/reactivity";
 
 import { DIRECT } from "./ways";
 
-type Picture =
+type Choice =
   | { readonly status: "none" }
-  | { readonly status: "loading"; readonly name: string }
-  | { readonly status: "failed"; readonly name: string; readonly reason: string }
-  | {
-      readonly status: "ready";
-      readonly name: string;
-      readonly bytes: Uint8Array;
-      readonly url: string;
-    };
+  | { readonly status: "chosen"; readonly name: string; readonly url: string };
 
-const NO_PICTURE: Picture = { status: "none" };
+const NO_CHOICE: Choice = { status: "none" };
 
-const pictureAtom = Atom.make<Picture>(NO_PICTURE);
+const choiceAtom = Atom.make<Choice>(NO_CHOICE);
 
 const apiKeyAtom = Atom.make("");
 
 const wayAtom = Atom.make(DIRECT.key);
 
-const usePicture = (): Picture => useAtomValue(pictureAtom);
+const useChoice = (): Choice => useAtomValue(choiceAtom);
 
-const useSetPicture = (): ((picture: Picture) => void) => useAtomSet(pictureAtom);
+const useSetChoice = (): ((choice: Choice) => void) => useAtomSet(choiceAtom);
 
 const useApiKey = (): string => useAtomValue(apiKeyAtom);
 
@@ -34,5 +27,5 @@ const useWay = (): string => useAtomValue(wayAtom);
 
 const useSetWay = (): ((way: string) => void) => useAtomSet(wayAtom);
 
-export type { Picture };
-export { useApiKey, usePicture, useSetApiKey, useSetPicture, useSetWay, useWay };
+export type { Choice };
+export { useApiKey, useChoice, useSetApiKey, useSetChoice, useSetWay, useWay };

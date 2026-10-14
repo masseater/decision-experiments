@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { usePicture } from "#/pages/extract/model/draft";
+import { usePicture } from "#/pages/extract/api/use-picture";
 
 const PicturePreview = (): ReactNode => {
   const picture = usePicture();
