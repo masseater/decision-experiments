@@ -130,7 +130,7 @@ jobs:
 
   release-lib:
     needs: verify
-    if: github.repository == 'masseater/injection-bisect'
+    if: github.repository == 'masseater/decision-experiments'
     runs-on: ubuntu-latest
     permissions:
       contents: write
