@@ -47,13 +47,13 @@ const DEFAULT_PARSERS: readonly Parser[] = [
   jsonParser,
   vttParser,
   srtParser,
+  ...CODE_PARSERS,
   xmlParser,
+  yamlParser,
+  tsvParser,
+  csvParser,
   markdownParser,
   htmlParser,
-  yamlParser,
-  csvParser,
-  tsvParser,
-  ...CODE_PARSERS,
 ];
 
 const segmenterOf = (
