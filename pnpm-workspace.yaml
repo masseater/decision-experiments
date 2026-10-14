@@ -66,6 +66,8 @@ catalog:
   "@types/papaparse": ^5.5.2
   ass-compiler: ^0.1.16
   "@plussub/srt-vtt-parser": ^2.0.5
+  ical.js: ^2.2.1
+  escape-string-regexp: ^5.0.0
 catalogs:
   stack:
     "@distilled.cloud/cloudflare": 1.0.0-rc.13

@@ -28,7 +28,7 @@ const looksLikeTable =
   };
 
 const fieldsOf = (text: string, delimiter: Delimiter): readonly Unit[] =>
-  proseUnitsOf(text)(
+  proseUnitsOf({ text })(
     parse<readonly string[]>(text, { delimiter: DELIMITERS[delimiter] })
       .data.flat()
       .map((value) => value.replaceAll('"', '""')),

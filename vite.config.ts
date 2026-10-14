@@ -129,6 +129,7 @@ export default defineConfig({
               name: "AnalyticsEngineDataset",
             },
             { from: "package", package: "@tanstack/query-core", name: "QueryClient" },
+            { from: "package", package: "ical.js", name: "Component" },
             {
               from: "package",
               package: "react",

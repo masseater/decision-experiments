@@ -26,7 +26,7 @@ const notesOf = (text: string): readonly string[] =>
   Array.from(text.matchAll(NOTE), ([note]) => note.trimEnd());
 
 const subtitleUnitsOf = (text: string): readonly Unit[] =>
-  proseUnitsOf(text)([...notesOf(text), ...cuesOf(text)]);
+  proseUnitsOf({ text })([...notesOf(text), ...cuesOf(text)]);
 
 const hasCues = (text: string): boolean => cuesOf(text).length > NONE;
 

@@ -18,7 +18,7 @@ const textsOf = (text: string): readonly string[] =>
     },
   );
 
-const assUnitsOf = (text: string): readonly Unit[] => proseUnitsOf(text)(textsOf(text));
+const assUnitsOf = (text: string): readonly Unit[] => proseUnitsOf({ text })(textsOf(text));
 
 const assParser: Parser = {
   format: "ass",

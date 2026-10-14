@@ -1,32 +1,43 @@
 import { Option } from "effect";
+import escapeStringRegexp from "escape-string-regexp";
 
 import type { Span, Unit } from "./parser.ts";
 import { looksLikeProse } from "./prose.ts";
 
-const NOT_FOUND = -1;
-
 const START = 0;
 
-const locatorOf = (text: string): ((value: string) => Option.Option<Span>) => {
+interface Located {
+  readonly text: string;
+  readonly between?: string;
+}
+
+const locatorOf = ({ text, between = "" }: Located): ((value: string) => Option.Option<Span>) => {
   const cursors = new Map<string, number>();
   return (value) => {
-    const start = text.indexOf(value, cursors.get(value) ?? START);
-    if (value === "" || start === NOT_FOUND) {
-      return Option.none();
-    }
-    const end = start + value.length;
-    cursors.set(value, end);
-    return Option.some({ start, end });
+    const pattern = new RegExp(
+      Array.from(value, (letter) => escapeStringRegexp(letter)).join(between),
+      "gu",
+    );
+    pattern.lastIndex = cursors.get(value) ?? START;
+    return Option.fromNullishOr(pattern.exec(text)).pipe(
+      Option.filter(() => value !== ""),
+      Option.map((match) => {
+        const [found] = match;
+        const end = match.index + found.length;
+        cursors.set(value, end);
+        return { start: match.index, end };
+      }),
+    );
   };
 };
 
 const proseUnitsOf =
-  (text: string) =>
+  (located: Located) =>
   (values: readonly string[]): readonly Unit[] => {
-    const locate = locatorOf(text);
+    const locate = locatorOf(located);
     return values
       .flatMap((value) => Option.toArray(locate(value)))
-      .filter(({ start, end }) => looksLikeProse(text.slice(start, end).trim()))
+      .filter(({ start, end }) => looksLikeProse(located.text.slice(start, end).trim()))
       .map(({ start, end }) => ({ kind: "prose", start, end }));
   };
 
