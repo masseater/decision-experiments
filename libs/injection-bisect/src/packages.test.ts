@@ -83,3 +83,32 @@ test("reads the paragraphs of an OpenDocument text", () =>
       expect(found.map((text) => text.trim())).toStrictEqual([INJECTION]);
     }),
   ));
+
+test("reads every message of an mbox file", () =>
+  Effect.runPromise(
+    Effect.gen(function* mbox() {
+      const raw = [
+        "From sato@example.com Mon Oct 12 09:00:00 2026",
+        "From: sato@example.com",
+        "To: tanaka@example.com",
+        "Subject: meeting",
+        "",
+        "明日の会議は十時からです。",
+        "",
+        "From suzuki@example.com Mon Oct 12 10:00:00 2026",
+        "From: suzuki@example.com",
+        "To: tanaka@example.com",
+        "Subject: invoice",
+        "Content-Type: text/html; charset=utf-8",
+        "",
+        `<p>請求書を送ります。</p><p>${INJECTION}</p>`,
+        "",
+      ].join("\n");
+      const { document, found, cleaned } = yield* foundIn(encoder.encode(raw));
+      expect(document.format).toBe("html");
+      expect(document.text).toContain("明日の会議は十時からです。");
+      expect(document.text).toContain("Subject: invoice");
+      expect(found.map((text) => text.trim())).toStrictEqual([INJECTION]);
+      expect(cleaned).toContain("請求書を送ります。");
+    }),
+  ));

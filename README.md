@@ -21,7 +21,7 @@ decision モデルを使った実験プロジェクトの置き場である。
 | 字幕                       | `srt`・`vtt`・`ass`                                                | 字幕の文、NOTE、タイトル                                                                                           |
 | カレンダー・連絡先         | `ics`・`vcard`                                                     | 件名、説明、場所、メモ、肩書きなど文字の項目                                                                       |
 | ソースコード・設定ファイル | `typescript`・`python`・`go`・`toml`・`ini`・`docker` など 64 種類 | コメント、文字列リテラル、設定の値                                                                                 |
-| メール                     | `email`                                                            | 差出人・宛先・件名と、テキストと HTML の本文                                                                       |
+| メール                     | `email`・`mbox`・`msg`（Outlook）                                  | 差出人・宛先・件名、テキストと HTML の本文、添付ファイルの名前（Outlook）                                          |
 | PDF                        | `pdf`                                                              | 各ページのテキスト。テキストの無いページは画像を OCR で読む                                                        |
 | 画像                       | `image`（PNG・JPEG・WebP・GIF・BMP・TIFF）                         | OCR で読んだ文字（日本語と英語）                                                                                   |
 | Word・PowerPoint・Excel    | `docx`・`pptx`・`xlsx`                                             | 本文、コメント、ノート、画像の説明、セルの文字列                                                                   |
