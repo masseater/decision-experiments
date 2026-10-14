@@ -58,6 +58,7 @@ catalog:
   "@tesseract.js-data/eng": ^1.0.0
   "@tesseract.js-data/jpn": ^1.0.0
   playwright-core: 1.64.0
+  "@kenjiuno/msgreader": ^1.28.0
 catalogs:
   stack:
     "@distilled.cloud/cloudflare": 1.0.0-rc.13
@@ -106,6 +107,9 @@ allowBuilds:
   re2: true
   "@openrouter/sdk": false
 packageExtensions:
+  safer-buffer@2.1.2:
+    dependencies:
+      buffer: ^6.0.3
   "@feature-sliced/steiger-plugin@0.8.0":
     dependencies:
       "@steiger/toolkit": 0.2.3

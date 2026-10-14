@@ -9,14 +9,14 @@
     "prompt-injection",
     "security"
   ],
-  "homepage": "https://github.com/masseater/injection-bisect#readme",
+  "homepage": "https://github.com/masseater/decision-experiments#readme",
   "bugs": {
-    "url": "https://github.com/masseater/injection-bisect/issues"
+    "url": "https://github.com/masseater/decision-experiments/issues"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/masseater/injection-bisect.git",
+    "url": "git+https://github.com/masseater/decision-experiments.git",
     "directory": "libs/injection-bisect"
   },
   "files": [
@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "@effect/ai-openrouter": "catalog:",
+    "@kenjiuno/msgreader": "catalog:",
     "effect": "catalog:stack",
     "fast-png": "catalog:",
     "fflate": "catalog:",

@@ -4,10 +4,11 @@ import { expect, test } from "vite-plus/test";
 import { ENGLISH_MARK, cleanedOf } from "./__tests__/fake-judge.ts";
 import type { Cleaned } from "./__tests__/fake-judge.ts";
 import { SCANNED_PDF, SCANNED_PNG } from "./__tests__/scans.ts";
-import { readDocument, readersWith } from "./document.ts";
+import { readDocument } from "./document.ts";
 import type { JudgeError } from "./judge-error.ts";
 import type { Document } from "./parser.ts";
 import type { ReadError } from "./read-error.ts";
+import { readersWith } from "./readers.ts";
 
 const OCR_TIMEOUT = 120_000;
 
