@@ -191,6 +191,9 @@ catalogs:
     '@html-eslint/eslint-plugin-react':
       specifier: 0.66.1
       version: 0.66.1
+    '@jupyterlab/nbformat':
+      specifier: ^4.5.11
+      version: 4.5.11
     '@kenjiuno/msgreader':
       specifier: ^1.28.0
       version: 1.28.0
@@ -638,6 +641,9 @@ importers:
       '@effect/ai-openrouter':
         specifier: 'catalog:'
         version: 4.0.2(effect@4.0.2)
+      '@jupyterlab/nbformat':
+        specifier: 'catalog:'
+        version: 4.5.11
       '@kenjiuno/msgreader':
         specifier: 'catalog:'
         version: 1.28.0
@@ -1976,6 +1982,9 @@ packages:
   '@js-sdsl/ordered-map@4.4.2':
     resolution: {integrity: sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==}
 
+  '@jupyterlab/nbformat@4.5.11':
+    resolution: {integrity: sha512-i4cAYClq+zmMCccCfkuQEmXGbrwfO9Agi/mYTij52dlnhXSnHVO64fZ1udmUrve8iJ1ZN/fo33bbyieJJPw3qQ==}
+
   '@kenjiuno/decompressrtf@0.1.4':
     resolution: {integrity: sha512-v9c/iFz17jRWyd2cRnrvJg4VOg/4I/VCk+bG8JnoX2gJ9sAesPzo3uTqcmlVXdpasTI8hChpBVw00pghKe3qTQ==}
 
@@ -2079,6 +2088,12 @@ packages:
     resolution: {integrity: sha512-4/0CvEdhi6+KjMxMaVbFM2n2Z44escBRoEYpR+gZg64DdetzGnYm8mcNLcoySaDJZNaBd6wz5DNdgRmcI4hXcg==}
     cpu: [x64]
     os: [win32]
+
+  '@lumino/algorithm@2.0.5':
+    resolution: {integrity: sha512-yW5k0IRrNlNDL9/hLOPr0XaMYf7YSZ5a/uJ++a92ziBe7v7a3xzBJ1+Awhb6fMyanE0Mz97UOQIsHa3vWB0UQA==}
+
+  '@lumino/coreutils@2.2.3':
+    resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
   '@modelcontextprotocol/core@2.1.0':
     resolution: {integrity: sha512-YdFj5gMRHr0gYNAhTbQDgjLHiEJdIAUYxomhKseUNye7ZGlISQmUoLh2sveFFCiQ7j2YMffT1kgSND0FSfIFjQ==}
@@ -11255,6 +11270,10 @@ snapshots:
 
   '@js-sdsl/ordered-map@4.4.2': {}
 
+  '@jupyterlab/nbformat@4.5.11':
+    dependencies:
+      '@lumino/coreutils': 2.2.3
+
   '@kenjiuno/decompressrtf@0.1.4': {}
 
   '@kenjiuno/msgreader@1.28.0':
@@ -11382,6 +11401,12 @@ snapshots:
 
   '@libsql/win32-x64-msvc@0.5.29':
     optional: true
+
+  '@lumino/algorithm@2.0.5': {}
+
+  '@lumino/coreutils@2.2.3':
+    dependencies:
+      '@lumino/algorithm': 2.0.5
 
   '@modelcontextprotocol/core@2.1.0':
     dependencies:

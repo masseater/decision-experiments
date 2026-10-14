@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "@effect/ai-openrouter": "catalog:",
+    "@jupyterlab/nbformat": "catalog:",
     "@kenjiuno/msgreader": "catalog:",
     "@plussub/srt-vtt-parser": "catalog:",
     "ass-compiler": "catalog:",

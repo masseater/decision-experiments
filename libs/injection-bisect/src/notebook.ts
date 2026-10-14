@@ -1,41 +1,27 @@
-import { Effect, Option, Schema } from "effect";
+import {
+  isCode,
+  isDisplayData,
+  isError,
+  isExecuteResult,
+  isMarkdown,
+  isStream,
+} from "@jupyterlab/nbformat";
+import type { ICell, INotebookContent, IOutput, MultilineString } from "@jupyterlab/nbformat";
+import { Effect, Option, Predicate, Result, Schema } from "effect";
 
 import type { Document, Reader } from "./parser.ts";
 import { ReadError } from "./read-error.ts";
 
-const LinesSchema = Schema.Union([Schema.String, Schema.Array(Schema.String)]);
+const isNotebook = (value: unknown): value is INotebookContent =>
+  Predicate.hasProperty(value, "nbformat") &&
+  Predicate.hasProperty(value, "cells") &&
+  Array.isArray(value.cells);
 
-const OutputSchema = Schema.Struct({
-  text: Schema.optional(LinesSchema),
-  data: Schema.optional(Schema.Record(Schema.String, Schema.Unknown)),
-});
+const NotebookFromJson = Schema.fromJsonString(Schema.declare(isNotebook));
 
-const CellSchema = Schema.Struct({
-  cell_type: Schema.String,
-  source: LinesSchema,
-  outputs: Schema.optional(Schema.Array(OutputSchema)),
-});
+const decodeNotebook = Schema.decodeUnknownEffect(NotebookFromJson);
 
-const LanguageSchema = Schema.Struct({ name: Schema.optional(Schema.String) });
-
-const MetadataSchema = Schema.Struct({ language_info: Schema.optional(LanguageSchema) });
-
-const NotebookSchema = Schema.Struct({
-  cells: Schema.Array(CellSchema),
-  metadata: Schema.optional(MetadataSchema),
-});
-
-type Lines = typeof LinesSchema.Type;
-
-type Output = typeof OutputSchema.Type;
-
-type Cell = typeof CellSchema.Type;
-
-type Notebook = typeof NotebookSchema.Type;
-
-const decodeNotebook = Schema.decodeUnknownEffect(Schema.fromJsonString(NotebookSchema));
-
-const isLines = Schema.is(LinesSchema);
+const notebookResultOf = Schema.decodeUnknownResult(NotebookFromJson);
 
 const DEFAULT_LANGUAGE = "python";
 
@@ -47,64 +33,67 @@ const OUTPUT_TYPES = [
 
 const decoder = new TextDecoder();
 
-const joined = (lines: Lines): string => [lines].flat().join("");
+const isLines = (value: unknown): value is MultilineString =>
+  Predicate.isString(value) ||
+  (Array.isArray(value) && value.every((line) => Predicate.isString(line)));
+
+const joined = (lines: MultilineString): string => [lines].flat().join("");
 
 const fenced =
   (language: string) =>
-  (lines: Lines): string =>
+  (lines: MultilineString): string =>
     `\`\`\`${language}\n${joined(lines)}\n\`\`\``;
 
-const fencedIf =
-  (language: string) =>
-  (value: unknown): readonly string[] =>
-    Option.toArray(Option.map(Option.liftPredicate(value, isLines), fenced(language)));
-
-const outputText = ({ text, data }: Output): readonly string[] => {
-  const shown = Option.getOrElse(
-    Option.fromNullishOr(data),
-    (): Readonly<Record<string, unknown>> => ({}),
-  );
-  return [
-    ...fencedIf("output")(text),
-    ...OUTPUT_TYPES.flatMap(([type, language]) => fencedIf(language)(shown[type])),
-  ];
+const outputText = (output: IOutput): readonly string[] => {
+  if (isStream(output)) {
+    return [fenced("output")(output.text)];
+  }
+  if (isError(output)) {
+    return [fenced("output")(`${output.ename}: ${output.evalue}`)];
+  }
+  if (isExecuteResult(output) || isDisplayData(output)) {
+    return OUTPUT_TYPES.flatMap(([type, language]) =>
+      Option.toArray(
+        Option.map(Option.liftPredicate(output.data[type], isLines), fenced(language)),
+      ),
+    );
+  }
+  return [];
 };
-
-const outputsOf = ({ outputs }: Cell): readonly string[] =>
-  Option.getOrElse(Option.fromNullishOr(outputs), () => []).flatMap((output) => outputText(output));
 
 const cellText =
   (language: string) =>
-  (cell: Cell): readonly string[] => {
-    if (cell.cell_type === "markdown") {
+  (cell: ICell): readonly string[] => {
+    if (isMarkdown(cell)) {
       return [joined(cell.source)];
     }
-    if (cell.cell_type === "code") {
-      return [fenced(language)(cell.source), ...outputsOf(cell)];
+    if (isCode(cell)) {
+      return [fenced(language)(cell.source), ...cell.outputs.flatMap(outputText)];
     }
     return [fenced("output")(cell.source)];
   };
 
-const languageOf = ({ metadata }: Notebook): string =>
-  Option.fromNullishOr(metadata).pipe(
-    Option.flatMapNullishOr(({ language_info }) => language_info),
-    Option.flatMapNullishOr(({ name }) => name),
+const languageOf = ({ metadata }: INotebookContent): string =>
+  Option.fromNullishOr(metadata.language_info).pipe(
+    Option.map(({ name }) => name),
     Option.getOrElse(() => DEFAULT_LANGUAGE),
   );
 
-const markdownOf = (notebook: Notebook): string =>
+const markdownOf = (notebook: INotebookContent): string =>
   notebook.cells.flatMap(cellText(languageOf(notebook))).join("\n\n");
-
-const looksLikeNotebook = (text: string): boolean =>
-  text.trimStart().startsWith("{") && text.includes('"nbformat"') && text.includes('"cells"');
 
 const notebookReader: Reader = {
   format: "ipynb",
   extensions: [".ipynb"],
-  accepts: (bytes) => looksLikeNotebook(decoder.decode(bytes)),
+  accepts: (bytes) => Result.isSuccess(notebookResultOf(decoder.decode(bytes))),
   read: (bytes) =>
     decodeNotebook(decoder.decode(bytes)).pipe(
-      Effect.map((notebook): Document => ({ text: markdownOf(notebook), format: "markdown" })),
+      Effect.flatMap((notebook) =>
+        Effect.try({
+          try: (): Document => ({ text: markdownOf(notebook), format: "markdown" }),
+          catch: (cause) => new ReadError({ reason: String(cause) }),
+        }),
+      ),
       Effect.mapError((cause) => new ReadError({ reason: String(cause) })),
     ),
 };

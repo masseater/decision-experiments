@@ -68,6 +68,7 @@ catalog:
   "@plussub/srt-vtt-parser": ^2.0.5
   ical.js: ^2.2.1
   linguist-languages: ^9.5.0
+  "@jupyterlab/nbformat": ^4.5.11
 catalogs:
   stack:
     "@distilled.cloud/cloudflare": 1.0.0-rc.13

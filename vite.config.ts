@@ -133,6 +133,11 @@ export default defineConfig({
             { from: "package", package: "ical.js", name: "Component" },
             {
               from: "package",
+              package: "@jupyterlab/nbformat",
+              name: ["ICell", "INotebookContent", "IOutput", "MultilineString"],
+            },
+            {
+              from: "package",
               package: "react",
               name: ["ReactNode", "ButtonHTMLAttributes", "ChangeEvent", "ClassAttributes"],
             },
