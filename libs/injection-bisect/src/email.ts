@@ -1,0 +1,75 @@
+import { Array as Arr, Effect, Option } from "effect";
+import PostalMime from "postal-mime";
+import type { Address } from "postal-mime";
+
+import type { Document, Reader } from "./parser.ts";
+import { ReadError } from "./read-error.ts";
+
+type Email = Awaited<ReturnType<typeof PostalMime.parse>>;
+
+const HEAD = { start: 0, end: 4096 } as const;
+
+const HEADER_START = /^[\w-]+:/u;
+
+const FROM = /^From:/imu;
+
+const OTHER_HEADER = /^(?:Subject|Date|To|MIME-Version|Message-ID|Received):/imu;
+
+const latin1 = new TextDecoder("latin1");
+
+const looksLikeEmail = (bytes: Uint8Array): boolean => {
+  const head = latin1.decode(bytes.subarray(HEAD.start, HEAD.end));
+  return HEADER_START.test(head) && FROM.test(head) && OTHER_HEADER.test(head);
+};
+
+const addressOf = (address: Address): string =>
+  Option.match(Option.fromNullishOr(address.address), {
+    onNone: () => address.name,
+    onSome: (mail) => `${address.name} <${mail}>`.trim(),
+  });
+
+const headerLine = (name: string, value: string): readonly string[] => {
+  if (value.trim() === "") {
+    return [];
+  }
+  return [`${name}: ${value}`];
+};
+
+const formatOf = (email: Email): string =>
+  Option.match(Option.fromNullishOr(email.html), {
+    onNone: () => "plain",
+    onSome: () => "html",
+  });
+
+const documentOf = (email: Email): Document => {
+  const from = Option.fromNullishOr(email.from).pipe(Option.map((address) => addressOf(address)));
+  const to = Option.fromNullishOr(email.to).pipe(
+    Option.map((addresses) => addresses.map((address) => addressOf(address)).join(", ")),
+  );
+  const headers = [
+    ...headerLine(
+      "From",
+      Option.getOrElse(from, () => ""),
+    ),
+    ...headerLine(
+      "To",
+      Option.getOrElse(to, () => ""),
+    ),
+    ...headerLine("Subject", email.subject ?? ""),
+  ];
+  const bodies = Arr.getSomes([Option.fromNullishOr(email.text), Option.fromNullishOr(email.html)]);
+  return { text: [headers.join("\n"), ...bodies].join("\n\n"), format: formatOf(email) };
+};
+
+const emailReader: Reader = {
+  format: "email",
+  extensions: [".eml"],
+  accepts: looksLikeEmail,
+  read: (bytes) =>
+    Effect.tryPromise({
+      try: () => PostalMime.parse(bytes),
+      catch: (cause) => new ReadError({ reason: String(cause) }),
+    }).pipe(Effect.map((email) => documentOf(email))),
+};
+
+export { emailReader };

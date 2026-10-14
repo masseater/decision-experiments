@@ -153,6 +153,8 @@ export default defineConfig({
               name: ["Code", "Nodes"],
             },
             { from: "package", package: "@types/hast", name: ["Element", "RootContent"] },
+            { from: "package", package: "postal-mime", name: ["Address", "Email"] },
+            { from: "package", package: "fflate", name: ["Unzipped"] },
             {
               from: "package",
               package: "effect",

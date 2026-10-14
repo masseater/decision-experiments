@@ -1,10 +1,13 @@
 import { Array as Arr, Effect, Option } from "effect";
 
+import { emailReader } from "./email.ts";
+import { OFFICE_READERS } from "./office.ts";
 import type { Document, Parser, Reader } from "./parser.ts";
+import { pdfReader } from "./pdf.ts";
 import { ReadError } from "./read-error.ts";
 import { AUTO, DEFAULT_PARSERS, isNamed, plainParser } from "./segment.ts";
 
-const DEFAULT_READERS: readonly Reader[] = [];
+const DEFAULT_READERS: readonly Reader[] = [pdfReader, ...OFFICE_READERS, emailReader];
 
 const NOT_FOUND = -1;
 

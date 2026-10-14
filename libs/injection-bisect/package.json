@@ -47,6 +47,7 @@
   "dependencies": {
     "@effect/ai-openrouter": "catalog:",
     "effect": "catalog:stack",
+    "fflate": "catalog:",
     "htmlparser2": "catalog:",
     "jsonc-parser": "catalog:",
     "mdast-util-from-markdown": "catalog:",
@@ -55,7 +56,9 @@
     "micromark-extension-frontmatter": "catalog:",
     "micromark-extension-gfm": "catalog:",
     "parse5": "catalog:",
+    "postal-mime": "catalog:",
     "refractor": "catalog:",
+    "unpdf": "catalog:",
     "yaml": "catalog:"
   },
   "devDependencies": {
