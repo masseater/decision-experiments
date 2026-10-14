@@ -57,8 +57,9 @@ const branchesOf = (model: string, sentences: number): number => {
 const RunSummary = ({
   text,
   model,
+  format,
   trace,
-}: Readonly<{ text: string; model: string; trace: Trace }>): ReactNode => (
+}: Readonly<{ text: string; model: string; format: string; trace: Trace }>): ReactNode => (
   <div className="flex flex-col gap-2">
     <h2 className={cn("text-xl font-semibold", isAlarm(trace.phase) && "text-destructive")}>
       {labelOf(trace.phase)}
@@ -67,8 +68,14 @@ const RunSummary = ({
     <GradeLine text={text} phase={trace.phase} />
     <dl className="grid grid-cols-2 gap-x-6 gap-y-2 font-mono text-sm sm:grid-cols-6">
       <Stat label={COPY.queries} value={`${requestsOf(model, trace.rows)}${COPY.times}`} />
-      <Stat label={COPY.perSentence} value={`${sentencesOf(text).length}${COPY.times}`} />
-      <Stat label={COPY.branches} value={String(branchesOf(model, sentencesOf(text).length))} />
+      <Stat
+        label={COPY.perSentence}
+        value={`${sentencesOf({ text, format }).length}${COPY.times}`}
+      />
+      <Stat
+        label={COPY.branches}
+        value={String(branchesOf(model, sentencesOf({ text, format }).length))}
+      />
       <Stat label={COPY.elapsed} value={`${formatCount(Math.round(trace.elapsed))}ms`} />
       <Stat
         label={COPY.tokens}

@@ -1,16 +1,20 @@
 import { NodeRuntime, NodeServices } from "@effect/platform-node";
 import {
+  AUTO,
   cutoffFor,
   DEFAULT_MODEL,
   PRODUCT_NAME,
   detect,
   openRouter,
+  readDocument,
+  removeRegions,
 } from "@r_masseater/injection-bisect";
 import type { Detection } from "@r_masseater/injection-bisect";
-import { Console, Effect, Layer, Option, Schema } from "effect";
+import { Console, Effect, FileSystem, Layer, Option, Schema } from "effect";
 import { Argument, Command, Flag } from "effect/cli";
 import { FetchHttpClient } from "effect/http";
 import { OtlpSerialization, OtlpTracer } from "effect/observability";
+import type { PlatformError } from "effect/PlatformError";
 
 import pkg from "#package.json" with { type: "json" };
 
@@ -25,6 +29,8 @@ const services = Layer.mergeAll(openRouter, tracing).pipe(
 
 const encodeJson = Schema.encodeUnknownEffect(Schema.fromJsonString(Schema.Unknown));
 
+const encoder = new TextEncoder();
+
 const reportOf = (detection: Detection, input: string): unknown => {
   if (detection.status === "clean") {
     return detection;
@@ -35,28 +41,45 @@ const reportOf = (detection: Detection, input: string): unknown => {
       ...region,
       text: input.slice(region.start, region.end),
     })),
+    cleaned: removeRegions({ text: input, regions: detection.regions }),
   };
 };
+
+const bytesOf = (
+  text: Option.Option<string>,
+  file: Option.Option<string>,
+): Effect.Effect<Uint8Array, PlatformError, FileSystem.FileSystem> =>
+  Option.match(file, {
+    onSome: (path) =>
+      Effect.gen(function* read() {
+        const fs = yield* FileSystem.FileSystem;
+        return yield* fs.readFile(path);
+      }),
+    onNone: () => Effect.succeed(encoder.encode(Option.getOrElse(text, () => ""))),
+  });
 
 const command = Command.make(
   PRODUCT_NAME,
   {
     text: Argument.String("text").pipe(Argument.optional),
-    file: Flag.FileText("file").pipe(Flag.optional),
+    file: Flag.String("file").pipe(Flag.optional),
+    format: Flag.String("format").pipe(Flag.withDefault(AUTO)),
     model: Flag.String("model").pipe(Flag.withDefault(DEFAULT_MODEL)),
     cutoff: Flag.Finite("cutoff").pipe(Flag.optional),
   },
-  ({ text, file, model, cutoff }) =>
+  ({ text, file, format, model, cutoff }) =>
     Effect.gen(function* inspect() {
-      const input = Option.getOrElse(
-        Option.orElse(text, () => file),
-        () => "",
-      );
-      const detection = yield* detect(input, {
+      const input = yield* readDocument({
+        bytes: yield* bytesOf(text, file),
+        format,
+        name: Option.getOrElse(file, () => ""),
+      });
+      const detection = yield* detect(input.text, {
         model,
+        format: input.format,
         cutoff: Option.getOrElse(cutoff, () => cutoffFor(model)),
       });
-      yield* Console.log(yield* encodeJson(reportOf(detection, input)));
+      yield* Console.log(yield* encodeJson(reportOf(detection, input.text)));
     }),
 );
 

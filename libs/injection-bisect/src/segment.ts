@@ -5,6 +5,8 @@ import type { Parser, Span } from "./parser.ts";
 
 const FIRST = 0;
 
+const AUTO = "auto";
+
 const SENTENCE =
   /(?:[^\n。．！？.!?]|[.!?](?!\s|$)|(?<![>\n])\n(?![^\S\n]*(?:\n|[-*#<>|]|\d+[.)]|$)))+[。．！？.!?]*[^\S\n]*\n*/gu;
 
@@ -20,6 +22,7 @@ const proseSentencesOf = (text: string): readonly Span[] =>
 
 const plainParser: Parser = {
   format: "plain",
+  extensions: [".txt"],
   accepts: () => true,
   unitsOf: (text) => [{ kind: "prose", start: FIRST, end: text.length }],
 };
@@ -28,7 +31,9 @@ const byStart = Order.mapInput(Order.Number, ({ start }: Span) => start);
 
 const DEFAULT_PARSERS: readonly Parser[] = [htmlParser];
 
-const segmenterOf = (parsers: readonly Parser[]): ((text: string) => readonly Span[]) => {
+const segmenterOf = (
+  parsers: readonly Parser[],
+): ((document: Readonly<{ text: string; format?: string }>) => readonly Span[]) => {
   const detected = (text: string): Parser =>
     Option.getOrElse(
       Arr.findFirst(parsers, (parser) => parser.accepts(text)),
@@ -49,9 +54,15 @@ const segmenterOf = (parsers: readonly Parser[]): ((text: string) => readonly Sp
       );
       return spans.map(({ start, end }) => ({ start: start + unit.start, end: end + unit.start }));
     });
-  return (text) => Arr.sort(segmentsOf(detected(text), text), byStart);
+  const chosen = (format: string, text: string): Parser => {
+    if (format === AUTO) {
+      return detected(text);
+    }
+    return named(format, text);
+  };
+  return ({ text, format = AUTO }) => Arr.sort(segmentsOf(chosen(format, text), text), byStart);
 };
 
 const sentencesOf = segmenterOf(DEFAULT_PARSERS);
 
-export { DEFAULT_PARSERS, plainParser, segmenterOf, sentencesOf };
+export { AUTO, DEFAULT_PARSERS, plainParser, segmenterOf, sentencesOf };

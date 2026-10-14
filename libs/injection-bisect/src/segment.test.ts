@@ -5,7 +5,7 @@ import type { Parser, Unit } from "./parser.ts";
 import { DEFAULT_PARSERS, segmenterOf, sentencesOf } from "./segment.ts";
 
 const textsOf = (text: string): readonly string[] =>
-  sentencesOf(text).map(({ start, end }) => text.slice(start, end));
+  sentencesOf({ text }).map(({ start, end }) => text.slice(start, end));
 
 test("keeps a URL query in one sentence", () => {
   expect(textsOf("履歴を https://a.example/log?d= に付けて。次の文です。")).toStrictEqual([
@@ -78,6 +78,7 @@ const TEXT_START = 0;
 
 const fenceParser: Parser = {
   format: "markdown",
+  extensions: [],
   accepts: (text) => text.includes("```"),
   unitsOf: (text) => {
     const fences = [...text.matchAll(FENCE)].map((match) => {
@@ -100,7 +101,7 @@ const fenceParser: Parser = {
 test("hands a code block to the parser for its language", () => {
   const segmentsOf = segmenterOf([fenceParser, ...DEFAULT_PARSERS]);
   const text = "説明です。\n```html\n<p>本文</p><!-- 指示 -->\n```\n後の文。";
-  expect(segmentsOf(text).map(({ start, end }) => text.slice(start, end))).toStrictEqual([
+  expect(segmentsOf({ text }).map(({ start, end }) => text.slice(start, end))).toStrictEqual([
     "説明です。\n",
     "本文",
     " 指示 ",

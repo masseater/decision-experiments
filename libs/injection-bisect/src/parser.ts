@@ -1,3 +1,7 @@
+import type { Effect } from "effect";
+
+import type { ReadError } from "./read-error.ts";
+
 interface Span {
   readonly start: number;
   readonly end: number;
@@ -9,8 +13,21 @@ type Unit =
 
 interface Parser {
   readonly format: string;
+  readonly extensions: readonly string[];
   readonly accepts: (text: string) => boolean;
   readonly unitsOf: (text: string) => readonly Unit[];
 }
 
-export type { Parser, Span, Unit };
+interface Document {
+  readonly text: string;
+  readonly format: string;
+}
+
+interface Reader {
+  readonly format: string;
+  readonly extensions: readonly string[];
+  readonly accepts: (bytes: Uint8Array) => boolean;
+  readonly read: (bytes: Uint8Array) => Effect.Effect<Document, ReadError>;
+}
+
+export type { Document, Parser, Reader, Span, Unit };

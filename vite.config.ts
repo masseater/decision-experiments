@@ -121,6 +121,7 @@ export default defineConfig({
           ignoreInferredTypes: true,
           allow: [
             { from: "lib", name: "Request" },
+            { from: "lib", name: "Uint8Array" },
             {
               from: "package",
               package: "@cloudflare/workers-types",

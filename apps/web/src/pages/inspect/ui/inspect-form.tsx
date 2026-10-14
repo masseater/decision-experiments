@@ -8,6 +8,7 @@ import {
   NO_FOCUS,
   useApiKey,
   useDraftText,
+  useFormat,
   useModel,
   useRun,
   useSetFocus,
@@ -16,10 +17,10 @@ import {
 import type { Run } from "#/pages/inspect/model/draft";
 import { Button } from "#/shared/ui/button";
 
-import { ExampleList } from "./example-list";
 import { Note } from "./note";
 import { OverlaidText } from "./overlaid-text";
 import { RunSettings } from "./run-settings";
+import { SourceBar } from "./source-bar";
 
 const FIRST_RUN = 0;
 
@@ -39,17 +40,18 @@ const InspectForm = ({ state }: Readonly<{ state: InspectState }>): ReactNode =>
   const text = useDraftText();
   const apiKey = useApiKey();
   const model = useModel();
+  const format = useFormat();
   const run = useRun();
   const setRun = useSetRun();
   const setFocus = useSetFocus();
   const submit = useCallback(() => {
     setFocus(NO_FOCUS);
-    setRun({ status: "started", id: nextIdOf(run), text, apiKey, model });
-  }, [setFocus, setRun, run, text, apiKey, model]);
+    setRun({ status: "started", id: nextIdOf(run), text, apiKey, model, format });
+  }, [setFocus, setRun, run, text, apiKey, model, format]);
   const ready = !isRunning(state) && text.trim() !== "" && apiKey !== "" && model.trim() !== "";
   return (
     <section className="flex min-w-0 flex-col gap-3">
-      <ExampleList />
+      <SourceBar />
       <OverlaidText state={state} />
       <div className="flex flex-wrap gap-2">
         <RunSettings />
