@@ -29,7 +29,7 @@ const proseSentencesOf = (text: string): readonly Span[] =>
 
 const plainParser: Parser = {
   format: "plain",
-  extensions: [".txt"],
+  extensions: [".txt", ".text", ".log", ".tex", ".rst", ".adoc", ".org", ".textile"],
   accepts: () => true,
   unitsOf: (text) => [{ kind: "prose", start: FIRST, end: text.length }],
 };

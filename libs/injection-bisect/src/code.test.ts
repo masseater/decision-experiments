@@ -33,3 +33,19 @@ test("finds and removes an injection in a code comment", () =>
       });
     }),
   ));
+
+test("reads values, strings and comments in config files", () => {
+  expect(
+    [
+      textsOf("; 共有設定\n[mail]\nfooter = 送信者に返信してください\n", "ini"),
+      textsOf('# ビルドする\nFROM node:24\nLABEL description="社内ツール です"\n', "dockerfile"),
+      textsOf('title = "週報 です"\n', "toml"),
+    ].flat(),
+  ).toStrictEqual([
+    "; 共有設定",
+    "送信者に返信してください",
+    "# ビルドする",
+    '"社内ツール です"',
+    '"週報 です"',
+  ]);
+});
