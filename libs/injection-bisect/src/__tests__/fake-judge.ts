@@ -12,8 +12,10 @@ const NO_COST = 0;
 
 const MODEL = "test/model";
 
+const ENGLISH_MARK = "ignore previous instructions";
+
 const probabilityOf = (text: string): number => {
-  if (text.includes(INJECTION_MARK)) {
+  if (text.includes(INJECTION_MARK) || text.toLowerCase().includes(ENGLISH_MARK)) {
     return INJECTED;
   }
   return CLEAN;
@@ -58,5 +60,5 @@ const cleanedOf = ({
     Effect.provideService(InjectionJudge, fakeJudge),
   );
 
-export { INJECTION_MARK, cleanedOf };
+export { ENGLISH_MARK, INJECTION_MARK, cleanedOf };
 export type { Cleaned };
