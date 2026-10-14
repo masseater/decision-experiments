@@ -134,6 +134,7 @@ export default defineConfig({
               name: ["ReactNode", "ButtonHTMLAttributes", "ChangeEvent", "ClassAttributes"],
             },
             { from: "package", package: "clsx", name: "ClassValue" },
+            { from: "package", package: "unpdf", name: "PDFDocumentProxy" },
             {
               from: "package",
               package: "parse5",

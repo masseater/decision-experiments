@@ -7,10 +7,11 @@ import {
   detect,
   openRouter,
   readDocument,
+  readersWith,
   removeRegions,
 } from "@r_masseater/injection-bisect";
 import type { Detection } from "@r_masseater/injection-bisect";
-import { Console, Effect, FileSystem, Layer, Option, Schema } from "effect";
+import { Config, Console, Effect, FileSystem, Layer, Option, Schema } from "effect";
 import { Argument, Command, Flag } from "effect/cli";
 import { FetchHttpClient } from "effect/http";
 import { OtlpSerialization, OtlpTracer } from "effect/observability";
@@ -58,6 +59,16 @@ const bytesOf = (
     onNone: () => Effect.succeed(encoder.encode(Option.getOrElse(text, () => ""))),
   });
 
+const cacheDirectory = Effect.gen(function* cache() {
+  const home = yield* Config.String("XDG_CACHE_HOME").pipe(
+    Config.orElse(() => Config.String("HOME").pipe(Config.map((path) => `${path}/.cache`))),
+  );
+  const directory = `${home}/${PRODUCT_NAME}`;
+  const fs = yield* FileSystem.FileSystem;
+  yield* fs.makeDirectory(directory, { recursive: true });
+  return directory;
+});
+
 const command = Command.make(
   PRODUCT_NAME,
   {
@@ -73,6 +84,7 @@ const command = Command.make(
         bytes: yield* bytesOf(text, file),
         format,
         name: Option.getOrElse(file, () => ""),
+        readers: readersWith({ worker: { cachePath: yield* cacheDirectory } }),
       });
       const detection = yield* detect(input.text, {
         model,
