@@ -25,6 +25,9 @@ decision モデルを使った実験プロジェクトの置き場である。
 | PDF                        | `pdf`                                                              | 各ページのテキスト。テキストの無いページは画像を OCR で読む                                                        |
 | 画像                       | `image`（PNG・JPEG・WebP・GIF・BMP・TIFF）                         | OCR で読んだ文字（日本語と英語）                                                                                   |
 | Word・PowerPoint・Excel    | `docx`・`pptx`・`xlsx`                                             | 本文、コメント、ノート、画像の説明、セルの文字列                                                                   |
+| OpenDocument               | `odt`・`odp`・`ods`                                                | 本文、見出し、メタデータ、セルの文字列                                                                             |
+| EPUB                       | `epub`                                                             | 書誌情報と、目次の順の各章（HTML として読む）                                                                      |
+| Jupyter Notebook           | `ipynb`                                                            | Markdown のセル、コード、出力                                                                                      |
 
 CLI は `--format` で形式を指定する。指定しなければ、ファイルの拡張子と中身から選ぶ。
 Web のデモでは形式を選ぶか、ファイルを開く。

@@ -1,9 +1,12 @@
 export { DEFAULT_CUTOFF, cutoffFor } from "./cutoff.ts";
 export { DEFAULT_MODEL, ProbeListener, asksTogether, branchesFor, detect } from "./detect.ts";
 export type { Detection, DetectOptions, Probe, ProbeEvent, Region } from "./detect.ts";
-export { DEFAULT_READERS, formatsOf, readDocument, readersWith } from "./document.ts";
+export { formatsOf, readDocument } from "./document.ts";
+export { DEFAULT_READERS, readersWith } from "./readers.ts";
 export type { Formats, ReadInput } from "./document.ts";
 export { emailReader } from "./email.ts";
+export { epubReader } from "./epub.ts";
+export { notebookReader } from "./notebook.ts";
 export { InjectionJudge } from "./judge.ts";
 export type { Verdict, Verdicts } from "./judge.ts";
 export { JudgeError } from "./judge-error.ts";
