@@ -1,8 +1,8 @@
+import { Button } from "@decision-experiments/web-ui";
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
 import { COPY } from "#/pages/why/model/copy";
-import { Button } from "#/shared/ui/button";
 
 const Actions = (): ReactNode => (
   <div className="flex flex-wrap gap-3">

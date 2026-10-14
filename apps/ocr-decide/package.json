@@ -1,0 +1,52 @@
+{
+  "name": "ocr-decide",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#/*": "./src/*"
+  },
+  "scripts": {
+    "dev": "alchemy dev",
+    "typecheck": "tsc",
+    "test": "vp test run --passWithNoTests",
+    "steiger": "steiger ./src",
+    "fallow": "fallow --skip dupes --fail-on-issues --quiet --format compact && fallow dupes --fail-on-issues --quiet --format compact && fallow security --fail-on-issues --quiet",
+    "deploy": "alchemy deploy",
+    "destroy": "alchemy destroy"
+  },
+  "dependencies": {
+    "@decision-experiments/web-ui": "workspace:*",
+    "@effect/atom-react": "catalog:stack",
+    "@ocr-decide/measurements": "workspace:*",
+    "@r_masseater/ocr-decide": "workspace:*",
+    "@tanstack/react-devtools": "0.10.13",
+    "@tanstack/react-query": "catalog:stack",
+    "@tanstack/react-query-devtools": "catalog:",
+    "@tanstack/react-router": "1.170.42",
+    "@tanstack/react-router-devtools": "1.167.2",
+    "@tanstack/react-start": "catalog:stack",
+    "effect": "catalog:stack",
+    "lucide-react": "catalog:stack",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "scheduler": "0.28.0",
+    "tailwindcss": "catalog:stack"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "catalog:",
+    "@decision-experiments/start-site": "workspace:*",
+    "@effect/platform-node": "catalog:",
+    "@effect/tsgo": "catalog:stack",
+    "@feature-sliced/steiger-plugin": "0.8.0",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "catalog:",
+    "@vitejs/plugin-rsc": "catalog:",
+    "alchemy": "catalog:stack",
+    "steiger": "catalog:stack",
+    "typescript": "catalog:stack",
+    "vite": "catalog:",
+    "vite-plus": "catalog:stack"
+  }
+}

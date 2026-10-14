@@ -1,0 +1,26 @@
+{
+  "name": "@decision-experiments/start-site",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./vite": "./src/vite.ts",
+    "./alchemy": "./src/app-prefix.ts"
+  },
+  "scripts": {
+    "test": "vp test run"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "4.3.3",
+    "@tanstack/devtools-vite": "0.8.5",
+    "@tanstack/react-start": "catalog:stack",
+    "@vitejs/plugin-react": "catalog:",
+    "@vitejs/plugin-rsc": "catalog:",
+    "alchemy": "catalog:stack",
+    "effect": "catalog:stack",
+    "vite-plus": "catalog:stack"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:"
+  }
+}

@@ -6,6 +6,7 @@ decision モデルを使った実験プロジェクトの置き場である。
 
 - injection-bisect の Web のデモ: https://masseater.dev/injection-bisect/
 - injection-bisect の npm パッケージ: https://www.npmjs.com/package/@r_masseater/injection-bisect
+- ocr-decide の Web のデモと計測結果: https://masseater.dev/ocr-decide/
 
 ## injection-bisect の読める形式
 
