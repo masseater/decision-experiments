@@ -1,22 +1,22 @@
 import type { ReactNode } from "react";
 
-import { BenchDetails } from "./bench-details";
 import { Compare } from "./compare";
+import { Flow } from "./flow";
 import { Hero } from "./hero";
-import { Limits } from "./limits";
-import { Mechanism } from "./mechanism";
+import { More } from "./more";
 import { Scenarios } from "./scenarios";
 import { Stats } from "./stats";
 
 const WhyPage = (): ReactNode => (
-  <main className="mx-auto flex max-w-4xl flex-col gap-10 px-4 py-10 md:px-8">
-    <Hero />
+  <main className="mx-auto flex max-w-4xl flex-col gap-12 px-4 py-10 md:px-8">
+    <div className="flex flex-col gap-8">
+      <Hero />
+      <Flow />
+    </div>
     <Compare />
-    <Mechanism />
     <Stats />
     <Scenarios />
-    <Limits />
-    <BenchDetails />
+    <More />
   </main>
 );
 
