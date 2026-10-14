@@ -53,6 +53,9 @@ catalog:
   fflate: ^0.8.3
   postal-mime: ^4.0.5
   unpdf: ^1.8.1
+  fast-png: ^8.0.0
+  tesseract.js: ^7.0.0
+  "@tesseract.js-data/eng": ^1.0.0
 catalogs:
   stack:
     "@distilled.cloud/cloudflare": 1.0.0-rc.13
@@ -96,6 +99,7 @@ allowBuilds:
   workerd: true
   protobufjs: false
   core-js-pure: false
+  tesseract.js: false
   dtrace-provider: false
   re2: true
   "@openrouter/sdk": false

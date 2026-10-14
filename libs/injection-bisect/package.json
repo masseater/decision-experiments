@@ -47,6 +47,7 @@
   "dependencies": {
     "@effect/ai-openrouter": "catalog:",
     "effect": "catalog:stack",
+    "fast-png": "catalog:",
     "fflate": "catalog:",
     "htmlparser2": "catalog:",
     "jsonc-parser": "catalog:",
@@ -58,10 +59,12 @@
     "parse5": "catalog:",
     "postal-mime": "catalog:",
     "refractor": "catalog:",
+    "tesseract.js": "catalog:",
     "unpdf": "catalog:",
     "yaml": "catalog:"
   },
   "devDependencies": {
+    "@tesseract.js-data/eng": "catalog:",
     "@types/hast": "catalog:",
     "@types/mdast": "catalog:",
     "@types/node": "catalog:",

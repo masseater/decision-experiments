@@ -1,13 +1,22 @@
 import { Array as Arr, Effect, Option } from "effect";
 
 import { emailReader } from "./email.ts";
+import { imageReaderOf } from "./ocr.ts";
+import type { OcrOptions } from "./ocr.ts";
 import { OFFICE_READERS } from "./office.ts";
 import type { Document, Parser, Reader } from "./parser.ts";
-import { pdfReader } from "./pdf.ts";
+import { pdfReaderOf } from "./pdf.ts";
 import { ReadError } from "./read-error.ts";
 import { AUTO, DEFAULT_PARSERS, isNamed, plainParser } from "./segment.ts";
 
-const DEFAULT_READERS: readonly Reader[] = [pdfReader, ...OFFICE_READERS, emailReader];
+const readersWith = (ocr: OcrOptions): readonly Reader[] => [
+  pdfReaderOf(ocr),
+  imageReaderOf(ocr),
+  ...OFFICE_READERS,
+  emailReader,
+];
+
+const DEFAULT_READERS = readersWith({});
 
 const NOT_FOUND = -1;
 
@@ -82,5 +91,5 @@ const readDocument = (input: ReadInput): Effect.Effect<Document, ReadError> => {
   return named(input, format);
 };
 
-export { DEFAULT_READERS, formatsOf, readDocument };
+export { DEFAULT_READERS, formatsOf, readDocument, readersWith };
 export type { Formats, ReadInput };
