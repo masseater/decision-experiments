@@ -1,3 +1,4 @@
+import { Button } from "@decision-experiments/web-ui";
 import { LockKeyhole } from "lucide-react";
 import { useCallback } from "react";
 import type { ReactNode } from "react";
@@ -15,7 +16,6 @@ import {
   useSetRun,
 } from "#/pages/inspect/model/draft";
 import type { Run } from "#/pages/inspect/model/draft";
-import { Button } from "#/shared/ui/button";
 
 import { Note } from "./note";
 import { OverlaidText } from "./overlaid-text";

@@ -1,6 +1,5 @@
+import { cn } from "@decision-experiments/web-ui";
 import type { ChangeEventHandler, ReactNode } from "react";
-
-import { cn } from "#/shared/lib/utils";
 
 const LAYER =
   "col-start-1 row-start-1 min-h-40 w-full rounded-md border px-3 py-2 text-base leading-relaxed break-words whitespace-pre-wrap md:text-sm";

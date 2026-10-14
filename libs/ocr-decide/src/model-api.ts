@@ -42,4 +42,4 @@ class ModelApi extends Context.Service<
 >()("@r_masseater/ocr-decide/model-api/ModelApi") {}
 
 export { ModelApi };
-export type { Choice, Generated, Part, Probability };
+export type { Part };

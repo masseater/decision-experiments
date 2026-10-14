@@ -8,13 +8,11 @@
         "allowedUnstableApis": [
           "@effect/ai-openrouter/OpenRouterClient#OpenRouterClient",
           "@effect/ai-openrouter/OpenRouterClient#layerConfig",
-          "@effect/ai-openrouter/OpenRouterConfig#withClientTransform",
           "@effect/ai-openrouter/OpenRouterSchema#Answer",
           "@effect/ai-openrouter/OpenRouterSchema#DecisionsQuestion",
           "@effect/ai-openrouter/Generated#ChatContentItems",
           "effect/http/FetchHttpClient#layer",
           "effect/http/HttpClient#mapRequest",
-          "effect/http/HttpClientRequest#bearerToken",
           "effect/http/HttpClientRequest#setHeader"
         ]
       }

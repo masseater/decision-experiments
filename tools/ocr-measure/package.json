@@ -3,6 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "scripts": {
+    "render": "node src/render.ts",
+    "measure": "node src/measure.ts",
+    "rescore": "node src/rescore.ts"
+  },
   "dependencies": {
     "@effect/platform-node": "catalog:",
     "@ocr-decide/measurements": "workspace:*",
@@ -10,8 +15,6 @@
     "effect": "catalog:stack"
   },
   "devDependencies": {
-    "@tesseract.js-data/eng": "catalog:",
-    "@tesseract.js-data/jpn": "catalog:",
     "@types/node": "catalog:",
     "playwright-core": "catalog:",
     "vite-plus": "catalog:stack"

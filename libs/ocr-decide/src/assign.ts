@@ -139,4 +139,4 @@ const assignFields = ({
   );
 
 export { CUTOFF, DECISION_MODELS, DEFAULT_DECISION_MODEL, assignFields };
-export type { DecisionModel };
+export type { DecisionModel, Via };

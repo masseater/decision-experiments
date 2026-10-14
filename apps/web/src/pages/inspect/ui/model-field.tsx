@@ -1,10 +1,10 @@
+import { cn } from "@decision-experiments/web-ui";
 import { useCallback } from "react";
 import type { ChangeEvent, ReactNode } from "react";
 
 import { COPY } from "#/pages/inspect/model/copy";
 import { useModel, useSetModel } from "#/pages/inspect/model/draft";
 import { MODELS } from "#/pages/inspect/model/models";
-import { cn } from "#/shared/lib/utils";
 
 import { SELECT_CLASS } from "./select-class";
 

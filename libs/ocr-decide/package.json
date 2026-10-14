@@ -52,8 +52,6 @@
     "tesseract.js": "catalog:"
   },
   "devDependencies": {
-    "@tesseract.js-data/eng": "catalog:",
-    "@tesseract.js-data/jpn": "catalog:",
     "@types/node": "catalog:",
     "vite-plus": "catalog:stack"
   }

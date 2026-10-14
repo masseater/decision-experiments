@@ -1,8 +1,8 @@
+import { Button } from "@decision-experiments/web-ui";
 import { useCallback } from "react";
 import type { ReactNode } from "react";
 
 import { useOpenPicture } from "#/pages/extract/api/use-open-picture";
-import { Button } from "#/shared/ui/button";
 
 const SampleButton = ({ name, label }: Readonly<{ name: string; label: string }>): ReactNode => {
   const open = useOpenPicture();

@@ -1,3 +1,4 @@
+import { Button } from "@decision-experiments/web-ui";
 import { Option } from "effect";
 import { useCallback } from "react";
 import type { ReactNode } from "react";
@@ -6,7 +7,6 @@ import { useExtract } from "#/pages/extract/api/use-extract";
 import { COPY } from "#/pages/extract/model/copy";
 import { useApiKey, usePicture, useWay } from "#/pages/extract/model/draft";
 import { WAYS } from "#/pages/extract/model/ways";
-import { Button } from "#/shared/ui/button";
 
 import { ExtractResult } from "./extract-result";
 

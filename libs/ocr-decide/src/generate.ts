@@ -200,3 +200,4 @@ const extractFromImage = ({
   );
 
 export { DEFAULT_GENERATOR_MODEL, REREAD_BELOW, extractFromImage, rereadLowConfidence };
+export type { Reread };

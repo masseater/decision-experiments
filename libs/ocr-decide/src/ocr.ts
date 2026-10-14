@@ -19,9 +19,8 @@ const PERCENT = 100;
 
 const BLOCKS = { blocks: true } as const;
 
-const CJK = String.raw`[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー]`;
-
-const SPACE_BETWEEN_CJK = new RegExp(String.raw`(?<=${CJK})\s+(?=${CJK})`, "gu");
+const SPACE_BETWEEN_CJK =
+  /(?<=[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー])\s+(?=[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー])/gu;
 
 const failure = (cause: unknown): OcrError => new OcrError({ reason: String(cause) });
 
@@ -58,4 +57,4 @@ const readFragments = ({
   );
 
 export { readFragments };
-export type { OcrOptions };
+export type { OcrOptions, OcrRequest };

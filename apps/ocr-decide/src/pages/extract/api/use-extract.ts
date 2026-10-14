@@ -1,7 +1,7 @@
-import { INVOICE_FIELDS, extract, openRouterPerRequest, withApiKey } from "@r_masseater/ocr-decide";
+import { INVOICE_FIELDS, extract, openRouterWithKey } from "@r_masseater/ocr-decide";
 import type { FieldValue } from "@r_masseater/ocr-decide";
 import { useMutation } from "@tanstack/react-query";
-import { Duration, Effect, ManagedRuntime } from "effect";
+import { Duration, Effect, Layer } from "effect";
 
 import type { Way } from "#/pages/extract/model/ways";
 
@@ -25,15 +25,22 @@ type ExtractState =
   | { readonly status: "running" }
   | { readonly status: "finished"; readonly outcome: Outcome };
 
-const runtime = ManagedRuntime.make(openRouterPerRequest);
+const reasonOf = (error: Readonly<{ message: string; reason?: string }>): string =>
+  error.reason ?? error.message;
 
-const outcomeOf = ({ bytes, apiKey, way }: Request): Promise<Outcome> =>
-  runtime.runPromise(
-    extract({ image: bytes, fields: INVOICE_FIELDS, method: way.method, model: way.model }).pipe(
-      withApiKey(apiKey),
-      Effect.timed,
+const outcomeOf = ({ bytes, apiKey, way }: Request): Promise<Outcome> => {
+  const run = extract({
+    image: bytes,
+    fields: INVOICE_FIELDS,
+    method: way.method,
+    model: way.model,
+  });
+  return Effect.runPromise(
+    Layer.build(openRouterWithKey(apiKey)).pipe(
+      Effect.flatMap((context) => Effect.provideContext(Effect.timed(run), context)),
+      Effect.scoped,
       Effect.match({
-        onFailure: ({ reason }): Outcome => ({ status: "failed", reason }),
+        onFailure: (error): Outcome => ({ status: "failed", reason: reasonOf(error) }),
         onSuccess: ([elapsed, { values, costUsd }]): Outcome => ({
           status: "done",
           values,
@@ -43,6 +50,7 @@ const outcomeOf = ({ bytes, apiKey, way }: Request): Promise<Outcome> =>
       }),
     ),
   );
+};
 
 const useExtract = (): Readonly<{ state: ExtractState; start: (request: Request) => void }> => {
   const mutation = useMutation({ mutationFn: outcomeOf });

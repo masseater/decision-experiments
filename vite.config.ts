@@ -189,7 +189,7 @@ export default defineConfig({
         rules: { "import/no-default-export": "off" },
       },
       {
-        files: ["**/shared/ui/**"],
+        files: ["**/shared/ui/**", "libs/web-ui/src/ui/**"],
         rules: { "shadcn/no-restyle": "off", "react/jsx-props-no-spreading": "off" },
       },
       {

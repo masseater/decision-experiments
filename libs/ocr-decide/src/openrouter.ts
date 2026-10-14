@@ -1,8 +1,7 @@
 import type { ChatContentItems } from "@effect/ai-openrouter/Generated";
 import { OpenRouterClient, layerConfig } from "@effect/ai-openrouter/OpenRouterClient";
-import { withClientTransform } from "@effect/ai-openrouter/OpenRouterConfig";
 import type { Answer, DecisionsQuestion } from "@effect/ai-openrouter/OpenRouterSchema";
-import { Array as Arr, Config, Effect, Layer, Option } from "effect";
+import { Array as Arr, Config, Effect, Layer, Option, Redacted } from "effect";
 import { Base64 } from "effect/encoding";
 import { FetchHttpClient, HttpClient, HttpClientRequest } from "effect/http";
 
@@ -196,16 +195,12 @@ const openRouter = modelApiLayer.pipe(
   Layer.provide(FetchHttpClient.layer),
 );
 
-const openRouterPerRequest = modelApiLayer.pipe(
-  Layer.provide(layerConfig(site)),
-  Layer.provide(FetchHttpClient.layer),
-);
+const clientWithKey = (apiKey: string): ReturnType<typeof layerConfig> => {
+  const fixedKey = Config.succeed(Redacted.make(apiKey));
+  return layerConfig({ apiKey: fixedKey, ...site });
+};
 
-const withApiKey = (
-  apiKey: string,
-): (<Success, Failure, Requirements>(
-  effect: Effect.Effect<Success, Failure, Requirements>,
-) => Effect.Effect<Success, Failure, Requirements>) =>
-  withClientTransform(HttpClient.mapRequest(HttpClientRequest.bearerToken(apiKey)));
+const openRouterWithKey = (apiKey: string): Layer.Layer<ModelApi, Config.ConfigError> =>
+  modelApiLayer.pipe(Layer.provide(clientWithKey(apiKey)), Layer.provide(FetchHttpClient.layer));
 
-export { PRODUCT_NAME, openRouter, openRouterPerRequest, withApiKey };
+export { PRODUCT_NAME, openRouter, openRouterWithKey };
