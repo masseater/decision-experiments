@@ -194,6 +194,9 @@ catalogs:
     '@kenjiuno/msgreader':
       specifier: ^1.28.0
       version: 1.28.0
+    '@plussub/srt-vtt-parser':
+      specifier: ^2.0.5
+      version: 2.0.5
     '@r_masseater/oxlint-plugin-decision':
       specifier: 0.0.4
       version: 0.0.4
@@ -242,6 +245,9 @@ catalogs:
     '@yarnpkg/parsers':
       specifier: 3.1.0
       version: 3.1.0
+    ass-compiler:
+      specifier: ^0.1.16
+      version: 0.1.16
     cfb:
       specifier: ^1.2.2
       version: 1.2.2
@@ -629,6 +635,12 @@ importers:
       '@kenjiuno/msgreader':
         specifier: 'catalog:'
         version: 1.28.0
+      '@plussub/srt-vtt-parser':
+        specifier: 'catalog:'
+        version: 2.0.5
+      ass-compiler:
+        specifier: 'catalog:'
+        version: 0.1.16
       cfb:
         specifier: 'catalog:'
         version: 1.2.2
@@ -2976,6 +2988,9 @@ packages:
   '@pkgr/core@0.3.6':
     resolution: {integrity: sha512-SEeaJLb3qBNF/OaXnaR1NmmBbFYk1zC0ZH/52fATcRPLFg/p791YrcyFFy44Bo9sLaGuSuLp5Q6axbb/O+v/RA==}
     engines: {node: ^14.18.0 || >=16.0.0}
+
+  '@plussub/srt-vtt-parser@2.0.5':
+    resolution: {integrity: sha512-cOedEgu7gyea9k+ixkPCQGf8ABBctFWWsBYnVCzzmuoHz45awc9vKtveHzn7VugR36fzFqgkXaLEn2HdZnzFdQ==}
 
   '@pnpm/catalogs.protocol-parser@1001.0.0':
     resolution: {integrity: sha512-9rHKCMRvhfv7TSAVSCVLI+8OZhi1OcT8lanAGqOPbGgQTkFrPH3PfEWJNxz43xqrXRa4HCFRAMu+g19su5eRLA==}
@@ -5493,6 +5508,9 @@ packages:
   arraybuffer.prototype.slice@1.0.4:
     resolution: {integrity: sha512-BNoCY6SXXPQ7gF2opIP4GBE+Xw7U+pHMYKuzjgCN3GwiaIR09UUeKfheyIry77QtrCBlC0KK0q5/TER/tYh3PQ==}
     engines: {node: '>= 0.4'}
+
+  ass-compiler@0.1.16:
+    resolution: {integrity: sha512-t6RvH8ebL47t5a62XcrxMwxh1JQoOykydpT5bSVqqf9HA9/rbFl+9JgckBVTA5QdvfwuhYD5yrSc2n3u1tsjhA==}
 
   assertion-error@2.0.1:
     resolution: {integrity: sha512-Izi8RQcffqCeNVgFigKli1ssklIbpHnCYc6AknXGYoB6grJqyeby7jv12JUQgmTAnIDnbck1uxksT4dzN3PWBA==}
@@ -11991,6 +12009,8 @@ snapshots:
 
   '@pkgr/core@0.3.6': {}
 
+  '@plussub/srt-vtt-parser@2.0.5': {}
+
   '@pnpm/catalogs.protocol-parser@1001.0.0': {}
 
   '@pnpm/catalogs.resolver@1000.0.5':
@@ -14957,6 +14977,8 @@ snapshots:
       es-errors: 1.3.0
       get-intrinsic: 1.3.0
       is-array-buffer: 3.0.5
+
+  ass-compiler@0.1.16: {}
 
   assertion-error@2.0.1: {}
 

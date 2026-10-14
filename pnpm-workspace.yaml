@@ -64,6 +64,8 @@ catalog:
   cfb: ^1.2.2
   papaparse: ^5.7.0
   "@types/papaparse": ^5.5.2
+  ass-compiler: ^0.1.16
+  "@plussub/srt-vtt-parser": ^2.0.5
 catalogs:
   stack:
     "@distilled.cloud/cloudflare": 1.0.0-rc.13

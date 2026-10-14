@@ -47,6 +47,8 @@
   "dependencies": {
     "@effect/ai-openrouter": "catalog:",
     "@kenjiuno/msgreader": "catalog:",
+    "@plussub/srt-vtt-parser": "catalog:",
+    "ass-compiler": "catalog:",
     "cfb": "catalog:",
     "effect": "catalog:stack",
     "fast-png": "catalog:",

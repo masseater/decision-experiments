@@ -34,7 +34,7 @@ test("reads the dialogue text of ASS subtitles", () =>
   Effect.runPromise(
     Effect.gen(function* ass() {
       const text = `[Script Info]\nTitle: 第1話\n\n[Events]\nFormat: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\nDialogue: 0,0:00:01.00,0:00:03.00,Default,,0,0,0,,${ITALIC}こんにちは。\nDialogue: 0,0:00:04.00,0:00:06.00,Default,,0,0,0,,${INJECTION}\n`;
-      expect(textsOf(text)).toStrictEqual([" 第1話", `${ITALIC}こんにちは。`, INJECTION]);
+      expect(textsOf(text)).toStrictEqual(["第1話", `${ITALIC}こんにちは。`, INJECTION]);
       expect((yield* cleanedOf({ text })).found).toStrictEqual([INJECTION]);
     }),
   ));

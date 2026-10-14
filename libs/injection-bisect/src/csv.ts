@@ -1,8 +1,8 @@
 import { Array as Arr } from "effect";
 import { parse } from "papaparse";
 
+import { proseUnitsOf } from "./located.ts";
 import type { Parser, Unit } from "./parser.ts";
-import { looksLikeProse } from "./prose.ts";
 
 const DELIMITERS = { comma: ",", tab: "\t" } as const;
 
@@ -27,22 +27,12 @@ const looksLikeTable =
     );
   };
 
-const fieldsOf = (text: string, delimiter: Delimiter): readonly Unit[] => {
-  const { data } = parse<readonly string[]>(text, { delimiter: DELIMITERS[delimiter] });
-  let cursor = 0;
-  return data.flat().flatMap((value) => {
-    const raw = value.replaceAll('"', '""');
-    if (raw === "") {
-      return [];
-    }
-    const start = text.indexOf(raw, cursor);
-    cursor = start + raw.length;
-    if (!looksLikeProse(value.trim())) {
-      return [];
-    }
-    return [{ kind: "prose", start, end: cursor } as const];
-  });
-};
+const fieldsOf = (text: string, delimiter: Delimiter): readonly Unit[] =>
+  proseUnitsOf(text)(
+    parse<readonly string[]>(text, { delimiter: DELIMITERS[delimiter] })
+      .data.flat()
+      .map((value) => value.replaceAll('"', '""')),
+  );
 
 const csvParser: Parser = {
   format: "csv",
