@@ -27,3 +27,9 @@ test("finds and removes an injection in an Atom entry", () =>
       });
     }),
   ));
+
+test("reads attribute values holding the other quote", () => {
+  expect(
+    textsOf(`<?xml version="1.0"?><item title="Don't stop here" note='彼は"はい"と言った'/>`),
+  ).toStrictEqual(["Don't stop here", '彼は"はい"と言った']);
+});

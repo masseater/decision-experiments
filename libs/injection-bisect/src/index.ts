@@ -13,6 +13,7 @@ export {
   openRouterPerRequest,
   withApiKey,
 } from "./openrouter.ts";
+export { CODE_PARSERS } from "./code.ts";
 export { csvParser, tsvParser } from "./csv.ts";
 export { htmlParser } from "./html.ts";
 export { jsonParser } from "./json.ts";

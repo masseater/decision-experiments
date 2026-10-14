@@ -152,6 +152,7 @@ export default defineConfig({
               package: "@types/mdast",
               name: ["Code", "Nodes"],
             },
+            { from: "package", package: "@types/hast", name: ["Element", "RootContent"] },
             {
               from: "package",
               package: "effect",

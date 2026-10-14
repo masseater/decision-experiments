@@ -1,5 +1,6 @@
 import { Array as Arr, Match, Option, Order } from "effect";
 
+import { CODE_PARSERS } from "./code.ts";
 import { csvParser, tsvParser } from "./csv.ts";
 import { htmlParser } from "./html.ts";
 import { jsonParser } from "./json.ts";
@@ -33,6 +34,13 @@ const plainParser: Parser = {
   unitsOf: (text) => [{ kind: "prose", start: FIRST, end: text.length }],
 };
 
+const isNamed =
+  (name: string) =>
+  ({ format, aliases = [] }: Parser): boolean => {
+    const lowered = name.toLowerCase();
+    return format === lowered || aliases.includes(lowered);
+  };
+
 const byStart = Order.mapInput(Order.Number, ({ start }: Span) => start);
 
 const DEFAULT_PARSERS: readonly Parser[] = [
@@ -45,6 +53,7 @@ const DEFAULT_PARSERS: readonly Parser[] = [
   yamlParser,
   csvParser,
   tsvParser,
+  ...CODE_PARSERS,
 ];
 
 const segmenterOf = (
@@ -56,9 +65,8 @@ const segmenterOf = (
       () => plainParser,
     );
   const named = (format: string, text: string): Parser =>
-    Option.getOrElse(
-      Arr.findFirst([...parsers, plainParser], (parser) => parser.format === format),
-      () => detected(text),
+    Option.getOrElse(Arr.findFirst([...parsers, plainParser], isNamed(format)), () =>
+      detected(text),
     );
   const segmentsOf = (parser: Parser, text: string): readonly Span[] =>
     parser.unitsOf(text).flatMap((unit) => {
@@ -82,4 +90,4 @@ const segmenterOf = (
 
 const sentencesOf = segmenterOf(DEFAULT_PARSERS);
 
-export { AUTO, DEFAULT_PARSERS, plainParser, segmenterOf, sentencesOf };
+export { AUTO, DEFAULT_PARSERS, isNamed, plainParser, segmenterOf, sentencesOf };

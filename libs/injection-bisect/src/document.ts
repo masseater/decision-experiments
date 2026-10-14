@@ -2,7 +2,7 @@ import { Array as Arr, Effect, Option } from "effect";
 
 import type { Document, Parser, Reader } from "./parser.ts";
 import { ReadError } from "./read-error.ts";
-import { AUTO, DEFAULT_PARSERS, plainParser } from "./segment.ts";
+import { AUTO, DEFAULT_PARSERS, isNamed, plainParser } from "./segment.ts";
 
 const DEFAULT_READERS: readonly Reader[] = [];
 
@@ -48,13 +48,11 @@ const named = (input: ReadInput, format: string): Effect.Effect<Document, ReadEr
     {
       onSome: (reader) => reader.read(input.bytes),
       onNone: () =>
-        Option.match(
-          Arr.findFirst(parsersOf(input), (parser) => parser.format === format),
-          {
-            onSome: () => Effect.succeed({ text: decoder.decode(input.bytes), format }),
-            onNone: () => Effect.fail(new ReadError({ reason: `unknown format: ${format}` })),
-          },
-        ),
+        Option.match(Arr.findFirst(parsersOf(input), isNamed(format)), {
+          onSome: (parser) =>
+            Effect.succeed({ text: decoder.decode(input.bytes), format: parser.format }),
+          onNone: () => Effect.fail(new ReadError({ reason: `unknown format: ${format}` })),
+        }),
     },
   );
 
