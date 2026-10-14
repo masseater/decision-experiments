@@ -14,9 +14,9 @@ decision モデルを使った実験プロジェクトの置き場である。
 | テキスト                        | `plain`（.txt・.log・.tex・.rst・.adoc など）                      | 全文                                                                                                               |
 | HTML                            | `html`（Vue・Svelte・Astro のファイルも）                          | 本文、コメント、属性の値、`script`（JSON-LD を含む）と `style` の各行                                              |
 | Markdown                        | `markdown`                                                         | 見出し、段落、表のセル、画像（alt と title）、リンクの title、コードブロック（言語ごとに読む）、HTML、front matter |
-| JSON                            | `json`                                                             | 文字列の値とコメント（JSON with Comments）。Slack・Discord・GitHub の書き出しもこれで読む                          |
+| JSON                            | `json`・`jsonl`（JSON Lines）                                      | 文字列の値とコメント（JSON with Comments）。Slack・Discord・GitHub の書き出しもこれで読む                          |
 | YAML                            | `yaml`                                                             | 文字列の値とコメント                                                                                               |
-| XML・RSS・Atom                  | `xml`                                                              | テキスト、コメント、属性の値、CDATA（中身の形式で読む）                                                            |
+| XML・RSS・Atom・SVG・XLIFF      | `xml`                                                              | テキスト、コメント、属性の値、CDATA（中身の形式で読む）                                                            |
 | CSV・TSV                        | `csv`・`tsv`                                                       | 各セル                                                                                                             |
 | 字幕                            | `srt`・`vtt`・`ass`                                                | 字幕の文、NOTE、タイトル                                                                                           |
 | カレンダー・連絡先              | `ics`・`vcard`                                                     | 件名、説明、場所、メモ、肩書きなど文字の項目                                                                       |

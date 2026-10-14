@@ -2,7 +2,7 @@ import { CALENDAR_PARSERS } from "./calendar.ts";
 import { CODE_PARSERS } from "./code.ts";
 import { csvParser, tsvParser } from "./csv.ts";
 import { htmlParser } from "./html.ts";
-import { jsonParser } from "./json.ts";
+import { jsonLinesParser, jsonParser } from "./json.ts";
 import { markdownParser } from "./markdown.ts";
 import type { Parser } from "./parser.ts";
 import { SUBTITLE_PARSERS } from "./subtitles.ts";
@@ -11,6 +11,7 @@ import { yamlParser } from "./yaml.ts";
 
 const DEFAULT_PARSERS: readonly Parser[] = [
   jsonParser,
+  jsonLinesParser,
   ...SUBTITLE_PARSERS,
   ...CALENDAR_PARSERS,
   ...CODE_PARSERS,

@@ -9,6 +9,8 @@ const OPENING = /^\s*[[{]/u;
 
 const QUOTE = '"'.length;
 
+const FIRST = 0;
+
 const COMMENT_MARK = "//".length;
 
 const BLOCK_END = "*/".length;
@@ -48,9 +50,36 @@ const jsonUnitsOf = (text: string): readonly Unit[] => {
 
 const jsonParser: Parser = {
   format: "json",
-  extensions: [".json", ".jsonc"],
+  extensions: [".json", ".jsonc", ".jsonld", ".geojson", ".har", ".webmanifest"],
   accepts: looksLikeJson,
   unitsOf: jsonUnitsOf,
 };
 
-export { jsonParser };
+const LINE = /[^\n]+/gu;
+
+const MIN_RECORDS = 2;
+
+const recordsOf = (text: string): readonly Span[] =>
+  Array.from(text.matchAll(LINE), (match) => ({
+    start: match.index,
+    end: match.index + match[FIRST].length,
+  })).filter(({ start, end }) => text.slice(start, end).trim() !== "");
+
+const looksLikeJsonLines = (text: string): boolean => {
+  const records = recordsOf(text);
+  return (
+    records.length >= MIN_RECORDS &&
+    records.every(({ start, end }) => looksLikeJson(text.slice(start, end)))
+  );
+};
+
+const jsonLinesParser: Parser = {
+  format: "jsonl",
+  aliases: ["ndjson"],
+  extensions: [".jsonl", ".ndjson"],
+  accepts: looksLikeJsonLines,
+  unitsOf: (text) =>
+    recordsOf(text).map(({ start, end }): Unit => ({ kind: "nested", format: "json", start, end })),
+};
+
+export { jsonLinesParser, jsonParser };

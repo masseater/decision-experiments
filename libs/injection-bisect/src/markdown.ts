@@ -117,7 +117,7 @@ const markdownUnitsOf = (text: string): readonly Unit[] =>
 
 const markdownParser: Parser = {
   format: "markdown",
-  extensions: [".md", ".markdown"],
+  extensions: [".md", ".markdown", ".mdx", ".mdown", ".mkd"],
   accepts: looksLikeMarkdown,
   unitsOf: markdownUnitsOf,
 };
