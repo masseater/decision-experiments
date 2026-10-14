@@ -1,4 +1,4 @@
-import { ShieldAlert, ShieldCheck } from "lucide-react";
+import { FileText, ShieldCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -10,7 +10,7 @@ import { Sentences } from "./sentences";
 
 const LOOK: Readonly<Record<View, Readonly<{ title: string; border: string; icon: LucideIcon }>>> =
   {
-    raw: { title: COPY.compare.raw, border: "border-destructive/50", icon: ShieldAlert },
+    raw: { title: COPY.compare.raw, border: "", icon: FileText },
     cleaned: { title: COPY.compare.cleaned, border: "border-primary", icon: ShieldCheck },
   };
 

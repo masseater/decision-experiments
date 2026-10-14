@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 
 import type { View } from "#/pages/why/model/cleanup";
 import { COPY } from "#/pages/why/model/copy";
-import { cn } from "#/shared/lib/utils";
 
 const REPLY: Readonly<Record<View, string>> = {
   raw: COPY.compare.replyRaw,
@@ -16,7 +15,7 @@ const AgentReply = ({ view }: Readonly<{ view: View }>): ReactNode => (
       <Bot className="size-4" />
       {COPY.compare.reply}
     </figcaption>
-    <p className={cn(view === "raw" && "text-destructive font-medium")}>{REPLY[view]}</p>
+    <p>{REPLY[view]}</p>
   </figure>
 );
 

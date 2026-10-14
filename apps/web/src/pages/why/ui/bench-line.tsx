@@ -10,7 +10,7 @@ import { ModelCell } from "./model-cell";
 const NONE = 0;
 
 const countClass = (count: number): string =>
-  cn("px-2 py-1 font-mono", count !== NONE && "text-destructive");
+  cn("px-2 py-1 font-mono", count !== NONE && "font-semibold");
 
 const extraOf = (extra: Extra): string => {
   if (extra.status === "measured") {
