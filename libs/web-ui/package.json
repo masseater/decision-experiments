@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "catalog:stack",
-    "@tanstack/react-router": "1.170.42",
+    "@tanstack/react-router": "1.170.44",
     "@tanstack/react-router-ssr-query": "1.167.3",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
