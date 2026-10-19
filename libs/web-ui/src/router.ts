@@ -11,6 +11,7 @@ const createAppRouter = <Tree extends AnyRoute>(routeTree: Tree): Router<Tree> =
     scrollRestoration: true,
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
+    defaultViewTransition: true,
   });
   setupRouterSsrQueryIntegration({ router, queryClient });
   return router;
