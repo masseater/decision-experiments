@@ -352,8 +352,8 @@ catalogs:
       version: 2.9.1
   stack:
     '@distilled.cloud/cloudflare':
-      specifier: 1.0.0-rc.15
-      version: 1.0.0-rc.15
+      specifier: 1.0.0-rc.13
+      version: 1.0.0-rc.13
     '@effect/atom-react':
       specifier: 4.0.2
       version: 4.0.2
@@ -512,7 +512,7 @@ importers:
     dependencies:
       '@distilled.cloud/cloudflare':
         specifier: catalog:stack
-        version: 1.0.0-rc.15(effect@4.0.2)
+        version: 1.0.0-rc.13(effect@4.0.2)
       '@effect/platform-node':
         specifier: 'catalog:'
         version: 4.0.2(effect@4.0.2)(redis@6.2.1(@opentelemetry/api@1.9.1))
@@ -891,6 +891,9 @@ importers:
 
   libs/web-ui:
     dependencies:
+      '@masseater.dev/ui':
+        specifier: github:masseater/masseater.dev#path:/libs/ui
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/a244792c7a57a86d5845aedbb27bd98c72049648#path:/libs/ui(@types/react@19.3.0)(react@19.3.0)(tailwindcss@4.3.3)
       '@tanstack/react-query':
         specifier: catalog:stack
         version: 5.104.3(react@19.3.0)
@@ -921,9 +924,6 @@ importers:
       tailwindcss:
         specifier: catalog:stack
         version: 4.3.3
-      tw-animate-css:
-        specifier: 1.4.0
-        version: 1.4.0
     devDependencies:
       '@types/react':
         specifier: 19.3.0
@@ -1456,18 +1456,8 @@ packages:
     peerDependencies:
       effect: 4.0.2
 
-  '@distilled.cloud/cloudflare@1.0.0-rc.15':
-    resolution: {integrity: sha512-UBnEpZGkf+lnMF33IJXcu7DD99vC+3314N01pnWNuKxLtsVNNLF/DxFbPxBU1Cb+aLE3Cs35aSiHZrYO7EiR0g==}
-    peerDependencies:
-      effect: 4.0.2
-
   '@distilled.cloud/core@1.0.0-rc.13':
     resolution: {integrity: sha512-RYyrxW+F5zrTuu1UWV/JoycholBCIkXIusYJdDniDwCdmbjdKGl07KlkkeeY774uBawNGf+pt1ESNGeLVnNHsg==}
-    peerDependencies:
-      effect: 4.0.2
-
-  '@distilled.cloud/core@1.0.0-rc.15':
-    resolution: {integrity: sha512-TPXxuwcxQ85Pvm0g7ZQSLTQkPc1Wmcb6p6KOk+Be2fP14Xpj5a+7HOSUyPNwbqOP+vPK5Sj0ZLN7M6spKnO2LA==}
     peerDependencies:
       effect: 4.0.2
 
@@ -1954,6 +1944,9 @@ packages:
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
 
+  '@fontsource-variable/roboto-flex@5.3.0':
+    resolution: {integrity: sha512-bOxckUy0qXNRjhV6e4pcHGSvptix4ZRD1uaj5Za8h+p3qrb2GL4U4TQdpVmPSy0SmqwldfD+JJqEKdF68EyiAw==}
+
   '@grpc/grpc-js@1.14.5':
     resolution: {integrity: sha512-7VZM+SVdEcUUqSQeNI3zM8Qs/BhQKZndPo2h5VkYkAM8Iz0wJIa8mKV5ekQGqG8UUsnkQ0NMxIxwkIHYvj0qOw==}
     engines: {node: '>=12.10.0'}
@@ -2313,6 +2306,13 @@ packages:
 
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
+
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/a244792c7a57a86d5845aedbb27bd98c72049648#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-IKtO3idrgla9QVyK2iUVtp/yDvbRrHIDvRWV9oe5N5rDU1DCcgrOlcwDZiXnJimBgWDL9lHMQgjU/BYxeY1M6w==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/a244792c7a57a86d5845aedbb27bd98c72049648}
+    version: 0.0.0
+    peerDependencies:
+      react: ^19.0.0
+      tailwindcss: ^4.0.0
 
   '@modelcontextprotocol/core@2.1.0':
     resolution: {integrity: sha512-YdFj5gMRHr0gYNAhTbQDgjLHiEJdIAUYxomhKseUNye7ZGlISQmUoLh2sveFFCiQ7j2YMffT1kgSND0FSfIFjQ==}
@@ -3226,6 +3226,18 @@ packages:
   '@oxlint/plugins@1.79.0':
     resolution: {integrity: sha512-S0uyoxakDINJ4DPgqxGlEEvrdSMeQb7Z2lKVjxoY2gwsbZbfg2Xr8Klfeo5ZeraHmmdBCELFUHkSe6KEmBpMvg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@paper-design/shaders-react@0.0.81':
+    resolution: {integrity: sha512-3FMkeZqj9sSvK/WkgekGu3crnOQd4R2iH8IT+jVBuQmq1m8p88VFvxh63s9bSt2exBwjBNaRfSo0FSCeNxqh3w==}
+    peerDependencies:
+      '@types/react': ^18 || ^19
+      react: ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  '@paper-design/shaders@0.0.81':
+    resolution: {integrity: sha512-jeGdyjMscZ2bxmQdo8lhwUufHUf4iq3s1ayjh8PXU7Go42Rw8E3I0It1FZdc3HuWt5J82m//DRWaxsRqRfA4Gg==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -10949,19 +10961,10 @@ snapshots:
       '@distilled.cloud/core': 1.0.0-rc.13(effect@4.0.2)
       effect: 4.0.2
 
-  '@distilled.cloud/cloudflare@1.0.0-rc.15(effect@4.0.2)':
-    dependencies:
-      '@distilled.cloud/core': 1.0.0-rc.15(effect@4.0.2)
-      effect: 4.0.2
-
   '@distilled.cloud/core@1.0.0-rc.13(effect@4.0.2)':
     dependencies:
       effect: 4.0.2
       graphql: 16.11.0
-
-  '@distilled.cloud/core@1.0.0-rc.15(effect@4.0.2)':
-    dependencies:
-      effect: 4.0.2
 
   '@distilled.cloud/doppler@1.0.0-rc.13(effect@4.0.2)':
     dependencies:
@@ -11386,6 +11389,8 @@ snapshots:
 
   '@floating-ui/utils@0.2.12': {}
 
+  '@fontsource-variable/roboto-flex@5.3.0': {}
+
   '@grpc/grpc-js@1.14.5':
     dependencies:
       '@grpc/proto-loader': 0.8.1
@@ -11723,6 +11728,16 @@ snapshots:
   '@lumino/coreutils@2.2.3':
     dependencies:
       '@lumino/algorithm': 2.0.5
+
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/a244792c7a57a86d5845aedbb27bd98c72049648#path:/libs/ui(@types/react@19.3.0)(react@19.3.0)(tailwindcss@4.3.3)':
+    dependencies:
+      '@fontsource-variable/roboto-flex': 5.3.0
+      '@paper-design/shaders-react': 0.0.81(@types/react@19.3.0)(react@19.3.0)
+      react: 19.3.0
+      tailwindcss: 4.3.3
+      tw-animate-css: 1.4.0
+    transitivePeerDependencies:
+      - '@types/react'
 
   '@modelcontextprotocol/core@2.1.0':
     dependencies:
@@ -12362,6 +12377,15 @@ snapshots:
     optional: true
 
   '@oxlint/plugins@1.79.0': {}
+
+  '@paper-design/shaders-react@0.0.81(@types/react@19.3.0)(react@19.3.0)':
+    dependencies:
+      '@paper-design/shaders': 0.0.81
+      react: 19.3.0
+    optionalDependencies:
+      '@types/react': 19.3.0
+
+  '@paper-design/shaders@0.0.81': {}
 
   '@pkgjs/parseargs@0.11.0':
     optional: true

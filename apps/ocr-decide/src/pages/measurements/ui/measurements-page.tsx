@@ -10,7 +10,7 @@ import { RunsSection } from "./runs-section";
 const MeasurementsPage = (): ReactNode => {
   const summary = useSummary();
   return (
-    <main className="mx-auto flex max-w-3xl flex-col gap-8 px-4 py-12 md:px-8">
+    <main className="vt-match mx-auto flex max-w-3xl flex-col gap-8 px-4 py-12 md:px-8">
       <h1 className="text-2xl font-bold">{COPY.title}</h1>
       {tablesOf(summary).map((table) => (
         <RunsSection key={table.id} table={table} />

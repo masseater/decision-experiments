@@ -53,6 +53,7 @@ release. Add a tool name to select part of the graph. For example, run
 - `libs/ocr-decide` は請求書の画像を OCR で断片にし、decision モデルで項目に割り当てる。`apps/ocr-decide` はこれをブラウザーで動かし、計測結果も表示する。
 - 計測は `tools/ocr-measure` で行う。`render` が `data/` の請求書を画像にし、`measure` が `results/details.json` と `libs/ocr-measurements/summary.json` を書き、`rescore` はモデルに問い合わせず details.json から summary.json を書き直す。
 - 2 つのアプリは `infra/start-site` の Vite と Alchemy の設定、`libs/web-ui` の部品を共有し、masseater.dev の `/<APP_NAME>/` で公開される。
+- `libs/web-ui` は背景やテーマを masseater/masseater.dev の `libs/ui`（`@masseater.dev/ui`）から git の subpath 依存で読む。lockfile が main のコミットを固定するので、新しい版は `vp update @masseater.dev/ui` で取り込む。色のトークンは @shadcn/lint が読めるよう `libs/web-ui/src/styles.css` に置く。
 
 ## 環境変数
 

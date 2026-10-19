@@ -11,7 +11,7 @@ import { RunView } from "./run-view";
 const InspectPage = (): ReactNode => {
   const state = useInspect(useRun());
   return (
-    <main className="mx-auto flex max-w-7xl flex-col gap-10 px-4 py-10 md:px-8">
+    <main className="vt-match mx-auto flex max-w-7xl flex-col gap-10 px-4 py-10 md:px-8">
       <header className="flex flex-wrap items-baseline justify-between gap-4">
         <h1 className="font-mono text-2xl font-bold">{COPY.title}</h1>
         <Link to="/why" className="text-primary text-sm underline-offset-4 hover:underline">
