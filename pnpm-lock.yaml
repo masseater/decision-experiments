@@ -893,7 +893,7 @@ importers:
     dependencies:
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/8fa38c6da5ccd9d4e709e4957d0c00e904758541#path:/libs/ui(@types/react@19.3.0)(react@19.3.0)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/a244792c7a57a86d5845aedbb27bd98c72049648#path:/libs/ui(@types/react@19.3.0)(react@19.3.0)(tailwindcss@4.3.3)
       '@tanstack/react-query':
         specifier: catalog:stack
         version: 5.104.3(react@19.3.0)
@@ -2307,8 +2307,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/8fa38c6da5ccd9d4e709e4957d0c00e904758541#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-gkBvzyMhH22n8CRAutjGWy/y8xFSKHVshuB10CCnvSiXYRyERKH1BGDZ0OfxayD/d6LicWTX7NbFGYLvCxvvmg==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/8fa38c6da5ccd9d4e709e4957d0c00e904758541}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/a244792c7a57a86d5845aedbb27bd98c72049648#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-IKtO3idrgla9QVyK2iUVtp/yDvbRrHIDvRWV9oe5N5rDU1DCcgrOlcwDZiXnJimBgWDL9lHMQgjU/BYxeY1M6w==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/a244792c7a57a86d5845aedbb27bd98c72049648}
     version: 0.0.0
     peerDependencies:
       react: ^19.0.0
@@ -11729,7 +11729,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/8fa38c6da5ccd9d4e709e4957d0c00e904758541#path:/libs/ui(@types/react@19.3.0)(react@19.3.0)(tailwindcss@4.3.3)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/a244792c7a57a86d5845aedbb27bd98c72049648#path:/libs/ui(@types/react@19.3.0)(react@19.3.0)(tailwindcss@4.3.3)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.81(@types/react@19.3.0)(react@19.3.0)
