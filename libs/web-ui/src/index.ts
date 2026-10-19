@@ -1,4 +1,4 @@
-export { SiteStage } from "@masseater.dev/ui";
+export { PortfolioHeader, SiteStage } from "@masseater.dev/ui";
 export { ApiKeyInput } from "./api-key-input.tsx";
 export { cn } from "./ui/cn.ts";
 export { rootHead } from "./root-head.ts";
