@@ -1,5 +1,6 @@
 import { NodeRuntime } from "@effect/platform-node";
-import { Effect, Layer } from "effect";
+import { provideAtEntry } from "@ocr-decide/tooling";
+import { Effect } from "effect";
 
 import { outcomeOf } from "./details.ts";
 import { Results, resultsLayer } from "./report.ts";
@@ -11,9 +12,4 @@ const rescore = Effect.gen(function* rescore() {
   yield* results.writeSummary({ outcomes: details.map((detail) => outcomeOf(detail)), documents });
 });
 
-NodeRuntime.runMain(
-  Layer.build(resultsLayer).pipe(
-    Effect.flatMap((context) => Effect.provideContext(rescore, context)),
-    Effect.scoped,
-  ),
-);
+NodeRuntime.runMain(rescore.pipe(provideAtEntry(resultsLayer)));

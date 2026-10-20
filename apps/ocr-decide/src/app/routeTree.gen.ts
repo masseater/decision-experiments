@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MeasurementsRouteImport } from './routes/measurements'
+import { Route as OcrEnginesRouteImport } from './routes/ocr-engines'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const MeasurementsRoute = MeasurementsRouteImport.update({
   path: '/measurements',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OcrEnginesRoute = OcrEnginesRouteImport.update({
+  id: '/ocr-engines',
+  path: '/ocr-engines',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/measurements': typeof MeasurementsRoute
+  '/ocr-engines': typeof OcrEnginesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/measurements': typeof MeasurementsRoute
+  '/ocr-engines': typeof OcrEnginesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/measurements': typeof MeasurementsRoute
+  '/ocr-engines': typeof OcrEnginesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/measurements'
+  fullPaths: '/' | '/measurements' | '/ocr-engines'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/measurements'
-  id: '__root__' | '/' | '/measurements'
+  to: '/' | '/measurements' | '/ocr-engines'
+  id: '__root__' | '/' | '/measurements' | '/ocr-engines'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MeasurementsRoute: typeof MeasurementsRoute
+  OcrEnginesRoute: typeof OcrEnginesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MeasurementsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ocr-engines': {
+      id: '/ocr-engines'
+      path: '/ocr-engines'
+      fullPath: '/ocr-engines'
+      preLoaderRoute: typeof OcrEnginesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MeasurementsRoute: MeasurementsRoute,
+  OcrEnginesRoute: OcrEnginesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

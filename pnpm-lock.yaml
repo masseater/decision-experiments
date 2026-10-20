@@ -188,6 +188,18 @@ catalogs:
     '@eslint/config-helpers':
       specifier: 0.7.0
       version: 0.7.0
+    '@fontsource/klee-one':
+      specifier: ^5.3.1
+      version: 5.3.1
+    '@fontsource/noto-sans-jp':
+      specifier: ^5.3.1
+      version: 5.3.1
+    '@fontsource/noto-serif-jp':
+      specifier: ^5.3.1
+      version: 5.3.1
+    '@fontsource/zen-kurenaido':
+      specifier: ^5.3.1
+      version: 5.3.1
     '@html-eslint/eslint-plugin-react':
       specifier: 0.66.1
       version: 0.66.1
@@ -272,6 +284,9 @@ catalogs:
     fast-png:
       specifier: ^8.0.0
       version: 8.0.0
+    fastest-levenshtein:
+      specifier: ^1.0.16
+      version: 1.0.16
     fflate:
       specifier: ^0.8.3
       version: 0.8.3
@@ -889,6 +904,15 @@ importers:
         specifier: 4.0.2
         version: 4.0.2
 
+  libs/ocr-tooling:
+    dependencies:
+      effect:
+        specifier: 4.0.2
+        version: 4.0.2
+      playwright-core:
+        specifier: 'catalog:'
+        version: 1.64.1
+
   libs/web-ui:
     dependencies:
       '@masseater.dev/ui':
@@ -951,6 +975,46 @@ importers:
         specifier: catalog:stack
         version: 1.1.0(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/ui@5.0.3)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1)
 
+  tools/ocr-ja-bench:
+    dependencies:
+      '@effect/platform-node':
+        specifier: 'catalog:'
+        version: 4.0.2(effect@4.0.2)(redis@6.2.1(@opentelemetry/api@1.9.1))
+      '@ocr-decide/measurements':
+        specifier: workspace:*
+        version: link:../../libs/ocr-measurements
+      '@ocr-decide/tooling':
+        specifier: workspace:*
+        version: link:../../libs/ocr-tooling
+      '@r_masseater/ocr-decide':
+        specifier: workspace:*
+        version: link:../../libs/ocr-decide
+      effect:
+        specifier: 4.0.2
+        version: 4.0.2
+      fastest-levenshtein:
+        specifier: 'catalog:'
+        version: 1.0.16
+    devDependencies:
+      '@fontsource/klee-one':
+        specifier: 'catalog:'
+        version: 5.3.1
+      '@fontsource/noto-sans-jp':
+        specifier: 'catalog:'
+        version: 5.3.1
+      '@fontsource/noto-serif-jp':
+        specifier: 'catalog:'
+        version: 5.3.1
+      '@fontsource/zen-kurenaido':
+        specifier: 'catalog:'
+        version: 5.3.1
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.6.5
+      vite-plus:
+        specifier: catalog:stack
+        version: 1.1.0(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/ui@5.0.3)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1)
+
   tools/ocr-measure:
     dependencies:
       '@effect/platform-node':
@@ -959,6 +1023,9 @@ importers:
       '@ocr-decide/measurements':
         specifier: workspace:*
         version: link:../../libs/ocr-measurements
+      '@ocr-decide/tooling':
+        specifier: workspace:*
+        version: link:../../libs/ocr-tooling
       '@r_masseater/ocr-decide':
         specifier: workspace:*
         version: link:../../libs/ocr-decide
@@ -969,9 +1036,6 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 26.6.5
-      playwright-core:
-        specifier: 'catalog:'
-        version: 1.64.1
       vite-plus:
         specifier: catalog:stack
         version: 1.1.0(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/ui@5.0.3)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1)
@@ -1946,6 +2010,18 @@ packages:
 
   '@fontsource-variable/roboto-flex@5.3.0':
     resolution: {integrity: sha512-bOxckUy0qXNRjhV6e4pcHGSvptix4ZRD1uaj5Za8h+p3qrb2GL4U4TQdpVmPSy0SmqwldfD+JJqEKdF68EyiAw==}
+
+  '@fontsource/klee-one@5.3.1':
+    resolution: {integrity: sha512-TWW1hZylfNSpsKAIxKlCUY02gSiRhulJgfVIOlpDMZhBbssXvKBnbUREFkZuB0Hefe2xiso07JWKDxOENKwu1w==}
+
+  '@fontsource/noto-sans-jp@5.3.1':
+    resolution: {integrity: sha512-9NNBB/M9PextLYVXGSfIaLZsPnrt5UDw8g2B6T0M775H2yb/oekApSjuS1XKOP7FPcMMEnTavR5rJGDM66qKtA==}
+
+  '@fontsource/noto-serif-jp@5.3.1':
+    resolution: {integrity: sha512-ewMVFXmG1Ip5u1Po1E1M3qqm8hsFqja0/26vkoaNylPXW9pnmEcBREqXxp+Fs03wpmhICE6qyYBN2bbfNtsR9Q==}
+
+  '@fontsource/zen-kurenaido@5.3.1':
+    resolution: {integrity: sha512-oQvgZ1sfd5KDNNlq83s1uSrmv7rbPvmAShZAEqypySlPjpadATp3ZqJnOXaI38DyLOhLMyNFL7Y73VZshMg4VQ==}
 
   '@grpc/grpc-js@1.14.5':
     resolution: {integrity: sha512-7VZM+SVdEcUUqSQeNI3zM8Qs/BhQKZndPo2h5VkYkAM8Iz0wJIa8mKV5ekQGqG8UUsnkQ0NMxIxwkIHYvj0qOw==}
@@ -11391,6 +11467,14 @@ snapshots:
   '@floating-ui/utils@0.2.12': {}
 
   '@fontsource-variable/roboto-flex@5.3.0': {}
+
+  '@fontsource/klee-one@5.3.1': {}
+
+  '@fontsource/noto-sans-jp@5.3.1': {}
+
+  '@fontsource/noto-serif-jp@5.3.1': {}
+
+  '@fontsource/zen-kurenaido@5.3.1': {}
 
   '@grpc/grpc-js@1.14.5':
     dependencies:

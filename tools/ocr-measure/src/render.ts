@@ -1,11 +1,9 @@
 import { NodeRuntime, NodeServices } from "@effect/platform-node";
-import { Effect, FileSystem, Layer, Schema } from "effect";
-import { chromium } from "playwright-core";
+import { launchBrowser, provideAtEntry } from "@ocr-decide/tooling";
+import { Effect, FileSystem, Schema } from "effect";
 
 import { htmlOf } from "./html.ts";
 import { DocumentsSchema } from "./sample.ts";
-
-const CHROMIUM = "/opt/pw-browsers/chromium";
 
 const DATA = new URL("../data/", import.meta.url);
 
@@ -18,10 +16,7 @@ const render = Effect.gen(function* render() {
   const documents = yield* fs
     .readFileString(new URL("documents.json", DATA).pathname)
     .pipe(Effect.flatMap(Schema.decodeEffect(DocumentsSchema)));
-  const browser = yield* Effect.acquireRelease(
-    Effect.promise(() => chromium.launch({ executablePath: CHROMIUM })),
-    (opened) => Effect.promise(() => opened.close()),
-  );
+  const browser = yield* launchBrowser;
   yield* Effect.forEach(
     documents,
     (document) =>
@@ -36,11 +31,6 @@ const render = Effect.gen(function* render() {
       }).pipe(Effect.withSpan("ocr-measure.render", { attributes: { id: document.id } })),
     ONE_AT_A_TIME,
   );
-}).pipe(Effect.scoped);
+});
 
-NodeRuntime.runMain(
-  Layer.build(NodeServices.layer).pipe(
-    Effect.flatMap((context) => Effect.provideContext(render, context)),
-    Effect.scoped,
-  ),
-);
+NodeRuntime.runMain(render.pipe(provideAtEntry(NodeServices.layer)));

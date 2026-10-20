@@ -1,8 +1,7 @@
 import { NodeRuntime } from "@effect/platform-node";
+import { provideAtEntry, tracingLayer } from "@ocr-decide/tooling";
 import { PRODUCT_NAME, openRouter } from "@r_masseater/ocr-decide";
 import { Effect, Layer } from "effect";
-import { FetchHttpClient } from "effect/http";
-import { OtlpSerialization, OtlpTracer } from "effect/observability";
 
 import { measureDocument } from "./outcome.ts";
 import { Results, resultsLayer } from "./report.ts";
@@ -22,15 +21,6 @@ const measure = Effect.gen(function* measure() {
   yield* results.writeSummary({ outcomes, documents });
 });
 
-const tracing = OtlpTracer.layerFromConfig({
-  resource: { serviceName: `${PRODUCT_NAME}-measure` },
-}).pipe(Layer.provide(OtlpSerialization.layerJson), Layer.provide(FetchHttpClient.layer));
+const services = Layer.mergeAll(openRouter, tracingLayer(`${PRODUCT_NAME}-measure`), resultsLayer);
 
-const services = Layer.mergeAll(openRouter, tracing, resultsLayer);
-
-NodeRuntime.runMain(
-  Layer.build(services).pipe(
-    Effect.flatMap((context) => Effect.provideContext(measure, context)),
-    Effect.scoped,
-  ),
-);
+NodeRuntime.runMain(measure.pipe(provideAtEntry(services)));
