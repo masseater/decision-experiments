@@ -373,8 +373,8 @@ catalogs:
       specifier: 4.0.2
       version: 4.0.2
     '@effect/tsgo':
-      specifier: 0.51.1
-      version: 0.51.1
+      specifier: 0.53.3
+      version: 0.53.3
     '@tanstack/react-query':
       specifier: 5.104.3
       version: 5.104.3
@@ -449,7 +449,7 @@ importers:
         version: 21.2.3
       '@effect/tsgo':
         specifier: catalog:stack
-        version: 0.51.1
+        version: 0.53.3
       '@eslint-react/eslint-plugin':
         specifier: 'catalog:'
         version: 5.27.2(eslint@10.12.0(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
@@ -607,7 +607,7 @@ importers:
         version: 4.0.2(effect@4.0.2)(redis@6.2.1(@opentelemetry/api@1.9.1))
       '@effect/tsgo':
         specifier: catalog:stack
-        version: 0.51.1
+        version: 0.53.3
       '@feature-sliced/steiger-plugin':
         specifier: 0.8.0
         version: 0.8.0(typescript@7.0.2)(vitest@5.0.3)
@@ -701,7 +701,7 @@ importers:
         version: 4.0.2(effect@4.0.2)(redis@6.2.1(@opentelemetry/api@1.9.1))
       '@effect/tsgo':
         specifier: catalog:stack
-        version: 0.51.1
+        version: 0.53.3
       '@feature-sliced/steiger-plugin':
         specifier: 0.8.0
         version: 0.8.0(typescript@7.0.2)(vitest@5.0.3)
@@ -917,7 +917,7 @@ importers:
     dependencies:
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/fedb075d1011e11cb379e0bed0a5f8b28c484baf#path:/libs/ui(@types/react@19.3.0)(effect@4.0.2)(react@19.3.0)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/7e8043b4b4d03eb384aab368d5711a60e5f5fa99#path:/libs/ui(@types/react@19.3.0)(effect@4.0.2)(react@19.3.0)(tailwindcss@4.3.3)
       '@tanstack/react-query':
         specifier: catalog:stack
         version: 5.104.3(react@19.3.0)
@@ -1625,43 +1625,43 @@ packages:
     peerDependencies:
       effect: 4.0.2
 
-  '@effect/tsgo-darwin-arm64@0.51.1':
-    resolution: {integrity: sha512-Jx+1RB3pz1B2zYs1EmxybwDOq9KRpfdu/rn1XTULNMZmqUJZuvTQU9CRqB0g/ZgIa6MeNBZEYvmAu4Dq2/QVWA==}
+  '@effect/tsgo-darwin-arm64@0.53.3':
+    resolution: {integrity: sha512-qd34+MHG/AOwm6x/I+ieRVBmrirE7LZ/Jyro+p55PMz/dN4WmgxvJmes+ltYaBUUXP0xtGE5TICufQdZyYjm4Q==}
     cpu: [arm64]
     os: [darwin]
 
-  '@effect/tsgo-darwin-x64@0.51.1':
-    resolution: {integrity: sha512-eRz7eHOOb2eJPUj66m89Zhzu924vGvNLDAXzcEAIaXVsWc4Zw29RVUsRnp/ozTmCbDVCvMqPSh8i9bkdAmt8mA==}
+  '@effect/tsgo-darwin-x64@0.53.3':
+    resolution: {integrity: sha512-DGYiRXx/GVP0rjQMT+yqROLT35nbgu5ImmI+XerlRhoF5Z/7UBHFiIDjD0df4+2WmF2w0D5vE6XPTyQpdw08Kg==}
     cpu: [x64]
     os: [darwin]
 
-  '@effect/tsgo-linux-arm64@0.51.1':
-    resolution: {integrity: sha512-LqZKkEEgJcq7dOho+h0esioU/idlB/+VhPuMR7l9B5Y7mk17Eivs8TiJQHtxLVfrh/nizbvZih7O5GujRNG0bw==}
+  '@effect/tsgo-linux-arm64@0.53.3':
+    resolution: {integrity: sha512-qqKa5VYk7N+QnRUaPAkUeKaEOSiWW018ZJN/fGZ9ND9R4llBby6JVtVatUh8MsP+QDr1pavFp0JhOfXjg9S4Ig==}
     cpu: [arm64]
     os: [linux]
 
-  '@effect/tsgo-linux-arm@0.51.1':
-    resolution: {integrity: sha512-vub6MCJIbczHp+Im1GTEUh5YyS+6YHcvH0ZmBdSjdvqzzBKbRnl5xUbO52tRJlty74f+3ey+uSh0nIO99NnggA==}
+  '@effect/tsgo-linux-arm@0.53.3':
+    resolution: {integrity: sha512-NkfXu00rSy9rZa3O5YDmI+vZEsFlO42qOY6NBwtKwLpwOcbtY34JTDtPJAsRHN4ARlbh2CerFc46knIatLDWUw==}
     cpu: [arm]
     os: [linux]
 
-  '@effect/tsgo-linux-x64@0.51.1':
-    resolution: {integrity: sha512-zyKKcdL2Pr4C//9raggaEuxhsSUR7jT6517vHvPwykbBPjPnnmGtM1Kq7NKEIZnvXWzXcaK+4wAK/0FqSqMOmw==}
+  '@effect/tsgo-linux-x64@0.53.3':
+    resolution: {integrity: sha512-BPy6BVx/HfyzG6SWWTxIdt6ZynSE6OrRPCna2wYvI5EJELiCoFNbkLhzgLWVFOfy8z01eBwXUF6syPB4Y+c1GQ==}
     cpu: [x64]
     os: [linux]
 
-  '@effect/tsgo-win32-arm64@0.51.1':
-    resolution: {integrity: sha512-yIF88Za3Bs793Mb8OShet8gc3kj/NNty6+ZoTdgiPXWlY6xh84bZZCOETqE7VcCmxXFT3NZSYQuDrU35/CTvRQ==}
+  '@effect/tsgo-win32-arm64@0.53.3':
+    resolution: {integrity: sha512-1a/h9nukr/4z9ZjyAe4cCG2XtAH6jqmBmjRTVGpopwqTf3ulyoiXEM7+/eywws+2sgTUl0hcghrvv5ej5E3taA==}
     cpu: [arm64]
     os: [win32]
 
-  '@effect/tsgo-win32-x64@0.51.1':
-    resolution: {integrity: sha512-5HO1TJkWMlErIXbfKKWEMzg0Jj0MPQAzs0g1k7wA3B1ZxNDoDY9iRu5eGM+G1a4HmKl3zA7hQZd0ch2Dh4MohQ==}
+  '@effect/tsgo-win32-x64@0.53.3':
+    resolution: {integrity: sha512-tmfVk95IObJm+D0sK1Z416uspK5focwlacZQDzPJK8mzM/Tboqxr4y0MfRuOIfXigxZo0wdH0noiJ0lmoZJXwg==}
     cpu: [x64]
     os: [win32]
 
-  '@effect/tsgo@0.51.1':
-    resolution: {integrity: sha512-i6mA6cNah+0mkPdu8qZILCO3Pnd9kWo03/s82Ju+1DFhdL28HFagi+1PRGxqgq1uMaHziWQ+ciKvOmIoks2RdA==}
+  '@effect/tsgo@0.53.3':
+    resolution: {integrity: sha512-YqufYyU8aOEwz6wKjYvr8umfhw1JDLiU49y4s6lvApsXioRMg8y1nPc81+Hm2oMWZ2gbUikZW1w8fTDOadNN9w==}
     hasBin: true
 
   '@electric-sql/pglite-socket@0.0.20':
@@ -2383,8 +2383,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/fedb075d1011e11cb379e0bed0a5f8b28c484baf#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-YygbDa9g2Qg5d4De8nQCfcOMLE1PWFc8mzN0D+LlK+Jc5COSyo7wSuEcS214nMPVzbxqD2/uqvgb/bN8W/bPUw==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/fedb075d1011e11cb379e0bed0a5f8b28c484baf}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/7e8043b4b4d03eb384aab368d5711a60e5f5fa99#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-v89YmXw8mUuBiu9oG7CCMAhe75zPSXKECl2lTNrWLlTIg5JShP8c1e4vnCjmUI4dsk0BuoqMx1OnG8Wvbx5HjQ==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/7e8043b4b4d03eb384aab368d5711a60e5f5fa99}
     version: 0.0.0
     peerDependencies:
       effect: 4.0.2
@@ -11148,36 +11148,36 @@ snapshots:
     dependencies:
       effect: 4.0.2
 
-  '@effect/tsgo-darwin-arm64@0.51.1':
+  '@effect/tsgo-darwin-arm64@0.53.3':
     optional: true
 
-  '@effect/tsgo-darwin-x64@0.51.1':
+  '@effect/tsgo-darwin-x64@0.53.3':
     optional: true
 
-  '@effect/tsgo-linux-arm64@0.51.1':
+  '@effect/tsgo-linux-arm64@0.53.3':
     optional: true
 
-  '@effect/tsgo-linux-arm@0.51.1':
+  '@effect/tsgo-linux-arm@0.53.3':
     optional: true
 
-  '@effect/tsgo-linux-x64@0.51.1':
+  '@effect/tsgo-linux-x64@0.53.3':
     optional: true
 
-  '@effect/tsgo-win32-arm64@0.51.1':
+  '@effect/tsgo-win32-arm64@0.53.3':
     optional: true
 
-  '@effect/tsgo-win32-x64@0.51.1':
+  '@effect/tsgo-win32-x64@0.53.3':
     optional: true
 
-  '@effect/tsgo@0.51.1':
+  '@effect/tsgo@0.53.3':
     optionalDependencies:
-      '@effect/tsgo-darwin-arm64': 0.51.1
-      '@effect/tsgo-darwin-x64': 0.51.1
-      '@effect/tsgo-linux-arm': 0.51.1
-      '@effect/tsgo-linux-arm64': 0.51.1
-      '@effect/tsgo-linux-x64': 0.51.1
-      '@effect/tsgo-win32-arm64': 0.51.1
-      '@effect/tsgo-win32-x64': 0.51.1
+      '@effect/tsgo-darwin-arm64': 0.53.3
+      '@effect/tsgo-darwin-x64': 0.53.3
+      '@effect/tsgo-linux-arm': 0.53.3
+      '@effect/tsgo-linux-arm64': 0.53.3
+      '@effect/tsgo-linux-x64': 0.53.3
+      '@effect/tsgo-win32-arm64': 0.53.3
+      '@effect/tsgo-win32-x64': 0.53.3
 
   '@electric-sql/pglite-socket@0.0.20(@electric-sql/pglite@0.3.15)':
     dependencies:
@@ -11814,7 +11814,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/fedb075d1011e11cb379e0bed0a5f8b28c484baf#path:/libs/ui(@types/react@19.3.0)(effect@4.0.2)(react@19.3.0)(tailwindcss@4.3.3)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/7e8043b4b4d03eb384aab368d5711a60e5f5fa99#path:/libs/ui(@types/react@19.3.0)(effect@4.0.2)(react@19.3.0)(tailwindcss@4.3.3)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.81(@types/react@19.3.0)(react@19.3.0)
