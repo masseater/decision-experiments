@@ -71,3 +71,4 @@ const charF1Of = ({ answer, truth }: Pair): number => {
 };
 
 export { accuracyOf, charF1Of };
+export type { Pair };
