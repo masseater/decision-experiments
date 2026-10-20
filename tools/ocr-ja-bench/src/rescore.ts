@@ -1,12 +1,7 @@
 import { NodeRuntime } from "@effect/platform-node";
-import { Effect, Layer } from "effect";
+import { provideAtEntry } from "@ocr-decide/tooling";
 
 import { writeReport } from "./report.ts";
 import { resultsLayer } from "./results.ts";
 
-NodeRuntime.runMain(
-  Layer.build(resultsLayer).pipe(
-    Effect.flatMap((context) => Effect.provideContext(writeReport, context)),
-    Effect.scoped,
-  ),
-);
+NodeRuntime.runMain(writeReport.pipe(provideAtEntry(resultsLayer)));

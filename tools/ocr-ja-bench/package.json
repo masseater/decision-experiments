@@ -12,6 +12,7 @@
   "dependencies": {
     "@effect/platform-node": "catalog:",
     "@ocr-decide/measurements": "workspace:*",
+    "@ocr-decide/tooling": "workspace:*",
     "@r_masseater/ocr-decide": "workspace:*",
     "effect": "catalog:stack",
     "fastest-levenshtein": "catalog:"
@@ -22,7 +23,6 @@
     "@fontsource/noto-serif-jp": "catalog:",
     "@fontsource/zen-kurenaido": "catalog:",
     "@types/node": "catalog:",
-    "playwright-core": "catalog:",
     "vite-plus": "catalog:stack"
   }
 }

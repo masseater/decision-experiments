@@ -11,12 +11,12 @@
   "dependencies": {
     "@effect/platform-node": "catalog:",
     "@ocr-decide/measurements": "workspace:*",
+    "@ocr-decide/tooling": "workspace:*",
     "@r_masseater/ocr-decide": "workspace:*",
     "effect": "catalog:stack"
   },
   "devDependencies": {
     "@types/node": "catalog:",
-    "playwright-core": "catalog:",
     "vite-plus": "catalog:stack"
   }
 }
