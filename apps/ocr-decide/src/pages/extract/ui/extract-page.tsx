@@ -20,6 +20,9 @@ const ExtractPage = (): ReactNode => (
     <Link to="/measurements" className="text-sm underline underline-offset-4">
       {COPY.measurements}
     </Link>
+    <Link to="/ocr-engines" className="text-sm underline underline-offset-4">
+      {COPY.ocrEngines}
+    </Link>
   </main>
 );
 

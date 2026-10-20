@@ -70,6 +70,11 @@ catalog:
   ical.js: ^2.2.1
   linguist-languages: ^9.5.0
   "@jupyterlab/nbformat": ^4.5.11
+  "@fontsource/klee-one": ^5.3.1
+  "@fontsource/noto-sans-jp": ^5.3.1
+  "@fontsource/noto-serif-jp": ^5.3.1
+  "@fontsource/zen-kurenaido": ^5.3.1
+  fastest-levenshtein: ^1.0.16
 catalogs:
   stack:
     "@distilled.cloud/cloudflare": 1.0.0-rc.13

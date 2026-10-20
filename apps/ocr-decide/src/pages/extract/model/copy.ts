@@ -11,6 +11,7 @@ const COPY = {
   seconds: "時間",
   cost: "費用",
   measurements: "20 枚で比べた結果",
+  ocrEngines: "OCR エンジンの日本語の読み取りを比べた結果",
   unreadable: "画像を開けなかった",
 } as const;
 

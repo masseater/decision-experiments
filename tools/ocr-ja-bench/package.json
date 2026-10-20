@@ -1,0 +1,28 @@
+{
+  "name": "@ocr-decide/ja-bench",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare-data": "uv run --project prepare python -I prepare/prepare.py .cache/images data/jawildtext.json",
+    "render": "node src/render.ts",
+    "measure": "node src/measure.ts",
+    "rescore": "node src/rescore.ts"
+  },
+  "dependencies": {
+    "@effect/platform-node": "catalog:",
+    "@ocr-decide/measurements": "workspace:*",
+    "@r_masseater/ocr-decide": "workspace:*",
+    "effect": "catalog:stack",
+    "fastest-levenshtein": "catalog:"
+  },
+  "devDependencies": {
+    "@fontsource/klee-one": "catalog:",
+    "@fontsource/noto-sans-jp": "catalog:",
+    "@fontsource/noto-serif-jp": "catalog:",
+    "@fontsource/zen-kurenaido": "catalog:",
+    "@types/node": "catalog:",
+    "playwright-core": "catalog:",
+    "vite-plus": "catalog:stack"
+  }
+}
