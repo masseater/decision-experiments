@@ -1,4 +1,5 @@
 import { formatsOf } from "@r_masseater/injection-bisect";
+import { Array as Arr, pipe } from "effect";
 import { useCallback } from "react";
 import type { ChangeEvent, ReactNode } from "react";
 
@@ -29,11 +30,14 @@ const FormatField = (): ReactNode => {
   );
   return (
     <select aria-label={COPY.format} value={format} onChange={pick} className={SELECT_CLASS}>
-      {TEXT_FORMATS.map((id) => (
-        <option key={id} value={id}>
-          {labelOf(id)}
-        </option>
-      ))}
+      {pipe(
+        TEXT_FORMATS,
+        Arr.map((id) => (
+          <option key={id} value={id}>
+            {labelOf(id)}
+          </option>
+        )),
+      )}
     </select>
   );
 };

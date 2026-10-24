@@ -1,3 +1,4 @@
+import { Array as Arr, String as Str, pipe } from "effect";
 import type { ReactNode } from "react";
 
 import { COPY } from "#/pages/inspect/model/copy";
@@ -13,14 +14,17 @@ const TraceView = ({ text, trace }: Readonly<{ text: string; trace: Trace }>): R
     <h2 className="text-lg font-semibold">{COPY.trace}</h2>
     <Legend />
     <ol className="flex flex-col">
-      {trace.rows.map((row) => (
-        <TraceRow
-          key={row.id}
-          row={row}
-          excerpt={text.slice(row.start, row.end)}
-          total={Math.max(trace.elapsed, MIN_SPAN)}
-        />
-      ))}
+      {pipe(
+        trace.rows,
+        Arr.map((row) => (
+          <TraceRow
+            key={row.id}
+            row={row}
+            excerpt={Str.slice(row.start, row.end)(text)}
+            total={Math.max(trace.elapsed, MIN_SPAN)}
+          />
+        )),
+      )}
     </ol>
   </div>
 );

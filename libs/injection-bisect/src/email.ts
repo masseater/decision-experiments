@@ -1,4 +1,4 @@
-import { Array as Arr, Effect, Option } from "effect";
+import { Array as Arr, Effect, Option, String as Str, pipe } from "effect";
 import PostalMime from "postal-mime";
 import type { Address } from "postal-mime";
 
@@ -26,11 +26,11 @@ const looksLikeEmail = (bytes: Uint8Array): boolean => {
 const addressOf = (address: Address): string =>
   Option.match(Option.fromNullishOr(address.address), {
     onNone: () => address.name,
-    onSome: (mail) => `${address.name} <${mail}>`.trim(),
+    onSome: (mail) => Str.trim(`${address.name} <${mail}>`),
   });
 
 const headerLine = (name: string, value: string): readonly string[] => {
-  if (value.trim() === "") {
+  if (Str.trim(value) === "") {
     return [];
   }
   return [`${name}: ${value}`];
@@ -45,7 +45,13 @@ const formatOf = (email: Email): string =>
 const documentOf = (email: Email): Document => {
   const from = Option.fromNullishOr(email.from).pipe(Option.map((address) => addressOf(address)));
   const to = Option.fromNullishOr(email.to).pipe(
-    Option.map((addresses) => addresses.map((address) => addressOf(address)).join(", ")),
+    Option.map((addresses) =>
+      pipe(
+        addresses,
+        Arr.map((address) => addressOf(address)),
+        Arr.join(", "),
+      ),
+    ),
   );
   const headers = [
     ...headerLine(
@@ -59,7 +65,10 @@ const documentOf = (email: Email): Document => {
     ...headerLine("Subject", email.subject ?? ""),
   ];
   const bodies = Arr.getSomes([Option.fromNullishOr(email.text), Option.fromNullishOr(email.html)]);
-  return { text: [headers.join("\n"), ...bodies].join("\n\n"), format: formatOf(email) };
+  return {
+    text: pipe([pipe(headers, Arr.join("\n")), ...bodies], Arr.join("\n\n")),
+    format: formatOf(email),
+  };
 };
 
 const emailOf = (bytes: Uint8Array): Effect.Effect<Document, ReadError> =>

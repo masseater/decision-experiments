@@ -1,4 +1,4 @@
-import { Array as Arr, Effect, Option, Schema } from "effect";
+import { Array as Arr, Effect, Option, Schema, Record as Rec, String as Str, pipe } from "effect";
 import { decode, encode } from "fast-png";
 
 import { MISSING } from "./fragment.ts";
@@ -44,7 +44,7 @@ const askJson = <Codec extends Schema.Codec<unknown, string>>({
     const api = yield* ModelApi;
     const { content, costUsd } = yield* api.generateJson({ model, parts, jsonSchema });
     const output = yield* Schema.decodeEffect(schema)(content).pipe(
-      Effect.mapError((error) => new ModelError({ reason: error.message })),
+      Effect.mapError((error) => ModelError.make({ reason: error.message })),
     );
     return { output, costUsd };
   });
@@ -101,6 +101,30 @@ interface Reread {
   readonly reread: number;
 }
 
+const withRereadLines = (
+  fragments: readonly Fragment[],
+  targets: readonly Readonly<{ index: number }>[],
+  lines: readonly string[],
+): readonly Fragment[] => {
+  const replaced = new Map(
+    pipe(
+      targets,
+      Arr.map(({ index }, position) => [index, lines[position]] as const),
+    ),
+  );
+  return pipe(
+    fragments,
+    Arr.map((fragment, index) =>
+      Option.fromNullishOr(replaced.get(index)).pipe(
+        Option.match({
+          onNone: () => fragment,
+          onSome: (read) => ({ ...fragment, text: read }),
+        }),
+      ),
+    ),
+  );
+};
+
 const rereadLowConfidence = ({
   image,
   fragments,
@@ -110,55 +134,60 @@ const rereadLowConfidence = ({
   fragments: readonly Fragment[];
   model?: string;
 }>): Effect.Effect<Reread, ModelError, ModelApi> => {
-  const targets = fragments
-    .map((fragment, index) => ({ fragment, index }))
-    .filter(({ fragment }) => fragment.confidence < REREAD_BELOW);
+  const targets = pipe(
+    fragments,
+    Arr.map((fragment, index) => ({ fragment, index })),
+    Arr.filter(({ fragment }) => fragment.confidence < REREAD_BELOW),
+  );
   if (targets.length === NOTHING_REREAD) {
     return Effect.succeed({ fragments, costUsd: NOTHING_REREAD, reread: NOTHING_REREAD });
   }
-  const prompts = targets.flatMap(({ fragment }, position) => [
-    text(`${position + FIRST_LINE} 行目（OCR では「${fragment.text}」）`),
-    png(crop(image, fragment.box)),
-  ]);
+  const prompts = pipe(
+    targets,
+    Arr.flatMap(({ fragment }, position) => [
+      text(`${position + FIRST_LINE} 行目（OCR では「${fragment.text}」）`),
+      png(crop(image, fragment.box)),
+    ]),
+  );
   return askJson({
     model,
     schema: LinesSchema,
     jsonSchema: LINES_JSON_SCHEMA,
     parts: [text(REREAD_PROMPT), ...prompts],
   }).pipe(
-    Effect.map(({ output, costUsd }) => {
-      const replaced = new Map(
-        targets.map(({ index }, position) => [index, output.lines[position]] as const),
-      );
-      return {
-        fragments: fragments.map((fragment, index) =>
-          Option.fromNullishOr(replaced.get(index)).pipe(
-            Option.match({
-              onNone: () => fragment,
-              onSome: (read) => ({ ...fragment, text: read }),
-            }),
-          ),
-        ),
-        costUsd,
-        reread: targets.length,
-      };
-    }),
+    Effect.map(({ output, costUsd }) => ({
+      fragments: withRereadLines(fragments, targets, output.lines),
+      costUsd,
+      reread: targets.length,
+    })),
     Effect.withSpan("ocr-decide.reread", { attributes: { model, lines: targets.length } }),
   );
 };
 
 const extractPrompt = (fields: readonly Field[]): string =>
-  [
-    "帳票の画像から次の項目を読み取り、帳票に書かれているとおりの文字列で返す。見つからない項目は null にする。",
-    ...fields.map((field) => `${field.id}: ${field.label}（${field.description}）`),
-  ].join("\n");
+  pipe(
+    [
+      "帳票の画像から次の項目を読み取り、帳票に書かれているとおりの文字列で返す。見つからない項目は null にする。",
+      ...pipe(
+        fields,
+        Arr.map((field) => `${field.id}: ${field.label}（${field.description}）`),
+      ),
+    ],
+    Arr.join("\n"),
+  );
 
 const extractJsonSchema = (fields: readonly Field[]): object => ({
   type: "object",
-  properties: Object.fromEntries(
-    fields.map((field) => [field.id, { type: ["string", "null"], description: field.label }]),
+  properties: Rec.fromEntries(
+    pipe(
+      fields,
+      Arr.map((field) => [field.id, { type: ["string", "null"], description: field.label }]),
+    ),
   ),
-  required: fields.map(({ id }) => id),
+  required: pipe(
+    fields,
+    Arr.map(({ id }) => id),
+  ),
   additionalProperties: false,
 });
 
@@ -168,7 +197,7 @@ const ExtractedSchema = Schema.fromJsonString(
 
 const toValue = (value: Option.Option<string>): FieldValue =>
   value.pipe(
-    Option.filter((read) => read.trim() !== ""),
+    Option.filter((read) => Str.trim(read) !== ""),
     Option.match({
       onNone: () => MISSING,
       onSome: (read): FieldValue => ({ status: "found", text: read }),
@@ -191,8 +220,11 @@ const extractFromImage = ({
     parts: [text(extractPrompt(fields)), png(image)],
   }).pipe(
     Effect.map(({ output, costUsd }) => ({
-      values: Object.fromEntries(
-        fields.map(({ id }) => [id, toValue(Option.fromNullishOr(output[id]))]),
+      values: Rec.fromEntries(
+        pipe(
+          fields,
+          Arr.map(({ id }) => [id, toValue(Option.fromNullishOr(output[id]))]),
+        ),
       ),
       costUsd,
     })),

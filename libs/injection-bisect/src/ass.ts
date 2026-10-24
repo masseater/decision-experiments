@@ -1,5 +1,5 @@
 import { parse } from "ass-compiler";
-import { Option, Result } from "effect";
+import { Option, Result, Array as Arr, pipe } from "effect";
 
 import { proseUnitsOf } from "./located.ts";
 import type { Parser, Unit } from "./parser.ts";
@@ -13,7 +13,10 @@ const textsOf = (text: string): readonly string[] =>
       onFailure: () => [],
       onSuccess: ({ info, events }) => [
         ...Option.toArray(Option.fromNullishOr(info.Title)),
-        ...[...events.dialogue, ...events.comment].map(({ Text }) => Text.raw),
+        ...pipe(
+          [...events.dialogue, ...events.comment],
+          Arr.map(({ Text }) => Text.raw),
+        ),
       ],
     },
   );

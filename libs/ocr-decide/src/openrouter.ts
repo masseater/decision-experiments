@@ -51,7 +51,7 @@ const costOf = (cost: number | null | undefined): number =>
   Option.fromNullishOr(cost).pipe(Option.getOrElse(() => NO_COST));
 
 const asModelError = (error: Readonly<{ message: string }>): ModelError =>
-  new ModelError({ reason: error.message });
+  ModelError.make({ reason: error.message });
 
 const toContent = (part: Part): ChatContentItems => {
   if (part.type === "text") {
@@ -103,7 +103,7 @@ const choose =
         answer.pipe(
           Option.filter(isChoice),
           Option.match({
-            onNone: () => Effect.fail(new ModelError({ reason: `${model} returned no choice` })),
+            onNone: () => Effect.fail(ModelError.make({ reason: `${model} returned no choice` })),
             onSome: ({ choice, probabilities }) =>
               Effect.succeed({
                 choice,
@@ -134,7 +134,7 @@ const probability =
           Option.filter(isNoul),
           Option.match({
             onNone: () =>
-              Effect.fail(new ModelError({ reason: `${model} returned no probability` })),
+              Effect.fail(ModelError.make({ reason: `${model} returned no probability` })),
             onSome: ({ noul }) => Effect.succeed({ probability: noul, costUsd }),
           }),
         ),
@@ -165,7 +165,7 @@ const generateJson =
           Option.flatMap(({ message }) => Option.fromNullishOr(message.content)),
           Option.filter((content) => typeof content === "string"),
           Option.match({
-            onNone: () => Effect.fail(new ModelError({ reason: `${model} returned no text` })),
+            onNone: () => Effect.fail(ModelError.make({ reason: `${model} returned no text` })),
             onSome: (content) =>
               Effect.succeed({
                 content,

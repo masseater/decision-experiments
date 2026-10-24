@@ -1,6 +1,6 @@
 import type { Run } from "@ocr-decide/measurements/schema";
 import { INVOICE_FIELDS } from "@r_masseater/ocr-decide";
-import { Array as Arr, Number as Num, Option } from "effect";
+import { Array as Arr, Number as Num, Option, Record as Rec, pipe } from "effect";
 
 import type { Outcome } from "./outcome.ts";
 import { CONDITIONS, KINDS, truthOf } from "./sample.ts";
@@ -14,13 +14,22 @@ const CONDITION_LABELS = { clean: "", degraded: "（劣化）" } as const;
 
 const NONE = 0;
 
-const FIELD_IDS: readonly FieldId[] = INVOICE_FIELDS.map(({ id }) => id);
+const FIELD_IDS: readonly FieldId[] = pipe(
+  INVOICE_FIELDS,
+  Arr.map(({ id }) => id),
+);
 
-const GROUPS = KINDS.flatMap((kind) =>
-  CONDITIONS.map((condition) => ({
-    id: `${kind}-${condition}`,
-    label: `${KIND_LABELS[kind]}${CONDITION_LABELS[condition]}`,
-  })),
+const GROUPS = pipe(
+  KINDS,
+  Arr.flatMap((kind) =>
+    pipe(
+      CONDITIONS,
+      Arr.map((condition) => ({
+        id: `${kind}-${condition}`,
+        label: `${KIND_LABELS[kind]}${CONDITION_LABELS[condition]}`,
+      })),
+    ),
+  ),
 );
 
 const groupOf = (document: Document): string => `${document.kind}-${document.condition}`;
@@ -29,7 +38,7 @@ const rate = (hits: readonly boolean[]): number => {
   if (hits.length === NONE) {
     return NONE;
   }
-  return hits.filter(Boolean).length / hits.length;
+  return pipe(hits, Arr.filter(Boolean)).length / hits.length;
 };
 
 const average = (values: readonly number[]): number => {
@@ -56,12 +65,23 @@ const hitsOf = (
   documents: readonly Document[],
   fieldIds: readonly FieldId[],
 ): readonly boolean[] =>
-  outcomes.flatMap((outcome) =>
-    documentOf(documents, outcome.id).pipe(
-      Option.match({
-        onNone: () => fieldIds.map(() => false),
-        onSome: (document) => fieldIds.map((field) => fieldHit(outcome, document, field)),
-      }),
+  pipe(
+    outcomes,
+    Arr.flatMap((outcome) =>
+      documentOf(documents, outcome.id).pipe(
+        Option.match({
+          onNone: () =>
+            pipe(
+              fieldIds,
+              Arr.map(() => false),
+            ),
+          onSome: (document) =>
+            pipe(
+              fieldIds,
+              Arr.map((field) => fieldHit(outcome, document, field)),
+            ),
+        }),
+      ),
     ),
   );
 
@@ -69,13 +89,19 @@ const groupRates = (
   outcomes: readonly Outcome[],
   documents: readonly Document[],
 ): Readonly<Record<string, number>> =>
-  Object.fromEntries(
-    GROUPS.map(({ id }) => {
-      const members = outcomes.filter((outcome) =>
-        documentOf(documents, outcome.id).pipe(Option.exists((doc) => groupOf(doc) === id)),
-      );
-      return [id, rate(hitsOf(members, documents, FIELD_IDS))];
-    }),
+  Rec.fromEntries(
+    pipe(
+      GROUPS,
+      Arr.map(({ id }) => {
+        const members = pipe(
+          outcomes,
+          Arr.filter((outcome) =>
+            documentOf(documents, outcome.id).pipe(Option.exists((doc) => groupOf(doc) === id)),
+          ),
+        );
+        return [id, rate(hitsOf(members, documents, FIELD_IDS))];
+      }),
+    ),
   );
 
 const runOf = (outcomes: readonly [Outcome, ...Outcome[]], documents: readonly Document[]): Run => {
@@ -85,13 +111,29 @@ const runOf = (outcomes: readonly [Outcome, ...Outcome[]], documents: readonly D
     model: first.model,
     label: first.label,
     accuracy: rate(hitsOf(outcomes, documents, FIELD_IDS)),
-    byField: Object.fromEntries(
-      FIELD_IDS.map((field) => [field, rate(hitsOf(outcomes, documents, [field]))]),
+    byField: Rec.fromEntries(
+      pipe(
+        FIELD_IDS,
+        Arr.map((field) => [field, rate(hitsOf(outcomes, documents, [field]))]),
+      ),
     ),
     byGroup: groupRates(outcomes, documents),
-    secondsPerDocument: average(outcomes.map(({ seconds }) => seconds)),
-    usdPerDocument: average(outcomes.map(({ costUsd }) => costUsd)),
-    failed: outcomes.filter(({ extraction }) => extraction.status === "failed").length,
+    secondsPerDocument: average(
+      pipe(
+        outcomes,
+        Arr.map(({ seconds }) => seconds),
+      ),
+    ),
+    usdPerDocument: average(
+      pipe(
+        outcomes,
+        Arr.map(({ costUsd }) => costUsd),
+      ),
+    ),
+    failed: pipe(
+      outcomes,
+      Arr.filter(({ extraction }) => extraction.status === "failed"),
+    ).length,
   };
 };
 
@@ -100,7 +142,10 @@ const summarize = ({
   documents,
 }: Readonly<{ outcomes: readonly Outcome[]; documents: readonly Document[] }>): readonly Run[] => {
   const groups = Arr.groupBy(outcomes, ({ method, model }) => `${method} ${model}`);
-  return Object.values(groups).map((group) => runOf(group, documents));
+  return pipe(
+    Rec.values(groups),
+    Arr.map((group) => runOf(group, documents)),
+  );
 };
 
 export { GROUPS, summarize };

@@ -1,4 +1,4 @@
-import { Effect } from "effect";
+import { Effect, Array as Arr, String as Str, Record as Rec, pipe } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import { cleanedOf } from "./__tests__/fake-judge.ts";
@@ -23,14 +23,19 @@ const FILES = {
   odp: { bytes: Effect.succeed(SAVED.odp), kept: SLIDE },
 };
 
-test.each(Object.entries(FILES))(
+test.each(Rec.toEntries(FILES))(
   "finds and removes an injection in a %s file",
   (format, { bytes, kept }) =>
     Effect.runPromise(
       Effect.gen(function* office() {
         const document = yield* readDocument({ bytes: yield* bytes, name: `a.${format}` });
         const { found, cleaned } = yield* cleanedOf(document);
-        expect(found.map((text) => text.replaceAll('"', "").trim())).toStrictEqual([INJECTION]);
+        expect(
+          pipe(
+            found,
+            Arr.map((text) => pipe(text, Str.replaceAll('"', ""), Str.trim)),
+          ),
+        ).toStrictEqual([INJECTION]);
         expect(cleaned).toContain(kept);
       }),
     ),

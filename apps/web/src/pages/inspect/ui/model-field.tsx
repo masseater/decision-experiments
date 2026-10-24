@@ -1,4 +1,5 @@
 import { cn } from "@decision-experiments/web-ui";
+import { Array as Arr, pipe } from "effect";
 import { useCallback } from "react";
 import type { ChangeEvent, ReactNode } from "react";
 
@@ -24,11 +25,14 @@ const ModelField = (): ReactNode => {
       onChange={pick}
       className={cn(SELECT_CLASS, "font-mono")}
     >
-      {MODELS.map((id) => (
-        <option key={id} value={id}>
-          {id}
-        </option>
-      ))}
+      {pipe(
+        MODELS,
+        Arr.map((id) => (
+          <option key={id} value={id}>
+            {id}
+          </option>
+        )),
+      )}
     </select>
   );
 };

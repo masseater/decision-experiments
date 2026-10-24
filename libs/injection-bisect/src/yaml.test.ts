@@ -1,11 +1,14 @@
-import { Effect } from "effect";
+import { Effect, Array as Arr, String as Str, pipe } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import { INJECTION, cleanedOf } from "./__tests__/fake-judge.ts";
 import { sentencesOf } from "./segment.ts";
 
 const textsOf = (text: string): readonly string[] =>
-  sentencesOf({ text, format: "yaml" }).map(({ start, end }) => text.slice(start, end));
+  pipe(
+    sentencesOf({ text, format: "yaml" }),
+    Arr.map(({ start, end }) => Str.slice(start, end)(text)),
+  );
 
 test("reads scalars that look like prose, block scalars and comments", () => {
   expect(

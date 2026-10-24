@@ -1,3 +1,5 @@
+import { String as Str } from "effect";
+
 type Engine =
   | Readonly<{ kind: "process"; id: string; label: string; project: string }>
   | Readonly<{ kind: "tesseract"; id: string; label: string }>
@@ -16,7 +18,7 @@ const ENGINES: readonly Engine[] = [
   { kind: "vlm", id: "anthropic/claude-haiku-5.5", label: "Claude Haiku 5.5" },
 ];
 
-const fileNameOf = (id: string): string => `${id.replaceAll("/", "__")}.json`;
+const fileNameOf = (id: string): string => `${Str.replaceAll("/", "__")(id)}.json`;
 
 export { ENGINES, fileNameOf };
 export type { Engine };

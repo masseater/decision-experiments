@@ -1,5 +1,6 @@
 import { cn } from "@decision-experiments/web-ui";
 import { asksTogether, branchesFor, sentencesOf } from "@r_masseater/injection-bisect";
+import { Array as Arr, pipe } from "effect";
 import type { ReactNode } from "react";
 
 import { COPY } from "#/pages/inspect/model/copy";
@@ -42,7 +43,12 @@ const sumOf = (rows: readonly Row[], pick: (answered: Answered) => number): numb
 
 const requestsOf = (model: string, rows: readonly Row[]): number => {
   if (asksTogether(model)) {
-    return new Set(rows.map(({ depth }) => depth)).size;
+    return new Set(
+      pipe(
+        rows,
+        Arr.map(({ depth }) => depth),
+      ),
+    ).size;
   }
   return rows.length;
 };

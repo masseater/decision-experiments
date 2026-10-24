@@ -1,5 +1,12 @@
-import { Data } from "effect";
+import { Schema } from "effect";
 
-class ModelError extends Data.TaggedError("ModelError")<{ readonly reason: string }> {}
+const taggedError = Schema.TaggedError;
+
+class ModelError extends taggedError<ModelError, { readonly brand: unique symbol }>()(
+  "ModelError",
+  {
+    reason: Schema.String,
+  },
+) {}
 
 export { ModelError };

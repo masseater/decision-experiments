@@ -1,11 +1,14 @@
-import { Effect } from "effect";
+import { Effect, Array as Arr, String as Str, pipe } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import { INJECTION, INJECTION_MARK, cleanedOf } from "./__tests__/fake-judge.ts";
 import { sentencesOf } from "./segment.ts";
 
 const textsOf = (text: string): readonly string[] =>
-  sentencesOf({ text, format: "markdown" }).map(({ start, end }) => text.slice(start, end));
+  pipe(
+    sentencesOf({ text, format: "markdown" }),
+    Arr.map(({ start, end }) => Str.slice(start, end)(text)),
+  );
 
 test("reads headings, paragraphs and table cells as prose", () => {
   expect(textsOf("# 見出し\n\n本文です。続きです。\n\n| 列 |\n| -- |\n| 値 |\n")).toStrictEqual([
@@ -35,10 +38,12 @@ test("reads an HTML comment between paragraphs", () => {
 
 test("detects the format from Markdown signs", () => {
   const text = "# 手順\n\n[資料](https://a.example)を読む。";
-  expect(sentencesOf({ text }).map(({ start, end }) => text.slice(start, end))).toStrictEqual([
-    "# 手順",
-    "[資料](https://a.example)を読む。",
-  ]);
+  expect(
+    pipe(
+      sentencesOf({ text }),
+      Arr.map(({ start, end }) => Str.slice(start, end)(text)),
+    ),
+  ).toStrictEqual(["# 手順", "[資料](https://a.example)を読む。"]);
 });
 
 test("finds and removes an injection in image alt text", () =>

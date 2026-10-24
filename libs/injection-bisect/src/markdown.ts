@@ -1,4 +1,4 @@
-import { Array as Arr, Match, Option } from "effect";
+import { Array as Arr, Match, Option, String as Str, pipe } from "effect";
 import type { Code, Nodes } from "mdast";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { frontmatterFromMarkdown } from "mdast-util-frontmatter";
@@ -33,19 +33,25 @@ const spanOf = (node: Nodes): Option.Option<Span> =>
   );
 
 const bodyOf = (text: string, { start, end }: Span): Span => {
-  const opening = text.indexOf(NEWLINE, start) + NEWLINE.length;
-  const closing = text.lastIndexOf(NEWLINE, end - NEWLINE.length);
-  if (opening <= start || opening > end) {
+  const opening = pipe(
+    Str.slice(start)(text),
+    Str.indexOf(NEWLINE),
+    Option.map((at) => at + start + NEWLINE.length),
+    Option.filter((at) => at <= end),
+  );
+  if (Option.isNone(opening)) {
     return { start: end, end };
   }
-  if (closing < opening) {
-    return { start: opening, end };
-  }
-  return { start: opening, end: closing };
+  const closing = pipe(
+    Str.takeLeft(end)(text),
+    Str.lastIndexOf(NEWLINE),
+    Option.filter((at) => at >= opening.value),
+  );
+  return { start: opening.value, end: Option.getOrElse(closing, () => end) };
 };
 
 const fencedBodyOf = (text: string, span: Span): Span => {
-  if (FENCE.test(text.slice(span.start, span.end))) {
+  if (FENCE.test(Str.slice(span.start, span.end)(text))) {
     return bodyOf(text, span);
   }
   return span;
@@ -65,22 +71,44 @@ const imagesIn = (node: Nodes): readonly Span[] => {
   if (node.type === "image" || node.type === "imageReference") {
     return Option.toArray(spanOf(node));
   }
-  return childrenOf(node).flatMap((child) => imagesIn(child));
+  return pipe(
+    childrenOf(node),
+    Arr.flatMap((child) => imagesIn(child)),
+  );
 };
 
 const blockUnits = (block: Nodes, span: Span): readonly Unit[] => {
   const images = imagesIn(block);
-  const starts = [span.start, ...images.map(({ end }) => end)];
-  const ends = [...images.map(({ start }) => start), span.end];
+  const starts = [
+    span.start,
+    ...pipe(
+      images,
+      Arr.map(({ end }) => end),
+    ),
+  ];
+  const ends = [
+    ...pipe(
+      images,
+      Arr.map(({ start }) => start),
+    ),
+    span.end,
+  ];
   return [
     ...Arr.zipWith(starts, ends, (start, end): Unit => ({ kind: "prose", start, end })),
-    ...images.map(({ start, end }): Unit => ({ kind: "whole", start, end })),
+    ...pipe(
+      images,
+      Arr.map(({ start, end }): Unit => ({ kind: "whole", start, end })),
+    ),
   ];
 };
 
 const unitsIn = (text: string, node: Nodes): readonly Unit[] =>
   Option.match(spanOf(node), {
-    onNone: () => childrenOf(node).flatMap((child) => unitsIn(text, child)),
+    onNone: () =>
+      pipe(
+        childrenOf(node),
+        Arr.flatMap((child) => unitsIn(text, child)),
+      ),
     onSome: (span) =>
       Match.value(node).pipe(
         Match.when({ type: "code" }, (code) => codeUnits(text, code, span)),
@@ -101,7 +129,10 @@ const unitsIn = (text: string, node: Nodes): readonly Unit[] =>
           if (Arr.isReadonlyArrayEmpty(children)) {
             return NO_UNITS;
           }
-          return children.flatMap((child) => unitsIn(text, child));
+          return pipe(
+            children,
+            Arr.flatMap((child) => unitsIn(text, child)),
+          );
         }),
       ),
   });

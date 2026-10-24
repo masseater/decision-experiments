@@ -1,4 +1,4 @@
-import { Array as Arr, Effect, Option, Order } from "effect";
+import { Array as Arr, Effect, Option, Order, String as Str, pipe } from "effect";
 
 import { hasFlag, hasStream, streamOf, utf16le, viewOf } from "./cfb.ts";
 import type { Reader } from "./parser.ts";
@@ -34,8 +34,6 @@ const PIECE_FC = 2;
 const LITTLE_ENDIAN = true;
 
 const FIELD = { begin: "\u0013", separator: "\u0014", end: "\u0015" } as const;
-
-const NOT_FOUND = -1;
 
 const CELL_END = "\u0007";
 
@@ -95,43 +93,60 @@ const pieceText =
   };
 
 const afterInstruction = (field: string): string => {
-  const stops = [
-    { at: field.indexOf(FIELD.separator), skip: FIELD.separator.length },
-    { at: field.indexOf(FIELD.end), skip: NONE },
-  ]
-    .filter(({ at }) => at !== NOT_FOUND)
-    .map(({ at, skip }) => at + skip);
+  const stops = pipe(
+    [
+      { at: Str.indexOf(FIELD.separator)(field), skip: FIELD.separator.length },
+      { at: Str.indexOf(FIELD.end)(field), skip: NONE },
+    ],
+    Arr.map(({ at, skip }) => at.pipe(Option.map((index) => index + skip))),
+    Arr.getSomes,
+  );
   const first = Arr.head(Arr.sort(stops, Order.Number));
-  return field.slice(Option.getOrElse(first, () => NONE));
+  return Str.slice(Option.getOrElse(first, () => NONE))(field);
 };
 
 const withoutFieldCodes = (text: string): string => {
-  const [first = "", ...fields] = text.split(FIELD.begin);
-  return [first, ...fields.map((field) => afterInstruction(field))].join("");
+  const [first, ...fields] = Str.split(FIELD.begin)(text);
+  return pipe(
+    [
+      first,
+      ...pipe(
+        fields,
+        Arr.map((field) => afterInstruction(field)),
+      ),
+    ],
+    Arr.join(""),
+  );
 };
 
 const isShown = (letter: string): boolean =>
-  KEPT_CONTROLS.has(letter) || (letter.codePointAt(NONE) ?? NONE) > LAST_CONTROL;
+  KEPT_CONTROLS.has(letter) ||
+  Option.getOrElse(Str.codePointAt(NONE)(letter), () => NONE) > LAST_CONTROL;
 
-const cleaned = (text: string): string =>
-  Array.from(
-    withoutFieldCodes(text)
-      .replaceAll(CELL_END, "\t")
-      .replaceAll(/[\r\v\f]/gu, "\n"),
-    (letter) => letter,
-  )
-    .filter((letter) => isShown(letter))
-    .join("")
-    .trim();
+const cleaned = (text: string): string => {
+  const normalized = pipe(
+    withoutFieldCodes(text),
+    Str.replaceAll(CELL_END, "\t"),
+    Str.replaceAll(/[\r\v\f]/gu, "\n"),
+  );
+  return pipe(
+    Array.from(normalized, (letter) => letter),
+    Arr.filter((letter) => isShown(letter)),
+    Arr.join(""),
+    Str.trim,
+  );
+};
 
 const textOf = (word: Uint8Array, table: Uint8Array): string => {
   const fib = viewOf(word);
   const fcClx = fib.getUint32(FIB.fcClx, LITTLE_ENDIAN);
   const clx = viewOf(table.subarray(fcClx, fcClx + fib.getUint32(FIB.lcbClx, LITTLE_ENDIAN)));
   return cleaned(
-    piecesOf(clx)
-      .map((piece) => pieceText(word)(piece))
-      .join(""),
+    pipe(
+      piecesOf(clx),
+      Arr.map((piece) => pieceText(word)(piece)),
+      Arr.join(""),
+    ),
   );
 };
 

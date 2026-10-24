@@ -1,4 +1,4 @@
-import { Schema } from "effect";
+import { Schema, Array as Arr, pipe } from "effect";
 
 const CATEGORIES = [
   { id: "horizontal-mincho", label: "横書き（明朝）", source: "synthetic" },
@@ -14,7 +14,12 @@ const CATEGORIES = [
   { id: "receipt-photo", label: "レシートの写真", source: "jawildtext" },
 ] as const;
 
-const CategoryIdSchema = Schema.Literals(CATEGORIES.map(({ id }) => id));
+const CategoryIdSchema = Schema.Literals(
+  pipe(
+    CATEGORIES,
+    Arr.map(({ id }) => id),
+  ),
+);
 
 const RateMapSchema = Schema.Record(Schema.String, Schema.Finite);
 

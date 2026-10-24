@@ -1,3 +1,4 @@
+import { Array as Arr, pipe } from "effect";
 import type { ReactNode } from "react";
 
 import { useSummary } from "#/pages/measurements/api/summary-query";
@@ -10,9 +11,10 @@ const RunRows = ({ columns }: Readonly<{ columns: readonly Column[] }>): ReactNo
   const { runs } = useSummary();
   return (
     <tbody>
-      {runs.map((run) => (
-        <RunRow key={keyOf(run)} run={run} columns={columns} />
-      ))}
+      {pipe(
+        runs,
+        Arr.map((run) => <RunRow key={keyOf(run)} run={run} columns={columns} />),
+      )}
     </tbody>
   );
 };

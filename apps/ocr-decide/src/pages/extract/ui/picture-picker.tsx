@@ -1,4 +1,4 @@
-import { Option } from "effect";
+import { Option, Array as Arr, pipe } from "effect";
 import { FileUp } from "lucide-react";
 import { useCallback } from "react";
 import type { ChangeEvent, ReactNode } from "react";
@@ -44,9 +44,10 @@ const PicturePicker = (): ReactNode => {
         {COPY.image}
         <input type="file" accept="image/*" className="sr-only" onChange={pick} />
       </label>
-      {SAMPLES.map(({ name, label }) => (
-        <SampleButton key={name} name={name} label={label} />
-      ))}
+      {pipe(
+        SAMPLES,
+        Arr.map(({ name, label }) => <SampleButton key={name} name={name} label={label} />),
+      )}
       <span className="text-muted-foreground text-xs">{statusOf(picture)}</span>
     </div>
   );

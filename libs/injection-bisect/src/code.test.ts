@@ -1,11 +1,14 @@
-import { Effect } from "effect";
+import { Effect, Array as Arr, String as Str, pipe } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import { INJECTION, cleanedOf } from "./__tests__/fake-judge.ts";
 import { sentencesOf } from "./segment.ts";
 
 const textsOf = (text: string, format: string): readonly string[] =>
-  sentencesOf({ text, format }).map(({ start, end }) => text.slice(start, end));
+  pipe(
+    sentencesOf({ text, format }),
+    Arr.map(({ start, end }) => Str.slice(start, end)(text)),
+  );
 
 test("reads comments and strings that look like prose", () => {
   expect(

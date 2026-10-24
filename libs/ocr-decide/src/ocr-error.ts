@@ -1,5 +1,9 @@
-import { Data } from "effect";
+import { Schema } from "effect";
 
-class OcrError extends Data.TaggedError("OcrError")<{ readonly reason: string }> {}
+const taggedError = Schema.TaggedError;
+
+class OcrError extends taggedError<OcrError, { readonly brand: unique symbol }>()("OcrError", {
+  reason: Schema.String,
+}) {}
 
 export { OcrError };

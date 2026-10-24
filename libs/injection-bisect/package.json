@@ -52,6 +52,7 @@
     "ass-compiler": "catalog:",
     "cfb": "catalog:",
     "effect": "catalog:stack",
+    "entities": "catalog:",
     "fast-png": "catalog:",
     "fflate": "catalog:",
     "file-type": "catalog:",

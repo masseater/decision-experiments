@@ -1,4 +1,5 @@
-import { Match } from "effect";
+import { Match, Array as Arr, pipe } from "effect";
+import { escapeText } from "entities/escape";
 
 import type { SyntheticPage } from "./page.ts";
 
@@ -15,9 +16,6 @@ const NOISE =
 const NO_TILT = 0;
 
 const WRITING_MODE = { horizontal: "horizontal-tb", vertical: "vertical-rl" } as const;
-
-const escape = (text: string): string =>
-  text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 
 const conditionStyle = (page: SyntheticPage): string =>
   Match.value(page.condition).pipe(
@@ -41,6 +39,10 @@ const htmlOf = (
     .sheet { background: #fff; padding: 28px; font-family: "${page.font}"; line-height: 1.8; writing-mode: ${WRITING_MODE[page.writing]}; }
     .line { white-space: pre; }
     ${conditionStyle(page)}
-  </style></head><body><div class="sheet">${page.lines.map((line) => `<div class="line">${escape(line)}</div>`).join("")}</div></body></html>`;
+  </style></head><body><div class="sheet">${pipe(
+    page.lines,
+    Arr.map((line) => `<div class="line">${escapeText(line)}</div>`),
+    Arr.join(""),
+  )}</div></body></html>`;
 
 export { htmlOf };

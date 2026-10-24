@@ -1,4 +1,4 @@
-import { Effect } from "effect";
+import { Effect, Array as Arr, String as Str, pipe } from "effect";
 import { encode } from "fast-png";
 import { extractImages, extractText, getDocumentProxy } from "unpdf";
 
@@ -23,8 +23,11 @@ const scannedText =
           return Effect.succeed("");
         }
         return recognizedText(options)(
-          images.map(({ width, height, data, channels }) =>
-            encode({ width, height, data, channels }),
+          pipe(
+            images,
+            Arr.map(({ width, height, data, channels }) =>
+              encode({ width, height, data, channels }),
+            ),
           ),
         );
       }),
@@ -46,14 +49,14 @@ const pdfReaderOf = (options: OcrOptions): Reader => ({
       const pages = yield* Effect.forEach(
         text,
         (page, index) => {
-          if (page.trim() === "") {
+          if (Str.trim(page) === "") {
             return scannedText(options, pdf)(index + FIRST_PAGE);
           }
           return Effect.succeed(page);
         },
         ONE_AT_A_TIME,
       );
-      return { text: pages.join(PAGE_BREAK), format: "plain" };
+      return { text: pipe(pages, Arr.join(PAGE_BREAK)), format: "plain" };
     }),
 });
 

@@ -15,6 +15,7 @@
     "@ocr-decide/tooling": "workspace:*",
     "@r_masseater/ocr-decide": "workspace:*",
     "effect": "catalog:stack",
+    "entities": "catalog:",
     "fastest-levenshtein": "catalog:"
   },
   "devDependencies": {

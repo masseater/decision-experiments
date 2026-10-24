@@ -1,4 +1,4 @@
-import { Effect } from "effect";
+import { Effect, Array as Arr, String as Str, pipe } from "effect";
 import type { WorkerOptions } from "tesseract.js";
 
 import type { Fragment } from "./fragment.ts";
@@ -22,7 +22,7 @@ const BLOCKS = { blocks: true } as const;
 const SPACE_BETWEEN_CJK =
   /(?<=[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー])\s+(?=[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}ー])/gu;
 
-const failure = (cause: unknown): OcrError => new OcrError({ reason: String(cause) });
+const failure = (cause: unknown): OcrError => OcrError.make({ reason: String(cause) });
 
 const readFragments = ({
   image,
@@ -43,15 +43,17 @@ const readFragments = ({
     (tesseract) => Effect.promise(() => tesseract.terminate()),
   ).pipe(
     Effect.map(({ data }) =>
-      (data.blocks ?? [])
-        .flatMap((block) => block.paragraphs)
-        .flatMap((paragraph) => paragraph.lines)
-        .map((line) => ({
-          text: line.text.trim().replaceAll(SPACE_BETWEEN_CJK, ""),
+      pipe(
+        data.blocks ?? [],
+        Arr.flatMap((block) => block.paragraphs),
+        Arr.flatMap((paragraph) => paragraph.lines),
+        Arr.map((line) => ({
+          text: pipe(line.text, Str.trim, Str.replaceAll(SPACE_BETWEEN_CJK, "")),
           confidence: line.confidence / PERCENT,
           box: line.bbox,
-        }))
-        .filter(({ text }) => text !== ""),
+        })),
+        Arr.filter(({ text }) => text !== ""),
+      ),
     ),
     Effect.withSpan("ocr-decide.ocr"),
   );

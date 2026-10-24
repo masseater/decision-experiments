@@ -1,4 +1,5 @@
-import { Effect } from "effect";
+import { Effect, Array as Arr, String as Str, pipe } from "effect";
+import { escapeText } from "entities/escape";
 
 import { emailOf, emailReader, looksLikeEmail } from "./email.ts";
 import type { Document, Reader } from "./parser.ts";
@@ -15,28 +16,32 @@ const latin1 = new TextDecoder("latin1");
 
 const decoder = new TextDecoder();
 
-const escaped = (text: string): string =>
-  text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-
 const htmlOf = ({ text, format }: Document): string => {
   if (format === "html") {
     return text;
   }
-  return text
-    .split("\n")
-    .map((line) => `<p>${escaped(line)}</p>`)
-    .join("\n");
+  return pipe(
+    text,
+    Str.split("\n"),
+    Arr.map((line) => `<p>${escapeText(line)}</p>`),
+    Arr.join("\n"),
+  );
 };
 
 const messagesOf = (text: string): readonly string[] =>
-  text
-    .split(SEPARATORS)
-    .filter((message) => message.trim() !== "")
-    .map((message) => message.replaceAll(/^>(?=>*From )/gmu, ""));
+  pipe(
+    text,
+    Str.split(SEPARATORS),
+    Arr.filter((message) => Str.trim(message) !== ""),
+    Arr.map((message) => Str.replaceAll(/^>(?=>*From )/gmu, "")(message)),
+  );
 
 const looksLikeMbox = (bytes: Uint8Array): boolean => {
   const head = latin1.decode(bytes);
-  return head.startsWith(FROM_LINE) && looksLikeEmail(encoder.encode(head.replace(SEPARATOR, "")));
+  return (
+    Str.startsWith(FROM_LINE)(head) &&
+    looksLikeEmail(encoder.encode(Str.replace(SEPARATOR, "")(head)))
+  );
 };
 
 const mboxReader: Reader = {
@@ -52,7 +57,11 @@ const mboxReader: Reader = {
       },
     ).pipe(
       Effect.map((documents) => ({
-        text: documents.map((document) => htmlOf(document)).join("\n<hr>\n"),
+        text: pipe(
+          documents,
+          Arr.map((document) => htmlOf(document)),
+          Arr.join("\n<hr>\n"),
+        ),
         format: "html",
       })),
     ),

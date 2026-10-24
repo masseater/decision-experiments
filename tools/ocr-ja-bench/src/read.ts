@@ -1,6 +1,17 @@
 import { NodeServices } from "@effect/platform-node";
 import { ModelApi, readFragments } from "@r_masseater/ocr-decide";
-import { Context, Duration, Effect, FileSystem, Layer, Match, Schema, Stream } from "effect";
+import {
+  Context,
+  Duration,
+  Effect,
+  FileSystem,
+  Layer,
+  Match,
+  Schema,
+  Stream,
+  Array as Arr,
+  pipe,
+} from "effect";
 import { ChildProcess, ChildProcessSpawner } from "effect/process";
 
 import type { Engine } from "./engines.ts";
@@ -41,7 +52,11 @@ const textOf = (answer: typeof TextAnswerSchema.Type): string => {
   if ("text" in answer) {
     return answer.text;
   }
-  return answer.map(({ text }) => text).join("\n");
+  return pipe(
+    answer,
+    Arr.map(({ text }) => text),
+    Arr.join("\n"),
+  );
 };
 
 type Record = (reading: Reading) => Effect.Effect<void>;
@@ -73,8 +88,9 @@ const throughProcess = ({
   record: Record;
 }>): Effect.Effect<void> =>
   Effect.gen(function* runProcess() {
-    const requests = pages.map((page) =>
-      encoder.encode(`${JSON.stringify({ id: page.id, image: page.image })}\n`),
+    const requests = pipe(
+      pages,
+      Arr.map((page) => encoder.encode(`${JSON.stringify({ id: page.id, image: page.image })}\n`)),
     );
     const handle = yield* spawn(
       ChildProcess.make(
@@ -121,7 +137,11 @@ const throughTesseract = ({
       onSuccess: ([duration, fragments]): Reading => ({
         id: page.id,
         status: "done",
-        text: fragments.map(({ text }) => text).join("\n"),
+        text: pipe(
+          fragments,
+          Arr.map(({ text }) => text),
+          Arr.join("\n"),
+        ),
         seconds: Duration.toSeconds(duration),
         costUsd: NO_COST,
       }),

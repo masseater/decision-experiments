@@ -1,11 +1,14 @@
-import { Effect } from "effect";
+import { Effect, String as Str, Array as Arr, pipe } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import { INJECTION, cleanedOf } from "./__tests__/fake-judge.ts";
 import { sentencesOf } from "./segment.ts";
 
 const textsOf = (text: string): readonly string[] =>
-  sentencesOf({ text }).map(({ start, end }) => text.slice(start, end));
+  pipe(
+    sentencesOf({ text }),
+    Arr.map(({ start, end }) => Str.slice(start, end)(text)),
+  );
 
 test("reads only the cue text and notes of WebVTT", () => {
   expect(
@@ -21,7 +24,7 @@ test("finds and removes an injection in an SRT cue", () =>
       const text = `1\n00:00:01,000 --> 00:00:03,000\n今日の議題です。\n\n2\n00:00:04,000 --> 00:00:06,000\n${INJECTION}\n\n3\n00:00:07,000 --> 00:00:09,000\n以上です。\n`;
       expect(yield* cleanedOf({ text })).toStrictEqual({
         found: [INJECTION],
-        cleaned: text.replace(INJECTION, ""),
+        cleaned: Str.replace(INJECTION, "")(text),
       });
     }),
   ));

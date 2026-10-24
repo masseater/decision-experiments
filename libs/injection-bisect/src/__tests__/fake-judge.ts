@@ -8,7 +8,7 @@ import type {
   Verdict,
   Verdicts,
 } from "@r_masseater/injection-bisect";
-import { Effect } from "effect";
+import { Effect, Array as Arr, String as Str, pipe } from "effect";
 
 const INJECTION_MARK = "無視して";
 
@@ -25,7 +25,10 @@ const MODEL = "test/model";
 const ENGLISH_MARK = "ignore previous instructions";
 
 const probabilityOf = (text: string): number => {
-  if (text.includes(INJECTION_MARK) || text.toLowerCase().includes(ENGLISH_MARK)) {
+  if (
+    Str.includes(INJECTION_MARK)(text) ||
+    pipe(text, Str.toLowerCase, Str.includes(ENGLISH_MARK))
+  ) {
     return INJECTED;
   }
   return CLEAN;
@@ -41,7 +44,10 @@ const fakeJudge = {
     }),
   verdictsOf: ({ parts }: Readonly<{ parts: readonly string[] }>): Effect.Effect<Verdicts> =>
     Effect.succeed({
-      probabilities: parts.map((part) => probabilityOf(part)),
+      probabilities: pipe(
+        parts,
+        Arr.map((part) => probabilityOf(part)),
+      ),
       cost: NO_COST,
       model: MODEL,
       inputTokens: NO_COST,
@@ -63,7 +69,10 @@ const cleanedOf = ({
         return { found: [], cleaned: text };
       }
       return {
-        found: detection.regions.map(({ start, end }) => text.slice(start, end)),
+        found: pipe(
+          detection.regions,
+          Arr.map(({ start, end }) => Str.slice(start, end)(text)),
+        ),
         cleaned: removeRegions({ text, regions: detection.regions }),
       };
     }),

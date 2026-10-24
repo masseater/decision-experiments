@@ -1,5 +1,5 @@
 import { Button } from "@decision-experiments/web-ui";
-import { Option } from "effect";
+import { Array as Arr, Option } from "effect";
 import { useCallback } from "react";
 import type { ReactNode } from "react";
 
@@ -23,7 +23,7 @@ const RunPanel = (): ReactNode => {
   const apiKey = useApiKey();
   const wayKey = useWay();
   const { state, start } = useExtract();
-  const way = Option.fromNullishOr(WAYS.find(({ key }) => key === wayKey));
+  const way = Arr.findFirst(WAYS, ({ key }) => key === wayKey);
   const running = state.status === "running";
   const ready = picture.status === "ready" && apiKey !== "" && Option.isSome(way) && !running;
   const run = useCallback(() => {

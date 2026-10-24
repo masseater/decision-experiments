@@ -1,4 +1,4 @@
-import { Effect } from "effect";
+import { Effect, Array as Arr, String as Str, pipe } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import { compoundOf, utf16Of } from "./__tests__/compound.ts";
@@ -9,7 +9,12 @@ const LITTLE_ENDIAN = true;
 const START = 0;
 
 const concat = (parts: readonly Uint8Array[]): Uint8Array =>
-  Uint8Array.from(parts.flatMap((part) => [...part]));
+  Uint8Array.from(
+    pipe(
+      parts,
+      Arr.flatMap((part) => [...part]),
+    ),
+  );
 
 const u16 = (value: number): Uint8Array => {
   const view = new DataView(new ArrayBuffer(Uint16Array.BYTES_PER_ELEMENT));
@@ -35,7 +40,12 @@ test("reads the sender, subject and body of an Outlook message", () =>
       expect(document.format).toBe("plain");
       expect(document.text).toContain("Subject: 請求書");
       expect(document.text).toContain("From: 佐藤");
-      expect(found.map((text) => text.trim())).toStrictEqual([INJECTION]);
+      expect(
+        pipe(
+          found,
+          Arr.map((text) => Str.trim(text)),
+        ),
+      ).toStrictEqual([INJECTION]);
       expect(cleaned).toContain("請求書を送ります。");
     }),
   ));
@@ -77,7 +87,12 @@ test("reads the text of a Word 97-2003 document without its field codes", () =>
         ),
       });
       expect(document.text).toBe(`議事録です。\n詳しくはリンクを参照。\n${INJECTION}`);
-      expect(found.map((text) => text.trim())).toStrictEqual([INJECTION]);
+      expect(
+        pipe(
+          found,
+          Arr.map((text) => Str.trim(text)),
+        ),
+      ).toStrictEqual([INJECTION]);
     }),
   ));
 
@@ -102,6 +117,11 @@ test("reads the slide text of a PowerPoint 97-2003 file", () =>
         }),
       });
       expect(document.text).toBe(`売上の報告\n\nRevenue grew.\n\n${INJECTION}`);
-      expect(found.map((text) => text.trim())).toStrictEqual([INJECTION]);
+      expect(
+        pipe(
+          found,
+          Arr.map((text) => Str.trim(text)),
+        ),
+      ).toStrictEqual([INJECTION]);
     }),
   ));

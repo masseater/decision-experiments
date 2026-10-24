@@ -1,5 +1,6 @@
 import type { Region } from "@r_masseater/injection-bisect";
 import { cutoffFor } from "@r_masseater/injection-bisect";
+import { Array as Arr, String as Str, pipe } from "effect";
 
 import type { InspectEvent } from "#/pages/inspect/api/inspect-events";
 
@@ -16,7 +17,7 @@ const TIME_WIDTH = 6;
 
 const NEXT = 1;
 
-const stamp = (at: number): string => `+${String(Math.round(at)).padStart(TIME_WIDTH)}ms`;
+const stamp = (at: number): string => `+${Str.padStart(TIME_WIDTH)(String(Math.round(at)))}ms`;
 
 const rangeOf = ({ start, end }: Readonly<{ start: number; end: number }>): string =>
   `[${start}, ${end})`;
@@ -36,7 +37,11 @@ const resultOf = (event: Extract<InspectEvent, { type: "done" }>): string => {
   if (event.detection.status === "clean") {
     return `${COPY.clean}  ${formatPercent(event.detection.probability)}`;
   }
-  const regions = event.detection.regions.map((region: Region) => rangeOf(region)).join(" ");
+  const regions = pipe(
+    event.detection.regions,
+    Arr.map((region: Region) => rangeOf(region)),
+    Arr.join(" "),
+  );
   return `${COPY.injected}  ${COPY.regions} ${regions}`;
 };
 
@@ -63,7 +68,10 @@ const lineOf = (event: InspectEvent): LogLine => {
 };
 
 const logOf = (events: readonly InspectEvent[]): readonly LogLine[] =>
-  events.map((event) => lineOf(event));
+  pipe(
+    events,
+    Arr.map((event) => lineOf(event)),
+  );
 
 export type { LogLine };
 export { logOf };

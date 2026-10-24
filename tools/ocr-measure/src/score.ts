@@ -1,5 +1,5 @@
 import type { FieldValue, INVOICE_FIELDS } from "@r_masseater/ocr-decide";
-import { Array as Arr, Equivalence, Option } from "effect";
+import { Array as Arr, Equivalence, Option, String as Str, pipe } from "effect";
 
 type FieldId = (typeof INVOICE_FIELDS)[number]["id"];
 
@@ -9,13 +9,14 @@ const DATE_PARTS = 3;
 
 const YEAR_PART = 1;
 
-const compact = (text: string): string => text.normalize("NFKC").replaceAll(/\s/gu, "");
+const compact = (text: string): string =>
+  pipe(text, Str.normalize("NFKC"), Str.replaceAll(/\s/gu, ""));
 
 const numbersOf = (text: string): readonly number[] =>
-  Array.from(text.normalize("NFKC").matchAll(/\d+/gu), ([run]) => Number(run));
+  Array.from(pipe(text, Str.normalize("NFKC"), Str.matchAll(/\d+/gu)), ([run]) => Number(run));
 
 const amountsOf = (text: string): readonly number[] =>
-  numbersOf(compact(text).replaceAll(/(?<=\d)[,.](?=\d{3})/gu, ""));
+  numbersOf(Str.replaceAll(/(?<=\d)[,.](?=\d{3})/gu, "")(compact(text)));
 
 const yearsOf = (year: number): readonly number[] => [
   year,
@@ -39,8 +40,9 @@ const containsDate = (answer: string, truth: string): boolean => {
   const numbers = numbersOf(answer);
   return (
     expected.length === DATE_PARTS &&
-    [...numbers.keys()].some((start) =>
-      sameDate(numbers.slice(start, start + DATE_PARTS), expected),
+    pipe(
+      [...numbers.keys()],
+      Arr.some((start) => sameDate(numbers.slice(start, start + DATE_PARTS), expected)),
     )
   );
 };
@@ -55,7 +57,7 @@ const matches = (field: FieldId, answer: string, truth: string): boolean => {
   if (field === "total" || field === "tax") {
     return containsAmount(answer, truth);
   }
-  return compact(answer).includes(compact(truth));
+  return Str.includes(compact(truth))(compact(answer));
 };
 
 const isCorrect = ({

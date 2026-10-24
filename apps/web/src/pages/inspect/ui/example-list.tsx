@@ -1,4 +1,4 @@
-import { Array as Arr, Option } from "effect";
+import { Array as Arr, Option, pipe } from "effect";
 import { useCallback } from "react";
 import type { ChangeEvent, ReactNode } from "react";
 
@@ -38,15 +38,22 @@ const ExampleList = (): ReactNode => {
       <option value={UNPICKED} disabled>
         {COPY.examples}
       </option>
-      {GROUPS.map(({ kind, label }) => (
-        <optgroup key={kind} label={label}>
-          {EXAMPLES.filter((example) => example.kind === kind).map(({ name }) => (
-            <option key={name} value={name}>
-              {name}
-            </option>
-          ))}
-        </optgroup>
-      ))}
+      {pipe(
+        GROUPS,
+        Arr.map(({ kind, label }) => (
+          <optgroup key={kind} label={label}>
+            {pipe(
+              EXAMPLES,
+              Arr.filter((example) => example.kind === kind),
+              Arr.map(({ name }) => (
+                <option key={name} value={name}>
+                  {name}
+                </option>
+              )),
+            )}
+          </optgroup>
+        )),
+      )}
     </select>
   );
 };

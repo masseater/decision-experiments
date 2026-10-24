@@ -1,7 +1,7 @@
 import { NodeRuntime } from "@effect/platform-node";
 import { provideAtEntry, tracingLayer } from "@ocr-decide/tooling";
 import { PRODUCT_NAME, openRouter } from "@r_masseater/ocr-decide";
-import { Effect, Layer, Ref } from "effect";
+import { Effect, Layer, Ref, Array as Arr, pipe } from "effect";
 
 import { ENGINES } from "./engines.ts";
 import type { Engine } from "./engines.ts";
@@ -35,10 +35,22 @@ const measureEngine = Effect.fn("ocr-ja-bench.engine")(function* measureEngine(
   const reader = yield* Reader;
   const previous = yield* results.read(engine);
   const done = new Set(
-    previous.readings.filter(({ status }) => status === "done").map(({ id }) => id),
+    pipe(
+      previous.readings,
+      Arr.filter(({ status }) => status === "done"),
+      Arr.map(({ id }) => id),
+    ),
   );
-  const pending = pages.filter(({ id }) => !done.has(id));
-  const readings = yield* Ref.make(previous.readings.filter(({ id }) => done.has(id)));
+  const pending = pipe(
+    pages,
+    Arr.filter(({ id }) => !done.has(id)),
+  );
+  const readings = yield* Ref.make(
+    pipe(
+      previous.readings,
+      Arr.filter(({ id }) => done.has(id)),
+    ),
+  );
   yield* Effect.logInfo(`${engine.id}: ${pending.length} pages to read`);
   yield* reader.read({
     engine,
@@ -57,7 +69,10 @@ const selected = (names: readonly string[]): readonly Engine[] => {
   if (names.length === NO_ENGINES) {
     return ENGINES;
   }
-  return ENGINES.filter(({ id }) => names.includes(id));
+  return pipe(
+    ENGINES,
+    Arr.filter(({ id }) => names.includes(id)),
+  );
 };
 
 const measure = Effect.gen(function* measure() {
