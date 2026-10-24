@@ -1,4 +1,4 @@
-import { Array as Arr, Effect, Option } from "effect";
+import { Array as Arr, Effect, Option, String as Str, pipe } from "effect";
 import { fileTypeFromBuffer } from "file-type";
 
 import { ARCHIVE_FORMATS, archiveReadersOf } from "./archive.ts";
@@ -23,13 +23,15 @@ interface ReadInput extends Formats {
 
 const decoder = new TextDecoder();
 
-const extensionOf = (name: string): string => {
-  const dot = name.lastIndexOf(".");
-  if (dot === NOT_FOUND) {
-    return "";
-  }
-  return name.slice(dot).toLowerCase();
-};
+const extensionOf = (name: string): string =>
+  pipe(
+    name,
+    Str.lastIndexOf("."),
+    Option.match({
+      onNone: () => "",
+      onSome: (dot) => pipe(name, Str.slice(dot), Str.toLowerCase),
+    }),
+  );
 
 const parsersOf = ({ parsers = DEFAULT_PARSERS }: Formats): readonly Parser[] => [
   ...parsers,
@@ -50,8 +52,14 @@ const archivesOf = <Archive>(
 
 const formatsOf = (formats: Formats = {}): readonly string[] => [
   AUTO,
-  ...parsersOf(formats).map(({ format }) => format),
-  ...readersOf(formats).map(({ format }) => format),
+  ...pipe(
+    parsersOf(formats),
+    Arr.map(({ format }) => format),
+  ),
+  ...pipe(
+    readersOf(formats),
+    Arr.map(({ format }) => format),
+  ),
   ...archivesOf(formats, ARCHIVE_FORMATS),
 ];
 
@@ -64,7 +72,7 @@ const named = (input: ReadInput, format: string): Effect.Effect<Document, ReadEr
         Option.match(Arr.findFirst(parsersOf(input), isNamed(format)), {
           onSome: (parser) =>
             Effect.succeed({ text: decoder.decode(input.bytes), format: parser.format }),
-          onNone: () => Effect.fail(new ReadError({ reason: `unknown format: ${format}` })),
+          onNone: () => Effect.fail(ReadError.make({ reason: `unknown format: ${format}` })),
         }),
     },
   );
@@ -72,7 +80,10 @@ const named = (input: ReadInput, format: string): Effect.Effect<Document, ReadEr
 const withExtension =
   (names: readonly string[]) =>
   ({ extensions }: { readonly extensions: readonly string[] }): boolean =>
-    names.some((name) => extensions.includes(name));
+    pipe(
+      names,
+      Arr.some((name) => extensions.includes(name)),
+    );
 
 const sniffed = (bytes: Uint8Array): Effect.Effect<readonly string[]> =>
   Effect.promise(() => fileTypeFromBuffer(bytes)).pipe(
@@ -89,7 +100,8 @@ const accepting =
 const detected = (input: ReadInput): Effect.Effect<Document, ReadError> =>
   Effect.gen(function* detect() {
     const name = input.name ?? "";
-    const fileName = name.slice(name.lastIndexOf("/") + "/".length).toLowerCase();
+    const slash = Option.getOrElse(Str.lastIndexOf("/")(name), () => NOT_FOUND);
+    const fileName = pipe(name, Str.slice(slash + "/".length), Str.toLowerCase);
     const candidates = [...readersOf(input), ...parsersOf(input)];
     const byName = Arr.findFirst(candidates, withExtension([extensionOf(name), fileName]));
     const bySignature = Arr.findFirst(candidates, withExtension(yield* sniffed(input.bytes)));

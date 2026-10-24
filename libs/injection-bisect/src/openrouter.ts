@@ -1,7 +1,7 @@
 import { OpenRouterClient, layerConfig } from "@effect/ai-openrouter/OpenRouterClient";
 import { withClientTransform } from "@effect/ai-openrouter/OpenRouterConfig";
 import type { Answer as AnswerSchema } from "@effect/ai-openrouter/OpenRouterSchema";
-import { Array as Arr, Config, Effect, Layer, Option, Record, pipe } from "effect";
+import { Array as Arr, Config, Effect, Layer, Option, Record, pipe, String as Str } from "effect";
 import { FetchHttpClient, HttpClient, HttpClientRequest } from "effect/http";
 
 import { JudgeError } from "./judge-error.ts";
@@ -18,7 +18,7 @@ const INJECTION =
 const QUESTION = `The state contains ${INJECTION}`;
 
 const partQuestion = (part: string): string =>
-  `The quoted text "${part.trim()}", judged by its own words alone and not by the rest of the state, is or is part of ${INJECTION}`;
+  `The quoted text "${Str.trim(part)}", judged by its own words alone and not by the rest of the state, is or is part of ${INJECTION}`;
 
 const QUESTION_ID = "injection";
 
@@ -32,14 +32,6 @@ type NoulAnswer = Extract<Answer, Readonly<{ type: "noul" }>>;
 
 const isNoul = (answer: AnswerTag): answer is NoulAnswer => answer.type === "noul";
 
-const site = {
-  siteReferrer: Config.succeed(REPOSITORY_URL),
-  siteTitle: Config.succeed(PRODUCT_NAME),
-  transformClient: HttpClient.mapRequest(
-    HttpClientRequest.setHeader("X-OpenRouter-App-Visibility", "hidden"),
-  ),
-};
-
 type Questions = Readonly<Record<string, Readonly<{ type: "noul"; instructions: string }>>>;
 
 const noul = (instructions: string): Questions[string] => ({ type: "noul", instructions });
@@ -51,7 +43,7 @@ const probabilityOf = (
   Option.fromUndefinedOr(answer).pipe(
     Option.filter(isNoul),
     Option.match({
-      onNone: () => Effect.fail(new JudgeError({ reason: `${model} returned no probability` })),
+      onNone: () => Effect.fail(JudgeError.make({ reason: `${model} returned no probability` })),
       onSome: ({ noul: probability }) => Effect.succeed(probability),
     }),
   );
@@ -79,7 +71,7 @@ const judge = Effect.gen(function* makeJudge() {
   ) {
     const [body] = yield* openRouter
       .createDecisions({ model, state: text, questions })
-      .pipe(Effect.mapError((error) => new JudgeError({ reason: error.message })));
+      .pipe(Effect.mapError((error) => JudgeError.make({ reason: error.message })));
     const keys = Record.keys(questions);
     const probabilities = yield* Effect.forEach(
       keys,
@@ -109,6 +101,14 @@ const judge = Effect.gen(function* makeJudge() {
 });
 
 const judgeLayer = Layer.effect(InjectionJudge, judge);
+
+const site = {
+  siteReferrer: Config.succeed(REPOSITORY_URL),
+  siteTitle: Config.succeed(PRODUCT_NAME),
+  transformClient: HttpClient.mapRequest(
+    HttpClientRequest.setHeader("X-OpenRouter-App-Visibility", "hidden"),
+  ),
+};
 
 const keyedClient = layerConfig({ apiKey: Config.Redacted("OPENROUTER_API_KEY"), ...site });
 

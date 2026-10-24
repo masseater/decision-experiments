@@ -1,5 +1,5 @@
 import { parse } from "@plussub/srt-vtt-parser";
-import { Result } from "effect";
+import { Result, String as Str, Array as Arr, pipe } from "effect";
 
 import { assParser } from "./ass.ts";
 import { proseUnitsOf } from "./located.ts";
@@ -15,15 +15,19 @@ const NOTE = /^NOTE\b.*(?:\r\n?|\n)?(?:.+(?:\r\n?|\n)?)*/gmu;
 
 const cuesOf = (text: string): readonly string[] =>
   Result.match(
-    Result.try(() => parse(text.replaceAll(LINE_BREAK, "\n"))),
+    Result.try(() => parse(Str.replaceAll(LINE_BREAK, "\n")(text))),
     {
       onFailure: () => [],
-      onSuccess: ({ entries }) => entries.flatMap(({ text: cue }) => cue.split("\n")),
+      onSuccess: ({ entries }) =>
+        pipe(
+          entries,
+          Arr.flatMap(({ text: cue }) => Str.split("\n")(cue)),
+        ),
     },
   );
 
 const notesOf = (text: string): readonly string[] =>
-  Array.from(text.matchAll(NOTE), ([note]) => note.trimEnd());
+  Array.from(Str.matchAll(NOTE)(text), ([note]) => Str.trimEnd(note));
 
 const subtitleUnitsOf = (text: string): readonly Unit[] =>
   proseUnitsOf({ text })([...notesOf(text), ...cuesOf(text)]);

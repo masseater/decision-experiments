@@ -1,3 +1,4 @@
+import { Array as Arr, pipe } from "effect";
 import type { ReactNode } from "react";
 
 import { COPY } from "#/pages/inspect/model/copy";
@@ -14,12 +15,15 @@ const ITEMS: readonly (readonly [Tone, string])[] = [
 
 const Legend = (): ReactNode => (
   <ul className="text-muted-foreground flex flex-wrap gap-4 text-xs">
-    {ITEMS.map(([tone, label]) => (
-      <li key={tone} className="flex items-center gap-1.5">
-        <span className={`inline-block h-3 w-5 ${TONE_CLASS[tone]}`} />
-        {label}
-      </li>
-    ))}
+    {pipe(
+      ITEMS,
+      Arr.map(([tone, label]) => (
+        <li key={tone} className="flex items-center gap-1.5">
+          <span className={`inline-block h-3 w-5 ${TONE_CLASS[tone]}`} />
+          {label}
+        </li>
+      )),
+    )}
     <li className="flex items-center gap-1.5">
       <span className={ANSWER_CLASS}>{COPY.sample}</span>
       {COPY.answer}

@@ -1,9 +1,7 @@
-import { Option } from "effect";
+import { Option, Array as Arr, String as Str, pipe } from "effect";
 
 import type { Span, Unit } from "./parser.ts";
 import { looksLikeProse } from "./prose.ts";
-
-const NOT_FOUND = -1;
 
 const START = 0;
 
@@ -31,18 +29,24 @@ const foldsIn = (folded: boolean): RegExp => {
 };
 
 const viewOf = ({ text, folded = false }: Located): View => {
-  const folds = text.matchAll(foldsIn(folded));
+  const folds = Str.matchAll(foldsIn(folded))(text);
   const removed = new Set(
     Array.from(folds, (match) => {
       const [found] = match;
-      return Array.from({ length: found.length }, (_unit, at) => match.index + at);
+      const index = match.index ?? START;
+      return Array.from({ length: found.length }, (_unit, at) => index + at);
     }).flat(),
   );
-  const offsets = Array.from({ length: text.length }, (_unit, at) => at).filter(
-    (at) => !removed.has(at),
+  const offsets = pipe(
+    Array.from({ length: text.length }, (_unit, at) => at),
+    Arr.filter((at) => !removed.has(at)),
   );
   return {
-    text: offsets.map((at) => text.charAt(at)).join(""),
+    text: pipe(
+      offsets,
+      Arr.map((at) => text[at] ?? ""),
+      Arr.join(""),
+    ),
     offsets: [...offsets, text.length],
   };
 };
@@ -50,10 +54,16 @@ const viewOf = ({ text, folded = false }: Located): View => {
 const locatorOf = (view: View): ((value: string) => Option.Option<Span>) => {
   const cursors = new Map<string, number>();
   return (value) => {
-    const start = view.text.indexOf(value, cursors.get(value) ?? START);
-    if (value === "" || start === NOT_FOUND) {
+    const cursor = cursors.get(value) ?? START;
+    const found = pipe(
+      Str.slice(cursor)(view.text),
+      Str.indexOf(value),
+      Option.map((at) => at + cursor),
+    );
+    if (value === "" || Option.isNone(found)) {
       return Option.none();
     }
+    const start = found.value;
     const end = start + value.length;
     cursors.set(value, end);
     return Option.all([
@@ -67,10 +77,14 @@ const proseUnitsOf =
   (located: Located) =>
   (values: readonly string[]): readonly Unit[] => {
     const locate = locatorOf(viewOf(located));
-    return values
-      .flatMap((value) => Option.toArray(locate(value)))
-      .filter(({ start, end }) => looksLikeProse(located.text.slice(start, end).trim()))
-      .map(({ start, end }) => ({ kind: "prose", start, end }));
+    return pipe(
+      values,
+      Arr.flatMap((value) => Option.toArray(locate(value))),
+      Arr.filter(({ start, end }) =>
+        looksLikeProse(pipe(located.text, Str.slice(start, end), Str.trim)),
+      ),
+      Arr.map(({ start, end }) => ({ kind: "prose", start, end })),
+    );
   };
 
 export { proseUnitsOf };

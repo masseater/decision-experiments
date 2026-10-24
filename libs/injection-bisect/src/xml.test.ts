@@ -1,11 +1,14 @@
-import { Effect } from "effect";
+import { Effect, String as Str, Array as Arr, pipe } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import { INJECTION, cleanedOf } from "./__tests__/fake-judge.ts";
 import { sentencesOf } from "./segment.ts";
 
 const textsOf = (text: string): readonly string[] =>
-  sentencesOf({ text }).map(({ start, end }) => text.slice(start, end));
+  pipe(
+    sentencesOf({ text }),
+    Arr.map(({ start, end }) => Str.slice(start, end)(text)),
+  );
 
 test("reads text, comments, attribute values and CDATA of a feed", () => {
   expect(
@@ -21,7 +24,7 @@ test("finds and removes an injection in an Atom entry", () =>
       const text = `<feed xmlns="http://www.w3.org/2005/Atom"><entry><title>新機能のお知らせ</title><summary>${INJECTION}</summary></entry></feed>`;
       expect(yield* cleanedOf({ text })).toStrictEqual({
         found: [INJECTION],
-        cleaned: text.replace(INJECTION, ""),
+        cleaned: Str.replace(INJECTION, "")(text),
       });
     }),
   ));

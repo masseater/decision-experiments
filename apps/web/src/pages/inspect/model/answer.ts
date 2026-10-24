@@ -1,5 +1,5 @@
 import type { Detection, Region } from "@r_masseater/injection-bisect";
-import { Array as Arr, Option } from "effect";
+import { Array as Arr, Option, String as Str, pipe } from "effect";
 
 import { EXAMPLES } from "./examples";
 import type { Example } from "./examples";
@@ -20,11 +20,17 @@ type Grade =
 
 const PERCENT = 100;
 
+const NOT_FOUND = -1;
+
 const exampleOf = (text: string): Option.Option<Example> =>
   Arr.findFirst(EXAMPLES, (example) => example.text === text);
 
 const spanIn = (text: string, answer: string): Span => {
-  const start = text.indexOf(answer);
+  const start = pipe(
+    text,
+    Str.indexOf(answer),
+    Option.getOrElse(() => NOT_FOUND),
+  );
   return { start, end: start + answer.length };
 };
 
@@ -34,14 +40,19 @@ const answerSpansOf = (text: string): Option.Option<readonly Span[]> =>
       if (example.kind === "clean") {
         return Option.none();
       }
-      return Option.some(example.answers.map((answer) => spanIn(example.text, answer)));
+      return Option.some(
+        pipe(
+          example.answers,
+          Arr.map((answer) => spanIn(example.text, answer)),
+        ),
+      );
     }),
   );
 
 const answerOf = (text: string): readonly Span[] => Option.getOrElse(answerSpansOf(text), () => []);
 
 const visibleIn = (text: string, { start, end }: Span): number =>
-  text.slice(start, end).replaceAll(/\s/gu, "").length;
+  pipe(text, Str.slice(start, end), Str.replaceAll(/\s/gu, "")).length;
 
 const overlapOf = (left: Span, right: Span): Span => ({
   start: Math.max(left.start, right.start),

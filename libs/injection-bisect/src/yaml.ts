@@ -1,10 +1,8 @@
-import { Array as Arr, Match, Option } from "effect";
+import { Array as Arr, Match, Option, String as Str, Record as Rec, pipe, Order } from "effect";
 import { Parser as YamlParser, isCollection, parseDocument } from "yaml";
 
 import type { Parser, Span, Unit } from "./parser.ts";
 import { looksLikeProse } from "./prose.ts";
-
-const NOT_FOUND = -1;
 
 const ENTRIES = 2;
 
@@ -17,10 +15,12 @@ const looksLikeYaml = (text: string): boolean => {
     Arr.isReadonlyArrayEmpty(document.errors) &&
     isCollection(contents) &&
     contents.items.length >= ENTRIES &&
-    text
-      .split("\n")
-      .filter((line) => line.trim() !== "")
-      .every((line) => STRUCTURE.test(line))
+    pipe(
+      text,
+      Str.split("\n"),
+      Arr.filter((line) => Str.trim(line) !== ""),
+      Arr.every((line) => STRUCTURE.test(line)),
+    )
   );
 };
 
@@ -48,24 +48,29 @@ const spanIn = (text: string, token: SourceToken): Option.Option<Span> => {
     Match.whenOr("single-quoted-scalar", "double-quoted-scalar", () =>
       Option.some({ start: token.offset + QUOTE, end: end - QUOTE }),
     ),
-    Match.when("block-scalar", () => {
-      const start = text.indexOf(token.source, token.offset);
-      if (start === NOT_FOUND) {
-        return Option.none();
-      }
-      return Option.some({ start, end: start + token.source.length });
-    }),
+    Match.when("block-scalar", () =>
+      pipe(
+        Str.slice(token.offset)(text),
+        Str.indexOf(token.source),
+        Option.map((at) => {
+          const start = at + token.offset;
+          return { start, end: start + token.source.length };
+        }),
+      ),
+    ),
     Match.orElse(() => Option.none()),
   );
 };
 
 const childrenOf = (value: unknown): readonly unknown[] =>
   Match.value(value).pipe(
-    Match.when(Array.isArray, (items: readonly unknown[]) => items),
+    Match.when(Arr.isArray, (items: readonly unknown[]) => items),
     Match.when(Match.record, (record) =>
-      Object.entries(record)
-        .filter(([key]) => key !== "source")
-        .map(([, child]) => child),
+      pipe(
+        Rec.toEntries(record),
+        Arr.filter(([key]) => key !== "source"),
+        Arr.map(([, child]) => child),
+      ),
     ),
     Match.orElse(() => []),
   );
@@ -79,15 +84,25 @@ const ownSpan = (text: string, value: unknown): readonly Span[] => {
 
 const spansIn = (text: string, value: unknown): readonly Span[] => [
   ...ownSpan(text, value),
-  ...childrenOf(value).flatMap((child) => spansIn(text, child)),
+  ...pipe(
+    childrenOf(value),
+    Arr.flatMap((child) => spansIn(text, child)),
+  ),
 ];
 
-const yamlUnitsOf = (text: string): readonly Unit[] =>
-  [...new YamlParser().parse(text)]
-    .flatMap((token) => spansIn(text, token))
-    .filter(({ start, end }) => looksLikeProse(text.slice(start, end)))
-    .toSorted((left, right) => left.start - right.start)
-    .map(({ start, end }): Unit => ({ kind: "prose", start, end }));
+const byStart = Order.mapInput(Order.Number, (span: Span) => span.start);
+
+const yamlUnitsOf = (text: string): readonly Unit[] => {
+  const spans = pipe(
+    [...new YamlParser().parse(text)],
+    Arr.flatMap((token) => spansIn(text, token)),
+    Arr.filter(({ start, end }) => looksLikeProse(Str.slice(start, end)(text))),
+  );
+  return pipe(
+    Arr.sort(spans, byStart),
+    Arr.map(({ start, end }): Unit => ({ kind: "prose", start, end })),
+  );
+};
 
 const yamlParser: Parser = {
   format: "yaml",

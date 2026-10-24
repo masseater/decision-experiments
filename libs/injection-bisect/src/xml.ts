@@ -1,8 +1,10 @@
-import { Option } from "effect";
+import { Option, String as Str, Array as Arr, pipe } from "effect";
 import { Parser as XmlParser } from "htmlparser2";
 
 import type { Parser, Span, Unit } from "./parser.ts";
 import { looksLikeProse } from "./prose.ts";
+
+const NO_OFFSET = 0;
 
 const DECLARATION = /^\s*(?:<\?xml\b|<(?:rss|feed|rdf:RDF)\b)/u;
 
@@ -21,20 +23,23 @@ const INCLUSIVE = 1;
 const looksLikeXml = (text: string): boolean => DECLARATION.test(text);
 
 const attributeUnits = (text: string, { start, end }: Span): readonly Unit[] =>
-  [...text.slice(start, end).matchAll(ATTRIBUTE)].flatMap((match) => {
-    const [whole] = match;
-    const value = Option.getOrElse(
-      Option.fromNullishOr(match.groups).pipe(
-        Option.flatMapNullishOr(({ double, single }) => double ?? single),
-      ),
-      () => "",
-    );
-    if (!looksLikeProse(value)) {
-      return [];
-    }
-    const from = start + match.index + whole.length - value.length - "'".length;
-    return [{ kind: "prose", start: from, end: from + value.length } satisfies Unit];
-  });
+  pipe(
+    [...pipe(text, Str.slice(start, end), Str.matchAll(ATTRIBUTE))],
+    Arr.flatMap((match) => {
+      const [whole] = match;
+      const value = Option.getOrElse(
+        Option.fromNullishOr(match.groups).pipe(
+          Option.flatMapNullishOr(({ double, single }) => double ?? single),
+        ),
+        () => "",
+      );
+      if (!looksLikeProse(value)) {
+        return [];
+      }
+      const from = start + (match.index ?? NO_OFFSET) + whole.length - value.length - "'".length;
+      return [{ kind: "prose", start: from, end: from + value.length } satisfies Unit];
+    }),
+  );
 
 const xmlUnitsOf = (text: string): readonly Unit[] => {
   const units: Unit[] = [];
@@ -64,7 +69,7 @@ const xmlUnitsOf = (text: string): readonly Unit[] => {
             start: parser.startIndex + CDATA_OPEN,
             end: end - CDATA_CLOSE,
           });
-        } else if (looksLikeProse(data) && data.trim() !== "") {
+        } else if (looksLikeProse(data) && Str.trim(data) !== "") {
           units.push({ kind: "prose", start: end - data.length, end });
         }
       },

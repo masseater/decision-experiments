@@ -1,7 +1,11 @@
-import { Data } from "effect";
+import { Schema } from "effect";
 
-class ReadError extends Data.TaggedError("ReadError")<{ readonly reason: string }> {}
+const taggedError = Schema.TaggedError;
 
-const readErrorOf = (cause: unknown): ReadError => new ReadError({ reason: String(cause) });
+class ReadError extends taggedError<ReadError, { readonly brand: unique symbol }>()("ReadError", {
+  reason: Schema.String,
+}) {}
+
+const readErrorOf = (cause: unknown): ReadError => ReadError.make({ reason: String(cause) });
 
 export { ReadError, readErrorOf };

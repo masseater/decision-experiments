@@ -1,6 +1,7 @@
 import MsgReaderModule from "@kenjiuno/msgreader";
 import type { FieldsData } from "@kenjiuno/msgreader";
-import { Effect, Option, Predicate } from "effect";
+import { Effect, Option, Predicate, String as Str, Array as Arr, pipe } from "effect";
+import { escapeText } from "entities/escape";
 
 import { hasStream } from "./cfb.ts";
 import type { Document, Reader } from "./parser.ts";
@@ -17,37 +18,60 @@ const MsgReader = Option.liftPredicate(MsgReaderModule, Predicate.hasProperty("d
   Option.getOrElse(() => MsgReaderModule),
 );
 
-const escaped = (text: string): string =>
-  text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-
 const presentIn = (parts: readonly (string | null | undefined)[]): string =>
-  parts.flatMap((part) => Option.toArray(Option.fromNullishOr(part))).join(" ");
+  pipe(
+    parts,
+    Arr.flatMap((part) => Option.toArray(Option.fromNullishOr(part))),
+    Arr.join(" "),
+  );
 
 const addressOf = ({ name, email, smtpAddress }: FieldsData): string =>
   presentIn([name, Option.getOrElse(Option.fromNullishOr(smtpAddress), () => email)]);
 
 const headersOf = (fields: FieldsData): readonly string[] => [
   `From: ${presentIn([fields.senderName, fields.senderEmail])}`,
-  `To: ${Option.getOrElse(Option.fromNullishOr(fields.recipients), () => [])
-    .map((recipient) => addressOf(recipient))
-    .join(", ")}`,
+  `To: ${pipe(
+    Option.getOrElse(Option.fromNullishOr(fields.recipients), () => []),
+    Arr.map((recipient) => addressOf(recipient)),
+    Arr.join(", "),
+  )}`,
   `Subject: ${Option.getOrElse(Option.fromNullishOr(fields.subject), () => "")}`,
-  ...Option.getOrElse(Option.fromNullishOr(fields.attachments), () => []).flatMap(({ fileName }) =>
-    Option.toArray(Option.map(Option.fromNullishOr(fileName), (name) => `Attachment: ${name}`)),
+  ...pipe(
+    Option.getOrElse(Option.fromNullishOr(fields.attachments), () => []),
+    Arr.flatMap(({ fileName }) =>
+      Option.toArray(Option.map(Option.fromNullishOr(fileName), (name) => `Attachment: ${name}`)),
+    ),
   ),
 ];
 
 const documentOf = (fields: FieldsData): Document => {
-  const headers = headersOf(fields).filter((line) => !line.endsWith(": "));
+  const headers = pipe(
+    headersOf(fields),
+    Arr.filter((line) => !Str.endsWith(": ")(line)),
+  );
   return Option.match(Option.fromNullishOr(fields.bodyHtml), {
     onSome: (html) => ({
-      text: [...headers.map((line) => `<p>${escaped(line)}</p>`), html].join("\n"),
+      text: pipe(
+        [
+          ...pipe(
+            headers,
+            Arr.map((line) => `<p>${escapeText(line)}</p>`),
+          ),
+          html,
+        ],
+        Arr.join("\n"),
+      ),
       format: "html",
     }),
     onNone: () => ({
-      text: [headers.join("\n"), Option.getOrElse(Option.fromNullishOr(fields.body), () => "")]
-        .join("\n\n")
-        .trim(),
+      text: pipe(
+        [
+          pipe(headers, Arr.join("\n")),
+          Option.getOrElse(Option.fromNullishOr(fields.body), () => ""),
+        ],
+        Arr.join("\n\n"),
+        Str.trim,
+      ),
       format: "plain",
     }),
   });
@@ -56,7 +80,7 @@ const documentOf = (fields: FieldsData): Document => {
 const outlookReader: Reader = {
   format: "msg",
   extensions: [".msg"],
-  accepts: hasStream((name) => name.startsWith(PROPERTY_STREAM)),
+  accepts: hasStream((name) => Str.startsWith(PROPERTY_STREAM)(name)),
   read: (bytes) =>
     Effect.try({
       try: () =>
@@ -66,7 +90,7 @@ const outlookReader: Reader = {
       Effect.flatMap((fields) =>
         Option.match(Option.fromNullishOr(fields.error), {
           onNone: () => Effect.succeed(documentOf(fields)),
-          onSome: (reason) => Effect.fail(new ReadError({ reason })),
+          onSome: (reason) => Effect.fail(ReadError.make({ reason })),
         }),
       ),
     ),

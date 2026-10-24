@@ -11,7 +11,18 @@ import {
   removeRegions,
 } from "@r_masseater/injection-bisect";
 import type { Detection } from "@r_masseater/injection-bisect";
-import { Config, Console, Effect, FileSystem, Layer, Option, Schema } from "effect";
+import {
+  Config,
+  Console,
+  Effect,
+  FileSystem,
+  Layer,
+  Option,
+  Schema,
+  Array as Arr,
+  String as Str,
+  pipe,
+} from "effect";
 import { Argument, Command, Flag } from "effect/cli";
 import { FetchHttpClient } from "effect/http";
 import { OtlpSerialization, OtlpTracer } from "effect/observability";
@@ -32,16 +43,22 @@ const encodeJson = Schema.encodeUnknownEffect(Schema.fromJsonString(Schema.Unkno
 
 const encoder = new TextEncoder();
 
+type Region = Extract<Detection, Readonly<{ regions: unknown }>>["regions"][number];
+
+const withTextOf =
+  (input: string) =>
+  (region: Region): Region & Readonly<{ text: string }> => ({
+    ...region,
+    text: Str.slice(region.start, region.end)(input),
+  });
+
 const reportOf = (detection: Detection, input: string): unknown => {
   if (detection.status === "clean") {
     return detection;
   }
   return {
     ...detection,
-    regions: detection.regions.map((region) => ({
-      ...region,
-      text: input.slice(region.start, region.end),
-    })),
+    regions: pipe(detection.regions, Arr.map(withTextOf(input))),
     cleaned: removeRegions({ text: input, regions: detection.regions }),
   };
 };

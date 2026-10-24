@@ -1,4 +1,4 @@
-import { Effect } from "effect";
+import { Effect, Array as Arr, pipe } from "effect";
 import { OEM, createWorker } from "tesseract.js";
 import type { WorkerOptions } from "tesseract.js";
 
@@ -31,7 +31,15 @@ const recognizedText =
           (image) =>
             Effect.tryPromise({ try: () => tesseract.recognize(image), catch: readErrorOf }),
           ONE_AT_A_TIME,
-        ).pipe(Effect.map((results) => results.map(({ data }) => data.text).join(PAGE_BREAK))),
+        ).pipe(
+          Effect.map((results) =>
+            pipe(
+              results,
+              Arr.map(({ data }) => data.text),
+              Arr.join(PAGE_BREAK),
+            ),
+          ),
+        ),
       (tesseract) => Effect.promise(() => tesseract.terminate()),
     ).pipe(Effect.withSpan("injection-bisect.ocr"));
 

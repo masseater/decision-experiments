@@ -35,7 +35,7 @@ const statusOf = (opening: Opening): string => {
 const documentOf = ({ name, load }: Picked): Effect.Effect<Document, ReadError> =>
   Effect.tryPromise({
     try: load,
-    catch: (cause) => new ReadError({ reason: String(cause) }),
+    catch: (cause) => ReadError.make({ reason: String(cause) }),
   }).pipe(
     Effect.flatMap((buffer) =>
       readDocument({ bytes: new Uint8Array(buffer), name, readers: DEFAULT_READERS }),

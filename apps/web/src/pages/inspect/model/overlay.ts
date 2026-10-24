@@ -1,8 +1,10 @@
 import { cutoffFor } from "@r_masseater/injection-bisect";
 import type { Region } from "@r_masseater/injection-bisect";
-import { Array as Arr, Option, Order } from "effect";
+import { Array as Arr, Option, Order, String as Str, pipe } from "effect";
 
+import { answerOf } from "./answer";
 import type { Focus } from "./draft";
+import { traceOf } from "./trace";
 import type { Answer, Phase, Row, Trace } from "./trace";
 
 type Tone = "none" | "pending" | "miss" | "hit" | "injection";
@@ -47,7 +49,10 @@ const regionsOf = (phase: Phase): readonly Region[] => {
 };
 
 const deepestAt = (rows: readonly Row[], at: number): Option.Option<Row> => {
-  const covering = rows.filter((row) => covers(row, at));
+  const covering = pipe(
+    rows,
+    Arr.filter((row) => covers(row, at)),
+  );
   return Arr.last(Arr.sort(covering, byDepth));
 };
 
@@ -59,41 +64,58 @@ const rowTone = (rows: readonly Row[], at: number): Tone =>
 
 const visibleRows = (trace: Trace, focus: Focus): readonly Row[] => {
   if (focus.status === "probe") {
-    return trace.rows.filter((row) => row.id === focus.id);
+    return pipe(
+      trace.rows,
+      Arr.filter((row) => row.id === focus.id),
+    );
   }
   return trace.rows;
 };
 
 const toneAt = (trace: Trace, focus: Focus, at: number): Tone => {
-  if (focus.status === "none" && regionsOf(trace.phase).some((region) => covers(region, at))) {
+  if (
+    focus.status === "none" &&
+    pipe(
+      regionsOf(trace.phase),
+      Arr.some((region) => covers(region, at)),
+    )
+  ) {
     return "injection";
   }
   return rowTone(visibleRows(trace, focus), at);
 };
 
+const NOT_RUN = traceOf([]);
+
 const piecesOf = ({
   text,
-  trace,
+  run,
   focus,
-  answer,
 }: Readonly<{
   text: string;
-  trace: Trace;
+  run: Option.Option<Trace>;
   focus: Focus;
-  answer: readonly Span[];
 }>): readonly Piece[] => {
+  const trace = Option.getOrElse(run, () => NOT_RUN);
+  const answer = answerOf(text);
   const cuts = new Set([FIRST, text.length]);
   for (const span of [...trace.rows, ...regionsOf(trace.phase), ...answer]) {
     cuts.add(span.start);
     cuts.add(span.end);
   }
-  const sorted = [...cuts].toSorted((left, right) => left - right);
-  return sorted.slice(FIRST, LAST).map((start, index) => ({
-    start,
-    text: text.slice(start, sorted[index + NEXT]),
-    tone: toneAt(trace, focus, start),
-    answer: answer.some((span) => covers(span, start)),
-  }));
+  const sorted = Arr.sort(cuts, Order.Number);
+  return pipe(
+    sorted.slice(FIRST, LAST),
+    Arr.map((start, index) => ({
+      start,
+      text: Str.slice(start, sorted[index + NEXT])(text),
+      tone: toneAt(trace, focus, start),
+      answer: pipe(
+        answer,
+        Arr.some((span) => covers(span, start)),
+      ),
+    })),
+  );
 };
 
 export type { Piece, Tone };

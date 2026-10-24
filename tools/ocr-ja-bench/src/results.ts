@@ -1,7 +1,7 @@
 import { NodeServices } from "@effect/platform-node";
 import { JaBenchSummarySchema } from "@ocr-decide/measurements/ja-bench-schema";
 import type { JaBenchSummary } from "@ocr-decide/measurements/ja-bench-schema";
-import { Context, Effect, FileSystem, Layer, Schema } from "effect";
+import { Context, Effect, FileSystem, Layer, Schema, Array as Arr, pipe } from "effect";
 
 import { fileNameOf } from "./engines.ts";
 import type { Engine } from "./engines.ts";
@@ -47,7 +47,7 @@ class Results extends Context.Service<
 >()("@ocr-decide/ja-bench/results") {}
 
 const asResultsError = (error: Readonly<{ message: string }>): ResultsError =>
-  new ResultsError({ reason: error.message });
+  ResultsError.make({ reason: error.message });
 
 const pathOf = (relative: string): string => new URL(relative, ROOT).pathname;
 
@@ -59,24 +59,30 @@ const EMPTY: readonly Reading[] = [];
 
 const resultsPath = (engine: string): string => pathOf(`results/${fileNameOf(engine)}`);
 
+const withImage = (page: (typeof JaWildTextPagesSchema.Type)[number]): Page => ({
+  ...page,
+  image: pathOf(`.cache/images/${page.id}.png`),
+});
+
 const makeResults = Effect.gen(function* makeResults() {
   const fs = yield* FileSystem.FileSystem;
   const synthetic = fs.readFileString(pathOf("data/synthetic.json")).pipe(
     Effect.flatMap(Schema.decodeEffect(SyntheticPagesSchema)),
     Effect.map((pages) =>
-      pages.map((page): Page => ({
-        id: page.id,
-        category: page.category,
-        truth: page.lines.join("\n"),
-        image: pathOf(`data/synthetic/${page.id}.png`),
-      })),
+      pipe(
+        pages,
+        Arr.map((page): Page => ({
+          id: page.id,
+          category: page.category,
+          truth: pipe(page.lines, Arr.join("\n")),
+          image: pathOf(`data/synthetic/${page.id}.png`),
+        })),
+      ),
     ),
   );
   const jaWildText = fs.readFileString(pathOf("data/jawildtext.json")).pipe(
     Effect.flatMap(Schema.decodeEffect(JaWildTextPagesSchema)),
-    Effect.map((pages) =>
-      pages.map((page): Page => ({ ...page, image: pathOf(`.cache/images/${page.id}.png`) })),
-    ),
+    Effect.map((pages) => pipe(pages, Arr.map(withImage))),
   );
   return Results.of({
     pages: Effect.all([synthetic, jaWildText]).pipe(

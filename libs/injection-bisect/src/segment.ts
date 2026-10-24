@@ -1,4 +1,4 @@
-import { Array as Arr, Match, Option, Order } from "effect";
+import { Array as Arr, Match, Option, Order, String as Str, pipe } from "effect";
 
 import type { Parser, Span } from "./parser.ts";
 import { DEFAULT_PARSERS } from "./parsers.ts";
@@ -11,14 +11,17 @@ const SENTENCE =
   /(?:[^\n。．！？.!?]|[.!?](?!\s|$)|(?<![>\n])\n(?![^\S\n]*(?:\n|[-*#<>|]|\d+[.)]|$)))+[。．！？.!?]*[^\S\n]*\n*/gu;
 
 const spanOf = (sentence: string, index: number): readonly Span[] => {
-  if (sentence.trim() === "") {
+  if (Str.trim(sentence) === "") {
     return [];
   }
   return [{ start: index, end: index + sentence.length }];
 };
 
 const proseSentencesOf = (text: string): readonly Span[] =>
-  [...text.matchAll(SENTENCE)].flatMap((match) => spanOf(match[FIRST], match.index));
+  pipe(
+    [...Str.matchAll(SENTENCE)(text)],
+    Arr.flatMap((match) => spanOf(match[FIRST], match.index ?? FIRST)),
+  );
 
 const plainParser: Parser = {
   format: "plain",
@@ -30,7 +33,7 @@ const plainParser: Parser = {
 const isNamed =
   (name: string) =>
   ({ format, aliases = [] }: Parser): boolean => {
-    const lowered = name.toLowerCase();
+    const lowered = Str.toLowerCase(name);
     return format === lowered || aliases.includes(lowered);
   };
 
@@ -49,16 +52,22 @@ const segmenterOf = (
       detected(text),
     );
   const segmentsOf = (parser: Parser, text: string): readonly Span[] =>
-    parser.unitsOf(text).flatMap((unit) => {
-      const inner = text.slice(unit.start, unit.end);
-      const spans = Match.value(unit).pipe(
-        Match.when({ kind: "prose" }, () => proseSentencesOf(inner)),
-        Match.when({ kind: "whole" }, () => spanOf(inner, FIRST)),
-        Match.when({ kind: "nested" }, ({ format }) => segmentsOf(named(format, inner), inner)),
-        Match.exhaustive,
-      );
-      return spans.map(({ start, end }) => ({ start: start + unit.start, end: end + unit.start }));
-    });
+    pipe(
+      parser.unitsOf(text),
+      Arr.flatMap((unit) => {
+        const inner = Str.slice(unit.start, unit.end)(text);
+        const spans = Match.value(unit).pipe(
+          Match.when({ kind: "prose" }, () => proseSentencesOf(inner)),
+          Match.when({ kind: "whole" }, () => spanOf(inner, FIRST)),
+          Match.when({ kind: "nested" }, ({ format }) => segmentsOf(named(format, inner), inner)),
+          Match.exhaustive,
+        );
+        return pipe(
+          spans,
+          Arr.map(({ start, end }) => ({ start: start + unit.start, end: end + unit.start })),
+        );
+      }),
+    );
   const chosen = (format: string, text: string): Parser => {
     if (format === AUTO) {
       return detected(text);

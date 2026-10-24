@@ -1,4 +1,4 @@
-import { Effect } from "effect";
+import { Effect, Array as Arr, String as Str, pipe } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import { INJECTION_MARK, cleanedOf } from "./__tests__/fake-judge.ts";
@@ -19,7 +19,7 @@ const upperReader: Reader = {
   extensions: [".up"],
   accepts: (bytes) => bytes[FIRST] === MAGIC,
   read: (bytes) =>
-    Effect.succeed({ text: new TextDecoder().decode(bytes).toUpperCase(), format: "plain" }),
+    Effect.succeed({ text: Str.toUpperCase(new TextDecoder().decode(bytes)), format: "plain" }),
 };
 
 test("reads text as is when no format is named", () =>
@@ -71,7 +71,10 @@ test("fails on a format nobody reads", () =>
 test("lists every format that can be named", () => {
   expect(formatsOf({ readers: [upperReader] })).toStrictEqual([
     "auto",
-    ...DEFAULT_PARSERS.map(({ format }) => format),
+    ...pipe(
+      DEFAULT_PARSERS,
+      Arr.map(({ format }) => format),
+    ),
     "plain",
     "upper",
     "zip",

@@ -1,4 +1,4 @@
-import { Effect } from "effect";
+import { Effect, String as Str, Array as Arr, pipe } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import { INJECTION, cleanedOf } from "./__tests__/fake-judge.ts";
@@ -7,7 +7,10 @@ import { sentencesOf } from "./segment.ts";
 const ITALIC = String.raw`{\i1}`;
 
 const textsOf = (text: string): readonly string[] =>
-  sentencesOf({ text }).map(({ start, end }) => text.slice(start, end));
+  pipe(
+    sentencesOf({ text }),
+    Arr.map(({ start, end }) => Str.slice(start, end)(text)),
+  );
 
 test("reads the text properties of a calendar event, folded lines included", () => {
   expect(
@@ -23,7 +26,7 @@ test("finds and removes an injection in a contact note", () =>
       const text = `BEGIN:VCARD\nVERSION:4.0\nFN:佐藤 花子\nNOTE:${INJECTION}\nEND:VCARD\n`;
       expect(yield* cleanedOf({ text })).toStrictEqual({
         found: [INJECTION],
-        cleaned: text.replace(INJECTION, ""),
+        cleaned: Str.replace(INJECTION, "")(text),
       });
     }),
   ));

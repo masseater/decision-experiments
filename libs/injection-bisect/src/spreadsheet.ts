@@ -1,4 +1,4 @@
-import { Effect, Option } from "effect";
+import { Effect, Option, Array as Arr, Record as Rec, pipe } from "effect";
 import { read, utils } from "xlsx";
 
 import { hasStream } from "./cfb.ts";
@@ -21,11 +21,15 @@ const csvOf = (bytes: Uint8Array): Effect.Effect<string, ReadError> =>
   Effect.try({
     try: () => {
       const { Sheets, SheetNames } = read(bytes, { type: "array" });
-      return SheetNames.flatMap((name) =>
-        Option.toArray(
-          Option.map(Option.fromNullishOr(Sheets[name]), (sheet) => utils.sheet_to_csv(sheet)),
+      return pipe(
+        SheetNames,
+        Arr.flatMap((name) =>
+          Option.toArray(
+            Option.map(Option.fromNullishOr(Sheets[name]), (sheet) => utils.sheet_to_csv(sheet)),
+          ),
         ),
-      ).join("\n");
+        Arr.join("\n"),
+      );
     },
     catch: readErrorOf,
   }).pipe(Effect.withSpan("injection-bisect.spreadsheet"));
@@ -38,7 +42,10 @@ const readerOf = ([format, extensions]: readonly [string, readonly string[]]): R
 
 const SPREADSHEET_READERS: readonly Reader[] = [
   { ...readerOf(["xls", XLS]), accepts: hasStream((name) => WORKBOOKS.has(name)) },
-  ...Object.entries(KINDS).map((kind) => readerOf(kind)),
+  ...pipe(
+    Rec.toEntries(KINDS),
+    Arr.map((kind) => readerOf(kind)),
+  ),
 ];
 
 export { SPREADSHEET_READERS };

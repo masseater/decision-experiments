@@ -1,11 +1,14 @@
-import { Effect } from "effect";
+import { Effect, String as Str, Array as Arr, pipe } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import { INJECTION, cleanedOf } from "./__tests__/fake-judge.ts";
 import { sentencesOf } from "./segment.ts";
 
 const textsOf = (text: string, format: string): readonly string[] =>
-  sentencesOf({ text, format }).map(({ start, end }) => text.slice(start, end));
+  pipe(
+    sentencesOf({ text, format }),
+    Arr.map(({ start, end }) => Str.slice(start, end)(text)),
+  );
 
 test("reads CSV fields that look like prose, quoted or not", () => {
   expect(
@@ -26,7 +29,7 @@ test("finds and removes an injection in a review column", () =>
       const text = `id,rating,review\n1,5,"届くのが早かった。"\n2,1,"${INJECTION}"\n`;
       expect(yield* cleanedOf({ text, format: "csv" })).toStrictEqual({
         found: [INJECTION],
-        cleaned: text.replace(INJECTION, ""),
+        cleaned: Str.replace(INJECTION, "")(text),
       });
     }),
   ));

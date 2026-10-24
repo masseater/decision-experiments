@@ -1,52 +1,60 @@
-import { Match } from "effect";
+import { Match, Array as Arr, pipe } from "effect";
+import { escapeText } from "entities/escape";
 
 import { truthOf } from "./sample.ts";
 import type { Document } from "./sample.ts";
 
-const escape = (text: string): string =>
-  text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-
 const row = (left: string, right: string): string =>
-  `<div class="row"><span>${escape(left)}</span><span>${escape(right)}</span></div>`;
+  `<div class="row"><span>${escapeText(left)}</span><span>${escapeText(right)}</span></div>`;
 
 const itemRows = (document: Document): string =>
-  document.items.map((item) => row(`${item.name} ×${item.quantity}`, item.amount)).join("");
+  pipe(
+    document.items,
+    Arr.map((item) => row(`${item.name} ×${item.quantity}`, item.amount)),
+    Arr.join(""),
+  );
 
 const totalRow = (document: Document): string =>
-  `<div class="row total"><span>合計</span><span>${escape(truthOf({ document, field: "total" }))}</span></div>`;
+  `<div class="row total"><span>合計</span><span>${escapeText(truthOf({ document, field: "total" }))}</span></div>`;
 
 const receiptBody = (document: Document): string =>
-  [
-    `<h1>${escape(truthOf({ document, field: "issuer" }))}</h1>`,
-    `<p class="center">TEL ${escape(document.phone)}</p>`,
-    `<p class="center">登録番号 ${escape(truthOf({ document, field: "registration" }))}</p>`,
-    `<p>${escape(truthOf({ document, field: "issueDate" }))} ${escape(document.time)}</p>`,
-    '<p class="center">領収書</p>',
-    itemRows(document),
-    "<hr>",
-    row("小計", document.subtotal),
-    row("（内消費税等 10%）", truthOf({ document, field: "tax" })),
-    totalRow(document),
-    row("お預り", document.paid),
-    row("お釣り", document.change),
-    '<p class="center">またのご来店をお待ちしております</p>',
-  ].join("");
+  pipe(
+    [
+      `<h1>${escapeText(truthOf({ document, field: "issuer" }))}</h1>`,
+      `<p class="center">TEL ${escapeText(document.phone)}</p>`,
+      `<p class="center">登録番号 ${escapeText(truthOf({ document, field: "registration" }))}</p>`,
+      `<p>${escapeText(truthOf({ document, field: "issueDate" }))} ${escapeText(document.time)}</p>`,
+      '<p class="center">領収書</p>',
+      itemRows(document),
+      "<hr>",
+      row("小計", document.subtotal),
+      row("（内消費税等 10%）", truthOf({ document, field: "tax" })),
+      totalRow(document),
+      row("お預り", document.paid),
+      row("お釣り", document.change),
+      '<p class="center">またのご来店をお待ちしております</p>',
+    ],
+    Arr.join(""),
+  );
 
 const invoiceBody = (document: Document): string =>
-  [
-    '<h1 class="title">請求書</h1>',
-    `<div class="row"><span class="recipient">${escape(document.recipient)} 御中</span><span>発行日 ${escape(truthOf({ document, field: "issueDate" }))}</span></div>`,
-    `<div class="issuer"><p>${escape(truthOf({ document, field: "issuer" }))}</p><p>登録番号 ${escape(truthOf({ document, field: "registration" }))}</p><p>TEL ${escape(document.phone)}</p></div>`,
-    `<p class="lead">ご請求金額 ${escape(truthOf({ document, field: "total" }))}（税込）</p>`,
-    `<p>お支払期限 ${escape(document.dueDate)}</p>`,
-    '<div class="row head"><span>品目</span><span>金額</span></div>',
-    itemRows(document),
-    "<hr>",
-    row("小計", document.subtotal),
-    row("消費税（10%）", truthOf({ document, field: "tax" })),
-    totalRow(document),
-    "<p>振込先 みなと銀行 本店営業部 普通 1234567</p>",
-  ].join("");
+  pipe(
+    [
+      '<h1 class="title">請求書</h1>',
+      `<div class="row"><span class="recipient">${escapeText(document.recipient)} 御中</span><span>発行日 ${escapeText(truthOf({ document, field: "issueDate" }))}</span></div>`,
+      `<div class="issuer"><p>${escapeText(truthOf({ document, field: "issuer" }))}</p><p>登録番号 ${escapeText(truthOf({ document, field: "registration" }))}</p><p>TEL ${escapeText(document.phone)}</p></div>`,
+      `<p class="lead">ご請求金額 ${escapeText(truthOf({ document, field: "total" }))}（税込）</p>`,
+      `<p>お支払期限 ${escapeText(document.dueDate)}</p>`,
+      '<div class="row head"><span>品目</span><span>金額</span></div>',
+      itemRows(document),
+      "<hr>",
+      row("小計", document.subtotal),
+      row("消費税（10%）", truthOf({ document, field: "tax" })),
+      totalRow(document),
+      "<p>振込先 みなと銀行 本店営業部 普通 1234567</p>",
+    ],
+    Arr.join(""),
+  );
 
 const NOISE =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";

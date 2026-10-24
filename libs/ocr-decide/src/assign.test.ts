@@ -1,4 +1,4 @@
-import { Effect } from "effect";
+import { Effect, String as Str, Array as Arr, pipe } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import { DECISION_MODELS, assignFields } from "./assign.ts";
@@ -22,12 +22,15 @@ const PROBABILITY = { sure: 0.95, unsure: 0.6, none: 0 } as const;
 
 const [NOUL_MODEL, CHOICE_MODEL] = DECISION_MODELS;
 
-const ISSUER = INVOICE_FIELDS.filter(({ id }) => id === "issuer");
+const ISSUER = pipe(
+  INVOICE_FIELDS,
+  Arr.filter(({ id }) => id === "issuer"),
+);
 
 const FOUND = { status: "found", text: ISSUER_LINE } as const;
 
 const lineProbability = (instructions: string, probability: number): number => {
-  if (instructions.endsWith(ISSUER_LINE)) {
+  if (Str.endsWith(ISSUER_LINE)(instructions)) {
     return probability;
   }
   return PROBABILITY.none;

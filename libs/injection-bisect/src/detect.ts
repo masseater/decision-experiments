@@ -1,4 +1,4 @@
-import { Array as Arr, Context, Duration, Effect, Option, Ref } from "effect";
+import { Array as Arr, Context, Duration, Effect, Option, Ref, String as Str, pipe } from "effect";
 
 import { cutoffFor } from "./cutoff.ts";
 import type { JudgeError } from "./judge-error.ts";
@@ -6,6 +6,8 @@ import { InjectionJudge } from "./judge.ts";
 import type { Verdict } from "./judge.ts";
 import type { Parser, Span } from "./parser.ts";
 import { DEFAULT_PARSERS } from "./parsers.ts";
+import { joinRegions } from "./region.ts";
+import type { Region } from "./region.ts";
 import { AUTO, segmenterOf } from "./segment.ts";
 
 const DEFAULT_MODEL = "respan/span-01-lite";
@@ -30,11 +32,10 @@ const branchesFor = (sentenceCount: number): number =>
   Math.max(MIN_BRANCHES, Math.ceil(Math.sqrt(sentenceCount)));
 
 const asksTogether = (model: string): boolean =>
-  SEPARATING_PROVIDERS.some((provider) => model.startsWith(provider));
-
-interface Region extends Span {
-  readonly probability: number;
-}
+  pipe(
+    SEPARATING_PROVIDERS,
+    Arr.some((provider) => Str.startsWith(provider)(model)),
+  );
 
 interface Probe extends Span, Verdict {
   readonly depth: number;
@@ -90,31 +91,13 @@ const ask = Effect.fn("injection-bisect.ask")(function* ask(
   yield* Effect.annotateCurrentSpan({ start: span.start, chars: span.end - span.start, depth });
   yield* listen({ type: "asked", id, ...span, depth });
   const [elapsed, verdict] = yield* Effect.timed(
-    judge.verdictOf(query.text.slice(span.start, span.end), query.model),
+    judge.verdictOf(Str.slice(span.start, span.end)(query.text), query.model),
   );
   const probe = { ...span, depth, ...verdict, millis: Duration.toMillis(elapsed) };
   yield* query.record(probe);
   yield* listen({ type: "answered", id, ...probe });
   return verdict.probability;
 });
-
-const joinRegions = (text: string, regions: readonly Region[]): readonly Region[] => {
-  const sorted = regions.toSorted((left, right) => left.start - right.start);
-  const joined: Region[] = [];
-  for (const region of sorted) {
-    const last = Arr.last(joined);
-    if (Option.isSome(last) && text.slice(last.value.end, region.start).trim() === "") {
-      joined.splice(-ONE_SENTENCE, ONE_SENTENCE, {
-        start: last.value.start,
-        end: region.end,
-        probability: Math.max(last.value.probability, region.probability),
-      });
-    } else {
-      joined.push(region);
-    }
-  }
-  return joined;
-};
 
 const spanOfRange = (sentences: readonly Span[], { from, to }: Range): Span => ({
   start: Option.match(Arr.get(sentences, from), {
@@ -159,7 +142,10 @@ const locate = (
         ),
       { concurrency: "unbounded" },
     );
-    const hits = scored.filter(({ probability }) => probability >= query.cutoff);
+    const hits = pipe(
+      scored,
+      Arr.filter(({ probability }) => probability >= query.cutoff),
+    );
     if (Arr.isReadonlyArrayEmpty(hits)) {
       return whole;
     }
@@ -175,6 +161,12 @@ const sharedCost = (index: number, total: number): number => {
   }
   return FIRST;
 };
+
+const sentenceTextsOf = (query: Query, sentences: readonly Span[]): readonly string[] =>
+  pipe(
+    sentences,
+    Arr.map(({ start, end }) => Str.slice(start, end)(query.text)),
+  );
 
 const askTogether = Effect.fn("injection-bisect.ask-together")(function* askTogether(
   query: Query,
@@ -193,19 +185,22 @@ const askTogether = Effect.fn("injection-bisect.ask-together")(function* askToge
   const [elapsed, verdicts] = yield* Effect.timed(
     judge.verdictsOf({
       text: query.text,
-      parts: sentences.map(({ start, end }) => query.text.slice(start, end)),
+      parts: sentenceTextsOf(query, sentences),
       model: query.model,
     }),
   );
-  const probes = sentences.map((span, index) => ({
-    ...span,
-    depth,
-    probability: verdicts.probabilities[index] ?? FIRST,
-    cost: sharedCost(index, verdicts.cost),
-    inputTokens: sharedCost(index, verdicts.inputTokens),
-    model: verdicts.model,
-    millis: Duration.toMillis(elapsed),
-  }));
+  const probes = pipe(
+    sentences,
+    Arr.map((span, index) => ({
+      ...span,
+      depth,
+      probability: verdicts.probabilities[index] ?? FIRST,
+      cost: sharedCost(index, verdicts.cost),
+      inputTokens: sharedCost(index, verdicts.inputTokens),
+      model: verdicts.model,
+      millis: Duration.toMillis(elapsed),
+    })),
+  );
   yield* Effect.forEach(
     probes,
     (probe, index) =>
@@ -224,9 +219,11 @@ const locateTogether = (
 ): Effect.Effect<readonly Region[], JudgeError, InjectionJudge> =>
   askTogether(query, sentences).pipe(
     Effect.map((probes) => {
-      const hits = probes
-        .filter((probe) => probe.probability >= query.cutoff)
-        .map(({ start, end, probability: found }) => ({ start, end, probability: found }));
+      const hits = pipe(
+        probes,
+        Arr.filter((probe) => probe.probability >= query.cutoff),
+        Arr.map(({ start, end, probability: found }) => ({ start, end, probability: found })),
+      );
       if (Arr.isReadonlyArrayEmpty(hits)) {
         return [{ start: FIRST, end: query.text.length, probability }];
       }
@@ -285,10 +282,10 @@ const detect = Effect.fn("injection-bisect.detect")(function* detect(
   return {
     status: "injected",
     probability,
-    regions: joinRegions(text, regions),
+    regions: joinRegions(text)(regions),
     probes: yield* Ref.get(probes),
   } satisfies Detection;
 });
 
 export { DEFAULT_MODEL, ProbeListener, asksTogether, branchesFor, detect };
-export type { Detection, DetectOptions, Probe, ProbeEvent, Region };
+export type { Detection, DetectOptions, Probe, ProbeEvent };

@@ -13,7 +13,8 @@
     "@ocr-decide/measurements": "workspace:*",
     "@ocr-decide/tooling": "workspace:*",
     "@r_masseater/ocr-decide": "workspace:*",
-    "effect": "catalog:stack"
+    "effect": "catalog:stack",
+    "entities": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",

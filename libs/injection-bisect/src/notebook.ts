@@ -14,7 +14,7 @@ import type {
   IOutput,
   MultilineString,
 } from "@jupyterlab/nbformat";
-import { Effect, Match, Option, Predicate, Result, Schema } from "effect";
+import { Effect, Match, Option, Predicate, Result, Schema, Array as Arr, pipe } from "effect";
 
 import type { Document, Reader } from "./parser.ts";
 import { readErrorOf } from "./read-error.ts";
@@ -22,7 +22,7 @@ import { readErrorOf } from "./read-error.ts";
 const isNotebook = (value: unknown): value is INotebookContent =>
   Predicate.hasProperty(value, "nbformat") &&
   Predicate.hasProperty(value, "cells") &&
-  Array.isArray(value.cells);
+  Arr.isArray(value.cells);
 
 const NotebookFromJson = Schema.fromJsonString(Schema.declare(isNotebook));
 
@@ -42,9 +42,13 @@ const decoder = new TextDecoder();
 
 const isLines = (value: unknown): value is MultilineString =>
   Predicate.isString(value) ||
-  (Array.isArray(value) && value.every((line) => Predicate.isString(line)));
+  (Arr.isArray(value) &&
+    pipe(
+      value,
+      Arr.every((line) => Predicate.isString(line)),
+    ));
 
-const joined = (lines: MultilineString): string => [lines].flat().join("");
+const joined = (lines: MultilineString): string => pipe([lines].flat(), Arr.join(""));
 
 const fenced =
   (language: string) =>
@@ -52,8 +56,11 @@ const fenced =
     `\`\`\`${language}\n${joined(lines)}\n\`\`\``;
 
 const mimeText = ({ data }: IDisplayData | IExecuteResult): readonly string[] =>
-  OUTPUT_TYPES.flatMap(([type, language]) =>
-    Option.toArray(Option.map(Option.liftPredicate(data[type], isLines), fenced(language))),
+  pipe(
+    OUTPUT_TYPES,
+    Arr.flatMap(([type, language]) =>
+      Option.toArray(Option.map(Option.liftPredicate(data[type], isLines), fenced(language))),
+    ),
   );
 
 const outputText = (output: IOutput): readonly string[] =>
@@ -72,7 +79,7 @@ const cellText =
       return [joined(cell.source)];
     }
     if (isCode(cell)) {
-      return [fenced(language)(cell.source), ...cell.outputs.flatMap(outputText)];
+      return [fenced(language)(cell.source), ...pipe(cell.outputs, Arr.flatMap(outputText))];
     }
     return [fenced("output")(cell.source)];
   };
@@ -83,8 +90,10 @@ const languageOf = ({ metadata }: INotebookContent): string =>
     Option.getOrElse(() => DEFAULT_LANGUAGE),
   );
 
-const markdownOf = (notebook: INotebookContent): string =>
-  notebook.cells.flatMap(cellText(languageOf(notebook))).join("\n\n");
+const markdownOf = (notebook: INotebookContent): string => {
+  const textOfCell = cellText(languageOf(notebook));
+  return pipe(notebook.cells, Arr.flatMap(textOfCell), Arr.join("\n\n"));
+};
 
 const notebookReader: Reader = {
   format: "ipynb",

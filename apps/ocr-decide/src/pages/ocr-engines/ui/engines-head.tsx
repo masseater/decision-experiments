@@ -1,3 +1,4 @@
+import { Array as Arr, pipe } from "effect";
 import type { ReactNode } from "react";
 
 import { COPY } from "#/pages/ocr-engines/model/copy";
@@ -10,11 +11,14 @@ const EnginesHead = ({
   <thead className="bg-muted">
     <tr>
       <th className={CELL}>{COPY.engine}</th>
-      {columns.map(({ id, label }) => (
-        <th key={id} className={CELL}>
-          {label}
-        </th>
-      ))}
+      {pipe(
+        columns,
+        Arr.map(({ id, label }) => (
+          <th key={id} className={CELL}>
+            {label}
+          </th>
+        )),
+      )}
     </tr>
   </thead>
 );

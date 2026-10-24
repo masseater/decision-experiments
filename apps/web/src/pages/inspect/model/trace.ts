@@ -1,4 +1,5 @@
 import type { Detection, Probe } from "@r_masseater/injection-bisect";
+import { Array as Arr, pipe } from "effect";
 
 import type { InspectEvent } from "#/pages/inspect/api/inspect-events";
 
@@ -46,7 +47,14 @@ const step = (trace: Trace, event: InspectEvent): Trace => {
     return { ...trace, elapsed, rows: [...trace.rows, row] };
   }
   if (event.type === "answered") {
-    return { ...trace, elapsed, rows: trace.rows.map((row) => answerRow(row, event)) };
+    return {
+      ...trace,
+      elapsed,
+      rows: pipe(
+        trace.rows,
+        Arr.map((row) => answerRow(row, event)),
+      ),
+    };
   }
   if (event.type === "done") {
     return { ...trace, elapsed, phase: { status: "done", detection: event.detection } };

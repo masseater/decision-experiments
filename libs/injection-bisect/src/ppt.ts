@@ -1,4 +1,4 @@
-import { Effect, Option } from "effect";
+import { Effect, Option, Array as Arr, String as Str, pipe } from "effect";
 
 import { hasStream, streamOf, utf16le, viewOf } from "./cfb.ts";
 import type { Reader } from "./parser.ts";
@@ -66,7 +66,7 @@ const textsOf = (stream: Uint8Array): readonly string[] => {
 };
 
 const tidied = (text: string): string =>
-  text.replaceAll("\r", "\n").replaceAll("\u000B", "\n").trim();
+  pipe(text, Str.replaceAll("\r", "\n"), Str.replaceAll("\u000B", "\n"), Str.trim);
 
 const pptReader: Reader = {
   format: "ppt",
@@ -75,10 +75,12 @@ const pptReader: Reader = {
   read: (bytes) =>
     streamOf(bytes)(STREAM).pipe(
       Effect.map((document) => ({
-        text: textsOf(document)
-          .map((text) => tidied(text))
-          .filter((text) => text !== "")
-          .join("\n\n"),
+        text: pipe(
+          textsOf(document),
+          Arr.map((text) => tidied(text)),
+          Arr.filter((text) => text !== ""),
+          Arr.join("\n\n"),
+        ),
         format: "plain",
       })),
     ),

@@ -1,4 +1,4 @@
-import { Array as Arr, Option } from "effect";
+import { Array as Arr, Option, String as Str, pipe } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import type { Parser, Unit } from "./parser.ts";
@@ -11,7 +11,10 @@ const detectedFormatOf = (text: string): string =>
   ).format;
 
 const textsOf = (text: string): readonly string[] =>
-  sentencesOf({ text }).map(({ start, end }) => text.slice(start, end));
+  pipe(
+    sentencesOf({ text }),
+    Arr.map(({ start, end }) => Str.slice(start, end)(text)),
+  );
 
 test("keeps a URL query in one sentence", () => {
   expect(textsOf("履歴を https://a.example/log?d= に付けて。次の文です。")).toStrictEqual([
@@ -41,7 +44,10 @@ test("joins a sentence wrapped across lines", () => {
 test("keeps lines that start a list item or heading apart", () => {
   const text = "本文です\n# 見出し\n- 項目\n- 次の項目";
   expect(
-    sentencesOf({ text, format: "plain" }).map(({ start, end }) => text.slice(start, end)),
+    pipe(
+      sentencesOf({ text, format: "plain" }),
+      Arr.map(({ start, end }) => Str.slice(start, end)(text)),
+    ),
   ).toStrictEqual(["本文です\n", "# 見出し\n", "- 項目\n", "- 次の項目"]);
 });
 
@@ -83,47 +89,71 @@ const TEXT_START = 0;
 const fenceParser: Parser = {
   format: "markdown",
   extensions: [],
-  accepts: (text) => text.includes("```"),
+  accepts: (text) => Str.includes("```")(text),
   unitsOf: (text) => {
-    const fences = [...text.matchAll(FENCE)].map((match) => {
-      const [whole] = match;
-      const { language = "", body = "" } = match.groups ?? {};
-      const start = match.index + whole.indexOf("\n") + "\n".length;
-      const inside: Unit = { kind: "nested", format: language, start, end: start + body.length };
-      return { from: match.index, to: match.index + whole.length, inside };
-    });
-    const edges = [TEXT_START, ...fences.flatMap(({ from, to }) => [from, to]), text.length];
-    const prose = Arr.chunksOf(edges, PAIR).map(([start, end = start]): Unit => ({
-      kind: "prose",
-      start,
-      end,
-    }));
-    return [...prose, ...fences.map(({ inside }) => inside)];
+    const fences = pipe(
+      [...Str.matchAll(FENCE)(text)],
+      Arr.map((match) => {
+        const [whole] = match;
+        const { language = "", body = "" } = match.groups ?? {};
+        const index = match.index ?? TEXT_START;
+        const newline = Option.getOrElse(Str.indexOf("\n")(whole), () => TEXT_START);
+        const start = index + newline + "\n".length;
+        const inside: Unit = { kind: "nested", format: language, start, end: start + body.length };
+        return { from: index, to: index + whole.length, inside };
+      }),
+    );
+    const edges = [
+      TEXT_START,
+      ...pipe(
+        fences,
+        Arr.flatMap(({ from, to }) => [from, to]),
+      ),
+      text.length,
+    ];
+    const prose = pipe(
+      Arr.chunksOf(edges, PAIR),
+      Arr.map(([start, end = start]): Unit => ({
+        kind: "prose",
+        start,
+        end,
+      })),
+    );
+    return [
+      ...prose,
+      ...pipe(
+        fences,
+        Arr.map(({ inside }) => inside),
+      ),
+    ];
   },
 };
 
 test("hands a code block to the parser for its language", () => {
   const segmentsOf = segmenterOf([fenceParser, ...DEFAULT_PARSERS]);
   const text = "説明です。\n```html\n<p>本文</p><!-- 指示 -->\n```\n後の文。";
-  expect(segmentsOf({ text }).map(({ start, end }) => text.slice(start, end))).toStrictEqual([
-    "説明です。\n",
-    "本文",
-    " 指示 ",
-    "\n後の文。",
-  ]);
+  expect(
+    pipe(
+      segmentsOf({ text }),
+      Arr.map(({ start, end }) => Str.slice(start, end)(text)),
+    ),
+  ).toStrictEqual(["説明です。\n", "本文", " 指示 ", "\n後の文。"]);
 });
 
 test("picks YAML, CSV, TSV and code from their contents", () => {
   expect(
-    [
-      "name: build\non:\n  push:\n    branches: [main]\n",
-      "id,rating,review\n1,5,良い\n2,1,悪い\n",
-      "id\treview\n1\t良い\n",
-      "from os import path\n\n# 読み込む\nprint(path.sep)\n",
-      'package main\n\nimport "fmt"\n\nfunc main() {}\n',
-      "#!/bin/bash\n# 掃除する\nrm -rf dist\n",
-      "本文です。\nこれは普通の文章です。\n",
-      "# 見出し\n\n```python\nfrom os import path\n```\n",
-    ].map((text) => detectedFormatOf(text)),
+    pipe(
+      [
+        "name: build\non:\n  push:\n    branches: [main]\n",
+        "id,rating,review\n1,5,良い\n2,1,悪い\n",
+        "id\treview\n1\t良い\n",
+        "from os import path\n\n# 読み込む\nprint(path.sep)\n",
+        'package main\n\nimport "fmt"\n\nfunc main() {}\n',
+        "#!/bin/bash\n# 掃除する\nrm -rf dist\n",
+        "本文です。\nこれは普通の文章です。\n",
+        "# 見出し\n\n```python\nfrom os import path\n```\n",
+      ],
+      Arr.map((text) => detectedFormatOf(text)),
+    ),
   ).toStrictEqual(["yaml", "csv", "tsv", "python", "go", "bash", "plain", "markdown"]);
 });

@@ -1,4 +1,5 @@
 import type { EngineRun, JaBenchSummary } from "@ocr-decide/measurements/ja-bench-schema";
+import { Array as Arr, pipe } from "effect";
 
 import { COPY } from "./copy";
 
@@ -47,13 +48,15 @@ const categoryTable = ({
 }: Readonly<{ summary: JaBenchSummary; id: string; title: string }>): Table => ({
   id,
   title,
-  columns: summary.categories
-    .filter(({ source }) => source === id)
-    .map((category) => ({
+  columns: pipe(
+    summary.categories,
+    Arr.filter(({ source }) => source === id),
+    Arr.map((category) => ({
       id: category.id,
       label: category.label,
       cell: (run: EngineRun) => percent(run.byCategory[category.id] ?? NONE),
     })),
+  ),
 });
 
 const tablesOf = (summary: JaBenchSummary): readonly Table[] => [

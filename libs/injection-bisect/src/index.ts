@@ -1,6 +1,7 @@
 export { DEFAULT_CUTOFF, cutoffFor } from "./cutoff.ts";
 export { DEFAULT_MODEL, ProbeListener, asksTogether, branchesFor, detect } from "./detect.ts";
-export type { Detection, DetectOptions, Probe, ProbeEvent, Region } from "./detect.ts";
+export type { Detection, DetectOptions, Probe, ProbeEvent } from "./detect.ts";
+export type { Region } from "./region.ts";
 export { formatsOf, readDocument } from "./document.ts";
 export { DEFAULT_READERS, readersWith } from "./readers.ts";
 export type { Formats, ReadInput } from "./document.ts";

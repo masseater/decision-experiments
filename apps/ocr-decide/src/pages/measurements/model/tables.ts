@@ -1,4 +1,5 @@
 import type { Run, Summary } from "@ocr-decide/measurements/schema";
+import { Array as Arr, pipe } from "effect";
 
 import { COPY } from "./copy";
 import { dollars, percent, rateIn, seconds } from "./summary";
@@ -30,20 +31,26 @@ const tablesOf = (summary: Summary): readonly Table[] => [
   {
     id: "group",
     title: COPY.byGroup,
-    columns: summary.groups.map(({ id, label }) => ({
-      id,
-      label,
-      cell: (run: Run) => rateIn({ rates: run.byGroup, id }),
-    })),
+    columns: pipe(
+      summary.groups,
+      Arr.map(({ id, label }) => ({
+        id,
+        label,
+        cell: (run: Run) => rateIn({ rates: run.byGroup, id }),
+      })),
+    ),
   },
   {
     id: "field",
     title: COPY.byField,
-    columns: summary.fields.map(({ id, label }) => ({
-      id,
-      label,
-      cell: (run: Run) => rateIn({ rates: run.byField, id }),
-    })),
+    columns: pipe(
+      summary.fields,
+      Arr.map(({ id, label }) => ({
+        id,
+        label,
+        cell: (run: Run) => rateIn({ rates: run.byField, id }),
+      })),
+    ),
   },
 ];
 

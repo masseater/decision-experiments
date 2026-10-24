@@ -1,4 +1,4 @@
-import { Array as Arr } from "effect";
+import { Array as Arr, String as Str, pipe } from "effect";
 import { parse } from "papaparse";
 
 import { proseUnitsOf } from "./located.ts";
@@ -29,9 +29,10 @@ const looksLikeTable =
 
 const fieldsOf = (text: string, delimiter: Delimiter): readonly Unit[] =>
   proseUnitsOf({ text })(
-    parse<readonly string[]>(text, { delimiter: DELIMITERS[delimiter] })
-      .data.flat()
-      .map((value) => value.replaceAll('"', '""')),
+    pipe(
+      parse<readonly string[]>(text, { delimiter: DELIMITERS[delimiter] }).data.flat(),
+      Arr.map((value) => Str.replaceAll('"', '""')(value)),
+    ),
   );
 
 const csvParser: Parser = {

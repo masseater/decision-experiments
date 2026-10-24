@@ -6,7 +6,7 @@ import {
   INVOICE_FIELDS,
   REREAD_BELOW,
 } from "@r_masseater/ocr-decide";
-import { Context, DateTime, Effect, FileSystem, Layer, Schema } from "effect";
+import { Context, DateTime, Effect, FileSystem, Layer, Schema, Array as Arr, pipe } from "effect";
 
 import { DetailsSchema, detailOf } from "./details.ts";
 import type { Detail } from "./details.ts";
@@ -43,7 +43,7 @@ class Results extends Context.Service<
 >()("@ocr-decide/measure/report/Results") {}
 
 const asResultsError = (error: Readonly<{ message: string }>): ResultsError =>
-  new ResultsError({ reason: error.message });
+  ResultsError.make({ reason: error.message });
 
 const summaryOf = (report: Report): Effect.Effect<string, ResultsError> =>
   DateTime.now.pipe(
@@ -54,7 +54,10 @@ const summaryOf = (report: Report): Effect.Effect<string, ResultsError> =>
         generatorModel: DEFAULT_GENERATOR_MODEL,
         cutoff: CUTOFF,
         rereadBelow: REREAD_BELOW,
-        fields: INVOICE_FIELDS.map(({ id, label }) => ({ id, label })),
+        fields: pipe(
+          INVOICE_FIELDS,
+          Arr.map(({ id, label }) => ({ id, label })),
+        ),
         groups: GROUPS,
         runs: summarize(report),
       }),
@@ -65,9 +68,12 @@ const summaryOf = (report: Report): Effect.Effect<string, ResultsError> =>
 const imagePath = (document: Document): string => new URL(`${document.id}.png`, DATA).pathname;
 
 const encodeDetails = (outcomes: readonly Outcome[]): Effect.Effect<string, ResultsError> =>
-  Schema.encodeEffect(DetailsSchema)(outcomes.map((outcome) => detailOf(outcome))).pipe(
-    Effect.mapError(asResultsError),
-  );
+  Schema.encodeEffect(DetailsSchema)(
+    pipe(
+      outcomes,
+      Arr.map((outcome) => detailOf(outcome)),
+    ),
+  ).pipe(Effect.mapError(asResultsError));
 
 const makeResults = Effect.gen(function* makeResults() {
   const fs = yield* FileSystem.FileSystem;

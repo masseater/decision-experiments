@@ -1,4 +1,4 @@
-import { Effect, Option } from "effect";
+import { Effect, Option, Array as Arr, Record as Rec, String as Str, pipe } from "effect";
 import { gunzip, unzip } from "fflate";
 import type { Unzipped } from "fflate";
 import { parseTar } from "nanotar";
@@ -27,15 +27,19 @@ const NUL = "\0";
 const SKIPPED = ["__MACOSX/", ".DS_Store"];
 
 const kept = (name: string): boolean =>
-  !name.endsWith("/") && !SKIPPED.some((skipped) => name.includes(skipped));
+  !Str.endsWith("/")(name) &&
+  !pipe(
+    SKIPPED,
+    Arr.some((skipped) => Str.includes(skipped)(name)),
+  );
 
 const fenceFor = (text: string): string => {
-  const runs = Array.from(text.matchAll(FENCE), ([run]) => run.length + LONGER);
-  return "`".repeat(Math.max(SHORTEST_FENCE, ...runs));
+  const runs = Array.from(Str.matchAll(FENCE)(text), ([run]) => run.length + LONGER);
+  return Str.repeat(Math.max(SHORTEST_FENCE, ...runs))("`");
 };
 
 const sectionOf = (name: string, { text, format }: Document): readonly string[] => {
-  if (text.includes(NUL) || text.trim() === "") {
+  if (Str.includes(NUL)(text) || Str.trim(text) === "") {
     return [];
   }
   const fence = fenceFor(text);
@@ -53,7 +57,12 @@ const sectionsOf =
           Effect.orElseSucceed((): readonly string[] => []),
         ),
       { concurrency: 1 },
-    ).pipe(Effect.map((sections) => ({ text: sections.flat().join("\n\n"), format: "markdown" })));
+    ).pipe(
+      Effect.map((sections) => ({
+        text: pipe(sections.flat(), Arr.join("\n\n")),
+        format: "markdown",
+      })),
+    );
 
 const settled = <Data>(cause: unknown, data: Data): Effect.Effect<Data, ReadError> =>
   Option.match(Option.fromNullishOr(cause), {
@@ -81,7 +90,12 @@ const archiveReadersOf = (read: ReadEntry): readonly Reader[] => [
     extensions: [".zip"],
     read: (bytes) =>
       unzipped(bytes).pipe(
-        Effect.map((files) => Object.entries(files).map(([name, data]) => ({ name, bytes: data }))),
+        Effect.map((files) =>
+          pipe(
+            Rec.toEntries(files),
+            Arr.map(([name, data]) => ({ name, bytes: data })),
+          ),
+        ),
         Effect.flatMap(sectionsOf(read)),
       ),
   },
@@ -90,14 +104,17 @@ const archiveReadersOf = (read: ReadEntry): readonly Reader[] => [
     extensions: [".tar"],
     read: (bytes) =>
       sectionsOf(read)(
-        parseTar(bytes).flatMap(({ name, type, data }) => {
-          if (type !== "file" || !kept(name)) {
-            return [];
-          }
-          return Option.toArray(
-            Option.map(Option.fromNullishOr(data), (body) => ({ name, bytes: body })),
-          );
-        }),
+        pipe(
+          parseTar(bytes),
+          Arr.flatMap(({ name, type, data }) => {
+            if (type !== "file" || !kept(name)) {
+              return [];
+            }
+            return Option.toArray(
+              Option.map(Option.fromNullishOr(data), (body) => ({ name, bytes: body })),
+            );
+          }),
+        ),
       ),
   },
   {

@@ -1,32 +1,38 @@
 import { burn } from "@kenjiuno/msgreader/lib/Burner.js";
 import { TypeEnum } from "@kenjiuno/msgreader/lib/Reader.js";
-import { Option } from "effect";
+import { Option, Array as Arr, Record as Rec, String as Str, pipe } from "effect";
 
 const NEXT = 1;
 
 const FIRST = 0;
 
 const unitOf = (letter: string): number =>
-  Option.getOrElse(Option.fromNullishOr(letter.codePointAt(FIRST)), () => FIRST);
+  Option.getOrElse(Str.codePointAt(FIRST)(letter), () => FIRST);
 
 const utf16Of = (text: string): Uint8Array =>
-  new Uint8Array(Uint16Array.from(text.split(""), (letter) => unitOf(letter)).buffer);
+  new Uint8Array(Uint16Array.from(Str.split("")(text), (letter) => unitOf(letter)).buffer);
 
 const compoundOf = (streams: Readonly<Record<string, Uint8Array>>): Uint8Array => {
-  const entries = Object.entries(streams);
+  const entries = Rec.toEntries(streams);
   return burn([
     {
       name: "Root Entry",
       type: TypeEnum.ROOT,
       length: 0,
-      children: entries.map((_entry, index) => index + NEXT),
+      children: pipe(
+        entries,
+        Arr.map((_entry, index) => index + NEXT),
+      ),
     },
-    ...entries.map(([name, data]) => ({
-      name,
-      type: TypeEnum.DOCUMENT,
-      length: data.length,
-      binaryProvider: () => data,
-    })),
+    ...pipe(
+      entries,
+      Arr.map(([name, data]) => ({
+        name,
+        type: TypeEnum.DOCUMENT,
+        length: data.length,
+        binaryProvider: () => data,
+      })),
+    ),
   ]);
 };
 

@@ -1,3 +1,5 @@
+import { Array as Arr, pipe } from "effect";
+
 interface Box {
   readonly x0: number;
   readonly y0: number;
@@ -27,7 +29,11 @@ interface Extraction {
 const MISSING: FieldValue = { status: "missing" };
 
 const stateOf = (fragments: readonly Fragment[]): string =>
-  fragments.map(({ text }) => text).join("\n");
+  pipe(
+    fragments,
+    Arr.map(({ text }) => text),
+    Arr.join("\n"),
+  );
 
 export { MISSING, stateOf };
 export type { Box, Extraction, Field, FieldValue, Fragment };

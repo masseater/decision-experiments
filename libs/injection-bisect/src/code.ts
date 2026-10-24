@@ -1,11 +1,20 @@
-import { Array as Arr, Match, Option, Order } from "effect";
+import {
+  Array as Arr,
+  Match,
+  Option,
+  Order,
+  Record as Rec,
+  String as Str,
+  pipe,
+  Struct,
+} from "effect";
 import type { Element, RootContent } from "hast";
 import * as LINGUIST from "linguist-languages";
 import type { Language } from "linguist-languages";
 import { refractor } from "refractor/all";
 
 import type { Parser, Span, Unit } from "./parser.ts";
-import { looksLikeProse } from "./prose.ts";
+import { proseUnitsIn } from "./prose.ts";
 
 const READ = /comment|string|attr-value/u;
 
@@ -44,7 +53,10 @@ const SIGNATURES: ReadonlyMap<string, RegExp> = new Map([
 ]);
 
 const isRead = ({ properties }: Element): boolean =>
-  Arr.ensure(properties.className).some((name) => READ.test(String(name)));
+  pipe(
+    Arr.ensure(properties.className),
+    Arr.some((name) => READ.test(String(name))),
+  );
 
 interface Leaf {
   readonly length: number;
@@ -55,7 +67,10 @@ const leavesOf = (node: RootContent, read: boolean): readonly Leaf[] =>
   Match.value(node).pipe(
     Match.when({ type: "text" }, ({ value }) => [{ length: value.length, read }]),
     Match.when({ type: "element" }, (element) =>
-      element.children.flatMap((child) => leavesOf(child, read || isRead(element))),
+      pipe(
+        element.children,
+        Arr.flatMap((child) => leavesOf(child, read || isRead(element))),
+      ),
     ),
     Match.orElse(() => []),
   );
@@ -63,7 +78,10 @@ const leavesOf = (node: RootContent, read: boolean): readonly Leaf[] =>
 const spansOf = (nodes: readonly RootContent[]): readonly Span[] => {
   const spans: Span[] = [];
   let at = FIRST;
-  for (const { length, read } of nodes.flatMap((node) => leavesOf(node, false))) {
+  for (const { length, read } of pipe(
+    nodes,
+    Arr.flatMap((node) => leavesOf(node, false)),
+  )) {
     if (read) {
       spans.push({ start: at, end: at + length });
     }
@@ -75,9 +93,7 @@ const spansOf = (nodes: readonly RootContent[]): readonly Span[] => {
 const codeUnitsOf =
   (format: string) =>
   (text: string): readonly Unit[] =>
-    spansOf(refractor.highlight(text, format).children)
-      .filter(({ start, end }) => looksLikeProse(text.slice(start, end)))
-      .map(({ start, end }): Unit => ({ kind: "prose", start, end }));
+    proseUnitsIn(text)(spansOf(refractor.highlight(text, format).children));
 
 const interpreterOf = (text: string): string =>
   Option.fromNullishOr(SHEBANG.exec(text)).pipe(
@@ -88,15 +104,21 @@ const interpreterOf = (text: string): string =>
 
 const canonicalOf = (name: string): Option.Option<string> =>
   Arr.findFirst(
-    Object.keys(refractor.languages),
+    Struct.keys(refractor.languages),
     (key) => refractor.languages[key] === refractor.languages[name],
   );
 
 const namesOf = ({ name, aliases = [] }: Language): readonly string[] =>
-  [name, ...aliases].map((alias) => alias.toLowerCase());
+  pipe(
+    [name, ...aliases],
+    Arr.map((alias) => Str.toLowerCase(alias)),
+  );
 
 const fileNamesOf = ({ extensions = [], filenames = [] }: Language): readonly string[] =>
-  [...extensions, ...filenames].map((fileName) => fileName.toLowerCase());
+  pipe(
+    [...extensions, ...filenames],
+    Arr.map((fileName) => Str.toLowerCase(fileName)),
+  );
 
 const detectorOf = (
   format: string,
@@ -113,7 +135,10 @@ const parserOf = (language: Language): Option.Option<Parser> =>
     Option.map((format) => ({
       format,
       extensions: fileNamesOf(language),
-      aliases: namesOf(language).filter((name) => name !== format),
+      aliases: pipe(
+        namesOf(language),
+        Arr.filter((name) => name !== format),
+      ),
       accepts: detectorOf(format, language),
       unitsOf: codeUnitsOf(format),
     })),
@@ -131,23 +156,72 @@ const merged = (parsers: Arr.NonEmptyReadonlyArray<Parser>): Parser => {
   const [first] = parsers;
   return {
     format: first.format,
-    extensions: Arr.dedupe(parsers.flatMap(({ extensions }) => extensions)),
-    aliases: Arr.dedupe(parsers.flatMap(({ aliases = [] }) => aliases)),
-    accepts: (text) => parsers.some(({ accepts }) => accepts(text)),
+    extensions: Arr.dedupe(
+      pipe(
+        parsers,
+        Arr.flatMap(({ extensions }) => extensions),
+      ),
+    ),
+    aliases: Arr.dedupe(
+      pipe(
+        parsers,
+        Arr.flatMap(({ aliases = [] }) => aliases),
+      ),
+    ),
+    accepts: (text) =>
+      pipe(
+        parsers,
+        Arr.some(({ accepts }) => accepts(text)),
+      ),
     unitsOf: first.unitsOf,
   };
 };
 
-const LANGUAGE_PARSERS = Object.values(LINGUIST)
-  .filter(({ type }) => type !== "prose")
-  .flatMap((language) => Option.toArray(parserOf(language)));
-
-const CODE_PARSERS: readonly Parser[] = Arr.sortWith(
-  Object.values(Arr.groupBy(LANGUAGE_PARSERS, ({ format }) => format)).map((parsers) =>
-    merged(parsers),
-  ),
-  bySignature,
-  Order.Number,
+const LANGUAGE_PARSERS = pipe(
+  Rec.values(LINGUIST),
+  Arr.filter(({ type }) => type !== "prose"),
+  Arr.flatMap((language) => Option.toArray(parserOf(language))),
 );
 
-export { CODE_PARSERS };
+const MERGED_PARSERS = pipe(
+  Arr.groupBy(LANGUAGE_PARSERS, ({ format }) => format),
+  Rec.values,
+  Arr.map((parsers) => merged(parsers)),
+);
+
+const CODE_PARSERS: readonly Parser[] = Arr.sortWith(MERGED_PARSERS, bySignature, Order.Number);
+
+const codeParsersBesides = (own: readonly Parser[]): readonly Parser[] => {
+  const claimedNames = new Set(
+    pipe(
+      own,
+      Arr.flatMap(({ format, aliases = [] }) => [format, ...aliases]),
+    ),
+  );
+  const claimedExtensions = new Set(
+    pipe(
+      own,
+      Arr.flatMap(({ extensions }) => extensions),
+    ),
+  );
+  const unclaimed = ({ format, extensions, aliases = [], accepts, unitsOf }: Parser): Parser => ({
+    format,
+    extensions: pipe(
+      extensions,
+      Arr.filter((extension) => !claimedExtensions.has(extension)),
+    ),
+    aliases: pipe(
+      aliases,
+      Arr.filter((alias) => !claimedNames.has(alias)),
+    ),
+    accepts,
+    unitsOf,
+  });
+  return pipe(
+    CODE_PARSERS,
+    Arr.filter(({ format }) => !claimedNames.has(format)),
+    Arr.map((parser) => unclaimed(parser)),
+  );
+};
+
+export { CODE_PARSERS, codeParsersBesides };

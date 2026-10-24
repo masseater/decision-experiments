@@ -1,4 +1,4 @@
-import { Array as Arr, Effect, Number as Num, Option, Order } from "effect";
+import { Array as Arr, Effect, Number as Num, Option, Order, Record as Rec, pipe } from "effect";
 
 import { MISSING, stateOf } from "./fragment.ts";
 import type { Extraction, Field, FieldValue, Fragment } from "./fragment.ts";
@@ -71,7 +71,11 @@ const assignByChoice = Effect.fn("ocr-decide.assign.choice")(function* assignByC
     model,
     state: stateOf(fragments),
     instructions: choiceQuestion(field),
-    options: Object.fromEntries(fragments.map(({ text }, index) => [keyOf(index), text])),
+    options: pipe(
+      fragments,
+      Arr.map(({ text }, index) => [keyOf(index), text] as const),
+      Rec.fromEntries,
+    ),
   });
   const best = Arr.findFirstIndex(
     Arr.makeBy(fragments.length, (index) => keyOf(index)),
@@ -93,12 +97,18 @@ const assignByProbability = Effect.fn("ocr-decide.assign.noul")(function* assign
     (fragment) => api.probability({ model, state, instructions: noulQuestion(field, fragment) }),
     { concurrency: "unbounded" },
   );
+  const candidates = pipe(
+    answers,
+    Arr.map(({ probability }, index) => ({ index, probability })),
+  );
   const scored: Scored = {
-    value: valueOf(
-      fragments,
-      bestOf(answers.map(({ probability }, index) => ({ index, probability }))),
+    value: valueOf(fragments, bestOf(candidates)),
+    costUsd: Num.sumAll(
+      pipe(
+        answers,
+        Arr.map(({ costUsd }) => costUsd),
+      ),
     ),
-    costUsd: Num.sumAll(answers.map(({ costUsd }) => costUsd)),
   };
   return scored;
 });
@@ -132,8 +142,18 @@ const assignFields = ({
     { concurrency: "unbounded" },
   ).pipe(
     Effect.map((scored) => ({
-      values: Object.fromEntries(scored.map(({ id, value }) => [id, value])),
-      costUsd: Num.sumAll(scored.map(({ costUsd }) => costUsd)),
+      values: Rec.fromEntries(
+        pipe(
+          scored,
+          Arr.map(({ id, value }) => [id, value]),
+        ),
+      ),
+      costUsd: Num.sumAll(
+        pipe(
+          scored,
+          Arr.map(({ costUsd }) => costUsd),
+        ),
+      ),
     })),
     Effect.withSpan("ocr-decide.assign", { attributes: { model: model.id } }),
   );

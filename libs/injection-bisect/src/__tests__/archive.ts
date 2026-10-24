@@ -1,4 +1,4 @@
-import { Effect } from "effect";
+import { Effect, Record as Rec, Array as Arr, pipe } from "effect";
 import { gzip, strToU8, zip } from "fflate";
 import type { AsyncZippable } from "fflate";
 
@@ -18,15 +18,17 @@ const entryOf = ([name, text]: readonly [string, string]): readonly [
 
 const zipOf = (files: Readonly<Record<string, string>>): Effect.Effect<Uint8Array> =>
   Effect.callback<Uint8Array>((resume) => {
-    zip(
-      Object.fromEntries(Object.entries(files).map((entry) => entryOf(entry))),
-      (cause, zipped) => {
-        if (cause !== null) {
-          throw cause;
-        }
-        resume(Effect.succeed(zipped));
-      },
+    const entries = pipe(
+      Rec.toEntries(files),
+      Arr.map((entry) => entryOf(entry)),
+      Rec.fromEntries,
     );
+    zip(entries, (cause, zipped) => {
+      if (cause !== null) {
+        throw cause;
+      }
+      resume(Effect.succeed(zipped));
+    });
   });
 
 const gzipOf = (bytes: Uint8Array): Effect.Effect<Uint8Array> =>

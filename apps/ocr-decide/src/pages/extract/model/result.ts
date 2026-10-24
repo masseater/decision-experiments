@@ -1,6 +1,6 @@
 import { INVOICE_FIELDS } from "@r_masseater/ocr-decide";
 import type { FieldValue } from "@r_masseater/ocr-decide";
-import { Option } from "effect";
+import { Option, Array as Arr, pipe } from "effect";
 
 import { COPY } from "./copy";
 
@@ -28,7 +28,10 @@ const linesOf = (
     seconds: number;
   }>,
 ): readonly Line[] => [
-  ...INVOICE_FIELDS.map(({ id, label }) => ({ label, value: textOf(result.values[id]) })),
+  ...pipe(
+    INVOICE_FIELDS,
+    Arr.map(({ id, label }) => ({ label, value: textOf(result.values[id]) })),
+  ),
   { label: COPY.seconds, value: `${result.seconds.toFixed(SECOND_DIGITS)} 秒` },
   { label: COPY.cost, value: `$${result.costUsd.toFixed(COST_DIGITS)}` },
 ];

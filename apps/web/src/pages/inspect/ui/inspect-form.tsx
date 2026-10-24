@@ -22,6 +22,8 @@ import { OverlaidText } from "./overlaid-text";
 import { RunSettings } from "./run-settings";
 import { SourceBar } from "./source-bar";
 
+const NON_BLANK = /\S/u;
+
 const FIRST_RUN = 0;
 
 const NEXT = 1;
@@ -48,7 +50,7 @@ const InspectForm = ({ state }: Readonly<{ state: InspectState }>): ReactNode =>
     setFocus(NO_FOCUS);
     setRun({ status: "started", id: nextIdOf(run), text, apiKey, model, format });
   }, [setFocus, setRun, run, text, apiKey, model, format]);
-  const ready = !isRunning(state) && text.trim() !== "" && apiKey !== "" && model.trim() !== "";
+  const ready = !isRunning(state) && NON_BLANK.test(text) && apiKey !== "" && NON_BLANK.test(model);
   return (
     <section className="flex min-w-0 flex-col gap-3">
       <SourceBar />

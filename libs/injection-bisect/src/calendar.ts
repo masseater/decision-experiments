@@ -1,4 +1,4 @@
-import { Predicate, Result } from "effect";
+import { Predicate, Result, Array as Arr, String as Str, pipe } from "effect";
 import ICAL from "ical.js";
 
 import { proseUnitsOf } from "./located.ts";
@@ -7,19 +7,25 @@ import type { Parser, Unit } from "./parser.ts";
 type Component = InstanceType<typeof ICAL.Component>;
 
 const escaped = (value: string): string =>
-  value
-    .replaceAll("\\", String.raw`\\`)
-    .replaceAll(";", ";")
-    .replaceAll(",", String.raw`\,`)
-    .replaceAll("\n", String.raw`\n`);
+  pipe(
+    value,
+    Str.replaceAll("\\", String.raw`\\`),
+    Str.replaceAll(";", ";"),
+    Str.replaceAll(",", String.raw`\,`),
+    Str.replaceAll("\n", String.raw`\n`),
+  );
 
 const textsIn = (component: Component): readonly string[] => [
-  ...component
-    .getAllProperties()
-    .filter(({ type }) => type === "text")
-    .flatMap((property): readonly unknown[] => property.getValues().flat())
-    .filter((value) => Predicate.isString(value)),
-  ...component.getAllSubcomponents().flatMap((child) => textsIn(child)),
+  ...pipe(
+    component.getAllProperties(),
+    Arr.filter(({ type }) => type === "text"),
+    Arr.flatMap((property): readonly unknown[] => property.getValues().flat()),
+    Arr.filter((value) => Predicate.isString(value)),
+  ),
+  ...pipe(
+    component.getAllSubcomponents(),
+    Arr.flatMap((child) => textsIn(child)),
+  ),
 ];
 
 const valueUnitsOf = (text: string): readonly Unit[] =>
@@ -28,7 +34,11 @@ const valueUnitsOf = (text: string): readonly Unit[] =>
       Result.try(() => ICAL.Component.fromString(text)),
       {
         onFailure: () => [],
-        onSuccess: (component) => textsIn(component).map((value) => escaped(value)),
+        onSuccess: (component) =>
+          pipe(
+            textsIn(component),
+            Arr.map((value) => escaped(value)),
+          ),
       },
     ),
   );

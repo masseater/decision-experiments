@@ -1,4 +1,4 @@
-import { Effect } from "effect";
+import { Effect, String as Str, Array as Arr, pipe } from "effect";
 import { expect, test } from "vite-plus/test";
 
 import { ENGLISH_MARK, foundIn } from "./__tests__/fake-judge.ts";
@@ -26,8 +26,8 @@ test(
           readers,
         });
         expect(document.text).toContain("Meeting notes for Monday.");
-        expect(found.join("").toLowerCase()).toContain(ENGLISH_MARK);
-        expect(cleaned.toLowerCase()).not.toContain(ENGLISH_MARK);
+        expect(pipe(found, Arr.join(""), Str.toLowerCase)).toContain(ENGLISH_MARK);
+        expect(Str.toLowerCase(cleaned)).not.toContain(ENGLISH_MARK);
       }),
     ),
   OCR_TIMEOUT,
@@ -44,7 +44,7 @@ test(
           readers,
         });
         expect(document.text).toContain("Meeting notes for Monday.");
-        expect(found.join("").toLowerCase()).toContain(ENGLISH_MARK);
+        expect(pipe(found, Arr.join(""), Str.toLowerCase)).toContain(ENGLISH_MARK);
       }),
     ),
   OCR_TIMEOUT,

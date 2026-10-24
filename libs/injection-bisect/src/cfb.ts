@@ -1,6 +1,6 @@
 import { find, read } from "cfb";
 import type { CFB$Container } from "cfb";
-import { Effect, Option, Result } from "effect";
+import { Effect, Option, Result, Array as Arr, pipe } from "effect";
 
 import { ReadError, readErrorOf } from "./read-error.ts";
 
@@ -29,7 +29,11 @@ const hasStream =
   (bytes: Uint8Array): boolean =>
     Result.match(containerOf(bytes), {
       onFailure: () => false,
-      onSuccess: ({ FileIndex }) => FileIndex.some(({ name }) => matches(name)),
+      onSuccess: ({ FileIndex }) =>
+        pipe(
+          FileIndex,
+          Arr.some(({ name }) => matches(name)),
+        ),
     });
 
 const streamOf =
@@ -38,7 +42,7 @@ const streamOf =
     Effect.fromResult(containerOf(bytes)).pipe(
       Effect.flatMap((container) =>
         Effect.fromOption(Option.fromNullishOr(find(container, name))).pipe(
-          Effect.mapError(() => new ReadError({ reason: `missing stream: ${name}` })),
+          Effect.mapError(() => ReadError.make({ reason: `missing stream: ${name}` })),
         ),
       ),
       Effect.map(({ content }) => Uint8Array.from(content)),

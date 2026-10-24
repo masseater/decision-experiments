@@ -1,5 +1,6 @@
 import { DECISION_MODELS, DEFAULT_GENERATOR_MODEL } from "@r_masseater/ocr-decide";
 import type { DecisionModel, Method } from "@r_masseater/ocr-decide";
+import { Array as Arr, pipe } from "effect";
 
 interface Way {
   readonly key: string;
@@ -19,20 +20,23 @@ const DIRECT: Way = {
 
 const WAYS: readonly [Way, ...Way[]] = [
   DIRECT,
-  ...DECISION_MODELS.flatMap((model): readonly Way[] => [
-    {
-      key: `ocr-decision ${model.id}`,
-      method: "ocr-decision",
-      model,
-      label: `OCR してから ${model.id} が選ぶ`,
-    },
-    {
-      key: `ocr-reread-decision ${model.id}`,
-      method: "ocr-reread-decision",
-      model,
-      label: `OCR、${DEFAULT_GENERATOR_MODEL} で読み直し、${model.id} が選ぶ`,
-    },
-  ]),
+  ...pipe(
+    DECISION_MODELS,
+    Arr.flatMap((model): readonly Way[] => [
+      {
+        key: `ocr-decision ${model.id}`,
+        method: "ocr-decision",
+        model,
+        label: `OCR してから ${model.id} が選ぶ`,
+      },
+      {
+        key: `ocr-reread-decision ${model.id}`,
+        method: "ocr-reread-decision",
+        model,
+        label: `OCR、${DEFAULT_GENERATOR_MODEL} で読み直し、${model.id} が選ぶ`,
+      },
+    ]),
+  ),
 ];
 
 export { DIRECT, WAYS };
