@@ -168,8 +168,8 @@ catalogs:
       specifier: 0.51.0
       version: 0.51.0
     '@cloudflare/workers-types':
-      specifier: 5.20261019.1
-      version: 5.20261019.1
+      specifier: 5.20261021.1
+      version: 5.20261021.1
     '@commitlint/cli':
       specifier: 21.2.4
       version: 21.2.4
@@ -610,7 +610,7 @@ importers:
     devDependencies:
       '@cloudflare/workers-types':
         specifier: 'catalog:'
-        version: 5.20261019.1
+        version: 5.20261021.1
       '@decision-experiments/start-site':
         specifier: workspace:*
         version: link:../../infra/start-site
@@ -704,7 +704,7 @@ importers:
     devDependencies:
       '@cloudflare/workers-types':
         specifier: 'catalog:'
-        version: 5.20261019.1
+        version: 5.20261021.1
       '@decision-experiments/start-site':
         specifier: workspace:*
         version: link:../../infra/start-site
@@ -932,7 +932,7 @@ importers:
     dependencies:
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/8ea2bc67d5d1c1a4beff2c3362e38ee6c8eaae2a#path:/libs/ui(@types/react@19.3.0)(effect@4.0.5)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/96ba2c1e779cff17a06619d8d59ee72426c4002f#path:/libs/ui(@types/react@19.3.0)(effect@4.0.5)(react@19.3.1)(tailwindcss@4.3.3)
       '@tanstack/react-query':
         specifier: catalog:stack
         version: 5.104.5(@types/react@19.3.0)(react@19.3.1)
@@ -1422,8 +1422,8 @@ packages:
   '@cloudflare/workers-types@5.20261012.1':
     resolution: {integrity: sha512-5Y0NrKXG9CZaNUZ6Dt3TLRE4UQe2/DGuxIhTEVYHUl0jAlv1TpQtI59YBAszRpSaZAMzbM8nqGc1n9Z2q4TVyA==}
 
-  '@cloudflare/workers-types@5.20261019.1':
-    resolution: {integrity: sha512-llvvy7WBVhK+OfykyBkG9A7OgsGvgwHSNyU40XGVkiy/xVFy0t/xflyhEBHT+U59yQECZQbmcZsJtqCNnLpIRg==}
+  '@cloudflare/workers-types@5.20261021.1':
+    resolution: {integrity: sha512-HLu/pEx2488dO13gQoLaLmMMTcah/NqEn/c/6c/sJV9nyBY/CVQAI9Zj+YugKacrxENDmIVPU0HKIK+mU7WKzA==}
 
   '@commitlint/cli@21.2.4':
     resolution: {integrity: sha512-g3M/wrQdElqGH5vROIeL2QiYIxrzqUkhCgsDyDlWfKEyQdCt10OyMB28W2cJtpZ+VNGMvmaN923infr1hOfyrg==}
@@ -2417,8 +2417,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/8ea2bc67d5d1c1a4beff2c3362e38ee6c8eaae2a#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-3Yk5FBxBPSqs0vZh3J1YjH+AubeHNvO/RPt09FVH0IKS3ed7zxoD2tYxnkUuY2spOHuZON/xBVfqATZK2Tz6Tg==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/8ea2bc67d5d1c1a4beff2c3362e38ee6c8eaae2a}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/96ba2c1e779cff17a06619d8d59ee72426c4002f#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-iEt6cImaC0LuyDgNLrIbIlMK+uNZwzagoBMYXFCiZ8/rG77QwpoDYmZuEABr9Ecdhlnb4MOB3JQcf+2HS1h1lA==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/96ba2c1e779cff17a06619d8d59ee72426c4002f}
     version: 0.0.0
     peerDependencies:
       effect: 4.0.5
@@ -10661,7 +10661,7 @@ snapshots:
 
   '@cloudflare/workers-types@5.20261012.1': {}
 
-  '@cloudflare/workers-types@5.20261019.1': {}
+  '@cloudflare/workers-types@5.20261021.1': {}
 
   '@commitlint/cli@21.2.4(conventional-commits-parser@7.1.2)(typescript@5.9.3)':
     dependencies:
@@ -11594,7 +11594,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/8ea2bc67d5d1c1a4beff2c3362e38ee6c8eaae2a#path:/libs/ui(@types/react@19.3.0)(effect@4.0.5)(react@19.3.1)(tailwindcss@4.3.3)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/96ba2c1e779cff17a06619d8d59ee72426c4002f#path:/libs/ui(@types/react@19.3.0)(effect@4.0.5)(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.82(@types/react@19.3.0)(react@19.3.1)
