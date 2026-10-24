@@ -388,8 +388,8 @@ catalogs:
       specifier: 3.33.1
       version: 3.33.1
     lucide-react:
-      specifier: 1.55.0
-      version: 1.55.0
+      specifier: 1.60.0
+      version: 1.60.0
     radix-ui:
       specifier: 1.8.1
       version: 1.8.1
@@ -582,7 +582,7 @@ importers:
         version: 4.0.2
       lucide-react:
         specifier: catalog:stack
-        version: 1.55.0(@types/react@19.3.0)(react@19.3.1)
+        version: 1.60.0(@types/react@19.3.0)(react@19.3.1)
       react:
         specifier: 19.3.1
         version: 19.3.1
@@ -676,7 +676,7 @@ importers:
         version: 6.2.12
       lucide-react:
         specifier: catalog:stack
-        version: 1.55.0(@types/react@19.3.0)(react@19.3.1)
+        version: 1.60.0(@types/react@19.3.0)(react@19.3.1)
       react:
         specifier: 19.3.1
         version: 19.3.1
@@ -917,7 +917,7 @@ importers:
     dependencies:
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/3bd9f2699295b5856df3c06f06b9e210e88c5f7f#path:/libs/ui(@types/react@19.3.0)(effect@4.0.2)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/3426715818c1ab8e97771a4574906a92a5910f23#path:/libs/ui(@types/react@19.3.0)(effect@4.0.2)(react@19.3.1)(tailwindcss@4.3.3)
       '@tanstack/react-query':
         specifier: catalog:stack
         version: 5.104.3(react@19.3.1)
@@ -2383,8 +2383,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/3bd9f2699295b5856df3c06f06b9e210e88c5f7f#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-8Lj6dwoXFS8agDatUqv9XjHSJZGRcwgOEmiy24wLwRjuo5xqFSTDxHlCPAetTma//A0OXsxb8THNLpio4WYT8A==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/3bd9f2699295b5856df3c06f06b9e210e88c5f7f}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/3426715818c1ab8e97771a4574906a92a5910f23#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-TbjEsEpQ7Jd1j3ttGOqqU9FyXVPpJzqNltklTs+SK7Q/fU8wq4jhzX7onzNM7x62Q6lnnSN90VxcOHWrSyqubw==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/3426715818c1ab8e97771a4574906a92a5910f23}
     version: 0.0.0
     peerDependencies:
       effect: 4.0.2
@@ -8004,8 +8004,8 @@ packages:
   lru_map@0.4.1:
     resolution: {integrity: sha512-I+lBvqMMFfqaV8CJCISjI3wbjmwVu/VyOoU7+qtu9d7ioW5klMgsTTiUOUp+DJvfTTzKXoPbyC6YfgkNcyPSOg==}
 
-  lucide-react@1.55.0:
-    resolution: {integrity: sha512-bSozQHiI3/8q7JvgoqVRGOYUi7fYT3siAZwmZsljjsOH2Husp/2ODdFf/leD+ZC/2yKfn7r8oh6yeoR3ITR5vA==}
+  lucide-react@1.60.0:
+    resolution: {integrity: sha512-UqxOW0FgAfDyb9VmjKb6/BkOzW6yfhf/QNboKtS2NDsscnNRW2CDzlyhbMKBQ1ontmcxuIDqHJ2AVgFR3NI+GA==}
     peerDependencies:
       '@types/react': '*'
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -11839,7 +11839,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/3bd9f2699295b5856df3c06f06b9e210e88c5f7f#path:/libs/ui(@types/react@19.3.0)(effect@4.0.2)(react@19.3.1)(tailwindcss@4.3.3)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/3426715818c1ab8e97771a4574906a92a5910f23#path:/libs/ui(@types/react@19.3.0)(effect@4.0.2)(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.81(@types/react@19.3.0)(react@19.3.1)
@@ -17821,7 +17821,7 @@ snapshots:
 
   lru_map@0.4.1: {}
 
-  lucide-react@1.55.0(@types/react@19.3.0)(react@19.3.1):
+  lucide-react@1.60.0(@types/react@19.3.0)(react@19.3.1):
     dependencies:
       react: 19.3.1
     optionalDependencies:
