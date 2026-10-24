@@ -1,7 +1,7 @@
 import type { ChatContentItems } from "@effect/ai-openrouter/Generated";
 import { OpenRouterClient, layerConfig } from "@effect/ai-openrouter/OpenRouterClient";
-import type { Answer, DecisionsQuestion } from "@effect/ai-openrouter/OpenRouterSchema";
-import { Array as Arr, Config, Effect, Layer, Option, Redacted } from "effect";
+import type { Answer } from "@effect/ai-openrouter/OpenRouterSchema";
+import { Array as Arr, Config, Effect, Layer, Option, Redacted, pipe } from "effect";
 import { Base64 } from "effect/encoding";
 import { FetchHttpClient, HttpClient, HttpClientRequest } from "effect/http";
 
@@ -23,17 +23,21 @@ type Decisions = OpenRouterClient["Service"]["createDecisions"];
 
 type Completion = OpenRouterClient["Service"]["createChatCompletion"];
 
-type Question = typeof DecisionsQuestion.Encoded;
+type Question =
+  | Readonly<{ type: "choice"; instructions: string; criteria: Readonly<Record<string, string>> }>
+  | Readonly<{ type: "noul"; instructions: string }>;
 
 type DecisionAnswer = typeof Answer.Type;
+
+type AnswerTag = Readonly<Pick<DecisionAnswer, "type">>;
 
 type ChoiceAnswer = Extract<DecisionAnswer, Readonly<{ type: "choice" }>>;
 
 type NoulAnswer = Extract<DecisionAnswer, Readonly<{ type: "noul" }>>;
 
-const isChoice = (answer: DecisionAnswer): answer is ChoiceAnswer => answer.type === "choice";
+const isChoice = (answer: AnswerTag): answer is ChoiceAnswer => answer.type === "choice";
 
-const isNoul = (answer: DecisionAnswer): answer is NoulAnswer => answer.type === "noul";
+const isNoul = (answer: AnswerTag): answer is NoulAnswer => answer.type === "noul";
 
 const site = {
   siteReferrer: Config.succeed(REPOSITORY_URL),
@@ -149,7 +153,7 @@ const generateJson =
   > =>
     createChatCompletion({
       model,
-      messages: [{ role: "user", content: parts.map((part) => toContent(part)) }],
+      messages: [{ role: "user", content: pipe(parts, Arr.map(toContent)) }],
       response_format: {
         type: "json_schema",
         json_schema: { name: "answer", strict: true, schema: { ...jsonSchema } },

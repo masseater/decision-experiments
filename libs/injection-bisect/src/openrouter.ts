@@ -1,7 +1,7 @@
 import { OpenRouterClient, layerConfig } from "@effect/ai-openrouter/OpenRouterClient";
 import { withClientTransform } from "@effect/ai-openrouter/OpenRouterConfig";
 import type { Answer as AnswerSchema } from "@effect/ai-openrouter/OpenRouterSchema";
-import { Config, Effect, Layer, Option } from "effect";
+import { Array as Arr, Config, Effect, Layer, Option, Record, pipe } from "effect";
 import { FetchHttpClient, HttpClient, HttpClientRequest } from "effect/http";
 
 import { JudgeError } from "./judge-error.ts";
@@ -26,9 +26,11 @@ const NO_COST = 0;
 
 type Answer = typeof AnswerSchema.Type;
 
+type AnswerTag = Readonly<Pick<Answer, "type">>;
+
 type NoulAnswer = Extract<Answer, Readonly<{ type: "noul" }>>;
 
-const isNoul = (answer: Answer): answer is NoulAnswer => answer.type === "noul";
+const isNoul = (answer: AnswerTag): answer is NoulAnswer => answer.type === "noul";
 
 const site = {
   siteReferrer: Config.succeed(REPOSITORY_URL),
@@ -38,17 +40,12 @@ const site = {
   ),
 };
 
-type DecisionsOptions =
-  Parameters<OpenRouterClient["Service"]["createDecisions"]> extends readonly [infer Options]
-    ? Options
-    : never;
-
-type Questions = DecisionsOptions["questions"];
+type Questions = Readonly<Record<string, Readonly<{ type: "noul"; instructions: string }>>>;
 
 const noul = (instructions: string): Questions[string] => ({ type: "noul", instructions });
 
 const probabilityOf = (
-  answer: Answer | undefined,
+  answer: AnswerTag | undefined,
   model: string,
 ): Effect.Effect<number, JudgeError> =>
   Option.fromUndefinedOr(answer).pipe(
@@ -67,7 +64,11 @@ const firstVerdict = ({
 }: Verdicts): Verdict => ({ probability, cost, inputTokens, model });
 
 const partQuestions = (parts: readonly string[]): Questions =>
-  Object.fromEntries(parts.map((part, index) => [`s${index}`, noul(partQuestion(part))]));
+  pipe(
+    parts,
+    Arr.map((part, index) => [`s${index}`, noul(partQuestion(part))] as const),
+    Record.fromEntries,
+  );
 
 const judge = Effect.gen(function* makeJudge() {
   const openRouter = yield* OpenRouterClient;
@@ -79,7 +80,7 @@ const judge = Effect.gen(function* makeJudge() {
     const [body] = yield* openRouter
       .createDecisions({ model, state: text, questions })
       .pipe(Effect.mapError((error) => new JudgeError({ reason: error.message })));
-    const keys = Object.keys(questions);
+    const keys = Record.keys(questions);
     const probabilities = yield* Effect.forEach(
       keys,
       (key) => probabilityOf(body.answers[key], body.model),
