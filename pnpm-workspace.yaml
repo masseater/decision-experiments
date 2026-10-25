@@ -9,7 +9,7 @@ catalogMode: prefer
 
 catalog:
   "@ast-grep/cli": 0.51.0
-  "@cloudflare/workers-types": 5.20261019.1
+  "@cloudflare/workers-types": 5.20261021.1
   "@effect/platform-node": 4.0.5
   "@effect/ai-openrouter": 4.0.5
   "@eslint-react/eslint-plugin": 5.28.4
@@ -19,7 +19,7 @@ catalog:
   "@tanstack/eslint-plugin-start": 0.1.0
   "@typescript-eslint/parser": 8.72.0
   "@types/node": 26.6.5
-  eslint: 10.12.0
+  eslint: 10.13.0
   eslint-plugin-drizzle: 0.2.3
   eslint-plugin-react-hooks: 7.1.1
   syncpack: 15.3.3
@@ -37,7 +37,7 @@ catalog:
   skills: 1.7.4
   "@tanstack/intent": 0.5.6
   "@yarnpkg/parsers": 3.1.0
-  jose: 6.2.12
+  jose: 6.2.13
   parse5: ^8.0.1
   mdast-util-from-markdown: ^2.1.0
   mdast-util-frontmatter: ^2.0.1
@@ -86,7 +86,7 @@ catalogs:
     alchemy: 2.0.0-beta.83
     effect: 4.0.5
     fallow: 3.34.1
-    lucide-react: 1.60.0
+    lucide-react: 1.61.0
     radix-ui: 1.8.1
     renovate: 44.151.5
     steiger: 0.7.0
