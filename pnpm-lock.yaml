@@ -358,7 +358,7 @@ catalogs:
       version: 7.0.0
     unpdf:
       specifier: ^1.8.1
-      version: 1.8.1
+      version: 1.9.1
     vite:
       specifier: npm:@voidzero-dev/vite-plus-core@1.3.0
       version: 1.3.0
@@ -861,7 +861,7 @@ importers:
         version: 7.0.0
       unpdf:
         specifier: 'catalog:'
-        version: 1.8.1(@napi-rs/canvas@1.0.11)
+        version: 1.9.1(@napi-rs/canvas@1.0.11)
       xlsx:
         specifier: 'catalog:'
         version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
@@ -9588,8 +9588,8 @@ packages:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
 
-  unpdf@1.8.1:
-    resolution: {integrity: sha512-xkURhy2SoGpOIH0a1gLHNkASPIQYonadDJs2AQwPEfUakafeD9EA1WTWWsaR++gfTCXJpV27W7tU1nXuk82UKQ==}
+  unpdf@1.9.1:
+    resolution: {integrity: sha512-nO1npM2kNyd4hj1fKzUVU6bvnWjDSxI97eycM/DgzI83dYyW+pNRI9NeMQVEfef8fI3Q06i9lkMeE1HxrQqKoA==}
     engines: {node: '>=22'}
     peerDependencies:
       '@napi-rs/canvas': ^0.1.69 || ^1.0.0
@@ -20149,7 +20149,7 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unpdf@1.8.1(@napi-rs/canvas@1.0.11):
+  unpdf@1.9.1(@napi-rs/canvas@1.0.11):
     optionalDependencies:
       '@napi-rs/canvas': 1.0.11
 
