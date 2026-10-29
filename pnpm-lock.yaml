@@ -397,8 +397,8 @@ catalogs:
       specifier: 1.8.1
       version: 1.8.1
     renovate:
-      specifier: 44.181.5
-      version: 44.181.5
+      specifier: 44.181.7
+      version: 44.181.7
     steiger:
       specifier: 0.8.0
       version: 0.8.0
@@ -518,7 +518,7 @@ importers:
         version: 3.35.0
       renovate:
         specifier: catalog:stack
-        version: 44.181.5(supports-color@7.2.0)(typanion@3.14.0)
+        version: 44.181.7(supports-color@7.2.0)(typanion@3.14.0)
       skills:
         specifier: 'catalog:'
         version: 1.7.4
@@ -932,7 +932,7 @@ importers:
     dependencies:
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/8b9ba49f229d871b8595c99c30c85ca63c8554be#path:/libs/ui(@types/react@19.3.0)(effect@4.0.5)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/2d980a1f0e1110679618222f23c411ab038834c7#path:/libs/ui(@types/react@19.3.0)(effect@4.0.5)(react@19.3.1)(tailwindcss@4.3.3)
       '@tanstack/react-query':
         specifier: catalog:stack
         version: 5.104.5(@types/react@19.3.0)(react@19.3.1)
@@ -1071,12 +1071,15 @@ packages:
       '@effect/platform-node': ^4.0.0
       effect: 4.0.5
       rolldown: 1.2.5
+      vite: ^7.0.0 || ^8.0.0
     peerDependenciesMeta:
       '@effect/platform-bun':
         optional: true
       '@effect/platform-node':
         optional: true
       rolldown:
+        optional: true
+      vite:
         optional: true
 
   '@alchemy.run/floci@2.0.0-beta.83':
@@ -2417,8 +2420,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/8b9ba49f229d871b8595c99c30c85ca63c8554be#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-MFpyegC/C41Aoge2v2tfP20IxCEcjJsjdXK629tPP3G/K5wORfiiH3FrrwnxMq1yo02cN1hpMpoyFQECIsRCCQ==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/8b9ba49f229d871b8595c99c30c85ca63c8554be}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/2d980a1f0e1110679618222f23c411ab038834c7#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-uqJZm5jcbczTZvw+km+KpHJmA98H84e7cVxF+3k2F/XJtdK4u/lcgPW6Enq1XjhOuqbwSYHHWP3GVaaN8E1GpQ==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/2d980a1f0e1110679618222f23c411ab038834c7}
     version: 0.0.0
     peerDependencies:
       effect: 4.0.5
@@ -4225,8 +4228,8 @@ packages:
     peerDependencies:
       '@redis/client': ^6.2.1
 
-  '@renovatebot/base-image@13.142.5':
-    resolution: {integrity: sha512-eycZcQhlQGVU7IYc36DRmWhEuYD9BrSYGEa9/LVChVmIEoaxYtR22BquG/dJvm6D/2+Q9y2EcMTdEQ31L3W2jQ==}
+  '@renovatebot/base-image@13.142.7':
+    resolution: {integrity: sha512-FKsit0mOVOK56oUfYvqx0l/QFjjM528n/XHMxcFR4Vaf/+zq90aaJIH2bxUdhiVKPNlQSDiY3iSziryB+/ncyQ==}
     engines: {node: '>=24.10.0'}
     peerDependencies:
       zod: ^4.6.6
@@ -5371,8 +5374,11 @@ packages:
     resolution: {integrity: sha512-xLL3lkDegJZw+MGoGaCCsFayDZthGgpAtr3Vziyfc4p7xH89K7KRPcRBBh/kEYm0Aqkt5DtTmkYpBtRV/FrHZg==}
     peerDependencies:
       msw: ^2.4.9 || ^3.0.0
+      vite: ^6.0.0 || ^7.0.0 || ^8.0.0
     peerDependenciesMeta:
       msw:
+        optional: true
+      vite:
         optional: true
 
   '@vitest/pretty-format@5.0.5':
@@ -5702,6 +5708,11 @@ packages:
 
   ajv-formats@3.0.1:
     resolution: {integrity: sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ==}
+    peerDependencies:
+      ajv: ^8.0.0
+    peerDependenciesMeta:
+      ajv:
+        optional: true
 
   ajv-keywords@5.1.0:
     resolution: {integrity: sha512-YCS/JNFAUyr5vAuhk1DWm1CBxRHW9LbJ2ozWeemrIqpbsqKjHVxYPyi5GC0rjZIT5JxJ3virVTS8wk4i/Z+krw==}
@@ -5735,6 +5746,7 @@ packages:
       mysql2: ^3.24.2
       pg: ^8.22.0
       prisma: ^8.0.0-rc.15
+      vite: ^8.0.7
       ws: ^8.21.0
     peerDependenciesMeta:
       '@alchemy.run/frontend-frameworks':
@@ -5768,6 +5780,8 @@ packages:
       pg:
         optional: true
       prisma:
+        optional: true
+      vite:
         optional: true
       ws:
         optional: true
@@ -8773,8 +8787,8 @@ packages:
   remove-accents@0.5.0:
     resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
 
-  renovate@44.181.5:
-    resolution: {integrity: sha512-a5eLBIgVlCixh2AjHJratdliiUXNzr95kA9oCtMokUko2RMNRbRQtLqbHYnHSYw3uIjY8lnkcHnGnE69EPRSVQ==}
+  renovate@44.181.7:
+    resolution: {integrity: sha512-hxcIFaLHjAxBl4Yjez3uJ62VPdqAt+8iPKhrtJlr5fcZ+xBGSbhfmkObK0qX59DOqOXxnOQqigf+cwQpXc2YUw==}
     engines: {node: ^24.11.0, pnpm: ^11.0.0}
     hasBin: true
 
@@ -11594,7 +11608,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/8b9ba49f229d871b8595c99c30c85ca63c8554be#path:/libs/ui(@types/react@19.3.0)(effect@4.0.5)(react@19.3.1)(tailwindcss@4.3.3)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/2d980a1f0e1110679618222f23c411ab038834c7#path:/libs/ui(@types/react@19.3.0)(effect@4.0.5)(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.82(@types/react@19.3.0)(react@19.3.1)
@@ -13203,7 +13217,7 @@ snapshots:
     dependencies:
       '@redis/client': 6.2.1(@opentelemetry/api@1.9.1)
 
-  '@renovatebot/base-image@13.142.5(zod@4.6.7)':
+  '@renovatebot/base-image@13.142.7(zod@4.6.7)':
     dependencies:
       '@containerbase/base': 14.52.5(zod@4.6.7)
     optionalDependencies:
@@ -18965,7 +18979,7 @@ snapshots:
 
   remove-accents@0.5.0: {}
 
-  renovate@44.181.5(supports-color@7.2.0)(typanion@3.14.0):
+  renovate@44.181.7(supports-color@7.2.0)(typanion@3.14.0):
     dependencies:
       '@aws-sdk/client-codecommit': 3.1139.0
       '@aws-sdk/client-ec2': 3.1139.0
@@ -18998,7 +19012,7 @@ snapshots:
       '@pnpm/parse-overrides': 1001.0.4
       '@qnighy/marshal': 0.1.3
       '@redis/client': 6.3.0(@opentelemetry/api@1.9.1)
-      '@renovatebot/base-image': 13.142.5(zod@4.6.7)
+      '@renovatebot/base-image': 13.142.7(zod@4.6.7)
       '@renovatebot/detect-tools': 4.0.23
       '@renovatebot/good-enough-parser': 2.0.1
       '@renovatebot/osv-offline': 3.0.12(supports-color@7.2.0)
@@ -20383,50 +20397,6 @@ snapshots:
     dependencies:
       '@types/chai': 5.2.3
       '@vitest/mocker': 5.0.5(@types/node@26.6.5)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@5.9.3)(yaml@2.9.1)
-      chai: 6.3.0
-      es-module-lexer: 2.3.2
-      expect-type: 1.4.0
-      magic-string: 1.4.3
-      obug: 3.0.0
-      picomatch: 4.0.7
-      std-env: 4.3.0
-      tinybench: 6.2.2
-      tinyexec: 1.3.1
-      tinyglobby: 0.2.17
-      vite: '@voidzero-dev/vite-plus-core@1.3.0(@types/node@26.6.5)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@5.9.3)(yaml@2.9.1)'
-      why-is-node-running: 3.2.1
-    optionalDependencies:
-      '@opentelemetry/api': 1.9.1
-      '@types/node': 26.6.5
-      '@vitest/browser-preview': 5.0.5(@types/node@26.6.5)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@5.9.3)(vitest@5.0.5)(yaml@2.9.1)
-      '@vitest/ui': 5.0.5(vitest@5.0.5)
-    transitivePeerDependencies:
-      - '@arethetypeswrong/core'
-      - '@typescript/native-preview'
-      - '@vitejs/devtools'
-      - '@volar/typescript'
-      - '@vue/language-core'
-      - esbuild
-      - jiti
-      - less
-      - msw
-      - publint
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-      - tsx
-      - typescript
-      - unplugin-unused
-      - unrun
-      - vue-tsc
-      - yaml
-
-  vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/browser-preview@5.0.5)(@vitest/ui@5.0.5)(@voidzero-dev/vite-plus-core@1.3.0(@types/node@26.6.5)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@5.9.3)(yaml@2.9.1))(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1):
-    dependencies:
-      '@types/chai': 5.2.3
-      '@vitest/mocker': 5.0.5(@types/node@26.6.5)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1)
       chai: 6.3.0
       es-module-lexer: 2.3.2
       expect-type: 1.4.0
