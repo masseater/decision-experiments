@@ -205,7 +205,7 @@ catalogs:
       version: 0.67.0
     '@jupyterlab/nbformat':
       specifier: ^4.5.11
-      version: 4.5.11
+      version: 4.6.4
     '@kenjiuno/msgreader':
       specifier: ^1.28.0
       version: 1.29.0
@@ -783,7 +783,7 @@ importers:
         version: 4.0.5(effect@4.0.5)
       '@jupyterlab/nbformat':
         specifier: 'catalog:'
-        version: 4.5.11
+        version: 4.6.4
       '@kenjiuno/msgreader':
         specifier: 'catalog:'
         version: 1.29.0
@@ -2307,8 +2307,8 @@ packages:
   '@js-sdsl/ordered-map@4.4.2':
     resolution: {integrity: sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==}
 
-  '@jupyterlab/nbformat@4.5.11':
-    resolution: {integrity: sha512-i4cAYClq+zmMCccCfkuQEmXGbrwfO9Agi/mYTij52dlnhXSnHVO64fZ1udmUrve8iJ1ZN/fo33bbyieJJPw3qQ==}
+  '@jupyterlab/nbformat@4.6.4':
+    resolution: {integrity: sha512-p0oIcD2Ok4nh6qAxehVNjNjzzlKgkCxF4cNId1mVd0xf/glh+xXLJLhBkel8hI5yqVY07AUuu1izZge2XF6Rcg==}
 
   '@kenjiuno/decompressrtf@0.1.4':
     resolution: {integrity: sha512-v9c/iFz17jRWyd2cRnrvJg4VOg/4I/VCk+bG8JnoX2gJ9sAesPzo3uTqcmlVXdpasTI8hChpBVw00pghKe3qTQ==}
@@ -11500,7 +11500,7 @@ snapshots:
 
   '@js-sdsl/ordered-map@4.4.2': {}
 
-  '@jupyterlab/nbformat@4.5.11':
+  '@jupyterlab/nbformat@4.6.4':
     dependencies:
       '@lumino/coreutils': 2.2.3
 
