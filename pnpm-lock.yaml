@@ -331,7 +331,7 @@ catalogs:
       version: 0.3.0
     officeparser:
       specifier: ^8.1.1
-      version: 8.2.0
+      version: 8.3.0
     papaparse:
       specifier: ^5.7.0
       version: 5.7.0
@@ -843,7 +843,7 @@ importers:
         version: 0.3.0
       officeparser:
         specifier: 'catalog:'
-        version: 8.2.0(supports-color@8.1.1)
+        version: 8.3.0(supports-color@8.1.1)
       papaparse:
         specifier: 'catalog:'
         version: 5.7.0
@@ -8314,8 +8314,8 @@ packages:
     resolution: {integrity: sha512-5vvB5+W7ePv+p3uqxi+RcW1XAzLW0/hxt3/4X4Lc4qHudzOhmBiBwOY6DRob4WnanAEGvNcLjF+KNOufrUoEQw==}
     engines: {node: '>=12.20.0'}
 
-  officeparser@8.2.0:
-    resolution: {integrity: sha512-9NNNRbtuMQmxXySS3SzXty1Z+sGd8L0rQJLn0Rl+UUv60uW5G/tajK5oIhJchrLiyGvOfpIe9CbDP+xeiV5RZw==}
+  officeparser@8.3.0:
+    resolution: {integrity: sha512-4lhLV9gSSVijzMyTuK0Y01PVUTNq9FoFljqRm6XRl4eEH4Aow4xokW965FSZuaS6vPr3zrTOi2iXfBaDwOObbg==}
     engines: {node: '>=22.13.0'}
     hasBin: true
     peerDependencies:
@@ -18329,7 +18329,7 @@ snapshots:
 
   obug@3.0.0: {}
 
-  officeparser@8.2.0(supports-color@8.1.1):
+  officeparser@8.3.0(supports-color@8.1.1):
     dependencies:
       '@xmldom/xmldom': 0.9.12
       fflate: 0.8.3
