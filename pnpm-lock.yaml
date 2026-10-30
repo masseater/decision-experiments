@@ -273,8 +273,8 @@ catalogs:
       specifier: 10.13.0
       version: 10.13.0
     eslint-plugin-baseline-js:
-      specifier: 0.7.5
-      version: 0.7.5
+      specifier: 0.7.6
+      version: 0.7.6
     eslint-plugin-drizzle:
       specifier: 0.2.3
       version: 0.2.3
@@ -503,7 +503,7 @@ importers:
         version: 10.13.0(jiti@2.7.0)(supports-color@7.2.0)
       eslint-plugin-baseline-js:
         specifier: 'catalog:'
-        version: 0.7.5(eslint@10.13.0(jiti@2.7.0)(supports-color@7.2.0))
+        version: 0.7.6(eslint@10.13.0(jiti@2.7.0)(supports-color@7.2.0))
       eslint-plugin-drizzle:
         specifier: 'catalog:'
         version: 0.2.3(eslint@10.13.0(jiti@2.7.0)(supports-color@7.2.0))
@@ -932,7 +932,7 @@ importers:
     dependencies:
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/bf02b73aeace1151544a761c82af14db1b3d5db7#path:/libs/ui(@types/react@19.3.0)(effect@4.0.5)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/361f0582fd4b4497ffa56be949f604f1ed427dc3#path:/libs/ui(@types/react@19.3.0)(effect@4.0.5)(react@19.3.1)(tailwindcss@4.3.3)
       '@tanstack/react-query':
         specifier: catalog:stack
         version: 5.104.5(@types/react@19.3.0)(react@19.3.1)
@@ -2420,8 +2420,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/bf02b73aeace1151544a761c82af14db1b3d5db7#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-cXgHTSlUnOO1TkzguZB4fUyf7cOhqXN2uQ5AwZr0+BaysDaa2fAtdDGzEu4S18p/dC75cEAfDFyNtln70sUSbA==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/bf02b73aeace1151544a761c82af14db1b3d5db7}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/361f0582fd4b4497ffa56be949f604f1ed427dc3#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-PUyuFx6gWgaFLBhNjSIHAndSPi33MEqtWHOLG+Hyk27R7Nzu+wfMvhv7CKgP1KGmjKcWlxxjMs+KdecLEuSOcg==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/361f0582fd4b4497ffa56be949f604f1ed427dc3}
     version: 0.0.0
     peerDependencies:
       effect: 4.0.5
@@ -6571,8 +6571,8 @@ packages:
     resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
     engines: {node: '>=12'}
 
-  eslint-plugin-baseline-js@0.7.5:
-    resolution: {integrity: sha512-AQ0Z24q/ZVwceC6m09D3HVD7Gi/+EgIzPjLOBONai5W6Jl2Gl0TA7dgwhtD/YuNIQAfn1Dr3GrQEqfT4hNKwAA==}
+  eslint-plugin-baseline-js@0.7.6:
+    resolution: {integrity: sha512-z2PEC/N6WSrcmYunFVutSKRqWURnXbdkyDboal4dztiYdC8OjaiaaJ1xDtWCV1lXR8VWbcxosICzPNz0N9enPQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       eslint: '>=9.29.0 <11'
@@ -11638,7 +11638,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/bf02b73aeace1151544a761c82af14db1b3d5db7#path:/libs/ui(@types/react@19.3.0)(effect@4.0.5)(react@19.3.1)(tailwindcss@4.3.3)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/361f0582fd4b4497ffa56be949f604f1ed427dc3#path:/libs/ui(@types/react@19.3.0)(effect@4.0.5)(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.82(@types/react@19.3.0)(react@19.3.1)
@@ -16218,7 +16218,7 @@ snapshots:
 
   escape-string-regexp@5.0.0: {}
 
-  eslint-plugin-baseline-js@0.7.5(eslint@10.13.0(jiti@2.7.0)(supports-color@7.2.0)):
+  eslint-plugin-baseline-js@0.7.6(eslint@10.13.0(jiti@2.7.0)(supports-color@7.2.0)):
     dependencies:
       eslint: 10.13.0(jiti@2.7.0)(supports-color@7.2.0)
       eslint-plugin-es-x: 9.7.0(eslint@10.13.0(jiti@2.7.0)(supports-color@7.2.0))
