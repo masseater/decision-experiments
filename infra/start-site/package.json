@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     "./vite": "./src/vite.ts",
-    "./alchemy": "./src/app-prefix.ts"
+    "./alchemy": "./src/app-prefix.ts",
+    "./site": "./src/static-site.ts"
   },
   "scripts": {
     "test": "vp test run"
