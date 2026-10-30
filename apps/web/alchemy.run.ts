@@ -1,5 +1,6 @@
+import { startStaticSite } from "@decision-experiments/start-site/site";
 import { Stack } from "alchemy";
-import { Website, Workers, providers, state } from "alchemy/Cloudflare";
+import { Workers, providers, state } from "alchemy/Cloudflare";
 import type { InferEnv } from "alchemy/Cloudflare";
 import { Config, Effect, Option, Schema } from "effect";
 
@@ -7,21 +8,11 @@ import { APP_NAME, CI_TELEMETRY_AUDIENCE, requireAppPrefix } from "./app-name.ts
 import { BASE_PATH } from "./base-path.ts";
 import { edgeGuard } from "./edge-guard.ts";
 
-const ZONE = "masseater.dev";
-
 const COMPATIBILITY = { date: "2026-08-25" } as const;
 
 const OWNED_ZONE = Option.none<string>();
 
-const web = Website.StaticSite("Web", {
-  compatibility: COMPATIBILITY,
-  logpush: true,
-  routes: [{ pattern: `${ZONE}${BASE_PATH}*`, zoneName: ZONE }],
-  command: "vp build",
-  outdir: "dist/client",
-  assets: { htmlHandling: "auto-trailing-slash" },
-  dev: { command: "vp dev" },
-});
+const web = startStaticSite(BASE_PATH, COMPATIBILITY);
 
 const ciTelemetry = Effect.gen(function* ciTelemetry() {
   const GITHUB_REPOSITORY = yield* Config.schema(Schema.String, "GITHUB_REPOSITORY").pipe(
