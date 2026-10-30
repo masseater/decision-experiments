@@ -160,7 +160,7 @@ export default defineConfig({
         {
           capIsNewExceptions: ["CloudflareApiLive", "Stack"],
           capIsNewExceptionPattern:
-            "^(Argument|Config|Context|Data|Flag|Schema|AnalyticsEngine|D1|Rum|Ruleset|Website|Workers|Zone)\\.",
+            "^(Argument|Config|Context|Data|Flag|Schema|AnalyticsEngine|D1|Ruleset|Website|Workers|Zone)\\.",
         },
       ],
       "typescript/no-empty-interface": ["error", { allowSingleExtends: true }],
