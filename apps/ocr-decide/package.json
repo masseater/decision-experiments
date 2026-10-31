@@ -34,6 +34,7 @@
     "tailwindcss": "catalog:stack"
   },
   "devDependencies": {
+    "@alchemy.run/cloudflare": "catalog:stack",
     "@cloudflare/workers-types": "catalog:",
     "@decision-experiments/start-site": "workspace:*",
     "@effect/platform-node": "catalog:",

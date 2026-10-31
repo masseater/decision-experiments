@@ -1,7 +1,7 @@
+import { Workers, providers, state } from "@alchemy.run/cloudflare";
+import type { InferEnv } from "@alchemy.run/cloudflare";
 import { startStaticSite } from "@decision-experiments/start-site/site";
 import { Stack } from "alchemy";
-import { Workers, providers, state } from "alchemy/Cloudflare";
-import type { InferEnv } from "alchemy/Cloudflare";
 import { Config, Effect, Option, Schema } from "effect";
 
 import { APP_NAME, CI_TELEMETRY_AUDIENCE, requireAppPrefix } from "./app-name.ts";

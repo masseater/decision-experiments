@@ -1,6 +1,6 @@
+import { providers, state } from "@alchemy.run/cloudflare";
 import { startStaticSite } from "@decision-experiments/start-site/site";
 import { Stack } from "alchemy";
-import { providers, state } from "alchemy/Cloudflare";
 import { Effect } from "effect";
 
 import { APP_NAME, requireAppPrefix } from "./app-name.ts";

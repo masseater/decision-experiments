@@ -1,4 +1,4 @@
-import { Website } from "alchemy/Cloudflare";
+import { Website } from "@alchemy.run/cloudflare";
 import { Effect } from "effect";
 
 const ZONE = "masseater.dev";
