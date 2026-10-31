@@ -427,7 +427,6 @@ overrides:
   eslint-plugin-react-hooks>zod-validation-error: ^5.0.0
   http-cache-semantics@<=4.2.0: ^4.3.0
   lodash@<=4.17.23: ^4.18.1
-  seroval@<=1.6.2: ^1.6.3
   shell-quote@>=1.8.4 <1.11.0: ^1.11.0
   source-map-js@>=1.0.0 <1.2.2: ^1.2.2
   '@modelcontextprotocol/server@>=2.0.0 <2.3.0': ^2.3.0
@@ -439,9 +438,7 @@ overrides:
   glob@>=9.0.0 <=14.0.1: ^14.0.2
   minimatch@<11.0.1: ^11.0.1
   qs@>=6.7.0 <=6.16.0: ^6.16.1
-  seroval@<=1.6.7: ^1.6.8
-  seroval@>=1.5.5 <1.6.10: ^1.6.10
-  seroval@>=1.6.0 <1.6.11: ^1.6.11
+  seroval@<1.6.11: ^1.6.11
 
 packageExtensionsChecksum: sha256-wCOt3MnawPNKO/n+q8PpaVo/MBN04Aio7Zf6lyi41E4=
 
@@ -949,7 +946,7 @@ importers:
     dependencies:
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/75aa7ee92b61ab2f9ce6ced2ac6f59f0e3146de0#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/e45959c159ad2389952c34dee763712dc50f938d#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
       '@tanstack/react-query':
         specifier: catalog:stack
         version: 5.104.5(@types/react@19.3.0)(react@19.3.1)
@@ -2332,8 +2329,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/75aa7ee92b61ab2f9ce6ced2ac6f59f0e3146de0#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-/o4PS9GVGv9rPLdCFkH06QKvCGkiOL8amlLfv+x5Kfd7ewGFgoG1/lZAQ7A5dbHh8HC3tlF8mZhgWEvUI81ZBw==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/75aa7ee92b61ab2f9ce6ced2ac6f59f0e3146de0}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/e45959c159ad2389952c34dee763712dc50f938d#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-tyRW33bsJlQF0hhc51lmgW2kwe/wQv7tjz6+8U3rFKo8XetaHKmdHF/B3GV4wExsIzmU1WuV3C9LqeT3CTPZ3w==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/e45959c159ad2389952c34dee763712dc50f938d}
     version: 0.0.0
     peerDependencies:
       effect: 4.0.7
@@ -8629,17 +8626,13 @@ packages:
     resolution: {integrity: sha512-HXuLAX2pu/UByPpaeo/TaMfvMIi+1QqIoPJYCcAtU8QkVNwgR6MPlGuCQTErV1JwraaMbYaWVIBX7mppzGLATQ==}
     engines: {node: '>=10'}
     peerDependencies:
-      seroval: ^1.6.3
+      seroval: ^1.6.11
 
   seroval-plugins@1.6.7:
     resolution: {integrity: sha512-4Nk35ttD3DTDJW4hgw5StsVAPeU6qnDFnULAouw6tQ7oLTV/ICXrWpsXo2EE52eSP2joUMazbVf52mFEcADqRw==}
     engines: {node: '>=10'}
     peerDependencies:
-      seroval: ^1.6.3
-
-  seroval@1.6.7:
-    resolution: {integrity: sha512-AeDcLh0yO2SFm9W71essgnSzLV9DI8ZH0x0knXn2DMnUZj728mpLbxjlbB6IqKCmqh8JA3cEqRyGoNkt584JcQ==}
-    engines: {node: '>=10'}
+      seroval: ^1.6.11
 
   seroval@1.7.5:
     resolution: {integrity: sha512-UdNgpHdq0gVpme5JdQF+S3jNscnjFr4NTwUWOc1qcOa8OuWZmbV0+YX2hsqxkUZshBpHnpxDZfAKVZG2ugbrJA==}
@@ -11251,7 +11244,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/75aa7ee92b61ab2f9ce6ced2ac6f59f0e3146de0#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/e45959c159ad2389952c34dee763712dc50f938d#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.82(@types/react@19.3.0)(react@19.3.1)
@@ -18610,15 +18603,13 @@ snapshots:
     dependencies:
       type-fest: 0.13.1
 
-  seroval-plugins@1.5.6(seroval@1.6.7):
+  seroval-plugins@1.5.6(seroval@1.7.5):
     dependencies:
-      seroval: 1.6.7
+      seroval: 1.7.5
 
   seroval-plugins@1.6.7(seroval@1.7.5):
     dependencies:
       seroval: 1.7.5
-
-  seroval@1.6.7: {}
 
   seroval@1.7.5: {}
 
@@ -18757,8 +18748,8 @@ snapshots:
   solid-js@1.9.15:
     dependencies:
       csstype: 3.2.3
-      seroval: 1.6.7
-      seroval-plugins: 1.5.6(seroval@1.6.7)
+      seroval: 1.7.5
+      seroval-plugins: 1.5.6(seroval@1.7.5)
 
   solid-presence@0.2.0(solid-js@1.9.15):
     dependencies:

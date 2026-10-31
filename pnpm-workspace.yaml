@@ -104,7 +104,6 @@ overrides:
   eslint-plugin-react-hooks>zod-validation-error: ^5.0.0
   http-cache-semantics@<=4.2.0: ^4.3.0
   lodash@<=4.17.23: ^4.18.1
-  seroval@<=1.6.2: ^1.6.3
   shell-quote@>=1.8.4 <1.11.0: ^1.11.0
   source-map-js@>=1.0.0 <1.2.2: ^1.2.2
   "@modelcontextprotocol/server@>=2.0.0 <2.3.0": ^2.3.0
@@ -116,9 +115,7 @@ overrides:
   glob@>=9.0.0 <=14.0.1: ^14.0.2
   minimatch@<11.0.1: ^11.0.1
   qs@>=6.7.0 <=6.16.0: ^6.16.1
-  seroval@<=1.6.7: ^1.6.8
-  seroval@>=1.5.5 <1.6.10: ^1.6.10
-  seroval@>=1.6.0 <1.6.11: ^1.6.11
+  seroval@<1.6.11: ^1.6.11
 peerDependencyRules:
   allowAny:
     - vite
@@ -148,3 +145,4 @@ auditConfig:
     - GHSA-vfj7-8cjw-p6xm
     - GHSA-hp3w-g68c-fv3c
     - GHSA-mrhx-c7xc-m3w5
+    - GHSA-gcqx-w48m-w2h4
