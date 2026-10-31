@@ -243,7 +243,7 @@ export default defineConfig({
         ],
       },
       "test-all": "vp run -r test",
-      eslint: "NODE_OPTIONS=--max-old-space-size=6144 eslint --max-warnings 0 .",
+      eslint: "NODE_OPTIONS=--max-old-space-size=8192 eslint --max-warnings 0 .",
       syncpack: "syncpack lint",
       "steiger-all": "vp run -r steiger",
       "fallow-all": "vp run -r fallow",
