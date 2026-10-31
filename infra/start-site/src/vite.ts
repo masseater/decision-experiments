@@ -10,10 +10,11 @@ import type { UserConfig } from "vite-plus";
 interface SiteOptions {
   readonly basePath: string;
   readonly searchIndexOrigin: Option.Option<string>;
-  readonly sitemapFile: string;
 }
 
-const startSiteConfig = ({ basePath, searchIndexOrigin, sitemapFile }: SiteOptions): UserConfig =>
+const SITEMAP_FILE = "sitemap.xml";
+
+const startSiteConfig = ({ basePath, searchIndexOrigin }: SiteOptions): UserConfig =>
   defineConfig({
     base: `${basePath}/`,
     resolve: { tsconfigPaths: true },
@@ -34,7 +35,7 @@ const startSiteConfig = ({ basePath, searchIndexOrigin, sitemapFile }: SiteOptio
         pages: [{ path: "/" }],
         sitemap: Option.match(searchIndexOrigin, {
           onNone: () => ({ enabled: false }),
-          onSome: (host) => ({ host, outputPath: sitemapFile }),
+          onSome: (host) => ({ host, outputPath: SITEMAP_FILE }),
         }),
       }),
       rsc(),

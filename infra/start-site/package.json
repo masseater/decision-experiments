@@ -12,6 +12,7 @@
     "test": "vp test run"
   },
   "dependencies": {
+    "@alchemy.run/cloudflare": "catalog:stack",
     "@tailwindcss/vite": "4.3.3",
     "@tanstack/devtools-vite": "0.8.5",
     "@tanstack/react-start": "catalog:stack",

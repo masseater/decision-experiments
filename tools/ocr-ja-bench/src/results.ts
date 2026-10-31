@@ -86,8 +86,7 @@ const makeResults = Effect.gen(function* makeResults() {
   );
   return Results.of({
     pages: Effect.all([synthetic, jaWildText]).pipe(
-      Effect.map((groups) => groups.flat()),
-      Effect.mapError(asResultsError),
+      Effect.mapBoth({ onSuccess: (groups) => groups.flat(), onFailure: asResultsError }),
     ),
     read: (engine) =>
       fs.readFileString(resultsPath(engine.id)).pipe(
