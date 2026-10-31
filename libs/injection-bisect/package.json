@@ -83,5 +83,8 @@
     "@types/node": "catalog:",
     "@types/papaparse": "catalog:",
     "vite-plus": "catalog:stack"
+  },
+  "engines": {
+    "node": ">=26"
   }
 }
