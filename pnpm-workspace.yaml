@@ -90,7 +90,7 @@ catalogs:
     lucide-react: 1.63.0
     radix-ui: 1.8.1
     renovate: 44.190.2
-    steiger: 0.8.0
+    steiger: 0.8.1
     tailwindcss: 4.3.3
     textlint: 15.8.0
     typescript: 7.0.2
