@@ -133,7 +133,7 @@ packageExtensions:
   safer-buffer@2.1.2:
     dependencies:
       buffer: ^6.0.3
-  "@feature-sliced/steiger-plugin@0.8.0":
+  "@feature-sliced/steiger-plugin":
     dependencies:
       "@steiger/toolkit": 0.2.3
 patchedDependencies:
