@@ -168,8 +168,8 @@ catalogs:
       specifier: 0.51.0
       version: 0.51.0
     '@cloudflare/workers-types':
-      specifier: 5.20261028.1
-      version: 5.20261028.1
+      specifier: 5.20261029.1
+      version: 5.20261029.1
     '@commitlint/cli':
       specifier: 21.2.4
       version: 21.2.4
@@ -618,7 +618,7 @@ importers:
         version: 2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.2.1(@opentelemetry/api@1.9.1)))(@types/node@26.6.6)(alchemy@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.2.1(@opentelemetry/api@1.9.1)))(@types/node@26.6.6)(@types/react@19.3.0)(effect@4.0.7)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.0.2)(ws@8.22.0))(effect@4.0.7)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1)
       '@cloudflare/workers-types':
         specifier: 'catalog:'
-        version: 5.20261028.1
+        version: 5.20261029.1
       '@decision-experiments/start-site':
         specifier: workspace:*
         version: link:../../infra/start-site
@@ -715,7 +715,7 @@ importers:
         version: 2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.2.1(@opentelemetry/api@1.9.1)))(@types/node@26.6.6)(alchemy@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.2.1(@opentelemetry/api@1.9.1)))(@types/node@26.6.6)(@types/react@19.3.0)(effect@4.0.7)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.0.2)(ws@8.22.0))(effect@4.0.7)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1)
       '@cloudflare/workers-types':
         specifier: 'catalog:'
-        version: 5.20261028.1
+        version: 5.20261029.1
       '@decision-experiments/start-site':
         specifier: workspace:*
         version: link:../../infra/start-site
@@ -946,7 +946,7 @@ importers:
     dependencies:
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/fc1b6af93ec5a94ce6ddb8d24b3a3a8ab886c073#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/c71b5e772577b46a7b056de27b6f84d2a2be0488#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
       '@tanstack/react-query':
         specifier: catalog:stack
         version: 5.105.0(@types/react@19.3.0)(react@19.3.1)
@@ -1479,11 +1479,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@5.20261022.1':
-    resolution: {integrity: sha512-irp6lxKgWTnIquva6iSaJhV9vCdGlhLIw3+vVOj1Glge38LnKb3jMQiB53gaUB+EgN47JVVg58kJ703V/00JYw==}
-
-  '@cloudflare/workers-types@5.20261028.1':
-    resolution: {integrity: sha512-a0Ceo9MtNZej9s7iZAvYD0txFXlFb1le4rhJ+x4mrC02hsXy4T0RHCqpX1zEOnrI1504Ro8HwJQtKMh2/MVDCw==}
+  '@cloudflare/workers-types@5.20261029.1':
+    resolution: {integrity: sha512-HwLwogkO/PnT4oXC8Y6wMQpgYbT3TEbWHytHV56F2tz9eLJBcgf4/VMjk5FYriAYHX6JOutS+tU6miuopKfCKw==}
 
   '@commitlint/cli@21.2.4':
     resolution: {integrity: sha512-g3M/wrQdElqGH5vROIeL2QiYIxrzqUkhCgsDyDlWfKEyQdCt10OyMB28W2cJtpZ+VNGMvmaN923infr1hOfyrg==}
@@ -2329,8 +2326,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/fc1b6af93ec5a94ce6ddb8d24b3a3a8ab886c073#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-PiRYVOfQhaXoWkM7e09RKUhuDg8rb+ZXqpVr5EXZAVv1l00KCHY/XaMH75Mo364GYEtISAtWSt3je/dTY4wWiA==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/fc1b6af93ec5a94ce6ddb8d24b3a3a8ab886c073}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/c71b5e772577b46a7b056de27b6f84d2a2be0488#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-K0hP971l4lN2cEFr6vEYzYZppKe9vtafJzZLm4cZYpk/4KluHjEWuNupUAG2BMyIyXuZeG57CVdrT5Ix+UQewQ==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/c71b5e772577b46a7b056de27b6f84d2a2be0488}
     version: 0.0.0
     peerDependencies:
       effect: 4.0.7
@@ -10431,9 +10428,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20261012.1':
     optional: true
 
-  '@cloudflare/workers-types@5.20261022.1': {}
-
-  '@cloudflare/workers-types@5.20261028.1': {}
+  '@cloudflare/workers-types@5.20261029.1': {}
 
   '@commitlint/cli@21.2.4(conventional-commits-parser@7.1.2)(typescript@5.9.3)':
     dependencies:
@@ -10630,7 +10625,7 @@ snapshots:
 
   '@effect/sql-d1@4.0.7(effect@4.0.7)':
     dependencies:
-      '@cloudflare/workers-types': 5.20261022.1
+      '@cloudflare/workers-types': 5.20261029.1
       effect: 4.0.7
 
   '@effect/tsgo-darwin-arm64@0.63.0':
@@ -11217,7 +11212,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/fc1b6af93ec5a94ce6ddb8d24b3a3a8ab886c073#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/c71b5e772577b46a7b056de27b6f84d2a2be0488#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.82(@types/react@19.3.0)(react@19.3.1)
