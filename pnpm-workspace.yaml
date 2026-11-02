@@ -87,7 +87,7 @@ catalogs:
     alchemy: 2.0.0-beta.84
     effect: 4.0.7
     fallow: 3.37.0
-    lucide-react: 1.63.0
+    lucide-react: 1.64.0
     radix-ui: 1.8.1
     renovate: 44.190.2
     steiger: 0.8.1
