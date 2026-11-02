@@ -577,8 +577,8 @@ importers:
         specifier: workspace:*
         version: link:../../libs/ocr-decide
       '@tanstack/react-devtools':
-        specifier: 0.10.13
-        version: 0.10.13(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.15)
+        specifier: 0.10.14
+        version: 0.10.14(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.15)
       '@tanstack/react-query':
         specifier: catalog:stack
         version: 5.105.0(@types/react@19.3.0)(react@19.3.1)
@@ -671,8 +671,8 @@ importers:
         specifier: workspace:*
         version: link:../../libs/injection-bisect
       '@tanstack/react-devtools':
-        specifier: 0.10.13
-        version: 0.10.13(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.15)
+        specifier: 0.10.14
+        version: 0.10.14(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.15)
       '@tanstack/react-query':
         specifier: catalog:stack
         version: 5.105.0(@types/react@19.3.0)(react@19.3.1)
@@ -946,7 +946,7 @@ importers:
     dependencies:
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/3a87fc6e61e5d8e6ca0273d25c9fc87e1389c1b4#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/0e250a9e5a255d2f2d5289be02e5af060f57bb67#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
       '@tanstack/react-query':
         specifier: catalog:stack
         version: 5.105.0(@types/react@19.3.0)(react@19.3.1)
@@ -2326,8 +2326,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/3a87fc6e61e5d8e6ca0273d25c9fc87e1389c1b4#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-Q7MSeWbXfzC/5WVbgFsdxLLbqi1MnEhEyqrTy9ZnkhPByPzayY3g8Zu+ONGcP4vtdEOJ/NSgn920WiY0hKp0Mw==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/3a87fc6e61e5d8e6ca0273d25c9fc87e1389c1b4}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/0e250a9e5a255d2f2d5289be02e5af060f57bb67#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-sTiIdnnUwdLnQMmbfkr1vNQZggom6e7ph1CtQrqMV4Oym1v9vZHt3b73J+oHFKTbxRKTPWmDrLAKEbHaQ6+cPQ==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/0e250a9e5a255d2f2d5289be02e5af060f57bb67}
     version: 0.0.0
     peerDependencies:
       effect: 4.0.7
@@ -4431,11 +4431,11 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@tanstack/devtools-ui@0.7.1':
-    resolution: {integrity: sha512-3xQ/ezZ2qVNszhjpCN2N3jn7uHc2J1PMgcyjHzH4XZBt9xAQyMMcPNoR2cd7rzReyxWoJpZUWiDBmOJiCtLj9A==}
+  '@tanstack/devtools-ui@0.7.2':
+    resolution: {integrity: sha512-Ij6EpEXkx13OOVMJPCJpMzWzVV/mcsqfXM4d+ZjqCrQtgbt7cd2rsCseuKuYNmuGhJiOLYNXzYU5da7UqCY54g==}
     engines: {node: '>=18'}
     peerDependencies:
-      solid-js: '>=1.9.7'
+      solid-js: ^1.9.13
 
   '@tanstack/devtools-vite@0.8.6':
     resolution: {integrity: sha512-CkaVqh3P7cJmQ6mMIxQfEmmR8gwlmgRCcoiWOMLigHaPobrrwTqsZvKqvYRHBybZ3ZT1ZSBj5TwlP7ukJJcRlg==}
@@ -4443,12 +4443,11 @@ packages:
     peerDependencies:
       vite: ^6.0.0 || ^7.0.0 || ^8.0.0
 
-  '@tanstack/devtools@0.15.0':
-    resolution: {integrity: sha512-KyS7Qi82Eq9yG8C+uae3ikAPb+D5rfzVhvOOjXVAHZ/64s6TWJlDWpREw1FrHIYZaI7paErpsExSSKlF5BKA/A==}
+  '@tanstack/devtools@0.16.0':
+    resolution: {integrity: sha512-SgmsZ1RwWgohY+S2GhZ1bCttZ+bICb8EKaI1DUFBrs/CXL67IaW25TouoHflj5fGzrppfDM2ld56+TLuzMwJSA==}
     engines: {node: '>=18'}
-    hasBin: true
     peerDependencies:
-      solid-js: '>=1.9.7'
+      solid-js: ^1.9.13
 
   '@tanstack/eslint-plugin-query@5.105.0':
     resolution: {integrity: sha512-nQTKJa7RMzhHAl03fVchPDDgt341Onxj7MmZTNt754awyQzjCLKLM+Ki36Y6gwq8UBz8M/xDxEg8it/JOTWifQ==}
@@ -4489,8 +4488,8 @@ packages:
   '@tanstack/query-devtools@5.105.0':
     resolution: {integrity: sha512-vRJf9XRHB+P2aMSAEHWtMLsAf1nC9NSsHVqSHiT/FZYU/+5LEo2BOrXKskURQnJEzg6whaBeP6iMn0PS30KJrQ==}
 
-  '@tanstack/react-devtools@0.10.13':
-    resolution: {integrity: sha512-r0cdB/14+st2Vxl/1Bodlyq4VC8pf9SykLQDYbGHDc1+V146WQo5B3KlYLkfyxD9Q/6+9NPRQHZyl8fvZVMdRA==}
+  '@tanstack/react-devtools@0.10.14':
+    resolution: {integrity: sha512-wFoNpqiU03MDbY1RljhX4vMUoGWwqpa5AZthWEaJRrojBFWFoB57lzzIM5r+EPGi+BsEX+OcXkn8Zkfoe4hGiA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@types/react': '>=16.8'
@@ -11221,7 +11220,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/3a87fc6e61e5d8e6ca0273d25c9fc87e1389c1b4#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/0e250a9e5a255d2f2d5289be02e5af060f57bb67#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.82(@types/react@19.3.0)(react@19.3.1)
@@ -13021,7 +13020,7 @@ snapshots:
 
   '@tanstack/devtools-event-client@0.5.0': {}
 
-  '@tanstack/devtools-ui@0.7.1(csstype@3.2.3)(solid-js@1.9.15)':
+  '@tanstack/devtools-ui@0.7.2(csstype@3.2.3)(solid-js@1.9.15)':
     dependencies:
       clsx: 2.1.1
       dayjs: 1.11.23
@@ -13043,7 +13042,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@tanstack/devtools@0.15.0(csstype@3.2.3)(solid-js@1.9.15)':
+  '@tanstack/devtools@0.16.0(csstype@3.2.3)(solid-js@1.9.15)':
     dependencies:
       '@neodrag/core': 3.0.0-next.11
       '@neodrag/solid': 3.0.0-next.11(@neodrag/core@3.0.0-next.11)(solid-js@1.9.15)
@@ -13052,7 +13051,7 @@ snapshots:
       '@solid-primitives/resize-observer': 2.2.0(solid-js@1.9.15)
       '@tanstack/devtools-client': 0.0.8
       '@tanstack/devtools-event-bus': 0.4.3
-      '@tanstack/devtools-ui': 0.7.1(csstype@3.2.3)(solid-js@1.9.15)
+      '@tanstack/devtools-ui': 0.7.2(csstype@3.2.3)(solid-js@1.9.15)
       clsx: 2.1.1
       goober: 2.1.19(csstype@3.2.3)
       solid-js: 1.9.15
@@ -13113,9 +13112,9 @@ snapshots:
     transitivePeerDependencies:
       - csstype
 
-  '@tanstack/react-devtools@0.10.13(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.15)':
+  '@tanstack/react-devtools@0.10.14(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.15)':
     dependencies:
-      '@tanstack/devtools': 0.15.0(csstype@3.2.3)(solid-js@1.9.15)
+      '@tanstack/devtools': 0.16.0(csstype@3.2.3)(solid-js@1.9.15)
       '@types/react': 19.3.0
       '@types/react-dom': 19.3.0(@types/react@19.3.0)
       react: 19.3.1
