@@ -89,7 +89,7 @@ catalogs:
     fallow: 3.37.0
     lucide-react: 1.63.0
     radix-ui: 1.8.1
-    renovate: 44.190.2
+    renovate: 44.198.0
     steiger: 0.8.1
     tailwindcss: 4.3.3
     textlint: 15.8.0
