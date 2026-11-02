@@ -159,8 +159,7 @@ export default defineConfig({
         "error",
         {
           capIsNewExceptions: ["CloudflareApiLive", "Stack"],
-          capIsNewExceptionPattern:
-            "^(Argument|Config|Context|Data|Flag|Schema|AnalyticsEngine|D1|Ruleset|Website|Workers|Zone)\\.",
+          capIsNewExceptionPattern: String.raw`^(Argument|Config|Context|Data|Flag|Schema|AnalyticsEngine|D1|Ruleset|Website|Workers|Zone)\.`,
         },
       ],
       "typescript/no-empty-interface": ["error", { allowSingleExtends: true }],
@@ -215,7 +214,7 @@ export default defineConfig({
         },
       },
       verify: {
-        command: "vp check",
+        command: "vp check --deny-warnings",
         cache: {
           env: ["OPENROUTER_API_KEY"],
           untrackedEnv: [
