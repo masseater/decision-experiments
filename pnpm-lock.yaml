@@ -302,9 +302,6 @@ catalogs:
     ical.js:
       specifier: ^2.2.1
       version: 2.2.1
-    jose:
-      specifier: 6.2.14
-      version: 6.2.14
     jsonc-parser:
       specifier: ^3.3.1
       version: 3.3.1
@@ -768,9 +765,6 @@ importers:
       effect:
         specifier: 4.0.7
         version: 4.0.7
-      jose:
-        specifier: 'catalog:'
-        version: 6.2.14
       lucide-react:
         specifier: catalog:stack
         version: 1.66.0(@types/react@19.3.0)(react@19.3.1)
@@ -846,7 +840,7 @@ importers:
         version: 4.0.7(effect@4.0.7)(redis@6.2.1(@opentelemetry/api@1.9.1))
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/e44e8036819056931bf60cdcb134fa7799689253#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/7603400229929f6f49426676b11c9da51da6f1dd#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
       '@tailwindcss/vite':
         specifier: 4.3.3
         version: 4.3.3(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@5.9.3)(yaml@2.9.1))
@@ -1041,7 +1035,7 @@ importers:
         version: 4.0.7(effect@4.0.7)(react@19.3.1)(scheduler@0.28.0)
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/e44e8036819056931bf60cdcb134fa7799689253#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/7603400229929f6f49426676b11c9da51da6f1dd#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
       '@tanstack/react-devtools':
         specifier: 0.10.14
         version: 0.10.14(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.15)
@@ -2467,8 +2461,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/e44e8036819056931bf60cdcb134fa7799689253#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-tnEKg7T3vfr3naLobR9voO4gEwVsG+Nj0Euxj4CKuKhfyatp41iD+uRVccPLigBykNPDATDh/Y5tV/YsVABCdQ==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/e44e8036819056931bf60cdcb134fa7799689253}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/7603400229929f6f49426676b11c9da51da6f1dd#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-yZ4F9FxsQ/PY54PrCNn9eSZmgDmxcBU3nYBEflLq/ZsZ6PsJYBqd+usq1S7rXZZ7eQf1s3rfa+dMPsos+czs6A==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/7603400229929f6f49426676b11c9da51da6f1dd}
     version: 0.0.0
     peerDependencies:
       effect: 4.0.7
@@ -7543,9 +7537,6 @@ packages:
     resolution: {integrity: sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==}
     hasBin: true
 
-  jose@6.2.14:
-    resolution: {integrity: sha512-3JasLuki1NRLQvY4wCoC37KZk4qxoBx2k2aFqLxT84IezqW0bkJKnNtxnZj/Fu1xsQivoc/lytxaRHJoGLjJ1A==}
-
   js-md4@0.3.2:
     resolution: {integrity: sha512-/GDnfQYsltsjRswQhN9fhv3EMw2sCpUdrdxyWDOUK7eyD++r3gRhzgiQgc/x4MAv2i1iuQ4lxO5mvqM3vj4bwA==}
 
@@ -11652,7 +11643,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/e44e8036819056931bf60cdcb134fa7799689253#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/7603400229929f6f49426676b11c9da51da6f1dd#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.82(@types/react@19.3.0)(react@19.3.1)
@@ -17406,8 +17397,6 @@ snapshots:
     optional: true
 
   jiti@2.7.0: {}
-
-  jose@6.2.14: {}
 
   js-md4@0.3.2: {}
 
