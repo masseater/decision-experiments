@@ -110,6 +110,11 @@ jobs:
       - if: steps.head.outputs.latest == 'true'
         run: vp exec alchemy deploy --stage production --yes
         working-directory: apps/ocr-decide
+      - if: steps.head.outputs.latest == 'true'
+        run: .github/scripts/cloudflare-token.sh
+      - if: steps.head.outputs.latest == 'true'
+        run: vp exec alchemy deploy --stage production --yes
+        working-directory: apps/decision-bench
 
   release:
     needs: verify

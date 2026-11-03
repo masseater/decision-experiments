@@ -1,4 +1,4 @@
-import { Zone } from "@alchemy.run/cloudflare";
+import { Rules, Zone } from "@alchemy.run/cloudflare";
 import { Stack, isResourceOfType } from "alchemy";
 import {
   Array as Arr,
@@ -15,18 +15,21 @@ const isZone = (resource: unknown): boolean => isResourceOfType(resource, Zone.Z
 
 const decodeNamed = Schema.decodeUnknownOption(Schema.Struct({ name: Schema.String }));
 
-const prefixOf = (resource: unknown, prefix: string): string =>
+const envPrefixOf = (appName: string): string => `${pipe(appName, Str.replaceAll("-", "_"))}_`;
+
+const prefixOf = (resource: unknown, appName: string): string =>
   Match.value(resource).pipe(
     Match.when(isZone, () => ""),
-    Match.orElse(() => prefix),
+    Match.when(Rules.isList, () => envPrefixOf(appName)),
+    Match.orElse(() => `${appName}-`),
   );
 
 const describeUnprefixed = (
   resource: Readonly<{ FQN: string; Props: unknown }>,
-  prefix: string,
+  appName: string,
 ): readonly string[] =>
   decodeNamed(resource.Props).pipe(
-    Option.filter(({ name }) => !Str.startsWith(prefixOf(resource, prefix))(name)),
+    Option.filter(({ name }) => !Str.startsWith(prefixOf(resource, appName))(name)),
     Option.map(({ name }) => `${resource.FQN}: ${name}`),
     Option.toArray,
   );
@@ -39,18 +42,18 @@ const requireAppPrefix = (appName: string): Effect.Effect<readonly string[], nev
       ...Arr.filter([`Stack: ${name}`], () => name !== appName),
       ...pipe(
         Rec.values(resources),
-        Arr.flatMap((resource) => describeUnprefixed(resource, prefix)),
+        Arr.flatMap((resource) => describeUnprefixed(resource, appName)),
       ),
     ];
     if (Arr.isReadonlyArrayNonEmpty(offenders)) {
       const listed = pipe(offenders, Arr.join(", "));
       return yield* Effect.die(
         new Error(
-          `Alchemy のスタック名は "${appName}"、リソース名は "${prefix}"（Zone はドメインそのもの）で始める: ${listed}`,
+          `Alchemy のスタック名は "${appName}"、リソース名は "${prefix}"（Rules.List は "${envPrefixOf(appName)}"、Zone はドメインそのもの）で始める: ${listed}`,
         ),
       );
     }
     return offenders;
   });
 
-export { requireAppPrefix };
+export { envPrefixOf, requireAppPrefix };

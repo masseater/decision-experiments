@@ -2,7 +2,7 @@
 
 OpenRouter の decision モデルで、文書の中身を安く速く判定できるかを試す実験の置き場である。decision モデルは文章を書かず、問いへの答えの確率だけを返す。そのぶん、大きなモデルに直接判定させるより安く速い。
 
-ここには 2 つの実験がある。injection-bisect は、AI に渡す文書へプロンプトインジェクションが紛れていないかを調べ、紛れていればその箇所を取り除く。ocr-decide は、請求書やレシートの画像を OCR で読み、どの行がどの項目かを decision モデルに選ばせる。
+ここには 3 つの実験がある。injection-bisect は、AI に渡す文書へプロンプトインジェクションが紛れていないかを調べ、紛れていればその箇所を取り除く。ocr-decide は、請求書やレシートの画像を OCR で読み、どの行がどの項目かを decision モデルに選ばせる。decision-bench は、decision モデルが日本語のタスクをどれだけ正しく判定できるかを測るベンチマークで、結果と手法は [docs/decision-bench.md](docs/decision-bench.md) にある。
 
 ## 公開先
 
@@ -10,6 +10,7 @@ OpenRouter の decision モデルで、文書の中身を安く速く判定で�
 - injection-bisect の npm パッケージ: https://www.npmjs.com/package/@r_masseater/injection-bisect
 - ocr-decide のデモと計測結果: https://masseater.dev/ocr-decide/
 - OCR エンジンの日本語の読み取りの比較: https://masseater.dev/ocr-decide/ocr-engines
+- 日本語 decision model ベンチのリーダーボード: https://masseater.dev/decision-bench/
 
 どちらのデモも [OpenRouter の API キー](https://openrouter.ai/settings/keys)を画面に入力して使う。キーはブラウザーから OpenRouter に直接送られ、デモのサーバーには届かない。
 

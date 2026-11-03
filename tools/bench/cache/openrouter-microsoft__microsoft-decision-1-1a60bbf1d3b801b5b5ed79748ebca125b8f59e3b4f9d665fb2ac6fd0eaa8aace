@@ -1,0 +1,1 @@
+[{"_tag":"Success","value":{"status":"answered","decision":{"type":"choice","choice":"entailment","probabilities":{"contradiction":0.00020318911827577537,"entailment":0.9986275382379591,"neutral":0.0011692726437650218}},"latencyMs":188,"costUsd":0.000004914}},null]
