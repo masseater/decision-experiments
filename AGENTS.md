@@ -44,7 +44,7 @@ release. Add a tool name to select part of the graph. For example, run
 
 ## コマンド
 
-- `vp run verify` は、ルートの `vp check` にテスト・ESLint・syncpack・textlint と yomiyasu・renovate・actionlint と zizmor・steiger・fallow・gitleaks・audit を足した検査である。
+- `vp run verify` は、ルートの `vp check` にテスト・syncpack・textlint と yomiyasu・renovate・actionlint と zizmor・steiger・fallow・gitleaks・audit を足した検査である。
 - `vp check` の decision lint は `apps/*/src` だけに掛かり、`.env` の `OPENROUTER_API_KEY` で判定する。
 - 1 つのテストファイルは、パッケージのディレクトリで `vp test run src/<name>.test.ts` として動かす。ルートの `vp run --filter <package> test -- <file>` ではファイルが絞られない。
 - アプリの起動とデプロイは `apps/<name>` で `vp run dev`・`vp run deploy` を使う。
