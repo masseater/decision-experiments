@@ -100,11 +100,6 @@ export default defineConfig({
             { from: "lib", name: "Request" },
             { from: "lib", name: "Uint8Array" },
             { from: "lib", name: "DataView" },
-            {
-              from: "package",
-              package: "@cloudflare/workers-types",
-              name: "AnalyticsEngineDataset",
-            },
             { from: "package", package: "@tanstack/query-core", name: "QueryClient" },
             { from: "package", package: "ical.js", name: "Component" },
             {
