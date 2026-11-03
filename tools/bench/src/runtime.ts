@@ -1,7 +1,6 @@
 import { NodeRuntime, NodeServices } from "@effect/platform-node";
 import {
   Context,
-  Crypto,
   Duration,
   Effect,
   Exit,
@@ -71,18 +70,17 @@ const keepWhen = (keep: boolean): Duration.Duration => {
   return Duration.zero;
 };
 
+const sha256Hex = (text: string): Effect.Effect<string> =>
+  Effect.promise(() =>
+    globalThis.crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)),
+  ).pipe(Effect.map((digest) => Hex.encode(new Uint8Array(digest))));
+
 const makeStore = Effect.gen(function* makeStore() {
   const fileSystem = yield* FileSystem.FileSystem;
   const path = yield* Path.Path;
-  const crypto = yield* Crypto.Crypto;
   const platform = yield* Effect.context<FileSystem.FileSystem | Path.Path>();
   const root = path.resolve(import.meta.dirname, "..");
   const benchPath = (...segments: readonly string[]): string => path.join(root, ...segments);
-  const sha256Hex = (text: string): Effect.Effect<string> =>
-    crypto.digest("SHA-256", new TextEncoder().encode(text)).pipe(
-      Effect.map((digest) => Hex.encode(digest)),
-      Effect.orDie,
-    );
   const makePersistedCache = Effect.fn("makePersistedCache")(function* makePersistedCache<
     Codec extends Schema.Codec<unknown, unknown>,
   >(storeId: string, success: Codec, keep: (value: Codec["Type"]) => boolean) {
