@@ -1,12 +1,12 @@
 "use client";
 
+import { Button } from "@decision-experiments/web-ui";
 import { Array as Arr, pipe } from "effect";
 import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { directionOf, LABEL_ID, useSort, useSortClick } from "#/pages/leaderboard/model/sorting";
 import type { TableColumn } from "#/pages/leaderboard/model/sorting";
-import { Button } from "#/shared/ui/button";
 import { TableHead } from "#/shared/ui/table-head";
 import { TableRow } from "#/shared/ui/table-row";
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@decision-experiments/web-ui";
 import { Search } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -11,7 +12,6 @@ import {
   useScope,
   useScopeChange,
 } from "#/pages/leaderboard/model/view";
-import { Input } from "#/shared/ui/input";
 import { ToggleGroup } from "#/shared/ui/toggle-group";
 import { ToggleGroupItem } from "#/shared/ui/toggle-group-item";
 

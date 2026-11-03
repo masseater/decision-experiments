@@ -1,6 +1,5 @@
+import { cn } from "@decision-experiments/web-ui";
 import type { ComponentProps, ReactNode } from "react";
-
-import { cn } from "#/shared/lib/utils";
 
 const TableCaption = ({ className, ...props }: ComponentProps<"caption">): ReactNode => (
   <caption

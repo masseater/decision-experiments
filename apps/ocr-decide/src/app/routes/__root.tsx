@@ -1,8 +1,7 @@
-import { rootHead } from "@decision-experiments/web-ui";
+import { RootDocument, rootHead } from "@decision-experiments/web-ui";
 import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext } from "@tanstack/react-router";
 
-import { RootDocument } from "#/app/shell/root-document";
 import { SEARCH_INDEX_ORIGIN } from "#/shared/config";
 
 import appCss from "#/app/styles.css?url";

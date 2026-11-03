@@ -135,7 +135,7 @@ OPENROUTER_API_KEY=<キー> vp run bench
 ```
 
 保存済みの応答は呼び直さないので、新しいモデルを足したときだけ OpenRouter に問い合わせる。
-終わると `vp run bench` は、この README の結果の表と、サイトが読む `libs/bench-summary/summary.json` を書き換える。
+終わると `vp run bench` は、このファイルの結果の表と、サイトが読む `libs/bench-summary/summary.json` を書き換える。
 
 問題とラベルを作り直すときは、Claude Code の `claude` コマンドと、JGLUE を clone したディレクトリが要る。
 

@@ -271,7 +271,7 @@ const loadStats = Effect.fn("loadStats")(function* loadStats(task: (typeof TASKS
 });
 
 const updateReadme = Effect.fn("updateReadme")(function* updateReadme(summary: Summary) {
-  const readme = yield* benchPath("..", "..", "README.md");
+  const readme = yield* benchPath("..", "..", "docs", "decision-bench.md");
   const [head, rest = ""] = pipe(yield* readText(readme), Str.split(START));
   const [, tail = ""] = pipe(rest, Str.split(END));
   yield* writeText(readme, `${head}${START}\n\n${table(summary)}\n\n${END}${tail}`);

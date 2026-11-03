@@ -1,4 +1,4 @@
-import { D1, Zone } from "@alchemy.run/cloudflare";
+import { D1, Rules, Zone } from "@alchemy.run/cloudflare";
 import { Stack } from "alchemy";
 import { Stage } from "alchemy/Stage";
 import { inMemoryState } from "alchemy/State";
@@ -11,6 +11,7 @@ const APP_NAME = "example";
 
 type Resource =
   | Readonly<{ type: "database"; props: Readonly<{ name?: string }> }>
+  | Readonly<{ type: "list"; name: string }>
   | Readonly<{ type: "zone"; name: string }>;
 
 const deploys = (stackName: string, resource: Resource): Promise<boolean> =>
@@ -22,6 +23,7 @@ const deploys = (stackName: string, resource: Resource): Promise<boolean> =>
         yield* Match.value(resource).pipe(
           Match.discriminatorsExhaustive("type")({
             database: ({ props }) => D1.Database("DB", props),
+            list: ({ name }) => Rules.List("List", { name, kind: "ip", items: [] }),
             zone: ({ name }) => Zone.Zone("Zone", { name }),
           }),
         );
@@ -49,6 +51,16 @@ test.each<Readonly<{ stackName: string; resource: Resource; expected: boolean }>
   },
   { stackName: "web", resource: { type: "database", props: {} }, expected: false },
   { stackName: APP_NAME, resource: { type: "zone", name: "example.com" }, expected: true },
+  {
+    stackName: APP_NAME,
+    resource: { type: "list", name: `${APP_NAME}_redirects` },
+    expected: true,
+  },
+  {
+    stackName: APP_NAME,
+    resource: { type: "list", name: `${APP_NAME}-redirects` },
+    expected: false,
+  },
 ])("stack $stackName with $resource deploys: $expected", ({ stackName, resource, expected }) =>
   expect(deploys(stackName, resource)).resolves.toBe(expected),
 );

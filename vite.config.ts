@@ -12,6 +12,7 @@ import {
   generated,
   pluginRules,
   restrictedImports,
+  shadcnRestyleContracts,
 } from "./lint.config.ts";
 
 export default defineConfig({
@@ -74,6 +75,7 @@ export default defineConfig({
       "drizzle/enforce-delete-with-where": "error",
       "drizzle/enforce-update-with-where": "error",
       ...allRulesOf({ prefix: "shadcn", rules: shadcn.rules }),
+      "shadcn/no-restyle": ["error", { contracts: shadcnRestyleContracts }],
       ...allRulesOf({ prefix: "baseline-js", rules: baselineJs.rules }),
       ...baselineJs.configs.recommended().rules,
       ...pluginRules,
@@ -148,6 +150,17 @@ export default defineConfig({
             { from: "package", package: "fflate", name: ["Unzipped"] },
             {
               from: "package",
+              package: "@openrouter/sdk",
+              name: [
+                "DecisionsChoiceAnswer",
+                "DecisionsNoulAnswer",
+                "DecisionsScoreAnswer",
+                "Unknown",
+              ],
+            },
+            { from: "package", package: "recharts", name: "TooltipPayloadEntry" },
+            {
+              from: "package",
               package: "effect",
               name: ["Cause", "Context", "Effect", "Exit", "Layer", "Option"],
             },
@@ -162,8 +175,8 @@ export default defineConfig({
       "eslint/new-cap": [
         "error",
         {
-          capIsNewExceptions: ["CloudflareApiLive", "Stack"],
-          capIsNewExceptionPattern: String.raw`^(Argument|Config|Context|Data|Flag|Schema|AnalyticsEngine|D1|Ruleset|Website|Workers|Zone)\.`,
+          capIsNewExceptions: ["App", "Build", "CloudflareApiLive", "Secret", "Stack"],
+          capIsNewExceptionPattern: String.raw`^(Argument|Config|Context|Data|Flag|Persistable|Schema|AnalyticsEngine|D1|Ruleset|Rules|Website|Workers|Zone)\.`,
         },
       ],
       "typescript/no-empty-interface": ["error", { allowSingleExtends: true }],

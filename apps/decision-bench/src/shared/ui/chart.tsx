@@ -1,9 +1,8 @@
 "use client";
 
+import { cn } from "@decision-experiments/web-ui";
 import type { ComponentProps, ReactNode } from "react";
 import { ResponsiveContainer } from "recharts";
-
-import { cn } from "#/shared/lib/utils";
 
 const SIZE_CLASSES = {
   default: "aspect-video",
