@@ -80,9 +80,12 @@ ocr-decide の前段に置く OCR を選ぶため、OCR エンジンと画像対
 
 2026 年 10 月 20 日に測った。ローカルのエンジンは 4 CPU の Linux で、Surya だけは llama.cpp が要るので Apple M4 の Mac で動かした。画像対応のモデルは OpenRouter を通し、1 枚あたり $0.0005〜$0.004 かかった。種類ごとの全部の値は[比較のページ](https://masseater.dev/ocr-decide/ocr-engines)にある。
 
-測り直すときは `tools/ocr-ja-bench` で次を動かす。uv と、画像対応のモデルには `OPENROUTER_API_KEY` が要る。
+### 測り直す
+
+uv が要る。画像対応のモデルを測るときは `OPENROUTER_API_KEY` も要る。
 
 ```sh
+cd tools/ocr-ja-bench
 vp run prepare-data   # JaWildText の 60 枚を .cache/ に取る
 vp run render         # 合成ページを描き直す（変えたときだけ）
 node src/measure.ts                      # 全エンジンを、まだ読んでいないページだけ読む
