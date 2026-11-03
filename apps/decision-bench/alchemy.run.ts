@@ -1,10 +1,10 @@
 import { Rules, Ruleset, Workers, providers, state } from "@alchemy.run/cloudflare";
+import { ASSET_HEADERS } from "@decision-experiments/start-site/headers";
 import { Stack } from "alchemy";
 import { Build } from "alchemy/Command";
 import { Effect } from "effect";
 
 import { APP_NAME, ENV_PREFIX, requireAppPrefix } from "./app-name.ts";
-import { ASSET_HEADERS } from "./asset-headers.ts";
 import { BASE_PATH } from "./base-path.ts";
 
 const ZONE = "masseater.dev";

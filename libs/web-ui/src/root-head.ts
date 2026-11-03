@@ -1,7 +1,7 @@
 import { Array as Arr, Option, Schema, pipe } from "effect";
 import type { JSX } from "react";
 
-const WEB_ANALYTICS_SCRIPT_ORIGIN = "https://static.cloudflareinsights.com";
+import { WEB_ANALYTICS_BEACON } from "./web-analytics.ts";
 
 interface HeadRequest {
   readonly title: string;
@@ -17,7 +17,7 @@ interface Head {
 }
 
 const webAnalyticsBeacon = (token: string): Head["scripts"][number] => ({
-  src: `${WEB_ANALYTICS_SCRIPT_ORIGIN}/beacon.min.js`,
+  ...WEB_ANALYTICS_BEACON,
   defer: true,
   "data-cf-beacon": JSON.stringify({ token }),
 });
