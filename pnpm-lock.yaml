@@ -334,7 +334,7 @@ catalogs:
       version: 0.3.0
     officeparser:
       specifier: ^8.1.1
-      version: 8.3.0
+      version: 8.4.1
     oxlint-plugin-eslint:
       specifier: 1.90.0
       version: 1.90.0
@@ -940,7 +940,7 @@ importers:
         version: 0.3.0
       officeparser:
         specifier: 'catalog:'
-        version: 8.3.0(supports-color@8.1.1)
+        version: 8.4.1(supports-color@8.1.1)
       papaparse:
         specifier: 'catalog:'
         version: 5.7.0
@@ -1032,7 +1032,7 @@ importers:
         version: 4.0.7(effect@4.0.7)(react@19.3.1)(scheduler@0.28.0)
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/e03d8f4701b71fc8bee232c59f1633f97a0573b6#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/a34123384f5aea16f737c827ead6e8b7edf16043#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
       '@tanstack/react-devtools':
         specifier: 0.10.14
         version: 0.10.14(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.15)
@@ -2458,8 +2458,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/e03d8f4701b71fc8bee232c59f1633f97a0573b6#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-Sv3SWoLWxzp+AbF4Dqt1SBILUjf4CYfbWK1QPWs27Zd0K8oIkDVgyNAkmgGEGyt+YtfbS/z7o6eKdIcPerESwg==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/e03d8f4701b71fc8bee232c59f1633f97a0573b6}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/a34123384f5aea16f737c827ead6e8b7edf16043#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-BU+4IV23hfyBVIe6QFuHPwtIwvvYYOuXr93XmtpH/LtsdHf0CRzBQSjnwyNuDK5nfm4rD7IH0CuwSRVF0kw1Aw==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/a34123384f5aea16f737c827ead6e8b7edf16043}
     version: 0.0.0
     peerDependencies:
       effect: 4.0.7
@@ -8364,8 +8364,8 @@ packages:
     resolution: {integrity: sha512-5vvB5+W7ePv+p3uqxi+RcW1XAzLW0/hxt3/4X4Lc4qHudzOhmBiBwOY6DRob4WnanAEGvNcLjF+KNOufrUoEQw==}
     engines: {node: '>=12.20.0'}
 
-  officeparser@8.3.0:
-    resolution: {integrity: sha512-4lhLV9gSSVijzMyTuK0Y01PVUTNq9FoFljqRm6XRl4eEH4Aow4xokW965FSZuaS6vPr3zrTOi2iXfBaDwOObbg==}
+  officeparser@8.4.1:
+    resolution: {integrity: sha512-MeyEdnqlZCThds/7W/w2xgMrwYKa7VoZirfECJ9+a3jigkF9HNHLNYqEGGS0k6kmfhUmPdoL0G2Od5EgKZDa5w==}
     engines: {node: '>=22.13.0'}
     hasBin: true
     peerDependencies:
@@ -11643,7 +11643,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/e03d8f4701b71fc8bee232c59f1633f97a0573b6#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/a34123384f5aea16f737c827ead6e8b7edf16043#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.82(@types/react@19.3.0)(react@19.3.1)
@@ -18439,7 +18439,7 @@ snapshots:
 
   obug@3.0.0: {}
 
-  officeparser@8.3.0(supports-color@8.1.1):
+  officeparser@8.4.1(supports-color@8.1.1):
     dependencies:
       '@xmldom/xmldom': 0.9.12
       fflate: 0.8.3
