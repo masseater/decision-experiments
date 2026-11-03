@@ -12,8 +12,8 @@ catalog:
   oxlint-plugin-eslint: 1.90.0
   "@ast-grep/cli": 0.51.0
   "@cloudflare/workers-types": 5.20261101.1
-  "@effect/platform-node": 4.0.7
-  "@effect/ai-openrouter": 4.0.7
+  "@effect/platform-node": 4.1.1
+  "@effect/ai-openrouter": 4.1.1
   "@eslint-react/eslint-plugin": 5.28.8
   "@shadcn/lint": 0.2.3
   "@tanstack/eslint-plugin-query": 5.105.1
@@ -82,14 +82,14 @@ catalog:
   "@types/seedrandom": 3.0.8
 catalogs:
   stack:
-    "@distilled.cloud/cloudflare": 1.0.0-rc.17
-    "@effect/atom-react": 4.0.7
+    "@distilled.cloud/cloudflare": 1.0.0-rc.18
+    "@effect/atom-react": 4.1.1
     "@effect/tsgo": 0.63.0
     "@tanstack/react-query": 5.105.1
     "@tanstack/react-start": 1.169.4
-    "@alchemy.run/cloudflare": 2.0.0-beta.84
-    alchemy: 2.0.0-beta.84
-    effect: 4.0.7
+    "@alchemy.run/cloudflare": 2.0.0-beta.85
+    alchemy: 2.0.0-beta.85
+    effect: 4.1.1
     fallow: 3.38.1
     lucide-react: 1.66.0
     radix-ui: 1.8.1
@@ -101,9 +101,12 @@ catalogs:
     vite-plus: 1.4.0
 overrides:
   effect: "catalog:stack"
-  "@effect/platform-node-shared": 4.0.7
-  "@effect/sql-d1": 4.0.7
-  "@effect/vitest": 4.0.7
+  "@effect/platform-node": "catalog:"
+  "@effect/platform-node-shared": 4.1.1
+  "@effect/sql-d1": 4.1.1
+  "@r_masseater/oxlint-plugin-decision>effect": 4.0.0
+  "@r_masseater/oxlint-plugin-decision>@effect/platform-node": 4.0.0
+  "@effect/platform-node@4.0.0>@effect/platform-node-shared": 4.0.0
   vite@*: "catalog:"
   eslint-plugin-react-hooks>zod-validation-error: ^5.0.0
   glob@>=9.0.0 <=14.0.1: ^14.0.2
@@ -132,6 +135,19 @@ packageExtensions:
 minimumReleaseAgeExclude:
   - "@r_masseater/oxlint-typed-rules@0.0.2"
   - "@r_masseater/oxlint-plugin-decision@0.0.4"
+  - "@alchemy.run/acme@2.0.0-beta.85"
+  - "@alchemy.run/cloudflare-runtime@2.0.0-beta.85"
+  - "@alchemy.run/cloudflare@2.0.0-beta.85"
+  - "@alchemy.run/docker@2.0.0-beta.85"
+  - "@alchemy.run/node-utils@2.0.0-beta.85"
+  - "@alchemy.run/sql@2.0.0-beta.85"
+  - "@distilled.cloud/acme@1.0.0-rc.18"
+  - "@distilled.cloud/aws4signer@1.0.0-rc.18"
+  - "@distilled.cloud/aws@1.0.0-rc.18"
+  - "@distilled.cloud/cloudflare@1.0.0-rc.18"
+  - "@distilled.cloud/core@1.0.0-rc.18"
+  - "@distilled.cloud/iceberg@1.0.0-rc.18"
+  - alchemy@2.0.0-beta.85
 audit:
   ignorePrune: true
   ignore:
