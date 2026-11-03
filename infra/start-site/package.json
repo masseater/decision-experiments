@@ -6,13 +6,17 @@
   "exports": {
     "./vite": "./src/vite.ts",
     "./alchemy": "./src/app-prefix.ts",
-    "./site": "./src/static-site.ts"
+    "./site": "./src/static-site.ts",
+    "./headers": "./src/asset-headers.ts"
   },
   "scripts": {
     "test": "vp test run"
   },
   "dependencies": {
     "@alchemy.run/cloudflare": "catalog:stack",
+    "@decision-experiments/web-ui": "workspace:*",
+    "@effect/platform-node": "catalog:",
+    "@masseater.dev/ui": "github:masseater/masseater.dev#path:/libs/ui",
     "@tailwindcss/vite": "4.3.3",
     "@tanstack/devtools-vite": "0.8.6",
     "@tanstack/react-start": "catalog:stack",

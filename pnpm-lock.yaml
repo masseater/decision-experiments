@@ -832,6 +832,15 @@ importers:
       '@alchemy.run/cloudflare':
         specifier: catalog:stack
         version: 2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.2.1(@opentelemetry/api@1.9.1)))(@types/node@26.6.6)(alchemy@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.2.1(@opentelemetry/api@1.9.1)))(@types/node@26.6.6)(@types/react@19.3.0)(effect@4.0.7)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@5.9.3)(ws@8.22.0))(effect@4.0.7)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@5.9.3)(yaml@2.9.1)
+      '@decision-experiments/web-ui':
+        specifier: workspace:*
+        version: link:../../libs/web-ui
+      '@effect/platform-node':
+        specifier: 'catalog:'
+        version: 4.0.7(effect@4.0.7)(redis@6.2.1(@opentelemetry/api@1.9.1))
+      '@masseater.dev/ui':
+        specifier: github:masseater/masseater.dev#path:/libs/ui
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/7603400229929f6f49426676b11c9da51da6f1dd#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
       '@tailwindcss/vite':
         specifier: 4.3.3
         version: 4.3.3(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@5.9.3)(yaml@2.9.1))
