@@ -292,7 +292,7 @@ catalogs:
       version: 0.8.3
     file-type:
       specifier: ^22.1.0
-      version: 22.2.0
+      version: 22.3.0
     forecast-calibration-kit:
       specifier: 0.1.2
       version: 0.1.2
@@ -907,7 +907,7 @@ importers:
         version: 0.8.3
       file-type:
         specifier: 'catalog:'
-        version: 22.2.0(supports-color@8.1.1)
+        version: 22.3.0(supports-color@8.1.1)
       htmlparser2:
         specifier: 'catalog:'
         version: 12.0.0
@@ -1032,7 +1032,7 @@ importers:
         version: 4.0.7(effect@4.0.7)(react@19.3.1)(scheduler@0.28.0)
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/13c736b87acc3636c4f07647ba94b7055f8b6b9d#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/e03d8f4701b71fc8bee232c59f1633f97a0573b6#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)
       '@tanstack/react-devtools':
         specifier: 0.10.14
         version: 0.10.14(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.15)
@@ -2458,8 +2458,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/13c736b87acc3636c4f07647ba94b7055f8b6b9d#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-yCBwS4CfFNWdY0LFjcI6dbkXI81huGJy85QvJ0trCLGrruibnZ/SHSmMPxoDMx/VZ6O4LYUKcM0O0rhL6K5gMA==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/13c736b87acc3636c4f07647ba94b7055f8b6b9d}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/e03d8f4701b71fc8bee232c59f1633f97a0573b6#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-Sv3SWoLWxzp+AbF4Dqt1SBILUjf4CYfbWK1QPWs27Zd0K8oIkDVgyNAkmgGEGyt+YtfbS/z7o6eKdIcPerESwg==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/e03d8f4701b71fc8bee232c59f1633f97a0573b6}
     version: 0.0.0
     peerDependencies:
       effect: 4.0.7
@@ -4981,8 +4981,8 @@ packages:
   '@thi.ng/zipper@1.0.3':
     resolution: {integrity: sha512-dWfuk5nzf5wGEmcF90AXNEuWr3NVwRF+cf/9ZSE6xImA7Vy5XpHNMwLHFszZaC+kqiDXr+EZ0lXWDF46a8lSPA==}
 
-  '@tokenizer/inflate@0.5.1':
-    resolution: {integrity: sha512-56U2O6fDLFtqokwWh597IdeUgtM7j+TT9tb1soybhgA6cy163gAcVmoQr8H4Ud/CkgCkViwcuLyqtn6wYqw59Q==}
+  '@tokenizer/inflate@0.6.0':
+    resolution: {integrity: sha512-+0RDxhBkyT9xMnGdJAwmats9yxRLR8ypJrQgrnLqOu4Gv/aHlnxYgdGVy2QTwvBl6IF/w2Hr+ZNirH+iMUbVZA==}
     engines: {node: '>=18'}
 
   '@tokenizer/token@0.3.0':
@@ -6920,8 +6920,8 @@ packages:
   file-entry-cache@11.1.5:
     resolution: {integrity: sha512-+PFTHITI08JIGhnNpGNI8T8inUpgZfk3GNEqfT9R2zZV2iFXg3CvqzSl/uEhs7TSGujYRELEANyDvS8Fj7+S7Q==}
 
-  file-type@22.2.0:
-    resolution: {integrity: sha512-XmEVJsRpQMVYC+sWFW+FKAVo2P7/lPctDdWH4UQ1r6oxhdrTobnowdM3z+ZJ93a4J8D3yDpxX0bEvRuFev0vUQ==}
+  file-type@22.3.0:
+    resolution: {integrity: sha512-PrPedgnnWl5bWz3JHgar0QSzRvzeyFh7dZ9JpYOgcPZu4KALS9zw4MMa6qXRYyjeBsAlpaWB2boLuG991+0HIQ==}
     engines: {node: '>=22'}
 
   fill-range@7.1.1:
@@ -9258,8 +9258,8 @@ packages:
   strip-literal@4.0.0:
     resolution: {integrity: sha512-PaqAvfUZKBwc/SLmNZtHmzK+v19Z4O4eS3cKPeGvbIv/U3pnyEq4Tuw3/4v/FwfM8VQaEawsyCcOQ0P+kpwWWw==}
 
-  strtok3@10.6.1:
-    resolution: {integrity: sha512-p8ynRS8lXnvA3tsdcUYFjbzwh2MsdBZgxrFT2G+Yb7vNvUfPF+GgHCt/0jkayfsRXA1TwtZstf+JA0V+iQXdHA==}
+  strtok3@10.6.3:
+    resolution: {integrity: sha512-MD8mENgyXMr2mDaDfzP3RWYDSyYQxIIou7HhCiCJiBekrsoDtUG0id3vYnjDfY9ndOEbazFXe13Qw6u/1AB8ew==}
     engines: {node: '>=18'}
 
   structured-source@4.0.0:
@@ -11643,7 +11643,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/13c736b87acc3636c4f07647ba94b7055f8b6b9d#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/e03d8f4701b71fc8bee232c59f1633f97a0573b6#path:/libs/ui(@types/react@19.3.0)(effect@4.0.7)(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.82(@types/react@19.3.0)(react@19.3.1)
@@ -14254,9 +14254,10 @@ snapshots:
       '@thi.ng/arrays': 1.0.3
       '@thi.ng/checks': 2.9.11
 
-  '@tokenizer/inflate@0.5.1(supports-color@8.1.1)':
+  '@tokenizer/inflate@0.6.0(supports-color@8.1.1)':
     dependencies:
       debug: 4.4.3(supports-color@8.1.1)
+      strtok3: 10.6.3
       token-types: 6.1.2
     transitivePeerDependencies:
       - supports-color
@@ -16716,10 +16717,10 @@ snapshots:
     dependencies:
       flat-cache: 6.1.23
 
-  file-type@22.2.0(supports-color@8.1.1):
+  file-type@22.3.0(supports-color@8.1.1):
     dependencies:
-      '@tokenizer/inflate': 0.5.1(supports-color@8.1.1)
-      strtok3: 10.6.1
+      '@tokenizer/inflate': 0.6.0(supports-color@8.1.1)
+      strtok3: 10.6.3
       token-types: 6.1.2
       uint8array-extras: 1.6.0
     transitivePeerDependencies:
@@ -18442,7 +18443,7 @@ snapshots:
     dependencies:
       '@xmldom/xmldom': 0.9.12
       fflate: 0.8.3
-      file-type: 22.2.0(supports-color@8.1.1)
+      file-type: 22.3.0(supports-color@8.1.1)
       pdfjs-dist: 6.2.108
       tesseract.js: 7.0.0
     transitivePeerDependencies:
@@ -19851,7 +19852,7 @@ snapshots:
     dependencies:
       js-tokens: 10.0.0
 
-  strtok3@10.6.1:
+  strtok3@10.6.3:
     dependencies:
       '@tokenizer/token': 0.3.0
 
