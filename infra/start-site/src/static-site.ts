@@ -12,6 +12,7 @@ const startStaticSite = Effect.fn("startStaticSite")(function* startStaticSite(b
     logpush: true,
     routes: [{ pattern: `${ZONE}${basePath}*`, zoneName: ZONE }],
     command: "vp build && vpx ../../infra/start-site/src/write-asset-headers.ts",
+    shell: true,
     outdir: "dist/client",
     assets: { htmlHandling: "auto-trailing-slash" },
     dev: { command: "vp dev" },
