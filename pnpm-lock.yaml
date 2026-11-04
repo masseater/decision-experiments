@@ -366,8 +366,8 @@ catalogs:
       specifier: ^7.0.0
       version: 7.0.0
     unpdf:
-      specifier: ^1.8.1
-      version: 1.9.1
+      specifier: ^2.0.0
+      version: 2.1.0
     vite:
       specifier: npm:@voidzero-dev/vite-plus-core@1.4.0
       version: 1.4.0
@@ -837,7 +837,7 @@ importers:
         version: 4.1.1(effect@4.1.1)(redis@6.2.1(@opentelemetry/api@1.9.1))
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/d7d248a44fdb877fce8c4d0dc9b8f66c7f17f780#path:/libs/ui(@types/react@19.3.0)(effect@4.1.1)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/ba6acc667bf969d639057eb016a30e7c86786456#path:/libs/ui(@types/react@19.3.0)(effect@4.1.1)(react@19.3.1)(tailwindcss@4.3.3)
       '@tailwindcss/vite':
         specifier: 4.3.3
         version: 4.3.3(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@5.9.3)(yaml@2.9.1))
@@ -958,7 +958,7 @@ importers:
         version: 7.0.0
       unpdf:
         specifier: 'catalog:'
-        version: 1.9.1(@napi-rs/canvas@1.0.11)
+        version: 2.1.0(@napi-rs/canvas@1.0.11)
       xlsx:
         specifier: 'catalog:'
         version: https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz
@@ -1032,7 +1032,7 @@ importers:
         version: 4.1.1(effect@4.1.1)(react@19.3.1)(scheduler@0.28.0)
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/d7d248a44fdb877fce8c4d0dc9b8f66c7f17f780#path:/libs/ui(@types/react@19.3.0)(effect@4.1.1)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/ba6acc667bf969d639057eb016a30e7c86786456#path:/libs/ui(@types/react@19.3.0)(effect@4.1.1)(react@19.3.1)(tailwindcss@4.3.3)
       '@tanstack/react-devtools':
         specifier: 0.10.14
         version: 0.10.14(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.15)
@@ -2456,8 +2456,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/d7d248a44fdb877fce8c4d0dc9b8f66c7f17f780#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-VX3+ttv6z5yI191AcT51W7LJ50jDx5uvxdUn9fb43u3dLALNsNrnTA24Y118l8ifC0LhVA1Crteed1+1qVv0iw==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/d7d248a44fdb877fce8c4d0dc9b8f66c7f17f780}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/ba6acc667bf969d639057eb016a30e7c86786456#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-kM6PhqK5dVxPxeQ4/5AHNrMrAjSV+coNpRjuAvYVoitdCzFipU/eVlRfDaMC8vYiHJ2oUqyGY3IyoTV4pDpoAw==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/ba6acc667bf969d639057eb016a30e7c86786456}
     version: 0.0.0
     peerDependencies:
       effect: 4.1.1
@@ -9682,9 +9682,9 @@ packages:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
 
-  unpdf@1.9.1:
-    resolution: {integrity: sha512-nO1npM2kNyd4hj1fKzUVU6bvnWjDSxI97eycM/DgzI83dYyW+pNRI9NeMQVEfef8fI3Q06i9lkMeE1HxrQqKoA==}
-    engines: {node: '>=22'}
+  unpdf@2.1.0:
+    resolution: {integrity: sha512-G/Hsrm++g0EoubUhV8TDFItq6oQ+FUu9EMvIRtHUwseKXB0iJoCvaLvBGOpYUBqyvggv/XfxhYYtohL2QpE3xQ==}
+    engines: {node: '>=24'}
     peerDependencies:
       '@napi-rs/canvas': ^0.1.69 || ^1.0.0
     peerDependenciesMeta:
@@ -11627,7 +11627,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/d7d248a44fdb877fce8c4d0dc9b8f66c7f17f780#path:/libs/ui(@types/react@19.3.0)(effect@4.1.1)(react@19.3.1)(tailwindcss@4.3.3)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/ba6acc667bf969d639057eb016a30e7c86786456#path:/libs/ui(@types/react@19.3.0)(effect@4.1.1)(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.82(@types/react@19.3.0)(react@19.3.1)
@@ -20278,7 +20278,7 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unpdf@1.9.1(@napi-rs/canvas@1.0.11):
+  unpdf@2.1.0(@napi-rs/canvas@1.0.11):
     optionalDependencies:
       '@napi-rs/canvas': 1.0.11
 
