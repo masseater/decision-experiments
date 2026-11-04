@@ -1,5 +1,4 @@
 import { Rules, Ruleset, Workers, providers, state } from "@alchemy.run/cloudflare";
-import { ASSET_HEADERS } from "@decision-experiments/start-site/headers";
 import { Stack } from "alchemy";
 import { Build } from "alchemy/Command";
 import { Effect } from "effect";
@@ -16,7 +15,7 @@ const CF_BEACON_TOKEN = "021b4961f3fd419297b186136a5a8a0a";
 
 const site = Effect.gen(function* site() {
   const build = yield* Build("WebBuild", {
-    command: "vp build",
+    command: "vp run build",
     env: { VITE_CF_BEACON_TOKEN: CF_BEACON_TOKEN },
     outdir: "dist/client",
     memo: false,
@@ -29,7 +28,6 @@ const site = Effect.gen(function* site() {
     assets: {
       directory: build.outdir,
       htmlHandling: "auto-trailing-slash",
-      headers: ASSET_HEADERS,
     },
   });
 });

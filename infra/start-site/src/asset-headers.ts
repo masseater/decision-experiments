@@ -42,7 +42,5 @@ const assetHeaders = ({
   return pipe(rules, Arr.flatten, Arr.append(""), Arr.join("\n"));
 };
 
-const ASSET_HEADERS = assetHeaders({ documentHeaders: {}, pages: [] });
-
 export type { PageHeaders };
-export { ASSET_HEADERS, assetHeaders };
+export { assetHeaders };
