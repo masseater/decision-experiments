@@ -5,7 +5,7 @@ requires-python = ">=3.13,<3.14"
 dependencies = [
   "dill==0.4.1",
   "lxml==5.4.0",
-  "networkx==3.3",
+  "networkx==3.7",
   "numpy==2.2.2",
   "onnxruntime==1.26.0; sys_platform != 'darwin'",
   "onnxruntime==1.23.2; sys_platform == 'darwin'",
