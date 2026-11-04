@@ -1,5 +1,4 @@
 import { Effect, Array as Arr, String as Str, pipe } from "effect";
-import { encode } from "fast-png";
 import { extractImages, extractText, getDocumentProxy } from "unpdf";
 
 import { ONE_AT_A_TIME, PAGE_BREAK, recognizedText } from "./ocr.ts";
@@ -17,7 +16,10 @@ type Pdf = Awaited<ReturnType<typeof getDocumentProxy>>;
 const scannedText =
   (options: OcrOptions, pdf: Pdf) =>
   (page: number): Effect.Effect<string, ReadError> =>
-    Effect.tryPromise({ try: () => extractImages(pdf, page), catch: readErrorOf }).pipe(
+    Effect.tryPromise({
+      try: () => extractImages(pdf, page, { format: "png" }),
+      catch: readErrorOf,
+    }).pipe(
       Effect.flatMap((images) => {
         if (images.length === NO_IMAGES) {
           return Effect.succeed("");
@@ -25,9 +27,7 @@ const scannedText =
         return recognizedText(options)(
           pipe(
             images,
-            Arr.map(({ width, height, data, channels }) =>
-              encode({ width, height, data, channels }),
-            ),
+            Arr.map(({ data }) => data),
           ),
         );
       }),
