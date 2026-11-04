@@ -18,8 +18,22 @@
       "automerge": false
     },
     {
+      "matchDepTypes": ["pnpm-workspace.overrides"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
       "matchPackageNames": ["typescript"],
       "allowedVersions": "!/-dev\\./"
+    },
+    {
+      "matchFileNames": [
+        "tools/ocr-ja-bench/engines/indra/pyproject.toml",
+        "tools/ocr-ja-bench/engines/ndlocr-lite/pyproject.toml",
+        "tools/ocr-ja-bench/engines/paddleocr/pyproject.toml"
+      ],
+      "matchDepNames": ["python"],
+      "enabled": false
     }
   ],
   "customManagers": [
