@@ -899,9 +899,6 @@ importers:
       entities:
         specifier: 'catalog:'
         version: 9.0.0
-      fast-png:
-        specifier: 'catalog:'
-        version: 8.0.0
       fflate:
         specifier: 'catalog:'
         version: 0.8.3
