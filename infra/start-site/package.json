@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "imports": {
+    "#package.json": "./package.json"
+  },
   "exports": {
     "./vite": "./src/vite.ts",
     "./alchemy": "./src/app-prefix.ts",
-    "./site": "./src/static-site.ts",
-    "./headers": "./src/asset-headers.ts"
+    "./site": "./src/static-site.ts"
   },
   "scripts": {
     "test": "vp test run"

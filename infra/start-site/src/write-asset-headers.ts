@@ -10,7 +10,10 @@ import {
   String as Str,
   pipe,
 } from "effect";
+import { Command, Flag } from "effect/cli";
 import { Base64 } from "effect/encoding";
+
+import pkg from "#package.json" with { type: "json" };
 
 import { assetHeaders } from "./asset-headers.ts";
 import type { PageHeaders } from "./asset-headers.ts";
@@ -48,7 +51,7 @@ const scriptHashes = (bodies: readonly string[]): Effect.Effect<readonly string[
 const pagePath = (page: string): string =>
   `/${pipe(page, Str.replace(INDEX_PAGE, ""), Str.replace(HTML_EXTENSION, ""))}`;
 
-const program = Effect.gen(function* write() {
+const write = Effect.fn("build.asset-headers")(function* write(clientCompute: boolean) {
   const fileSystem = yield* FileSystem.FileSystem;
   const path = yield* Path.Path;
   const entries = yield* fileSystem.readDirectory(OUTDIR, { recursive: true });
@@ -61,7 +64,12 @@ const program = Effect.gen(function* write() {
         Effect.flatMap(scriptHashes),
         Effect.map((hashes) => ({
           path: pagePath(page),
-          headers: { "Content-Security-Policy": contentSecurityPolicy(hashes) },
+          headers: {
+            "Content-Security-Policy": contentSecurityPolicy({
+              scriptHashes: hashes,
+              clientCompute,
+            }),
+          },
         })),
       ),
     ),
@@ -69,17 +77,25 @@ const program = Effect.gen(function* write() {
   yield* fileSystem.writeFileString(
     path.join(OUTDIR, HEADERS_FILE),
     assetHeaders({
-      documentHeaders: { "Content-Security-Policy": contentSecurityPolicy([]) },
+      documentHeaders: {
+        "Content-Security-Policy": contentSecurityPolicy({ scriptHashes: [], clientCompute }),
+      },
       pages,
     }),
   );
 });
 
+const command = Command.make(
+  "write-asset-headers",
+  { clientCompute: Flag.Boolean("client-compute").pipe(Flag.withDefault(false)) },
+  ({ clientCompute }) => write(clientCompute),
+);
+
+const program = Command.run(command, { version: pkg.version });
+
 NodeRuntime.runMain(
   Layer.build(NodeServices.layer).pipe(
-    Effect.flatMap((context) =>
-      Effect.provideContext(program.pipe(Effect.withSpan("build.asset-headers")), context),
-    ),
+    Effect.flatMap((context) => Effect.provideContext(program, context)),
     Effect.scoped,
   ),
 );

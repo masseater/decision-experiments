@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "alchemy dev",
+    "build": "vp build && vpx ../../infra/start-site/src/write-asset-headers.ts",
     "typecheck": "tsc",
     "test": "vp test run --passWithNoTests",
     "steiger": "steiger ./src",
