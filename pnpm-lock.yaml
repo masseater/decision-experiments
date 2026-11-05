@@ -612,8 +612,8 @@ importers:
         specifier: catalog:stack
         version: 0.63.0
       '@feature-sliced/steiger-plugin':
-        specifier: 0.8.1
-        version: 0.8.1(typescript@7.1.0-beta)(vitest@5.0.5)
+        specifier: 0.8.2
+        version: 0.8.2(typescript@7.1.0-beta)(vitest@5.0.5)
       '@types/react':
         specifier: 19.3.0
         version: 19.3.0
@@ -700,8 +700,8 @@ importers:
         specifier: catalog:stack
         version: 0.63.0
       '@feature-sliced/steiger-plugin':
-        specifier: 0.8.1
-        version: 0.8.1(typescript@7.1.0-beta)(vitest@5.0.5)
+        specifier: 0.8.2
+        version: 0.8.2(typescript@7.1.0-beta)(vitest@5.0.5)
       '@types/react':
         specifier: 19.3.0
         version: 19.3.0
@@ -794,8 +794,8 @@ importers:
         specifier: catalog:stack
         version: 0.63.0
       '@feature-sliced/steiger-plugin':
-        specifier: 0.8.1
-        version: 0.8.1(typescript@7.1.0-beta)(vitest@5.0.5)
+        specifier: 0.8.2
+        version: 0.8.2(typescript@7.1.0-beta)(vitest@5.0.5)
       '@types/react':
         specifier: 19.3.0
         version: 19.3.0
@@ -837,7 +837,7 @@ importers:
         version: 4.1.1(effect@4.1.1)(redis@6.2.1(@opentelemetry/api@1.10.0))
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/210681cb722ce77438cb96f66cb6e7bef945b925#path:/libs/ui(@types/react@19.3.0)(effect@4.1.1)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/9aeee717dc7a34d20ab8fc8e3865d004826911e5#path:/libs/ui(@types/react@19.3.0)(effect@4.1.1)(react@19.3.1)(tailwindcss@4.3.3)
       '@tailwindcss/vite':
         specifier: 4.3.3
         version: 4.3.3(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@5.9.3)(yaml@2.9.1))
@@ -1029,7 +1029,7 @@ importers:
         version: 4.1.1(effect@4.1.1)(react@19.3.1)(scheduler@0.28.0)
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/210681cb722ce77438cb96f66cb6e7bef945b925#path:/libs/ui(@types/react@19.3.0)(effect@4.1.1)(react@19.3.1)(tailwindcss@4.3.3)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/9aeee717dc7a34d20ab8fc8e3865d004826911e5#path:/libs/ui(@types/react@19.3.0)(effect@4.1.1)(react@19.3.1)(tailwindcss@4.3.3)
       '@tanstack/react-devtools':
         specifier: 0.10.14
         version: 0.10.14(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.15)
@@ -2127,6 +2127,9 @@ packages:
   '@feature-sliced/steiger-plugin@0.8.1':
     resolution: {integrity: sha512-hnRmnpGT7HoOv3Hy+et1xFq1IsCogp0SEfLlEC73kI74nlm0zQl8q1QN78iG0PEXyLZUAsqJIfG8rZHvva5vEg==}
 
+  '@feature-sliced/steiger-plugin@0.8.2':
+    resolution: {integrity: sha512-Gmc6b2GhjAT+Y+cQfHaCT+R1PnSuoOFcS6qsYtCnY8WjVH1FyT18FWJnhUjMyw4jN1Oqg0jSj5xeDDLs2InWoA==}
+
   '@floating-ui/core@1.8.0':
     resolution: {integrity: sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ==}
 
@@ -2453,8 +2456,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/210681cb722ce77438cb96f66cb6e7bef945b925#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-HSnFV9+bKZ1lkZPLY0lSVc0ooiZCUnMWAdz2GQFen1z+SeRPNNnOFzCZBHyD+Hd5BEi0ycCpa2WCEe/V1fZYFA==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/210681cb722ce77438cb96f66cb6e7bef945b925}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/9aeee717dc7a34d20ab8fc8e3865d004826911e5#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-ha7xmjUKBKE0GKaNGvIRgoN1UG29c8yfRLjKgNsCSqIMSzZ6OYZA4fV7j0Vc0armMLrM9wyWbKj0iVvo+wJM9A==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/9aeee717dc7a34d20ab8fc8e3865d004826911e5}
     version: 0.0.0
     peerDependencies:
       effect: 4.1.1
@@ -11314,6 +11317,18 @@ snapshots:
       - typescript
       - vitest
 
+  '@feature-sliced/steiger-plugin@0.8.2(typescript@7.1.0-beta)(vitest@5.0.5)':
+    dependencies:
+      '@feature-sliced/filesystem': 3.1.1
+      '@steiger/toolkit': 0.2.3(vitest@5.0.5)
+      fastest-levenshtein: 1.0.16
+      pluralize: 8.0.0
+      tsconfck: 3.1.6(typescript@7.1.0-beta)
+      web-tree-sitter: 0.26.13
+    transitivePeerDependencies:
+      - typescript
+      - vitest
+
   '@floating-ui/core@1.8.0':
     dependencies:
       '@floating-ui/utils': 0.2.12
@@ -11610,7 +11625,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/210681cb722ce77438cb96f66cb6e7bef945b925#path:/libs/ui(@types/react@19.3.0)(effect@4.1.1)(react@19.3.1)(tailwindcss@4.3.3)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/9aeee717dc7a34d20ab8fc8e3865d004826911e5#path:/libs/ui(@types/react@19.3.0)(effect@4.1.1)(react@19.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.82(@types/react@19.3.0)(react@19.3.1)
