@@ -37,7 +37,7 @@
     "@decision-experiments/start-site": "workspace:*",
     "@effect/platform-node": "catalog:",
     "@effect/tsgo": "catalog:stack",
-    "@feature-sliced/steiger-plugin": "0.8.1",
+    "@feature-sliced/steiger-plugin": "0.8.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "catalog:",
