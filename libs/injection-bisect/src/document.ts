@@ -104,7 +104,8 @@ const detected = (input: ReadInput): Effect.Effect<Document, ReadError> =>
     const fileName = pipe(name, Str.slice(slash + "/".length), Str.toLowerCase);
     const candidates = [...readersOf(input), ...parsersOf(input)];
     const byName = Arr.findFirst(candidates, withExtension([extensionOf(name), fileName]));
-    const bySignature = Arr.findFirst(candidates, withExtension(yield* sniffed(input.bytes)));
+    const signature = yield* sniffed(input.bytes);
+    const bySignature = Arr.findFirst(candidates, withExtension(signature));
     const byContent = Arr.findFirst(readersOf(input), accepting(input.bytes));
     return yield* Option.match(Option.firstSomeOf([byName, bySignature, byContent]), {
       onSome: ({ format }) => named(input, format),

@@ -142,7 +142,8 @@ const runClaude = Effect.fn("runClaude")(function* runClaude(request: Prompt) {
   const fileSystem = yield* FileSystem.FileSystem;
   const cwd = yield* fileSystem.makeTempDirectoryScoped();
   const spawner = yield* ChildProcessSpawner.ChildProcessSpawner;
-  const args = claudeArgs(request, yield* toJson(request.jsonSchema));
+  const schema = yield* toJson(request.jsonSchema);
+  const args = claudeArgs(request, schema);
   const handle = yield* spawner.spawn(ChildProcess.make("claude", args, { cwd, stdin: "ignore" }));
   const [stdout, stderr] = yield* Effect.all(
     [

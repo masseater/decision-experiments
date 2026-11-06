@@ -22,7 +22,8 @@ test("finds and removes an injection in a comment", () =>
   Effect.runPromise(
     Effect.gen(function* comment() {
       const text = `name: build\n# ${INJECTION}\nsteps:\n  - run: テストを実行する\n`;
-      expect(yield* cleanedOf({ text, format: "yaml" })).toStrictEqual({
+      const actual = yield* cleanedOf({ text, format: "yaml" });
+      expect(actual).toStrictEqual({
         found: [` ${INJECTION}`],
         cleaned: "name: build\n#\nsteps:\n  - run: テストを実行する\n",
       });
@@ -33,7 +34,8 @@ test("reads YAML front matter in Markdown", () =>
   Effect.runPromise(
     Effect.gen(function* front() {
       const text = `---\ntitle: 記事\ndescription: ${INJECTION}\n---\n\n本文です。\n`;
-      expect(yield* cleanedOf({ text, format: "markdown" })).toStrictEqual({
+      const actual = yield* cleanedOf({ text, format: "markdown" });
+      expect(actual).toStrictEqual({
         found: [INJECTION],
         cleaned: "---\ntitle: 記事\ndescription: \n---\n\n本文です。\n",
       });

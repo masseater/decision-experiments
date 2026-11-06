@@ -38,6 +38,10 @@ const NO_COST = 0;
 
 const ENGINES_DIR = new URL("../engines/", import.meta.url).pathname;
 
+const ProcessRequestSchema = Schema.fromJsonString(
+  Schema.Struct({ id: Schema.String, image: Schema.String }),
+);
+
 const ProcessOutputSchema = Schema.fromJsonString(
   Schema.Struct({ id: Schema.String, text: Schema.String, seconds: Schema.Finite }),
 );
@@ -76,6 +80,15 @@ const failed = (id: string, reason: string): Reading => ({ id, status: "failed",
 
 const encoder = new TextEncoder();
 
+const encodeRequest = Schema.encodeEffect(ProcessRequestSchema);
+
+const requestLines = (pages: readonly Page[]): Effect.Effect<Uint8Array[], Schema.SchemaError> =>
+  pipe(
+    pages,
+    Effect.forEach(({ id, image }) => encodeRequest({ id, image })),
+    Effect.map(Arr.map((line) => encoder.encode(`${line}\n`))),
+  );
+
 const throughProcess = ({
   spawn,
   project,
@@ -88,10 +101,7 @@ const throughProcess = ({
   record: Record;
 }>): Effect.Effect<void> =>
   Effect.gen(function* runProcess() {
-    const requests = pipe(
-      pages,
-      Arr.map((page) => encoder.encode(`${JSON.stringify({ id: page.id, image: page.image })}\n`)),
-    );
+    const requests = yield* requestLines(pages);
     const handle = yield* spawn(
       ChildProcess.make(
         "uv",

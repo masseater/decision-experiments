@@ -223,7 +223,8 @@ const runModel = Effect.fn("runModel")(function* runModel(
     ran,
     Arr.map(({ result }) => result),
   );
-  yield* writeJson(DetailSchema, yield* benchPath("results", `${modelSlug(model.id)}.json`), {
+  const detailPath = yield* benchPath("results", `${modelSlug(model.id)}.json`);
+  yield* writeJson(DetailSchema, detailPath, {
     model: model.id,
     outcomes: pipe(
       ran,
@@ -258,21 +259,21 @@ const runModel = Effect.fn("runModel")(function* runModel(
 });
 
 const loadTask = Effect.fn("loadTask")(function* loadTask(task: (typeof TASKS)[number]) {
-  const items = yield* readJsonl(
-    ItemSchema,
-    yield* dataPath({ task: task.id, extension: "jsonl" }),
-  );
+  const path = yield* dataPath({ task: task.id, extension: "jsonl" });
+  const items = yield* readJsonl(ItemSchema, path);
   return { ...task, items };
 });
 
 const loadStats = Effect.fn("loadStats")(function* loadStats(task: (typeof TASKS)[number]) {
-  const text = yield* readText(yield* dataPath({ task: task.id, extension: "stats.json" }));
+  const path = yield* dataPath({ task: task.id, extension: "stats.json" });
+  const text = yield* readText(path);
   return yield* Schema.decodeEffect(Schema.fromJsonString(LabelStatsSchema))(text);
 });
 
 const updateReadme = Effect.fn("updateReadme")(function* updateReadme(summary: Summary) {
   const readme = yield* benchPath("..", "..", "docs", "decision-bench.md");
-  const [head, rest = ""] = pipe(yield* readText(readme), Str.split(START));
+  const current = yield* readText(readme);
+  const [head, rest = ""] = pipe(current, Str.split(START));
   const [, tail = ""] = pipe(rest, Str.split(END));
   yield* writeText(readme, `${head}${START}\n\n${table(summary)}\n\n${END}${tail}`);
 });
@@ -280,18 +281,16 @@ const updateReadme = Effect.fn("updateReadme")(function* updateReadme(summary: S
 runBench(
   Effect.gen(function* runAll() {
     const tasks = yield* Effect.forEach(TASKS, (task) => loadTask(task), { discard: false });
+    const now = yield* DateTime.now;
     const summary: Summary = {
-      generatedAt: DateTime.formatIso(yield* DateTime.now),
+      generatedAt: DateTime.formatIso(now),
       models: yield* Effect.forEach(MODELS, (model) => runModel(model, tasks), {
         concurrency: "unbounded",
       }),
       labeling: yield* Effect.forEach(TASKS, (task) => loadStats(task), { discard: false }),
     };
-    yield* writeJson(
-      SummarySchema,
-      yield* benchPath("..", "..", "libs", "bench-summary", "summary.json"),
-      summary,
-    );
+    const summaryPath = yield* benchPath("..", "..", "libs", "bench-summary", "summary.json");
+    yield* writeJson(SummarySchema, summaryPath, summary);
     yield* updateReadme(summary);
   }),
 );

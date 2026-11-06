@@ -22,7 +22,8 @@ test("finds and removes an injection in an SRT cue", () =>
   Effect.runPromise(
     Effect.gen(function* srt() {
       const text = `1\n00:00:01,000 --> 00:00:03,000\n今日の議題です。\n\n2\n00:00:04,000 --> 00:00:06,000\n${INJECTION}\n\n3\n00:00:07,000 --> 00:00:09,000\n以上です。\n`;
-      expect(yield* cleanedOf({ text })).toStrictEqual({
+      const actual = yield* cleanedOf({ text });
+      expect(actual).toStrictEqual({
         found: [INJECTION],
         cleaned: Str.replace(INJECTION, "")(text),
       });

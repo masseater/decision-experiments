@@ -1,4 +1,4 @@
-import { Array as Arr, Effect, Option, Schema, String as Str } from "effect";
+import { Array as Arr, Effect, Option, Schema, String as Str, pipe } from "effect";
 
 import { getJson, projectDir, runHook, writeJson } from "./env.ts";
 import { HookPlatform } from "./platform.ts";
@@ -27,8 +27,9 @@ const SessionStartOutput = Schema.Struct({
 
 const currentVersion = Effect.gen(function* currentVersion() {
   const platform = yield* HookPlatform;
+  const directory = yield* projectDir;
   const text = yield* platform
-    .readFile(platform.join(yield* projectDir, MANIFEST_FILE))
+    .readFile(platform.join(directory, MANIFEST_FILE))
     .pipe(Effect.flatMap((found) => Effect.fromOption(found)));
   const manifest = yield* Schema.decodeEffect(Schema.fromJsonString(Manifest))(text);
   return `v${manifest["."]}`;
@@ -42,26 +43,25 @@ const latestRelease = getJson(
 const instructions = (current: string, release: typeof Release.Type): string => {
   const latest = release.tag_name;
   const remote = `https://github.com/${TEMPLATE_REPOSITORY}.git`;
-  return Arr.join(
-    [
-      `このリポジトリの元になったテンプレート ${TEMPLATE_REPOSITORY} に新しいリリース ${latest} がある。このリポジトリが取り込んでいるのは ${current} である。`,
-      "最初の応答で、この更新があることと主な変更点をユーザーに伝え、最新状態を取り込むかを聞く。ユーザーの作業依頼があっても、先にこの確認をする。",
-      "取り込むと答えたら、次の手順で差分を取り込む。",
-      `1. git fetch --no-tags ${remote} refs/tags/${current}:refs/template/${current} refs/tags/${latest}:refs/template/${latest}`,
-      `2. git diff refs/template/${current} refs/template/${latest} | git apply --3way`,
-      "3. 衝突を解消し、vp install と vp run verify を通してからコミットする。",
-      "取り込まないと答えたら、何もしない。",
-      `リリースページ: ${release.html_url}`,
-      "リリースノート:",
-      Str.takeLeft(release.body ?? "", NOTES_LENGTH),
-    ],
-    "\n",
-  );
+  const lines = [
+    `このリポジトリの元になったテンプレート ${TEMPLATE_REPOSITORY} に新しいリリース ${latest} がある。このリポジトリが取り込んでいるのは ${current} である。`,
+    "最初の応答で、この更新があることと主な変更点をユーザーに伝え、最新状態を取り込むかを聞く。ユーザーの作業依頼があっても、先にこの確認をする。",
+    "取り込むと答えたら、次の手順で差分を取り込む。",
+    `1. git fetch --no-tags ${remote} refs/tags/${current}:refs/template/${current} refs/tags/${latest}:refs/template/${latest}`,
+    `2. git diff refs/template/${current} refs/template/${latest} | git apply --3way`,
+    "3. 衝突を解消し、vp install と vp run verify を通してからコミットする。",
+    "取り込まないと答えたら、何もしない。",
+    `リリースページ: ${release.html_url}`,
+    "リリースノート:",
+    Str.takeLeft(release.body ?? "", NOTES_LENGTH),
+  ];
+  return pipe(lines, Arr.join("\n"));
 };
 
 runHook(
   Effect.gen(function* templateRelease() {
-    if (Str.includes(WORKTREE_SEGMENT)(yield* projectDir)) {
+    const directory = yield* projectDir;
+    if (pipe(directory, Str.includes(WORKTREE_SEGMENT))) {
       return;
     }
     const current = yield* currentVersion;

@@ -27,7 +27,8 @@ test("finds and removes an injection in a review column", () =>
   Effect.runPromise(
     Effect.gen(function* review() {
       const text = `id,rating,review\n1,5,"届くのが早かった。"\n2,1,"${INJECTION}"\n`;
-      expect(yield* cleanedOf({ text, format: "csv" })).toStrictEqual({
+      const actual = yield* cleanedOf({ text, format: "csv" });
+      expect(actual).toStrictEqual({
         found: [INJECTION],
         cleaned: Str.replace(INJECTION, "")(text),
       });

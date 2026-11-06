@@ -191,10 +191,13 @@ const callSystemOne = Effect.fn("callSystemOne")(function* callSystemOne(
   via: ChoiceVia,
 ) {
   const started = yield* Clock.currentTimeMillis;
-  const response = yield* Effect.tryPromise(() => create(item)).pipe(Effect.result);
+  const response = yield* Effect.tryPromise({
+    try: () => create(item),
+    catch: String,
+  }).pipe(Effect.result);
   const latencyMs = (yield* Clock.currentTimeMillis) - started;
   if (Result.isFailure(response)) {
-    return failed(String(response.failure.cause), latencyMs);
+    return failed(response.failure, latencyMs);
   }
   const { answers, usage } = response.success;
   return toOutcome(item, via, {
@@ -225,10 +228,9 @@ const makeOpenRouterAdapter = Effect.fn("makeOpenRouterAdapter")(function* makeO
   model: string,
   via: ChoiceVia,
 ) {
-  const client = new OpenRouter({
-    apiKey: Redacted.value(yield* Config.Redacted("OPENROUTER_API_KEY")),
-    ...(yield* attribution),
-  });
+  const apiKey = yield* Config.Redacted("OPENROUTER_API_KEY");
+  const headers = yield* attribution;
+  const client = new OpenRouter({ apiKey: Redacted.value(apiKey), ...headers });
   const create = (item: Readonly<Item>): Promise<DecisionsResponse> =>
     client.systemOne.create({
       decisionsRequest: { model, state: item.text, questions: questionsOf(item, via) },
