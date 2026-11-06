@@ -168,8 +168,8 @@ catalogs:
       specifier: 0.51.1
       version: 0.51.1
     '@cloudflare/workers-types':
-      specifier: 5.20261102.1
-      version: 5.20261102.1
+      specifier: 5.20261103.1
+      version: 5.20261103.1
     '@commitlint/cli':
       specifier: 21.2.4
       version: 21.2.4
@@ -330,8 +330,8 @@ catalogs:
       specifier: ^8.1.1
       version: 8.5.0
     oxlint-plugin-eslint:
-      specifier: 1.90.0
-      version: 1.90.0
+      specifier: 1.91.0
+      version: 1.91.0
     papaparse:
       specifier: ^5.7.0
       version: 5.7.0
@@ -357,8 +357,8 @@ catalogs:
       specifier: 8.0.0
       version: 8.0.0
     skills:
-      specifier: 1.7.5
-      version: 1.7.5
+      specifier: 1.7.6
+      version: 1.7.6
     syncpack:
       specifier: 15.3.3
       version: 15.3.3
@@ -403,14 +403,14 @@ catalogs:
       specifier: 3.38.1
       version: 3.38.1
     lucide-react:
-      specifier: 1.66.0
-      version: 1.66.0
+      specifier: 1.67.0
+      version: 1.67.0
     radix-ui:
       specifier: 1.8.1
       version: 1.8.1
     renovate:
-      specifier: 44.206.2
-      version: 44.206.2
+      specifier: 44.209.0
+      version: 44.209.0
     steiger:
       specifier: 0.9.0
       version: 0.9.0
@@ -509,13 +509,13 @@ importers:
         version: 3.38.1
       oxlint-plugin-eslint:
         specifier: 'catalog:'
-        version: 1.90.0
+        version: 1.91.0
       renovate:
         specifier: catalog:stack
-        version: 44.206.2(supports-color@7.2.0)(typanion@3.14.0)
+        version: 44.209.0(supports-color@7.2.0)(typanion@3.14.0)
       skills:
         specifier: 'catalog:'
-        version: 1.7.5
+        version: 1.7.6
       steiger:
         specifier: catalog:stack
         version: 0.9.0(typescript@5.9.3)(vitest@5.0.5)
@@ -585,7 +585,7 @@ importers:
         version: 4.1.2
       lucide-react:
         specifier: catalog:stack
-        version: 1.66.0(@types/react@19.3.0)(react@19.3.1)
+        version: 1.67.0(@types/react@19.3.0)(react@19.3.1)
       radix-ui:
         specifier: catalog:stack
         version: 1.8.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -610,7 +610,7 @@ importers:
         version: 2.0.0-beta.85(@effect/platform-node@4.1.2(effect@4.1.2)(redis@6.2.1(@opentelemetry/api@1.10.0)))(@types/node@26.6.6)(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.1.0-beta)(yaml@2.9.1))(alchemy@2.0.0-beta.85(@effect/platform-node@4.1.2(effect@4.1.2)(redis@6.2.1(@opentelemetry/api@1.10.0)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.1.0-beta)(yaml@2.9.1))(effect@4.1.2)(ws@8.22.0))(effect@4.1.2)(typescript@7.1.0-beta)
       '@cloudflare/workers-types':
         specifier: 'catalog:'
-        version: 5.20261102.1
+        version: 5.20261103.1
       '@decision-experiments/start-site':
         specifier: workspace:*
         version: link:../../infra/start-site
@@ -670,7 +670,7 @@ importers:
         version: 4.1.2
       lucide-react:
         specifier: catalog:stack
-        version: 1.66.0(@types/react@19.3.0)(react@19.3.1)
+        version: 1.67.0(@types/react@19.3.0)(react@19.3.1)
       react:
         specifier: 19.3.1
         version: 19.3.1
@@ -689,7 +689,7 @@ importers:
         version: 2.0.0-beta.85(@effect/platform-node@4.1.2(effect@4.1.2)(redis@6.2.1(@opentelemetry/api@1.10.0)))(@types/node@26.6.6)(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.1.0-beta)(yaml@2.9.1))(alchemy@2.0.0-beta.85(@effect/platform-node@4.1.2(effect@4.1.2)(redis@6.2.1(@opentelemetry/api@1.10.0)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.1.0-beta)(yaml@2.9.1))(effect@4.1.2)(ws@8.22.0))(effect@4.1.2)(typescript@7.1.0-beta)
       '@cloudflare/workers-types':
         specifier: 'catalog:'
-        version: 5.20261102.1
+        version: 5.20261103.1
       '@decision-experiments/start-site':
         specifier: workspace:*
         version: link:../../infra/start-site
@@ -758,7 +758,7 @@ importers:
         version: 4.1.2
       lucide-react:
         specifier: catalog:stack
-        version: 1.66.0(@types/react@19.3.0)(react@19.3.1)
+        version: 1.67.0(@types/react@19.3.0)(react@19.3.1)
       react:
         specifier: 19.3.1
         version: 19.3.1
@@ -777,7 +777,7 @@ importers:
         version: 2.0.0-beta.85(@effect/platform-node@4.1.2(effect@4.1.2)(redis@6.2.1(@opentelemetry/api@1.10.0)))(@types/node@26.6.6)(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.1.0-beta)(yaml@2.9.1))(alchemy@2.0.0-beta.85(@effect/platform-node@4.1.2(effect@4.1.2)(redis@6.2.1(@opentelemetry/api@1.10.0)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.1.0-beta)(yaml@2.9.1))(effect@4.1.2)(ws@8.22.0))(effect@4.1.2)(typescript@7.1.0-beta)
       '@cloudflare/workers-types':
         specifier: 'catalog:'
-        version: 5.20261102.1
+        version: 5.20261103.1
       '@decision-experiments/start-site':
         specifier: workspace:*
         version: link:../../infra/start-site
@@ -825,7 +825,7 @@ importers:
         version: 4.1.2(effect@4.1.2)(redis@6.2.1(@opentelemetry/api@1.10.0))
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/21266346d65d206e7c58e3a3316cc9f888d9a8de#path:/libs/ui(@types/react@19.3.0)(effect@4.1.2)(react@19.3.1)(tailwindcss@4.3.4)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/47393bad83867b9ddd5b06a8ceb5c350de8bebfb#path:/libs/ui(@types/react@19.3.0)(effect@4.1.2)(react@19.3.1)(tailwindcss@4.3.4)
       '@tailwindcss/vite':
         specifier: 4.3.4
         version: 4.3.4(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@5.9.3)(yaml@2.9.1))
@@ -1017,7 +1017,7 @@ importers:
         version: 4.1.2(effect@4.1.2)(react@19.3.1)(scheduler@0.28.0)
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/21266346d65d206e7c58e3a3316cc9f888d9a8de#path:/libs/ui(@types/react@19.3.0)(effect@4.1.2)(react@19.3.1)(tailwindcss@4.3.4)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/47393bad83867b9ddd5b06a8ceb5c350de8bebfb#path:/libs/ui(@types/react@19.3.0)(effect@4.1.2)(react@19.3.1)(tailwindcss@4.3.4)
       '@tanstack/react-devtools':
         specifier: 0.10.14
         version: 0.10.14(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.15)
@@ -1596,8 +1596,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@5.20261102.1':
-    resolution: {integrity: sha512-rRNznLGla+8vRdToTN/5M+AzlopILSLLZ3qo2L5Ku/dY792iOlX/K9ZLkLnLYji1jycv7+FB12hiE+fFjVgMrw==}
+  '@cloudflare/workers-types@5.20261103.1':
+    resolution: {integrity: sha512-3trekYqEHw3YT8yhMqZaEEW91TZDJXt9XWbwKO+L17rG5iuhdKNY0dk56Rdif+5mABY/8xvu5qIRiyVWMW0OUw==}
 
   '@commitlint/cli@21.2.4':
     resolution: {integrity: sha512-g3M/wrQdElqGH5vROIeL2QiYIxrzqUkhCgsDyDlWfKEyQdCt10OyMB28W2cJtpZ+VNGMvmaN923infr1hOfyrg==}
@@ -1668,8 +1668,8 @@ packages:
     resolution: {integrity: sha512-sGEA473TlCvhCGNoTBY9OXZVWdscIXdGt0dm8EpB+2MRfmt8LNh/X56P/T3nCtEB+eH5qGEa3odphSAoUxSfSQ==}
     engines: {node: '>=22.12.0'}
 
-  '@containerbase/base@14.61.0':
-    resolution: {integrity: sha512-xzfBD+2gVqU9reHELY5WbdCmDUCqjnPvCscG5/6iKnos7Jxg8M0E3rEdiYUMOHLWoww1+hZZFj5vHarjttTUTg==}
+  '@containerbase/base@14.62.0':
+    resolution: {integrity: sha512-S5b8KGMRz/jMwJ6IRiuLfV/ss+sHU+24BInz0C7OFC/SoiFvxNCO/RJPufCpjib3Pbw8+3oWOSMBVUEQDW2Skg==}
     engines: {node: '>=24.10.0'}
     peerDependencies:
       zod: ^4.0.0
@@ -2450,8 +2450,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/21266346d65d206e7c58e3a3316cc9f888d9a8de#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-JzF78VZOx1RagKIjWg0JFVdVd+lT/h7HgxvEnbnmbqvaY9Hs0lhHRtkQAUzXouJONZ4aoGyCfKAndf6fv4rhdQ==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/21266346d65d206e7c58e3a3316cc9f888d9a8de}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/47393bad83867b9ddd5b06a8ceb5c350de8bebfb#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-7wdotw4SstuKuZcrp31KLbNm7vwZq637CwhakbnhoNt7XbUrXCnUVUuMA6nzfB49/bMuErgd+Co9qfzmWH1Jjg==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/47393bad83867b9ddd5b06a8ceb5c350de8bebfb}
     version: 0.0.0
     peerDependencies:
       effect: 4.1.2
@@ -4157,8 +4157,8 @@ packages:
       react-redux:
         optional: true
 
-  '@renovatebot/base-image@13.154.0':
-    resolution: {integrity: sha512-Z90F5Q5nhHWUi7U/M+n6To+Y3tcrFWJPvFkBOPfybmYNhAEKfI99PtlCvuHz/IeEemEU/DND8n9GeHQv9sDM2w==}
+  '@renovatebot/base-image@13.155.0':
+    resolution: {integrity: sha512-oVSmYRYoKZpM2jcuXSftqIjUZ4/O1gV2iELUe9Sd/33k3sCRFjey9xXivfxrpRRxifybplagPhGP9qt05CZSYg==}
     engines: {node: '>=24.10.0'}
     peerDependencies:
       zod: ^4.0.0
@@ -7750,8 +7750,8 @@ packages:
   lru_map@0.4.1:
     resolution: {integrity: sha512-I+lBvqMMFfqaV8CJCISjI3wbjmwVu/VyOoU7+qtu9d7ioW5klMgsTTiUOUp+DJvfTTzKXoPbyC6YfgkNcyPSOg==}
 
-  lucide-react@1.66.0:
-    resolution: {integrity: sha512-8zjbi/Us+ETXqfBwmXF/FHrWGIqOdE6zT1yUdRJLQVoptomSkB0zdFWVIM667t9K8djWDaXdkBkqi2qVTuDNiw==}
+  lucide-react@1.67.0:
+    resolution: {integrity: sha512-z7kd21YNm/Gw3E7mTnq5dTuvV+yc+OEwA//oDENSG1SbZ/NVgKdjxALJFNdGoC0Ji7HaJR2Dha9ev7VUPxy9CQ==}
     peerDependencies:
       '@types/react': '*'
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -8321,8 +8321,8 @@ packages:
       vite-plus:
         optional: true
 
-  oxlint-plugin-eslint@1.90.0:
-    resolution: {integrity: sha512-JjQbCJZ1HuWrOA0qi1r8l6uqEdlP3Htu1XWrMNkTieGRRWLNB2nOFu7iw1MYSWODcuJR8lJn5KfoP6DujhWtiA==}
+  oxlint-plugin-eslint@1.91.0:
+    resolution: {integrity: sha512-iWRxVfbHBMFRiHdrS/OxLfk2ekoTclN3/TF7x7PyO7now4KR2to96x7xIEiQh7en4JazSrEziPWPIpE8b6sRrA==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
   oxlint-tsgolint@7.0.2004:
@@ -8768,8 +8768,8 @@ packages:
   remove-accents@0.5.0:
     resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
 
-  renovate@44.206.2:
-    resolution: {integrity: sha512-nKaK2sXJQ9XdWeNjC14dLb3aHTIR1DT0mnS95vGkohsQ1V/VFSZ+bLqTlrGXkV7KZKHyuyARf+ybepQ1WZmNGA==}
+  renovate@44.209.0:
+    resolution: {integrity: sha512-+CSWjzTWt7Oh8eHf56glRrwXe6x7QQrVJ4gmqKGTQvhFVEeho5cds0uvMVHcVJwIZALKv0cJwXepJ3qiZzCmRA==}
     engines: {node: ^24.11.0, pnpm: ^11.0.0}
     hasBin: true
 
@@ -8995,8 +8995,8 @@ packages:
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
 
-  skills@1.7.5:
-    resolution: {integrity: sha512-ihrB0rgqZ6Ibs2gp3iIHmIeJkz1OVc8lIExF50eFl4Mbc71sfGGUQB3jtNQZnIHWIbzBenaYmq2ZeY4V1jFjtg==}
+  skills@1.7.6:
+    resolution: {integrity: sha512-dAee29yRGin7ub6VHwmifLEfHrysGD41yq4RkY0gg7QQh0wyQKWfhiORGb/r6uNpKWc9A1GY8yowV07Lh+4rCg==}
     engines: {node: '>=22.20.0'}
     hasBin: true
 
@@ -10685,7 +10685,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20261026.1':
     optional: true
 
-  '@cloudflare/workers-types@5.20261102.1': {}
+  '@cloudflare/workers-types@5.20261103.1': {}
 
   '@commitlint/cli@21.2.4(conventional-commits-parser@7.1.2)(typescript@5.9.3)':
     dependencies:
@@ -10794,7 +10794,7 @@ snapshots:
       conventional-commits-parser: 7.1.2
       picocolors: 1.1.1
 
-  '@containerbase/base@14.61.0(zod@4.6.7)':
+  '@containerbase/base@14.62.0(zod@4.6.7)':
     dependencies:
       semver: 7.8.5
     optionalDependencies:
@@ -10884,7 +10884,7 @@ snapshots:
 
   '@effect/sql-d1@4.1.2(effect@4.1.2)':
     dependencies:
-      '@cloudflare/workers-types': 5.20261102.1
+      '@cloudflare/workers-types': 5.20261103.1
       effect: 4.1.2
 
   '@effect/tsgo-darwin-arm64@0.64.1':
@@ -11473,7 +11473,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/21266346d65d206e7c58e3a3316cc9f888d9a8de#path:/libs/ui(@types/react@19.3.0)(effect@4.1.2)(react@19.3.1)(tailwindcss@4.3.4)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/47393bad83867b9ddd5b06a8ceb5c350de8bebfb#path:/libs/ui(@types/react@19.3.0)(effect@4.1.2)(react@19.3.1)(tailwindcss@4.3.4)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.82(@types/react@19.3.0)(react@19.3.1)
@@ -12935,9 +12935,9 @@ snapshots:
       react: 19.3.1
       react-redux: 9.3.1(@types/react@19.3.0)(react@19.3.1)(redux@5.0.1)
 
-  '@renovatebot/base-image@13.154.0(zod@4.6.7)':
+  '@renovatebot/base-image@13.155.0(zod@4.6.7)':
     dependencies:
-      '@containerbase/base': 14.61.0(zod@4.6.7)
+      '@containerbase/base': 14.62.0(zod@4.6.7)
     optionalDependencies:
       zod: 4.6.7
 
@@ -17058,7 +17058,7 @@ snapshots:
 
   lru_map@0.4.1: {}
 
-  lucide-react@1.66.0(@types/react@19.3.0)(react@19.3.1):
+  lucide-react@1.67.0(@types/react@19.3.0)(react@19.3.1):
     dependencies:
       react: 19.3.1
     optionalDependencies:
@@ -18009,7 +18009,7 @@ snapshots:
       '@oxfmt/binding-win32-x64-msvc': 0.74.0
       vite-plus: 1.4.0(@opentelemetry/api@1.10.0)(@types/node@26.6.6)(@vitest/ui@5.0.5)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@7.1.0-beta)(yaml@2.9.1)
 
-  oxlint-plugin-eslint@1.90.0: {}
+  oxlint-plugin-eslint@1.91.0: {}
 
   oxlint-tsgolint@7.0.2004:
     optionalDependencies:
@@ -18630,7 +18630,7 @@ snapshots:
 
   remove-accents@0.5.0: {}
 
-  renovate@44.206.2(supports-color@7.2.0)(typanion@3.14.0):
+  renovate@44.209.0(supports-color@7.2.0)(typanion@3.14.0):
     dependencies:
       '@aws-sdk/client-codecommit': 3.1139.0
       '@aws-sdk/client-ec2': 3.1139.0
@@ -18663,7 +18663,7 @@ snapshots:
       '@pnpm/parse-overrides': 1001.0.4
       '@qnighy/marshal': 0.1.3
       '@redis/client': 6.3.0(@opentelemetry/api@1.10.0)
-      '@renovatebot/base-image': 13.154.0(zod@4.6.7)
+      '@renovatebot/base-image': 13.155.0(zod@4.6.7)
       '@renovatebot/detect-tools': 5.0.0
       '@renovatebot/good-enough-parser': 3.0.0
       '@renovatebot/osv-offline': 4.5.9(supports-color@7.2.0)(zod@4.6.7)
@@ -19035,7 +19035,7 @@ snapshots:
 
   sisteransi@1.0.5: {}
 
-  skills@1.7.5:
+  skills@1.7.6:
     dependencies:
       tar: 7.5.22
       yaml: 2.9.1
