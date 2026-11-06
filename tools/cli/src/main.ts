@@ -108,7 +108,8 @@ const command = Command.make(
         format: input.format,
         cutoff: Option.getOrElse(cutoff, () => cutoffFor(model)),
       });
-      yield* Console.log(yield* encodeJson(reportOf(detection, input.text)));
+      const report = yield* encodeJson(reportOf(detection, input.text));
+      yield* Console.log(report);
     }),
 );
 

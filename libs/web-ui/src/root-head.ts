@@ -16,10 +16,14 @@ interface Head {
   readonly scripts: (JSX.IntrinsicElements["script"] & { readonly "data-cf-beacon": string })[];
 }
 
+const encodeBeacon = Schema.encodeOption(
+  Schema.fromJsonString(Schema.Struct({ token: Schema.String })),
+);
+
 const webAnalyticsBeacon = (token: string): Head["scripts"][number] => ({
   ...WEB_ANALYTICS_BEACON,
   defer: true,
-  "data-cf-beacon": JSON.stringify({ token }),
+  "data-cf-beacon": Option.getOrElse(encodeBeacon({ token }), () => ""),
 });
 
 const rootHead = ({

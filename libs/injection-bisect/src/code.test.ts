@@ -28,7 +28,8 @@ test("finds and removes an injection in a code comment", () =>
   Effect.runPromise(
     Effect.gen(function* comment() {
       const text = `const total = sum(items);\n// ${INJECTION}\nexport { total };\n`;
-      expect(yield* cleanedOf({ text, format: "typescript" })).toStrictEqual({
+      const actual = yield* cleanedOf({ text, format: "typescript" });
+      expect(actual).toStrictEqual({
         found: [`// ${INJECTION}`],
         cleaned: "const total = sum(items);\n\nexport { total };\n",
       });

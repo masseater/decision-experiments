@@ -24,7 +24,8 @@ test("finds and removes an injection in a contact note", () =>
   Effect.runPromise(
     Effect.gen(function* vcard() {
       const text = `BEGIN:VCARD\nVERSION:4.0\nFN:佐藤 花子\nNOTE:${INJECTION}\nEND:VCARD\n`;
-      expect(yield* cleanedOf({ text })).toStrictEqual({
+      const actual = yield* cleanedOf({ text });
+      expect(actual).toStrictEqual({
         found: [INJECTION],
         cleaned: Str.replace(INJECTION, "")(text),
       });

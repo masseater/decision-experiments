@@ -14,6 +14,7 @@ import {
   Schema,
   Stdio,
   Stream,
+  pipe,
 } from "effect";
 import { FetchHttpClient, HttpClient, HttpClientRequest, HttpClientResponse } from "effect/http";
 import { ChildProcess, ChildProcessSpawner } from "effect/process";
@@ -25,10 +26,10 @@ const taggedError = Schema.TaggedError;
 
 class HookBlocked extends taggedError<HookBlocked, { readonly brand: unique symbol }>()(
   "HookBlocked",
-  {
-    reason: Schema.String,
-  },
+  { reason: Schema.String },
 ) {}
+
+const isHookBlocked = Schema.is(HookBlocked);
 
 const EXIT_SUCCESS = 0;
 const EXIT_FAILURE = 1;
@@ -39,19 +40,22 @@ const projectDir = Config.String("CLAUDE_PROJECT_DIR").pipe(Config.withDefault("
 
 const projectRoot = Effect.gen(function* projectRoot() {
   const platform = yield* HookPlatform;
-  return platform.resolve(yield* projectDir);
+  const directory = yield* projectDir;
+  return platform.resolve(directory);
 });
 
 const localBin = Effect.fn("localBin")(function* localBin(name: string) {
   const platform = yield* HookPlatform;
-  return platform.join(yield* projectRoot, "node_modules", ".bin", name);
+  const root = yield* projectRoot;
+  return platform.join(root, "node_modules", ".bin", name);
 });
 
 const blockWhen = (reasons: readonly string[]): Effect.Effect<void, HookBlocked> => {
   if (!Arr.isReadonlyArrayNonEmpty(reasons)) {
     return Effect.void;
   }
-  return Effect.fail(HookBlocked.make({ reason: Arr.join(reasons, "\n") }));
+  const reason = pipe(reasons, Arr.join("\n"));
+  return Effect.fail(HookBlocked.make({ reason }));
 };
 
 const writeTo = (sink: Sink, text: string): Effect.Effect<void, never, HookPlatform> =>
@@ -174,7 +178,7 @@ const getJson: {
 
 const findBlocked = <Failure>(cause: Cause.Cause<Failure>): Option.Option<HookBlocked> =>
   Cause.findErrorOption(cause).pipe(
-    Option.filter((error): error is Failure & HookBlocked => Schema.is(HookBlocked)(error)),
+    Option.filter((error): error is Failure & HookBlocked => isHookBlocked(error)),
   );
 
 const exitCodeOf = <Value, Failure>(exit: Exit.Exit<Value, Failure>): number => {

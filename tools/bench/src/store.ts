@@ -97,7 +97,8 @@ const toJson = (value: unknown): Effect.Effect<string, Schema.SchemaError> => en
 
 const sha256 = Effect.fn("sha256")(function* sha256(value: unknown) {
   const store = yield* BenchStore;
-  return yield* store.sha256Hex(yield* toJson(value));
+  const json = yield* toJson(value);
+  return yield* store.sha256Hex(json);
 });
 
 const makeCache = Effect.fn("makeCache")(function* makeCache<

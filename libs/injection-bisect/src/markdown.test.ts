@@ -50,7 +50,8 @@ test("finds and removes an injection in image alt text", () =>
   Effect.runPromise(
     Effect.gen(function* alt() {
       const text = `# レシピ\n\n![${INJECTION}](cake.png)\n\n材料を混ぜる。\n`;
-      expect(yield* cleanedOf({ text, format: "markdown" })).toStrictEqual({
+      const actual = yield* cleanedOf({ text, format: "markdown" });
+      expect(actual).toStrictEqual({
         found: [`![${INJECTION}](cake.png)`],
         cleaned: "# レシピ\n\n\n\n材料を混ぜる。\n",
       });
@@ -72,7 +73,8 @@ test("finds and removes an injection inside a code block", () =>
   Effect.runPromise(
     Effect.gen(function* code() {
       const text = `手順です。\n\n\`\`\`html\n<p>本文</p><!-- ${INJECTION} -->\n\`\`\`\n`;
-      expect(yield* cleanedOf({ text, format: "markdown" })).toStrictEqual({
+      const actual = yield* cleanedOf({ text, format: "markdown" });
+      expect(actual).toStrictEqual({
         found: [` ${INJECTION} `],
         cleaned: "手順です。\n\n```html\n<p>本文</p><!---->\n```\n",
       });

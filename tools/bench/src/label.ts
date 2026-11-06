@@ -91,8 +91,10 @@ const writeLabeled = Effect.fn("writeLabeled")(function* writeLabeled(
   items: readonly Item[],
   stats: Omit<typeof LabelStatsSchema.Type, "task" | "items" | "hard">,
 ) {
-  yield* writeJsonl(ItemSchema, yield* dataPath({ task, extension: "jsonl" }), items);
-  yield* writeJson(LabelStatsSchema, yield* dataPath({ task, extension: "stats.json" }), {
+  const itemsPath = yield* dataPath({ task, extension: "jsonl" });
+  const statsPath = yield* dataPath({ task, extension: "stats.json" });
+  yield* writeJsonl(ItemSchema, itemsPath, items);
+  yield* writeJson(LabelStatsSchema, statsPath, {
     task,
     items: items.length,
     hard: pipe(

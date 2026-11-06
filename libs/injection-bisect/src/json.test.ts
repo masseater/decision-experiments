@@ -39,7 +39,8 @@ test("finds and removes an injection in a chat export", () =>
         ],
         Arr.join("\n"),
       );
-      expect(yield* cleanedOf({ text })).toStrictEqual({
+      const actual = yield* cleanedOf({ text });
+      expect(actual).toStrictEqual({
         found: [INJECTION],
         cleaned: Str.replace(INJECTION, "")(text),
       });
@@ -59,7 +60,8 @@ test("finds and removes an injection in JSON Lines", () =>
         Arr.join("\n"),
       );
       expect(textsOf(text)).toContain("送りました。");
-      expect(yield* cleanedOf({ text })).toStrictEqual({
+      const actual = yield* cleanedOf({ text });
+      expect(actual).toStrictEqual({
         found: [INJECTION],
         cleaned: Str.replace(INJECTION, "")(text),
       });

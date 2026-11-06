@@ -22,7 +22,8 @@ test("finds and removes an injection in an Atom entry", () =>
   Effect.runPromise(
     Effect.gen(function* atom() {
       const text = `<feed xmlns="http://www.w3.org/2005/Atom"><entry><title>新機能のお知らせ</title><summary>${INJECTION}</summary></entry></feed>`;
-      expect(yield* cleanedOf({ text })).toStrictEqual({
+      const actual = yield* cleanedOf({ text });
+      expect(actual).toStrictEqual({
         found: [INJECTION],
         cleaned: Str.replace(INJECTION, "")(text),
       });
