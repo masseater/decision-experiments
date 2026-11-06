@@ -9,9 +9,6 @@
   "imports": {
     "#package.json": "./package.json"
   },
-  "scripts": {
-    "start": "node src/main.ts"
-  },
   "dependencies": {
     "@effect/platform-node": "catalog:",
     "@r_masseater/injection-bisect": "workspace:*",

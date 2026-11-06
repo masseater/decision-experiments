@@ -14,8 +14,10 @@ import {
   restrictedImports,
   shadcnRestyleContracts,
 } from "./lint.config.ts";
+import { readonlyParameterTypes } from "./readonly-parameter-types.config.ts";
 
 export default defineConfig({
+  test: { projects: ["apps/*", "libs/*", "infra/*", "tools/*"], passWithNoTests: true },
   staged: {
     "*": "vp check --fix",
   },
@@ -92,76 +94,7 @@ export default defineConfig({
       "eslint/one-var": ["error", "never"],
       "eslint/no-restricted-imports": ["error", restrictedImports],
       "import/no-namespace": ["error", { ignore: ["linguist-languages"] }],
-      "typescript/prefer-readonly-parameter-types": [
-        "error",
-        {
-          ignoreInferredTypes: true,
-          allow: [
-            { from: "lib", name: "Request" },
-            { from: "lib", name: "Uint8Array" },
-            { from: "lib", name: "DataView" },
-            { from: "package", package: "@tanstack/query-core", name: "QueryClient" },
-            { from: "package", package: "ical.js", name: "Component" },
-            {
-              from: "package",
-              package: "@jupyterlab/nbformat",
-              name: [
-                "ICell",
-                "IDisplayData",
-                "IExecuteResult",
-                "INotebookContent",
-                "IOutput",
-                "MultilineString",
-              ],
-            },
-            {
-              from: "package",
-              package: "react",
-              name: ["ReactNode", "ButtonHTMLAttributes", "ChangeEvent", "ClassAttributes"],
-            },
-            { from: "package", package: "clsx", name: "ClassValue" },
-            { from: "package", package: "unpdf", name: "PDFDocumentProxy" },
-            { from: "package", package: "@kenjiuno/msgreader", name: "FieldsData" },
-            {
-              from: "package",
-              package: "parse5",
-              name: [
-                "Document",
-                "DocumentFragment",
-                "DocumentType",
-                "Element",
-                "Template",
-                "CommentNode",
-                "TextNode",
-              ],
-            },
-            {
-              from: "package",
-              package: "@types/mdast",
-              name: ["Code", "Nodes"],
-            },
-            { from: "package", package: "@types/hast", name: ["Element", "RootContent"] },
-            { from: "package", package: "postal-mime", name: ["Address", "Email"] },
-            { from: "package", package: "fflate", name: ["Unzipped"] },
-            {
-              from: "package",
-              package: "@openrouter/sdk",
-              name: [
-                "DecisionsChoiceAnswer",
-                "DecisionsNoulAnswer",
-                "DecisionsScoreAnswer",
-                "Unknown",
-              ],
-            },
-            { from: "package", package: "recharts", name: "TooltipPayloadEntry" },
-            {
-              from: "package",
-              package: "effect",
-              name: ["Cause", "Context", "Effect", "Exit", "Layer", "Option"],
-            },
-          ],
-        },
-      ],
+      "typescript/prefer-readonly-parameter-types": ["error", readonlyParameterTypes],
       "eslint/no-duplicate-imports": ["error", { allowSeparateTypeImports: true }],
       "react/function-component-definition": [
         "error",
@@ -234,6 +167,18 @@ export default defineConfig({
   run: {
     cache: true,
     tasks: {
+      "markdown-lint": [
+        'textlint "**/*.md"',
+        `git -c core.quotePath=false ls-files -co --exclude-standard '*.md' | git -c core.quotePath=false -c core.excludesFile=.textlintignore check-ignore --no-index --stdin -nv | awk -F '\\t' '$1 == "::" { print $2 }' | tr '\\n' '\\0' | xargs -0 -r -n 1 -P 4 python3 "$(skills ls --json | jq -r '.[] | select(.name == "yomiyasu").path')/scripts/yomiyasu_lint.py" --strict`,
+      ],
+      renovate: "renovate-config-validator --strict",
+      fallow: [
+        "fallow --skip dupes --fail-on-issues --quiet --format compact",
+        "fallow dead-code --no-production --fail-on-issues --quiet --format compact",
+        "fallow dead-code --no-production --quiet --format json | jq -e '[.prop_drilling_chains, .thin_wrappers, .duplicate_prop_shapes] | all(length == 0)' > /dev/null",
+        "fallow dupes --fail-on-issues --quiet --format compact",
+        "fallow security --fail-on-issues --quiet",
+      ],
       "actions-lint": {
         command:
           'uvx --from actionlint-py@1.7.12.25 actionlint && uvx zizmor@1.32.0 $(test -n "$CLAUDE_CODE_REMOTE" && echo --no-online-audits) .github && ast-grep scan --rule .github/rules/no-full-history-checkout.yml .github/workflows',
@@ -265,28 +210,28 @@ export default defineConfig({
           ],
         },
         dependsOn: [
-          "test-all",
+          "test",
           "syncpack",
           "markdown-lint",
           "renovate",
           "actions-lint",
-          "steiger-all",
-          "fallow-all",
+          "steiger",
+          "fallow",
           "gitleaks",
           "audit",
         ],
       },
-      "test-all": "vp run -r test",
+      test: "vp test run",
       syncpack: "syncpack lint",
-      "steiger-all": "vp run -r steiger",
-      "fallow-all": "vp run -r fallow",
+      steiger: 'for src in apps/*/src; do steiger "$src" || exit 1; done',
       audit: {
         command:
           'before="$(cksum pnpm-workspace.yaml)"; vp pm audit --fix || exit; if [ "$before" != "$(cksum pnpm-workspace.yaml)" ]; then echo "vp pm audit --fix rewrote pnpm-workspace.yaml. Run vp install and commit the diff." >&2; exit 1; fi',
         cache: false,
       },
       gitleaks: {
-        command: "go run github.com/zricethezav/gitleaks/v8@v8.30.1 git --redact --no-banner",
+        command:
+          'go run github.com/zricethezav/gitleaks/v8@v8.30.1 git --redact --no-banner --log-opts="$(git rev-parse -q --verify "$GITLEAKS_BASE" || echo origin/main)..HEAD"',
         cache: false,
       },
     },

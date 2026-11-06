@@ -40,8 +40,6 @@
     "provenance": true
   },
   "scripts": {
-    "build": "vp pack",
-    "test": "vp test run",
     "prepublishOnly": "node -e \"if (!process.env.npm_config_user_agent?.startsWith('pnpm/')) { console.error('npm publish leaves catalog: in dependencies. Publish the tarball from vp pm pack instead.'); process.exit(1) }\" && vp run build"
   },
   "dependencies": {
