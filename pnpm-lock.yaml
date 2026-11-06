@@ -204,8 +204,8 @@ catalogs:
       specifier: ^1.28.0
       version: 1.29.0
     '@openrouter/sdk':
-      specifier: 1.5.34
-      version: 1.5.34
+      specifier: 1.5.35
+      version: 1.5.35
     '@plussub/srt-vtt-parser':
       specifier: ^2.0.5
       version: 2.0.5
@@ -825,7 +825,7 @@ importers:
         version: 4.1.2(effect@4.1.2)(redis@6.2.1(@opentelemetry/api@1.10.0))
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/47393bad83867b9ddd5b06a8ceb5c350de8bebfb#path:/libs/ui(@types/react@19.3.0)(effect@4.1.2)(react@19.3.1)(tailwindcss@4.3.4)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/dff8fbf38cff18b1648b6119c9f36a674541284a#path:/libs/ui(@types/react@19.3.0)(effect@4.1.2)(react@19.3.1)(tailwindcss@4.3.4)
       '@tailwindcss/vite':
         specifier: 4.3.4
         version: 4.3.4(@voidzero-dev/vite-plus-core@1.4.0(@types/node@26.6.6)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(typescript@5.9.3)(yaml@2.9.1))
@@ -1017,7 +1017,7 @@ importers:
         version: 4.1.2(effect@4.1.2)(react@19.3.1)(scheduler@0.28.0)
       '@masseater.dev/ui':
         specifier: github:masseater/masseater.dev#path:/libs/ui
-        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/47393bad83867b9ddd5b06a8ceb5c350de8bebfb#path:/libs/ui(@types/react@19.3.0)(effect@4.1.2)(react@19.3.1)(tailwindcss@4.3.4)
+        version: https://codeload.github.com/masseater/masseater.dev/tar.gz/dff8fbf38cff18b1648b6119c9f36a674541284a#path:/libs/ui(@types/react@19.3.0)(effect@4.1.2)(react@19.3.1)(tailwindcss@4.3.4)
       '@tanstack/react-devtools':
         specifier: 0.10.14
         version: 0.10.14(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(csstype@3.2.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(solid-js@1.9.15)
@@ -1072,7 +1072,7 @@ importers:
         version: 4.1.2(effect@4.1.2)(redis@6.2.1(@opentelemetry/api@1.10.0))
       '@openrouter/sdk':
         specifier: 'catalog:'
-        version: 1.5.34
+        version: 1.5.35
       bench-summary:
         specifier: workspace:*
         version: link:../../libs/bench-summary
@@ -2450,8 +2450,8 @@ packages:
   '@lumino/coreutils@2.2.3':
     resolution: {integrity: sha512-YxmayMeq8VJCPqo1okpsA3oOoz0eZeG5qedOLmopm+N/GwQT7S34QPPts49omVUwTJ0Xo8fGzOsxnS/LwnVl1Q==}
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/47393bad83867b9ddd5b06a8ceb5c350de8bebfb#path:/libs/ui':
-    resolution: {gitHosted: true, integrity: sha512-7wdotw4SstuKuZcrp31KLbNm7vwZq637CwhakbnhoNt7XbUrXCnUVUuMA6nzfB49/bMuErgd+Co9qfzmWH1Jjg==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/47393bad83867b9ddd5b06a8ceb5c350de8bebfb}
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/dff8fbf38cff18b1648b6119c9f36a674541284a#path:/libs/ui':
+    resolution: {gitHosted: true, integrity: sha512-ikebalf31nbayCUO7gl8/BFZc+caanzRTWh2v0MNBqRnUWTOfl4X6rSQbJMHiQzosbz7KpyUl/fXZB/dxfuUZg==, path: /libs/ui, tarball: https://codeload.github.com/masseater/masseater.dev/tar.gz/dff8fbf38cff18b1648b6119c9f36a674541284a}
     version: 0.0.0
     peerDependencies:
       effect: 4.1.2
@@ -2595,8 +2595,8 @@ packages:
   '@openrouter/sdk@1.5.33':
     resolution: {integrity: sha512-hbg4q/tZHOnggBk7Sjkel6COExpbe1+2p4Mt2YyvAloDXtNNaFkMab0SgVfoBdTgzweBlrJJ4jUHwHt5rFiadA==}
 
-  '@openrouter/sdk@1.5.34':
-    resolution: {integrity: sha512-LAcWpwGXD2xdQDDrC+flHRWHHNgkh7rFpptQfRsABuOGkUfsiyKcEdCgQsKb2L59kluTMuxBGMTmlLh91qfScw==}
+  '@openrouter/sdk@1.5.35':
+    resolution: {integrity: sha512-YgeZaQ3JUhqDvoRLn/23ZHfvqTXr8c0w7PMynjFiLR3TzjeeBHo+y0+6ZvlTbuYvrgp/dUxutGkjctVDyDKqyA==}
 
   '@opentelemetry/api@1.10.0':
     resolution: {integrity: sha512-lMkyes8iHrG+mk6WH7X70MdCLI2RS0FwNBY1PyQ8UemaijE2m5mv5A0Niy3HtbYTFrgkUEQjFMXmSAk2hQDuPQ==}
@@ -11473,7 +11473,7 @@ snapshots:
     dependencies:
       '@lumino/algorithm': 2.0.5
 
-  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/47393bad83867b9ddd5b06a8ceb5c350de8bebfb#path:/libs/ui(@types/react@19.3.0)(effect@4.1.2)(react@19.3.1)(tailwindcss@4.3.4)':
+  '@masseater.dev/ui@https://codeload.github.com/masseater/masseater.dev/tar.gz/dff8fbf38cff18b1648b6119c9f36a674541284a#path:/libs/ui(@types/react@19.3.0)(effect@4.1.2)(react@19.3.1)(tailwindcss@4.3.4)':
     dependencies:
       '@fontsource-variable/roboto-flex': 5.3.0
       '@paper-design/shaders-react': 0.0.82(@types/react@19.3.0)(react@19.3.1)
@@ -11594,7 +11594,7 @@ snapshots:
     dependencies:
       zod: 4.6.7
 
-  '@openrouter/sdk@1.5.34':
+  '@openrouter/sdk@1.5.35':
     dependencies:
       zod: 4.6.7
 
