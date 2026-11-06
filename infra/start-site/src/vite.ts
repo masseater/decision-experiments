@@ -10,14 +10,30 @@ import type { UserConfig } from "vite-plus";
 interface SiteOptions {
   readonly basePath: string;
   readonly searchIndexOrigin: Option.Option<string>;
+  readonly assetHeaderArgs: string;
 }
 
 const SITEMAP_FILE = "sitemap.xml";
 
-const startSiteConfig = ({ basePath, searchIndexOrigin }: SiteOptions): UserConfig =>
+const startSiteConfig = ({
+  basePath,
+  searchIndexOrigin,
+  assetHeaderArgs,
+}: SiteOptions): UserConfig =>
   defineConfig({
     base: `${basePath}/`,
     resolve: { tsconfigPaths: true },
+    run: {
+      tasks: {
+        dev: { command: "alchemy dev", cache: false },
+        build: {
+          command: `vp build && vpx ../../infra/start-site/src/write-asset-headers.ts ${assetHeaderArgs}`,
+          cache: false,
+        },
+        deploy: { command: "alchemy deploy", cache: false },
+        destroy: { command: "alchemy destroy", cache: false },
+      },
+    },
     environments: { client: { build: { outDir: `dist/client${basePath}` } } },
     test: {
       projects: [

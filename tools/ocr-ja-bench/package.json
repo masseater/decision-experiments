@@ -3,12 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "scripts": {
-    "prepare-data": "uv run --project prepare python -I prepare/prepare.py .cache/images data/jawildtext.json",
-    "render": "node src/render.ts",
-    "measure": "node src/measure.ts",
-    "rescore": "node src/rescore.ts"
-  },
   "dependencies": {
     "@effect/platform-node": "catalog:",
     "@ocr-decide/measurements": "workspace:*",

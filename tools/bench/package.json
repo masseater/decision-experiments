@@ -3,11 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "scripts": {
-    "build:jnli": "node src/build-jnli.ts",
-    "build:rules": "node src/build-rules.ts",
-    "test": "vp test run"
-  },
   "dependencies": {
     "@effect/platform-node": "catalog:",
     "@openrouter/sdk": "catalog:",

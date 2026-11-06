@@ -11,9 +11,6 @@
     "./alchemy": "./src/app-prefix.ts",
     "./site": "./src/static-site.ts"
   },
-  "scripts": {
-    "test": "vp test run"
-  },
   "dependencies": {
     "@alchemy.run/cloudflare": "catalog:stack",
     "@decision-experiments/web-ui": "workspace:*",

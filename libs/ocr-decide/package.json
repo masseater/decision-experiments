@@ -41,8 +41,6 @@
     "provenance": true
   },
   "scripts": {
-    "build": "vp pack",
-    "test": "vp test run",
     "prepublishOnly": "vp run build"
   },
   "dependencies": {
