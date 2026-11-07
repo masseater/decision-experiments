@@ -1,5 +1,7 @@
 # decision-experiments
 
+このリポジトリは [masseater/masseater.dev](https://github.com/masseater/masseater.dev) に移り、アーカイブされた。デモは `apps/`、ライブラリは `libs/`、ベンチと計測は `tools/` にある。
+
 OpenRouter の decision モデルで、文書の中身を安く速く判定できるかを試す実験の置き場である。decision モデルは文章を書かず、問いへの答えの確率だけを返す。そのぶん、大きなモデルに直接判定させるより安く速い。
 
 ここには 3 つの実験がある。injection-bisect は、AI に渡す文書へプロンプトインジェクションが紛れていないかを調べ、紛れていればその箇所を取り除く。ocr-decide は、請求書やレシートの画像を OCR で読み、どの行がどの項目かを decision モデルに選ばせる。decision-bench は、decision モデルが日本語のタスクをどれだけ正しく判定できるかを測るベンチマークで、結果と手法は [docs/decision-bench.md](docs/decision-bench.md) にある。
